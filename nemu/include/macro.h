@@ -12,7 +12,7 @@
 *
 * See the Mulan PSL v2 for more details.
 ***************************************************************************************/
-
+//add some macros to test some macros
 #ifndef __MACRO_H__
 #define __MACRO_H__
 

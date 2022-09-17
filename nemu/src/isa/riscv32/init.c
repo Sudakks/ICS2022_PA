@@ -28,7 +28,7 @@ static const uint32_t img [] = {
 static void restart() {
   /* Set the initial program counter. */
   cpu.pc = RESET_VECTOR;
-
+/*就是将pc的值设置为刚刚加载客户程序的内存位置*/
   /* The zero register is always 0. */
   cpu.gpr[0] = 0;
 }
