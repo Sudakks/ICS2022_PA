@@ -74,8 +74,8 @@ config CC_GPP
 config CC_CLANG
   depends on !TARGET_AM
   bool "clang"
-config CC_DEBUG#add new
-  bool "Enable debug information"#add new
+#config CC_DEBUG#add new
+#  bool "Enable debug information"#add new
 endchoice
 
 config CC
