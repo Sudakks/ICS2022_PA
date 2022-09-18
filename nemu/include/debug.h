@@ -38,6 +38,6 @@
 
 #define panic(format, ...) Assert(0, format, ## __VA_ARGS__)
 
-#define TODO() panic("please implement me")
+#define TODO() panic("please implement me")//an example of how to use panic to stop immediately
 
 #endif
