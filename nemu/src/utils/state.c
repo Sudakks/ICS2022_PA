@@ -23,5 +23,6 @@ int is_exit_status_bad() {
 		printf("%d\n",nemu_state.state);
 		printf("%d, %d", NEMU_QUIT, NEMU_STOP);
 //		printf("!good = %d, good = %d\n", !good, good);
+printf("end%d\n", NEMU_END);
   return !good;
 }
