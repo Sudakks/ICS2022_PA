@@ -83,7 +83,7 @@ static int cmd_help(char *args) {
   else {
     for (i = 0; i < NR_CMD; i ++) {
       if (strcmp(arg, cmd_table[i].name) == 0) {
-        printf("%s - %s\n", cmd_table[i].name, cmd_table[i].description);
+        printf("%s - %s\n", cmd_table[i].name, cmd_table[i].description);//compare whether it's the same order
         return 0;
       }
     }
