@@ -106,7 +106,7 @@ void sdb_mainloop() {
     char *str_end = str + strlen(str);
 
     /* extract the first token as the command */
-    char *cmd = strtok(str, " ");
+    char *cmd = strtok(str, " ");//the first use of strtok
     if (cmd == NULL) { continue; }
 
     /* treat the remaining string as the arguments,
