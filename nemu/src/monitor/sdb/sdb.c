@@ -19,6 +19,7 @@
 #include <readline/history.h>
 #include "sdb.h"
 #include <cpu/cpu.h>
+#include <stdlib.h>
 static int is_batch_mode = false;
 
 void init_regex();
@@ -58,13 +59,15 @@ static int cmd_help(char *args);
 static int cmd_si(char *args)
 {
 	int time;
-	sscanf(args, "%d", &time);
-	printf("time = %d\n", time);
-	if(time == -1)
-	{printf("xx\n");
-      time = 1;
+	char *arg = strtok(NULL, " ");
+  if (arg == NULL) {
+		time = 1;
+	}
+	else
+	{
+		time = atoi(arg); 
 		}
-	printf("now time = %d\n", time);
+	printf("time = %d\n", time);
 //parse the times cpu should execute
 	cpu_exec(time);
 	return 0;
