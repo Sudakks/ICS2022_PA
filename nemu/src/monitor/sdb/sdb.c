@@ -59,8 +59,9 @@ static int cmd_si(char *args)
 {
 	int time;
 	sscanf(args, "%d", &time);
+	printf("time = %d\n", time);
 	if(time == -1)
-	{
+	{printf("xx\n");
       time = 1;
 		}
 	printf("now time = %d\n", time);
