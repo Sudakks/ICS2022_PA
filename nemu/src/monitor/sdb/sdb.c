@@ -18,12 +18,12 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "sdb.h"
-
+#include <cpu/cpu.h>
 static int is_batch_mode = false;
 
 void init_regex();
 void init_wp_pool();
-
+#define EOF (-1)
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
   static char *line_read = NULL;
@@ -54,6 +54,20 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 
+
+static int cmd_si(char *args)
+{
+	int time;
+	sscanf(args, "%d", &time);
+	if(time == -1)
+	{
+      time = 1;
+		}
+	printf("now time = %d\n", time);
+//parse the times cpu should execute
+	cpu_exec(time);
+	return 0;
+}
 static struct {
   const char *name;
   const char *description;
@@ -62,7 +76,7 @@ static struct {
   { "help", "Display information about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
-
+  { "si", "Excute step by step", cmd_si},
   /* TODO: Add more commands */
 
 };
