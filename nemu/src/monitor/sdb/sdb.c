@@ -20,7 +20,9 @@
 #include "sdb.h"
 #include <cpu/cpu.h>
 #include <stdlib.h>
+#include <memory/paddr.h>
 static int is_batch_mode = false;
+word_t paddr_read(paddr_t addr, int len);
 
 void init_regex();
 void init_wp_pool();
@@ -82,9 +84,30 @@ static int cmd_info(char *args){
 		}
 	else{
 		//print the watchpoints
+		/*TODO: add new function?*/
 		}
 		return 0;
 }
+
+
+static int cmd_x(char *args){
+	char *arg = strtok(NULL, " ");
+	if(arg == NULL)
+		return 0;
+	int time = atoi(arg);
+	char *arg = strtok(NULL, " ");
+	if(arg == NULL)
+		return 0;
+	paddr_t addr;
+	sscanf(*arg, "%x", &addr);
+	int len = 4;
+	for(int i = 1; i <= time; i++)
+	{
+		printf("%u\n", word_t paddr_read(addr, len));
+	}
+	return 0;
+}
+
 
 static struct {
   const char *name;
@@ -96,6 +119,7 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
   { "si", "Excute step by step", cmd_si},
 	{ "info", "print the information of registers and the watchpoints", cmd_info},
+	{ "x", "scan the memory", cmd_x},
   /* TODO: Add more commands */
 
 };
