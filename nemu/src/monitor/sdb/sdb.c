@@ -103,8 +103,8 @@ char *arg = strtok(NULL, " ");
 	int len = 4;
 	for(int i = 1; i <= time; i++)
 	{
-		printf("%X %X\n", addr, paddr_read(addr, len));
-		addr += 1;
+		printf("%#X %#X\n", addr, paddr_read(addr, len));
+		addr += 4;
 	}
 	return 0;
 }
