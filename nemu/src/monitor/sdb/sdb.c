@@ -91,15 +91,15 @@ static int cmd_info(char *args){
 
 
 static int cmd_x(char *args){
-	char *arg = strtok(NULL, " ");
+	*arg = strtok(NULL, " ");
 	if(arg == NULL)
 		return 0;
 	int time = atoi(arg);
-	char *arg = strtok(NULL, " ");
+	*arg = strtok(NULL, " ");
 	if(arg == NULL)
 		return 0;
 	paddr_t addr;
-	sscanf(*arg, "%x", &addr);
+	sscanf(arg, "%x", &addr);
 	int len = 4;
 	for(int i = 1; i <= time; i++)
 	{
