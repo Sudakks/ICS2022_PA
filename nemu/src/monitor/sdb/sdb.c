@@ -91,11 +91,11 @@ static int cmd_info(char *args){
 
 
 static int cmd_x(char *args){
-	*arg = strtok(NULL, " ");
+char *arg = strtok(NULL, " ");
 	if(arg == NULL)
 		return 0;
 	int time = atoi(arg);
-	*arg = strtok(NULL, " ");
+	arg = strtok(NULL, " ");
 	if(arg == NULL)
 		return 0;
 	paddr_t addr;
