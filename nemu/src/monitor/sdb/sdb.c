@@ -69,7 +69,7 @@ static int cmd_si(char *args)
 	{
 		time = atoi(arg); 
 		}
-	printf("time = %d\n", time);
+//	printf("time = %d\n", time);
 //parse the times cpu should execute
 	cpu_exec(time);
 	return 0;
