@@ -80,7 +80,12 @@ static bool make_token(char *e) {
   int position = 0;
   int i;
   regmatch_t pmatch;
-
+while(e[position] != '\n')
+{
+	printf("%c", e[position]);
+	position++;
+	}
+position = 0;
   nr_token = 0;
 printf("start-----------\n");
   while (e[position] != '\0') {
@@ -144,6 +149,7 @@ printf("end-------------\n");
 word_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
+		printf("failure!\n");
     return 0;
   }
 
