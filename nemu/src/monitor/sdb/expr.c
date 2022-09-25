@@ -80,11 +80,12 @@ static bool make_token(char *e) {
   int position = 0;
   int i;
   regmatch_t pmatch;
-while(e[position] != '\n')
+while(e[position] != '\0')
 {
 	printf("%c", e[position]);
 	position++;
 	}
+	printf("\n");
 position = 0;
   nr_token = 0;
 printf("start-----------\n");
