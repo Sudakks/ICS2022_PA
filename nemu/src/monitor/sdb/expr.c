@@ -19,7 +19,7 @@
  * Type 'man regex' for more information about POSIX regex functions.
  */
 #include <regex.h>
-
+#include <vector>
 enum {
   TK_NOTYPE = 256, TK_EQ,
 	NUM_TYPE = '0',
@@ -48,7 +48,7 @@ static struct rule {
 };
 
 #define NR_REGEX ARRLEN(rules)
-
+map <int, int> priority[NR_REGEX + 1];
 static regex_t re[NR_REGEX] = {};
 
 /* Rules are used for many times.
@@ -130,16 +130,122 @@ static bool make_token(char *e) {
   return true;
 }
 
+bool check_parentheses(int sta, int end){
+	if(tokens[sta].type != '(' || tokens[end].type != ')')
+		return false;//need both sides are parentheses
+	//if meet (, then plus 1, else minus 1
+	//if not in the end, the res <= 0, false	
+	int res = 0;
+	for(int i = sta; i <= end; i++){
+		int now_type = tokens[i].type;
+		switch(now_type):
+			case '(':
+			  res += 1;
+				break;
+			case ')':
+				res -= 1;
+				break;
+			default:
+				break;
+		if(i == end && res == 0)
+			return true;
+		else if(res == 0)
+			return false;
+	}
+}
+
+
+word_t find_main_op(int sta, int end){
+	//TODO:priority!
+	//find the main op
+	//pr1: the op doesn't exist between a couple of parentheses,so the left can't be (, the right can't be )
+	//pr2: should be operation
+	//pr3: lower priority
+	//pr4: the same prority, the most right side
+	vector<int> ops;//to store the valid operations
+	for(int i = sta; i <= end; i++)
+	{
+		//pr2
+		if(tokens[i].type == NUM_TYPE)
+			continue;
+		//pr1
+		int l = i - 1; 
+		int r = i + 1;
+		bool valid = true;
+		while(valid == true && l >= sta)
+		{
+			if(tokens[l].type == '(')
+				valid = false;
+			l--;
+		}
+		while(valid == true && r <= end)
+		{
+			if(tokens[r].type == ')')
+				valid = false;
+			r++;
+		}
+		if(valid == true)
+		{
+			ops.push_back(i);
+		}
+	}
+	if(ops.size() == 0)
+		return -1;//invalid
+	//record the priority and location
+	pair<int, int> valid_op(-1, 100);//location and priority
+	int res = 0;
+	for(auto it = ops.begin(); it != ops.end(); it++)
+	{
+			int type = tokens[*i].type;
+			int pri = priority.find(type).second;
+			int loc = *it;
+			if(pri < valid_op.second || (pri == valid_op.second && loc > valid_op.first))
+			{
+				valid_op.first = loc;
+				valid_op.second = pri;
+				res = *it;
+			}
+	}
+	return res;
+}
+
+word_t eval(int sta, int end){
+	if(sta > end)
+		return -1;//bad expressions
+	else if(sta == end)
+	{
+		//single token, just return
+		int sin_token;
+		sscanf(tokens[sta].str, "%d", &sin_token);
+//		printf("sin_token = %d\n", sin_token);
+	}
+	else if(check_parentheses(sta, end) == true)
+	{
+		return	eval(sta + 1, end - 1);
+	}
+	else
+	{
+		int op = find_main_op(sta, end);
+		assert(op != -1);
+		char op_type = tokens[op].type;
+		switch(op_type):
+			case '+':	return eval(sta, op - 1) + eval(op + 1, end);
+			case '-': return eval(sta, op - 1) - eval(op + 1, end);
+			case '*': return eval(sta, op - 1) * eval(op + 1, end);
+			case '/': return eval(sta, op - 1) / eval(op + 1, end);
+			default: assert(0);
+	}
+
+}
 
 word_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
-		printf("failure!\n");
     return 0;
   }
-printf("yes\n");
   /* TODO: Insert codes to evaluate the expression. */
 //  TODO();
-
+	eval(0, nr_token - 1);
+//now start to calculate the result
   return 0;
 }
