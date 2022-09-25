@@ -39,12 +39,12 @@ static struct rule {
   {" +", TK_NOTYPE},    // spaces
 	{"\\(", '('},
 	{"\\)", ')'},
-	{"[0-9]*", NUM_TYPE},
 	{"\\*", '*'},
 	{"/", '/'},
   {"\\+", '+'},         // plus
 	{"-", '-'},
   {"==", TK_EQ},        // equal
+	{"[0-9]*", NUM_TYPE},
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -83,9 +83,9 @@ static bool make_token(char *e) {
  nr_token = 0;
 printf("start-----------\n");
 int num = 1;
-  while (e[position] != '\0') {
     /* Try all rules one by one. */
-		printf("num = %d\n", num);
+		while(e[position] != '\0'){
+		printf("num = %d\n", num);	
 		num+=1;
     for (i = 0; i < NR_REGEX; i ++) {
       if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
@@ -130,6 +130,7 @@ int num = 1;
 						}//it means the number is greater than the maximum number
 					}
 				}*/
+				printf("type = %d\n", rules[i].token_type);
         switch (rules[i].token_type) {
 					case TK_NOTYPE:	
 							break;
