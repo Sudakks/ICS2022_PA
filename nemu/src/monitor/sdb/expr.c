@@ -109,10 +109,11 @@ printf("start-----------\n");
 				{
 					int idx = 0;
 					int temp_len = substr_len;
+					printf("len = %d\n", temp_len);
 					while(temp_len--)
 					{
-						tokens[nr_token].str[idx] = *(substr_start + idx);
-						printf("%c", *(substr_start + idx));
+						tokens[nr_token].str[idx] = e[position + idx - substr_len];
+						printf("%c", e[position + idx - substr_len]);
 						idx++;
 						if(idx > 32)
 						{
