@@ -44,7 +44,7 @@ static struct rule {
   {"\\+", '+'},         // plus
 	{"-", '-'},
   {"==", TK_EQ},        // equal
-	{"\b[0-9]*\b", NUM_TYPE},
+	{"[0-9]*", NUM_TYPE},
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -112,6 +112,7 @@ static bool make_token(char *e) {
 							nr_token += 1;
 							break;
 					default:
+							printf("no store\n");
 							tokens[nr_token].type = rules[i].token_type;
 							nr_token += 1;
 							break;
