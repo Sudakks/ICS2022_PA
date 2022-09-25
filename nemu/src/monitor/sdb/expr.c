@@ -101,7 +101,7 @@ int num = 1;
          * of tokens, some extra actions should be performed.
          */
 				//add the recognized token into array
-				printf("type = %d\n", rules[i].token_type);
+//				printf("type = %d\n", rules[i].token_type);
 		/*		if(rules[i].token_type == TK_NOTYPE)
 				{
 					continue;
@@ -124,9 +124,19 @@ int num = 1;
 						}//it means the number is greater than the maximum number
 					}
 				}*/
-				nr_token += 1;
         switch (rules[i].token_type) {
-          default: TODO();
+					case TK_NOTYPE:	
+							break;
+					case NUM_TYPE:
+							tokens[nr_token].type = rules[i].token_type;
+							strncpy(tokens[nr_token].str, substr_start, substr_len);
+							nr_token += 1;
+							break;
+					default:
+							tokens[nr_token].type = rules[i].token_type;
+							nr_token += 1;
+							break;
+//          default: TODO();
         }
 
         break;
