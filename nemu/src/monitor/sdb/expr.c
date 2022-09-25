@@ -139,7 +139,7 @@ word_t expr(char *e, bool *success) {
   }
 printf("yes\n");
   /* TODO: Insert codes to evaluate the expression. */
-  TODO();
+//  TODO();
 
   return 0;
 }
