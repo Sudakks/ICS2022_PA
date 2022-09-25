@@ -22,7 +22,7 @@
 
 enum {
   TK_NOTYPE = 256, TK_EQ,
-
+	NUM_TYPE = '0',
   /* TODO: Add more token types */
 
 };
@@ -37,6 +37,12 @@ static struct rule {
    */
 
   {" +", TK_NOTYPE},    // spaces
+	{"\\(", '('},
+	{"\\)", ')'},
+	{"\\d*", NUM_TYPE},
+	{"\\*", '*'},
+	{"/", '/'},
+	{"-", '-'},
   {"\\+", '+'},         // plus
   {"==", TK_EQ},        // equal
 };
@@ -76,7 +82,7 @@ static bool make_token(char *e) {
   regmatch_t pmatch;
 
   nr_token = 0;
-
+printf("start-----------\n");
   while (e[position] != '\0') {
     /* Try all rules one by one. */
     for (i = 0; i < NR_REGEX; i ++) {
@@ -93,7 +99,29 @@ static bool make_token(char *e) {
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
-
+				//add the recognized token into array
+				if(rules[i].token_type == TK_NOTYPE)
+				{
+					continue;
+				}
+				tokens[nr_token].type = rules[i].token_type;
+				if(rules[i].token_type == NUM_TYPE)
+				{
+					int idx = 0;
+					int temp_len = substr_len;
+					while(temp_len--)
+					{
+						tokens[nr_token].str[idx] = *(substr_start + idx);
+						printf("%c", *(substr_start + idx));
+						idx++;
+						if(idx > 32)
+						{
+							printf("invalid input number!\n");
+							return false;
+						}//it means the number is greater than the maximum number
+					}
+				}
+				nr_token += 1;
         switch (rules[i].token_type) {
           default: TODO();
         }
@@ -107,7 +135,7 @@ static bool make_token(char *e) {
       return false;
     }
   }
-
+printf("end-------------\n");
   return true;
 }
 
