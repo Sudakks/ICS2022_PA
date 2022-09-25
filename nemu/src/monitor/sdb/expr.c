@@ -80,14 +80,7 @@ static bool make_token(char *e) {
   int position = 0;
   int i;
   regmatch_t pmatch;
-while(e[position] != '\0')
-{
-	printf("%c", e[position]);
-	position++;
-	}
-	printf("\n");
-position = 0;
-  nr_token = 0;
+ nr_token = 0;
 printf("start-----------\n");
   while (e[position] != '\0') {
     /* Try all rules one by one. */
@@ -106,6 +99,7 @@ printf("start-----------\n");
          * of tokens, some extra actions should be performed.
          */
 				//add the recognized token into array
+				printf("type = %d\n", rules[i].token_type);
 				if(rules[i].token_type == TK_NOTYPE)
 				{
 					continue;
