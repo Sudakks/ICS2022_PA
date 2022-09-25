@@ -39,7 +39,7 @@ static struct rule {
   {" +", TK_NOTYPE},    // spaces
 	{"\\(", '('},
 	{"\\)", ')'},
-	{"\\d*", NUM_TYPE},
+	{"[0-9]*", NUM_TYPE},
 	{"\\*", '*'},
 	{"/", '/'},
 	{"-", '-'},
@@ -90,7 +90,7 @@ printf("start-----------\n");
         char *substr_start = e + position;
         int substr_len = pmatch.rm_eo;
 
-        Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
+      Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
             i, rules[i].regex, position, substr_len, substr_len, substr_start);
 
         position += substr_len;
