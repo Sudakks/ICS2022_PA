@@ -80,13 +80,9 @@ static bool make_token(char *e) {
   int position = 0;
   int i;
   regmatch_t pmatch;
- nr_token = 0;
-printf("start-----------\n");
-int num = 1;
+  nr_token = 0;
     /* Try all rules one by one. */
 		while(e[position] != '\0'){
-		printf("num = %d\n", num);	
-		num+=1;
     for (i = 0; i < NR_REGEX; i ++) {
       if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
         char *substr_start = e + position;
@@ -107,30 +103,6 @@ int num = 1;
          * of tokens, some extra actions should be performed.
          */
 				//add the recognized token into array
-//				printf("type = %d\n", rules[i].token_type);
-		/*		if(rules[i].token_type == TK_NOTYPE)
-				{
-					continue;
-				}
-				tokens[nr_token].type = rules[i].token_type;
-				if(rules[i].token_type == NUM_TYPE)
-				{
-					int idx = 0;
-					int temp_len = substr_len;
-					printf("len = %d\n", temp_len);
-					while(temp_len--)
-					{
-						tokens[nr_token].str[idx] = e[position + idx - substr_len];
-						printf("%c", e[position + idx - substr_len]);
-						idx++;
-						if(idx > 32)
-						{
-							printf("invalid input number!\n");
-							return false;
-						}//it means the number is greater than the maximum number
-					}
-				}*/
-				printf("type = %d\n", rules[i].token_type);
         switch (rules[i].token_type) {
 					case TK_NOTYPE:	
 							break;
@@ -145,7 +117,6 @@ int num = 1;
 							break;
 //          default: TODO();
         }
-
         break;
       }
     }
@@ -155,7 +126,6 @@ int num = 1;
       return false;
     }
   }
-printf("end-------------\n");
   return true;
 }
 
