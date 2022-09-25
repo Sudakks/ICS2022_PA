@@ -23,8 +23,8 @@
 #include <memory/paddr.h>
 static int is_batch_mode = false;
 word_t paddr_read(paddr_t addr, int len);
-
 void init_regex();
+word_t expr(char *e, bool *success);
 void init_wp_pool();
 #define EOF (-1)
 /* We use the `readline' library to provide more flexibility to read from stdin. */
@@ -109,6 +109,15 @@ char *arg = strtok(NULL, " ");
 	return 0;
 }
 
+static int cmd_p(char *args){
+	char *arg = strtok(NULL, " ");
+	if(arg == NULL)
+		return 0;
+	bool *suc = malloc(sizeof(bool));
+	*suc = true;
+	expr(arg, suc);
+	return 0;
+}
 
 static struct {
   const char *name;
@@ -121,6 +130,7 @@ static struct {
   { "si", "Excute step by step", cmd_si},
 	{ "info", "print the information of registers and the watchpoints", cmd_info},
 	{ "x", "scan the memory", cmd_x},
+	{ "p", "calculate the given expression", cmd_p},
   /* TODO: Add more commands */
 
 };
