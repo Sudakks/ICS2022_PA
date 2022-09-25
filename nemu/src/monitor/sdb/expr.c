@@ -86,6 +86,7 @@ int num = 1;
   while (e[position] != '\0') {
     /* Try all rules one by one. */
 		printf("num = %d\n", num);
+		num+=1;
     for (i = 0; i < NR_REGEX; i ++) {
       if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
         char *substr_start = e + position;
@@ -95,6 +96,11 @@ int num = 1;
             i, rules[i].regex, position, substr_len, substr_len, substr_start);
 
         position += substr_len;
+        if(substr_len > 32 && rules[i].token_type == NUM_TYPE)
+				{
+					printf("invalid input number!\n");
+					return false;
+				}//it means the number is greater than the maximum number
 
         /* TODO: Now a new token is recognized with rules[i]. Add codes
          * to record the token in the array `tokens'. For certain types
