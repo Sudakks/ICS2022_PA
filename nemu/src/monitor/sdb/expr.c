@@ -102,7 +102,7 @@ int num = 1;
          */
 				//add the recognized token into array
 				printf("type = %d\n", rules[i].token_type);
-				if(rules[i].token_type == TK_NOTYPE)
+		/*		if(rules[i].token_type == TK_NOTYPE)
 				{
 					continue;
 				}
@@ -123,7 +123,7 @@ int num = 1;
 							return false;
 						}//it means the number is greater than the maximum number
 					}
-				}
+				}*/
 				nr_token += 1;
         switch (rules[i].token_type) {
           default: TODO();
