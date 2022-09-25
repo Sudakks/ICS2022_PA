@@ -137,7 +137,7 @@ word_t expr(char *e, bool *success) {
 		printf("failure!\n");
     return 0;
   }
-
+printf("yes\n");
   /* TODO: Insert codes to evaluate the expression. */
   TODO();
 
