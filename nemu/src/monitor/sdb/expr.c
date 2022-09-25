@@ -39,10 +39,10 @@ static struct rule {
   {" +", TK_NOTYPE},    // spaces
 	{"\\(", '('},
 	{"\\)", ')'},
-  {"\\+", '+'},         // plus
 	{"[0-9]*", NUM_TYPE},
 	{"\\*", '*'},
 	{"/", '/'},
+  {"\\+", '+'},         // plus
 	{"-", '-'},
   {"==", TK_EQ},        // equal
 };
@@ -84,6 +84,7 @@ static bool make_token(char *e) {
 printf("start-----------\n");
   while (e[position] != '\0') {
     /* Try all rules one by one. */
+		i = 0;
     for (i = 0; i < NR_REGEX; i ++) {
       if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
         char *substr_start = e + position;
