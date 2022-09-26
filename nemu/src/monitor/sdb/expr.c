@@ -171,7 +171,8 @@ word_t find_main_op(int sta, int end){
 	for(int i = sta; i <= end; i++)
 	{
 		//pr2
-		if(tokens[i].pri <= 0)
+		printf("invalid:%d\n", tokens[i].type);
+		if(tokens[i].pri <= 0 || tokens[i].type == NUM_TYPE)
 			continue;
 		//pr1
 		int l = i - 1; 
@@ -195,7 +196,7 @@ word_t find_main_op(int sta, int end){
 		}
 		if(valid == true)
 		{
-//			printf("valid in loc %d\n", i);
+			printf("valid in loc %d\n", i);
 			ops[num] = i;
 			num++;
 		}
@@ -219,6 +220,7 @@ word_t find_main_op(int sta, int end){
 			}
 	}
 //	printf("res = %d\n", res);
+	printf("main op's type = %d\n", tokens[res].type);
 	return res;
 }
 
@@ -246,7 +248,6 @@ word_t eval(int sta, int end){
 		int op = find_main_op(sta, end);
 		if(op == -1)
 		{
-	//		printf("here change\n");
 			valid_expr = false;
 			return 0;
 		}
