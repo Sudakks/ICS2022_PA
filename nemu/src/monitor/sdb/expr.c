@@ -179,6 +179,8 @@ word_t find_main_op(int sta, int end){
 		bool valid = true;
 		while(valid == true && l >= sta)
 		{
+			if(tokens[l].type == ')')
+				break;
 			if(tokens[l].type == '(')
 				valid = false;
 			if(valid == false)
@@ -187,6 +189,8 @@ word_t find_main_op(int sta, int end){
 		}
 		while(valid == true && r <= end)
 		{
+			if(tokens[r].type == '(')
+				break;
 			if(tokens[r].type == ')')
 				valid = false;
 			if(valid == false)
@@ -199,6 +203,7 @@ word_t find_main_op(int sta, int end){
 			num++;
 		}
 	}
+	printf("num = %d\n", num);
 	if(num == 0)
 		return -1;//invalid
 	//record the priority and location
@@ -216,6 +221,7 @@ word_t find_main_op(int sta, int end){
 				max_loc = loc;
 			}
 	}
+	printf("res = %d\n", res);
 	return res;
 }
 
