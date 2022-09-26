@@ -195,6 +195,7 @@ word_t find_main_op(int sta, int end){
 		}
 		if(valid == true)
 		{
+			printf("valid in loc %d\n", i);
 			ops[num] = i;
 			num++;
 		}
