@@ -171,7 +171,7 @@ word_t find_main_op(int sta, int end){
 	for(int i = sta; i <= end; i++)
 	{
 		//pr2
-		if(tokens[i].type == NUM_TYPE)
+		if(tokens[i].pri <= 0)
 			continue;
 		//pr1
 		int l = i - 1; 
