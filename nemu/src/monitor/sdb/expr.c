@@ -183,8 +183,6 @@ word_t find_main_op(int sta, int end){
 				break;
 			if(tokens[l].type == '(')
 				valid = false;
-			if(valid == false)
-				printf("type now = %d\n", tokens[l].type);
 			l--;
 		}
 		while(valid == true && r <= end)
@@ -193,8 +191,6 @@ word_t find_main_op(int sta, int end){
 				break;
 			if(tokens[r].type == ')')
 				valid = false;
-			if(valid == false)
-				printf("type now = %d\n", tokens[r].type);
 			r++;
 		}
 		if(valid == true)
@@ -241,6 +237,7 @@ word_t eval(int sta, int end){
 	}
 	else if(check_parentheses(sta, end) == true)
 	{
+		printf("true in %d, %d\n", sta, end);
 		return	eval(sta + 1, end - 1);
 	}
 	else
