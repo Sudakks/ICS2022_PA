@@ -181,12 +181,16 @@ word_t find_main_op(int sta, int end){
 		{
 			if(tokens[l].type == '(')
 				valid = false;
+			if(valid == false)
+				printf("type now = %d\n", tokens[l].type);
 			l--;
 		}
 		while(valid == true && r <= end)
 		{
 			if(tokens[r].type == ')')
 				valid = false;
+			if(valid == false)
+				printf("type now = %d\n", tokens[r].type);
 			r++;
 		}
 		if(valid == true)
