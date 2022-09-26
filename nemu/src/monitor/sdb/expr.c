@@ -195,12 +195,12 @@ word_t find_main_op(int sta, int end){
 		}
 		if(valid == true)
 		{
-			printf("valid in loc %d\n", i);
+//			printf("valid in loc %d\n", i);
 			ops[num] = i;
 			num++;
 		}
 	}
-	printf("num = %d\n", num);
+//	printf("num = %d\n", num);
 	if(num == 0)
 		return -1;//invalid
 	//record the priority and location
@@ -218,7 +218,7 @@ word_t find_main_op(int sta, int end){
 				max_loc = loc;
 			}
 	}
-	printf("res = %d\n", res);
+//	printf("res = %d\n", res);
 	return res;
 }
 
@@ -238,7 +238,7 @@ word_t eval(int sta, int end){
 	}
 	else if(check_parentheses(sta, end) == true)
 	{
-		printf("true in %d, %d\n", sta, end);
+//		printf("true in %d, %d\n", sta, end);
 		return	eval(sta + 1, end - 1);
 	}
 	else
@@ -246,15 +246,15 @@ word_t eval(int sta, int end){
 		int op = find_main_op(sta, end);
 		if(op == -1)
 		{
-			printf("here change\n");
+	//		printf("here change\n");
 			valid_expr = false;
 			return 0;
 		}
 		int op_type = tokens[op].type;
-		printf("area1: %d, %d\narea2: %d, %d\n", sta, op-1,op+1,end);
+	//	printf("area1: %d, %d\narea2: %d, %d\n", sta, op-1,op+1,end);
 		word_t val1 = eval(sta, op - 1);
 		word_t val2 = eval(op + 1, end);
-		printf("val1 = %u, val2 = %u\n", val1, val2);
+	//	printf("val1 = %u, val2 = %u\n", val1, val2);
 		switch(op_type){
 			case '+':	return val1 + val2;
 			case '-': return val1 - val2;
@@ -275,7 +275,7 @@ word_t expr(char *e, bool *success) {
 	*success = true;
 //now start to calculate the result
   word_t ans = eval(0, nr_token - 1);
-	printf("valid_expr = %d\n", valid_expr);
+//	printf("valid_expr = %d\n", valid_expr);
 	if(valid_expr == true)
 	{
 		printf("final ans = %d\n", ans);
