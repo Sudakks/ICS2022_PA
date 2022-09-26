@@ -255,6 +255,7 @@ word_t eval(int sta, int end){
 		word_t val1 = eval(sta, op - 1);
 		word_t val2 = eval(op + 1, end);
 	//	printf("val1 = %u, val2 = %u\n", val1, val2);
+	printf("type now = %d\n", op_type);
 		switch(op_type){
 			case '+':	return val1 + val2;
 			case '-': return val1 - val2;
