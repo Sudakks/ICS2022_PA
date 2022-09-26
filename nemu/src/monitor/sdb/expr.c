@@ -263,7 +263,10 @@ word_t expr(char *e, bool *success) {
 //now start to calculate the result
   word_t ans = eval(0, nr_token - 1);
 	if(valid_expr == true)
+	{
+		printf("final ans = %d\n", ans);
 		return ans;
+	}
 	else 
 		return 0;
 }
