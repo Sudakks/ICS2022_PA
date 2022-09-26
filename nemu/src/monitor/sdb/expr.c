@@ -19,17 +19,18 @@
  * Type 'man regex' for more information about POSIX regex functions.
  */
 #include <regex.h>
-#include <vector>
 enum {
   TK_NOTYPE = 256, TK_EQ,
 	NUM_TYPE = '0',
   /* TODO: Add more token types */
 
 };
+bool valid_expr = true;
 
 static struct rule {
   const char *regex;
   int token_type;
+	int pri;//priority
 } rules[] = {
 
   /* TODO: Add more rules.
@@ -37,18 +38,17 @@ static struct rule {
    */
 
   {" +", TK_NOTYPE},    // spaces
-	{"\\(", '('},
-	{"\\)", ')'},
-	{"\\*", '*'},
-	{"/", '/'},
-  {"\\+", '+'},         // plus
-	{"-", '-'},
-  {"==", TK_EQ},        // equal
-	{"[0-9]*", NUM_TYPE},
+	{"\\(", '(', 0},
+	{"\\)", ')', 0},
+	{"\\*", '*', 1},
+	{"/", '/', 1},
+  {"\\+", '+', 2},         // plus
+	{"-", '-', 2},
+  {"==", TK_EQ, 0},        // equal
+	{"[0-9]*", NUM_TYPE, 0},
 };
 
 #define NR_REGEX ARRLEN(rules)
-map <int, int> priority[NR_REGEX + 1];
 static regex_t re[NR_REGEX] = {};
 
 /* Rules are used for many times.
@@ -71,6 +71,7 @@ void init_regex() {
 typedef struct token {
   int type;
   char str[32];
+	int pri;//priority
 } Token;
 
 static Token tokens[32] __attribute__((used)) = {};
@@ -112,7 +113,8 @@ static bool make_token(char *e) {
 							nr_token += 1;
 							break;
 					default:
-							printf("no store\n");
+							if(rules[i].pri > 0)
+								tokens[nr_token].pri = rules[i].pri;
 							tokens[nr_token].type = rules[i].token_type;
 							nr_token += 1;
 							break;
@@ -138,7 +140,7 @@ bool check_parentheses(int sta, int end){
 	int res = 0;
 	for(int i = sta; i <= end; i++){
 		int now_type = tokens[i].type;
-		switch(now_type):
+		switch(now_type){
 			case '(':
 			  res += 1;
 				break;
@@ -147,11 +149,13 @@ bool check_parentheses(int sta, int end){
 				break;
 			default:
 				break;
+		}
 		if(i == end && res == 0)
 			return true;
 		else if(res == 0)
 			return false;
 	}
+	return false;
 }
 
 
@@ -162,7 +166,8 @@ word_t find_main_op(int sta, int end){
 	//pr2: should be operation
 	//pr3: lower priority
 	//pr4: the same prority, the most right side
-	vector<int> ops;//to store the valid operations
+	int ops[NR_REGEX];//to store the valid operations
+	int num = 0;
 	for(int i = sta; i <= end; i++)
 	{
 		//pr2
@@ -186,38 +191,43 @@ word_t find_main_op(int sta, int end){
 		}
 		if(valid == true)
 		{
-			ops.push_back(i);
+			ops[num] = i;
+			num++;
 		}
 	}
-	if(ops.size() == 0)
+	if(num == 0)
 		return -1;//invalid
 	//record the priority and location
-	pair<int, int> valid_op(-1, 100);//location and priority
 	int res = 0;
-	for(auto it = ops.begin(); it != ops.end(); it++)
+	int min_pri = 100;
+	int max_loc = -1;
+	for(int it = 0; it < num; it++)
 	{
-			int type = tokens[*i].type;
-			int pri = priority.find(type).second;
-			int loc = *it;
-			if(pri < valid_op.second || (pri == valid_op.second && loc > valid_op.first))
+			int loc = ops[it];
+			int pri = tokens[loc].pri; 
+			if(pri < min_pri || (pri == min_pri && loc > max_loc))
 			{
-				valid_op.first = loc;
-				valid_op.second = pri;
-				res = *it;
+				res = loc;
+				min_pri = pri;
+				max_loc = loc;
 			}
 	}
 	return res;
 }
 
 word_t eval(int sta, int end){
+	//need to identify the invalid expr
 	if(sta > end)
-		return -1;//bad expressions
+	{
+		return 0;//bad expressions
+	}
 	else if(sta == end)
 	{
 		//single token, just return
 		int sin_token;
 		sscanf(tokens[sta].str, "%d", &sin_token);
-//		printf("sin_token = %d\n", sin_token);
+		return sin_token;
+	//printf("sin_token = %d\n", sin_token);
 	}
 	else if(check_parentheses(sta, end) == true)
 	{
@@ -226,16 +236,20 @@ word_t eval(int sta, int end){
 	else
 	{
 		int op = find_main_op(sta, end);
-		assert(op != -1);
-		char op_type = tokens[op].type;
-		switch(op_type):
+		if(op == -1)
+		{
+			valid_expr = false;
+			return 0;
+		}
+		int op_type = tokens[op].type;
+		switch(op_type){
 			case '+':	return eval(sta, op - 1) + eval(op + 1, end);
 			case '-': return eval(sta, op - 1) - eval(op + 1, end);
 			case '*': return eval(sta, op - 1) * eval(op + 1, end);
 			case '/': return eval(sta, op - 1) / eval(op + 1, end);
 			default: assert(0);
+			}
 	}
-
 }
 
 word_t expr(char *e, bool *success) {
@@ -245,7 +259,11 @@ word_t expr(char *e, bool *success) {
   }
   /* TODO: Insert codes to evaluate the expression. */
 //  TODO();
-	eval(0, nr_token - 1);
+	*success = true;
 //now start to calculate the result
-  return 0;
+  word_t ans = eval(0, nr_token - 1);
+	if(valid_expr == true)
+		return ans;
+	else 
+		return 0;
 }
