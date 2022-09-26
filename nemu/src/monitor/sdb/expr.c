@@ -238,6 +238,7 @@ word_t eval(int sta, int end){
 		int op = find_main_op(sta, end);
 		if(op == -1)
 		{
+			printf("here change\n");
 			valid_expr = false;
 			return 0;
 		}
@@ -262,6 +263,7 @@ word_t expr(char *e, bool *success) {
 	*success = true;
 //now start to calculate the result
   word_t ans = eval(0, nr_token - 1);
+	printf("valid_expr = %d\n", valid_expr);
 	if(valid_expr == true)
 	{
 		printf("final ans = %d\n", ans);
