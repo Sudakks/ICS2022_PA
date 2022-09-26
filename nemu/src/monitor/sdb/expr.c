@@ -251,6 +251,7 @@ word_t eval(int sta, int end){
 			return 0;
 		}
 		int op_type = tokens[op].type;
+		printf("area1: %d, %d\narea2: %d, %d\n", sta, op-1,op+1,end);
 		word_t val1 = eval(sta, op - 1);
 		word_t val2 = eval(op + 1, end);
 		printf("val1 = %u, val2 = %u\n", val1, val2);
