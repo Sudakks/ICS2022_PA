@@ -32,7 +32,6 @@ static struct rule {
   int token_type;
 	int pri;//priority
 } rules[] = {
-
   /* TODO: Add more rules.
    * Pay attention to the precedence level of different rules.
    */
@@ -73,6 +72,7 @@ typedef struct token {
   char str[32];
 	int pri;//priority
 } Token;
+//need to clear the whole arrays
 
 static Token tokens[32] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
@@ -108,6 +108,7 @@ static bool make_token(char *e) {
 					case TK_NOTYPE:	
 							break;
 					case NUM_TYPE:
+							memset(tokens[nr_token].str, 0, 32);//clear length is 32
 							tokens[nr_token].type = rules[i].token_type;
 							strncpy(tokens[nr_token].str, substr_start, substr_len);
 							nr_token += 1;
