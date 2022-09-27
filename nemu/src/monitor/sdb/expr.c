@@ -136,6 +136,7 @@ static bool make_token(char *e) {
 bool check_parentheses(int sta, int end){
 	//to check all parentheses are valid or not
 	bool ans_return = true;
+	printf("sta = %d, end = %d\n", sta, end);
 	if(tokens[sta].type != '(' || tokens[end].type != ')')
 		ans_return = false;//need both sides are parentheses
 	//if meet (, then plus 1, else minus 1
@@ -151,23 +152,23 @@ bool check_parentheses(int sta, int end){
 				if(i == end)
 				{
 					valid_expr = false;
-			//		printf("HERE B\n");
+					printf("HERE B\n");
 				}
 				else
-				{
+			 	{
 					int next_type = tokens[i+1].type;
 					if(next_type == ')' || next_type == '+' || next_type == '-' || next_type == '*' || next_type == '/')
-					{
+			 		{
 						valid_expr = false;
-					//	printf("HERE C\n");
+						printf("HERE C\n");
 					}
 					if(i != sta && tokens[i-1].type == NUM_TYPE)
-					{
+					 {
 						valid_expr = false;
-//						printf("HERE D\n");
+						printf("HERE D\n");
 					}
 				}
-				/*
+ 				/*
 					不能是结尾，后面不能跟运算符，前面不能有数字
 				*/
 				break;
@@ -176,22 +177,22 @@ bool check_parentheses(int sta, int end){
 				if(i == sta)
 				{
 					valid_expr = false;
-		//			printf("HERE E\n");
-				}
+					printf("HERE E\n");
+ 				}
 				else
 				{
 					int last_type = tokens[i-1].type;
 					if(last_type == '(' || last_type == '+' || last_type == '-' || last_type == '*' || last_type == '/')
 					{
 						valid_expr = false;
-					//	printf("HERE F\n");
-					}
+						printf("HERE F\n");
+		 			}
 					if(i != end && (tokens[i+1].type == NUM_TYPE || tokens[i+1].type == '(' || res < 0))
 					{
 						valid_expr = false;
-//						 printf("HERE G\n");
-					}
-				}
+  					printf("HERE G\n");
+					 }
+		 		}
 				break;
 			default:
 				break;
@@ -200,7 +201,7 @@ bool check_parentheses(int sta, int end){
 		if((i != end && res == 0) || valid_expr == false || (i == end && res != 0))
 		{
 			ans_return = false;
-		}
+		} 
 	}
 //	printf("check: %d, from %d to %d\n", ans_return, sta, end);
 	return ans_return;
@@ -230,7 +231,7 @@ word_t find_main_op(int sta, int end){
 			{
 				valid_expr = false;//双目运算符不能是开头
 				break;
-			}
+		 	}
 			else
 			{
 				int last_type = tokens[i-1].type;
@@ -239,14 +240,14 @@ word_t find_main_op(int sta, int end){
 				{
 					valid_expr = false;
 					break;
-				}
+		 		}
 				if(next_type != NUM_TYPE && next_type != '(')
-				{
+		 		{
 					valid_expr = false;
 					break;
 				}
-			}//左右两边要么是括号，要么是数字
-		}
+		 	}//左右两边要么是括号，要么是数字
+		 }
 		//pr1
 		int l = i - 1; 
 		int r = i + 1;
@@ -258,7 +259,7 @@ word_t find_main_op(int sta, int end){
 			if(tokens[l].type == '(')
 				valid = false;
 			l--;
-		}
+		} 
 		while(valid == true && r <= end)
 		{
 			if(tokens[r].type == '(')
@@ -266,20 +267,20 @@ word_t find_main_op(int sta, int end){
 			if(tokens[r].type == ')')
 				valid = false;
 			r++;
-		}
+		} 
 		if(valid == true)
 		{
 		//	printf("valid in loc %d\n", i);
 			ops[num] = i;
 			num++;
 		}
-	}
+	} 
 //	printf("num = %d\n", num);
 	if(num == 0)
 	{
 		printf("wrong from %d to %d\n", sta, end);
 		return -1;//invalid
-	}
+	} 
 	//record the priority and location
 	int res = 0;
 	int min_pri = 100;
@@ -327,7 +328,7 @@ word_t eval(int sta, int end){
 		if(op == -1)
 		{
 			valid_expr = false;
-		//	printf("HERE A\n");
+			printf("HERE A\n");
 			return 0;
 		}
 		int op_type = tokens[op].type;
