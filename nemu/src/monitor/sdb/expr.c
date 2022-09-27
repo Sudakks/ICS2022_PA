@@ -146,6 +146,7 @@ bool check_parentheses(int sta, int end){
 		int now_type = tokens[i].type;
 		if(now_type != '(' || now_type != ')')
 			continue;
+		printf("reah\n");
 		switch(now_type){
 			case '(':
 			  res += 1;
@@ -197,6 +198,7 @@ bool check_parentheses(int sta, int end){
 			default:
 				break;
 		}
+		printf("reach here\n");
 		printf("now = %d, res = %d\n", i, res);
 		if((i != end && res == 0) || valid_expr == false || (i == end && res != 0))
 		{
