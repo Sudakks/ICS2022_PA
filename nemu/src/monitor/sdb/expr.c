@@ -25,7 +25,7 @@ enum {
   /* TODO: Add more token types */
 
 };
-bool valid_expr = true;
+bool valid_expr = true;//stands whether the expression is valid
 
 static struct rule {
   const char *regex;
@@ -134,46 +134,77 @@ static bool make_token(char *e) {
 }
 
 bool check_parentheses(int sta, int end){
+	//to check all parentheses are valid or not
+	bool ans_return = true;
 	if(tokens[sta].type != '(' || tokens[end].type != ')')
-		return false;//need both sides are parentheses
+		ans_return = false;//need both sides are parentheses
 	//if meet (, then plus 1, else minus 1
 	//if not in the end, the res <= 0, false	
 	int res = 0;
-	for(int i = sta; i <= end; i++){
+	for(int i = sta; i <= end && valid_expr == true && ans_return == true; i++){
 		int now_type = tokens[i].type;
 		switch(now_type){
 			case '(':
 			  res += 1;
+				if(i == end)
+					valid_expr = false;
+				else
+				{
+					int next_type = tokens[i+1].type;
+					if(next_type == ')' || next_type == '+' || next_type == '-' || next_type == '*' || next_type == '/')
+						valid_expr = false;
+					if(i != sta && tokens[i-1].type == NUM_TYPE)
+						valid_expr = false;
+				}
+				/*
+					不能是结尾，后面不能跟运算符，前面不能有数字
+				*/
 				break;
 			case ')':
 				res -= 1;
+				if(i == sta)
+					valid_expr = false;
+				else
+				{
+					int last_type = tokens[i-1].type;
+					if(last_type == '(' || last_type == '+' || last_type == '-' || last_type == '*' || last_type == '/')
+						valid_expr = false;
+					if(i != end && (token[i+1].type == NUM_TYPE || tokens[i+1].type == '(' || res < 0))
+						valid_expr = false;
+				}
 				break;
 			default:
 				break;
 		}
-		if(i == end && res == 0)
-			return true;
-		else if(res == 0)
-			return false;
+		if((i != end && res == 0) || valid_expr == false || (i == end && res != 0))
+			ans_return = false;
 	}
-	return false;
+	return ans_return;
 }
 
 
 word_t find_main_op(int sta, int end){
 	//TODO:priority!
 	//find the main op
+	//如果检测出来没有合法的表达式，那么就invalid
 	//pr1: the op doesn't exist between a couple of parentheses,so the left can't be (, the right can't be )
 	//pr2: should be operation
 	//pr3: lower priority
 	//pr4: the same prority, the most right side
 	int ops[NR_REGEX];//to store the valid operations
 	int num = 0;
-	for(int i = sta; i <= end; i++)
+	for(int i = sta; i <= end && valid_expr == true; i++)
 	{
 		//pr2
 		if(tokens[i].pri <= 0 || tokens[i].type == NUM_TYPE)
 			continue;
+		//judge whether it's valid
+		if(tokens[i].type == '+' || tokens[i].type == '-' || tokens[i].type == '*' || tokens[i].type == '/') 
+		{
+			if(i == sta || i == end || tokens[i-1].type != NUM_TYPE || tokens[i+1].type != NUM_TYPE)
+				vaild_expr = false;//如果前后没有操作数，那么此时不合法（但是要考虑到单目运算符）
+				continue;
+		}
 		//pr1
 		int l = i - 1; 
 		int r = i + 1;
@@ -226,6 +257,8 @@ word_t find_main_op(int sta, int end){
 
 word_t eval(int sta, int end){
 	//need to identify the invalid expr
+	if(valid_expr == false)
+		return 0;
 	if(sta > end)
 	{
 		return 0;//bad expressions
@@ -284,5 +317,8 @@ word_t expr(char *e, bool *success) {
 		return ans;
 	}
 	else 
+	{
+		printf("Invalid expression, can't calculate!\n");
 		return 0;
+	}
 }
