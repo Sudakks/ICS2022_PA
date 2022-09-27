@@ -134,10 +134,11 @@ static bool make_token(char *e) {
 }
 
 bool check_parentheses(int sta, int end){
+	printf("------------\n");
 	//to check all parentheses are valid or not
 	bool ans_return = true;
 	if(tokens[sta].type != '(' || tokens[end].type != ')')
-		ans_return = false;//need both sides are parentheses
+		ans_return = false, printf("impossible\n");//need both sides are parentheses
 	//if meet (, then plus 1, else minus 1
 	//if not in the end, the res <= 0, false	
 	int res = 0;
@@ -149,14 +150,23 @@ bool check_parentheses(int sta, int end){
 			case '(':
 			  res += 1;
 				if(i == end)
-					valid_expr = false, printf("HERE B\n");
+				{
+					valid_expr = false;
+					printf("HERE B\n");
+				}
 				else
 				{
 					int next_type = tokens[i+1].type;
 					if(next_type == ')' || next_type == '+' || next_type == '-' || next_type == '*' || next_type == '/')
-						valid_expr = false, printf("HERE C\n");
+					{
+						valid_expr = false;
+						printf("HERE C\n");
+					}
 					if(i != sta && tokens[i-1].type == NUM_TYPE)
-						valid_expr = false, printf("HERE D\n");
+					{
+						valid_expr = false;
+						printf("HERE D\n");
+					}
 				}
 				/*
 					不能是结尾，后面不能跟运算符，前面不能有数字
@@ -165,21 +175,34 @@ bool check_parentheses(int sta, int end){
 			case ')':
 				res -= 1;
 				if(i == sta)
-					valid_expr = false, printf("HERE E\n");
+				{
+					valid_expr = false;
+					printf("HERE E\n");
+				}
 				else
 				{
 					int last_type = tokens[i-1].type;
 					if(last_type == '(' || last_type == '+' || last_type == '-' || last_type == '*' || last_type == '/')
-						valid_expr = false, printf("HERE F\n");
+					{
+						valid_expr = false;
+						printf("HERE F\n");
+					}
 					if(i != end && (tokens[i+1].type == NUM_TYPE || tokens[i+1].type == '(' || res < 0))
-						valid_expr = false, printf("HERE G\n");
+					{
+						valid_expr = false;
+						 printf("HERE G\n");
+					}
 				}
 				break;
 			default:
 				break;
 		}
+		printf("now = %d, res = %d\n", i, res);
 		if((i != end && res == 0) || valid_expr == false || (i == end && res != 0))
-			ans_return = false, printf("Yes here, valid_expr == %d\n", valid_expr);
+		{
+			ans_return = false;
+			printf("Yes here, valid_expr == %d\n", valid_expr);
+		}
 	}
 	printf("check: %d, from %d to %d\n", ans_return, sta, end);
 	return ans_return;
