@@ -136,7 +136,6 @@ static bool make_token(char *e) {
 bool check_parentheses(int sta, int end){
 	//to check all parentheses are valid or not
 	bool ans_return = true;
-	printf("sta = %d, end = %d\n", sta, end);
 	if(tokens[sta].type != '(' || tokens[end].type != ')')
 		ans_return = false;//need both sides are parentheses
 	//if meet (, then plus 1, else minus 1
@@ -198,12 +197,13 @@ bool check_parentheses(int sta, int end){
 				break;
 		}
 		//printf("now = %d, res = %d\n", i, res);
+			printf("i = %d, res = %d, valid_expr = %d\n", i, res, valid_expr);
 		if((i != end && res == 0) || valid_expr == false || (i == end && res != 0))
 		{
 			ans_return = false;
 		} 
 	}
-//	printf("check: %d, from %d to %d\n", ans_return, sta, end);
+	printf("check: %d, from %d to %d\n", ans_return, sta, end);
 	return ans_return;
 }
 
