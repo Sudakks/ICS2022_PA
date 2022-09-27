@@ -169,7 +169,7 @@ bool check_parentheses(int sta, int end){
 					int last_type = tokens[i-1].type;
 					if(last_type == '(' || last_type == '+' || last_type == '-' || last_type == '*' || last_type == '/')
 						valid_expr = false;
-					if(i != end && (token[i+1].type == NUM_TYPE || tokens[i+1].type == '(' || res < 0))
+					if(i != end && (tokens[i+1].type == NUM_TYPE || tokens[i+1].type == '(' || res < 0))
 						valid_expr = false;
 				}
 				break;
@@ -202,8 +202,10 @@ word_t find_main_op(int sta, int end){
 		if(tokens[i].type == '+' || tokens[i].type == '-' || tokens[i].type == '*' || tokens[i].type == '/') 
 		{
 			if(i == sta || i == end || tokens[i-1].type != NUM_TYPE || tokens[i+1].type != NUM_TYPE)
-				vaild_expr = false;//如果前后没有操作数，那么此时不合法（但是要考虑到单目运算符）
+			{
+				valid_expr = false;//如果前后没有操作数，那么此时不合法（但是要考虑到单目运算符）
 				continue;
+			}
 		}
 		//pr1
 		int l = i - 1; 
