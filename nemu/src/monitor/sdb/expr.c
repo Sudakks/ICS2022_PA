@@ -232,6 +232,7 @@ word_t find_main_op(int sta, int end){
 		{
 			if(i == sta || i == end)
 			{
+				printf("3333333\n");
 				valid_expr = false;//双目运算符不能是开头
 				break;
 			}
@@ -242,11 +243,13 @@ word_t find_main_op(int sta, int end){
 				if(last_type != NUM_TYPE || last_type != ')')
 				{
 					valid_expr = false;
+					printf("11111\n");
 					break;
 				}
-				else if(next_type != NUM_TYPE || next_type != '(')
+				if(next_type != NUM_TYPE || next_type != '(')
 				{
 					valid_expr = false;
+					printf("222222\n");
 					break;
 				}
 			}//左右两边要么是括号，要么是数字
@@ -255,12 +258,13 @@ word_t find_main_op(int sta, int end){
 		int l = i - 1; 
 		int r = i + 1;
 		bool valid = true;
+		printf("now idx = %d\n", i);
 		while(valid == true && l >= sta)
 		{
 			if(tokens[l].type == ')')
 				break;
 			if(tokens[l].type == '(')
-				valid = false;
+				valid = false, printf("qq\n");
 			l--;
 		}
 		while(valid == true && r <= end)
@@ -268,9 +272,10 @@ word_t find_main_op(int sta, int end){
 			if(tokens[r].type == '(')
 				break;
 			if(tokens[r].type == ')')
-				valid = false;
+				valid = false, printf("ww\n");
 			r++;
 		}
+		printf("idx = %d, valid = %d\n", i, valid);
 		if(valid == true)
 		{
 		//	printf("valid in loc %d\n", i);
