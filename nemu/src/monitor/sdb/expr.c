@@ -138,7 +138,7 @@ bool check_parentheses(int sta, int end){
 	//to check all parentheses are valid or not
 	bool ans_return = true;
 	if(tokens[sta].type != '(' || tokens[end].type != ')')
-		ans_return = false, printf("impossible\n");//need both sides are parentheses
+		ans_return = false;//need both sides are parentheses
 	//if meet (, then plus 1, else minus 1
 	//if not in the end, the res <= 0, false	
 	int res = 0;
@@ -221,18 +221,20 @@ word_t find_main_op(int sta, int end){
 	//pr4: the same prority, the most right side
 	int ops[NR_REGEX];//to store the valid operations
 	int num = 0;
+	printf("start from %d to %d, the valid_expr = %d\n", sta, end, valid_expr);
 	for(int i = sta; i <= end && valid_expr == true; i++)
 	{
 		//pr2
-		if(tokens[i].pri <= 0 || tokens[i].type == NUM_TYPE)
+		if(tokens[i].pri <= 0)
 			continue;
 		//judge whether it's valid
 		if(tokens[i].type == '+' || tokens[i].type == '-' || tokens[i].type == '*' || tokens[i].type == '/') 
 		{
 			if(i == sta || i == end || tokens[i-1].type != NUM_TYPE || tokens[i+1].type != NUM_TYPE)
 			{
+				printf("operator wrong\n");
 				valid_expr = false;//如果前后没有操作数，那么此时不合法（但是要考虑到单目运算符）
-				continue;
+				break;
 			}
 		}
 		//pr1
@@ -264,7 +266,10 @@ word_t find_main_op(int sta, int end){
 	}
 //	printf("num = %d\n", num);
 	if(num == 0)
+	{
+		printf("wrong from %d to %d\n", sta, end);
 		return -1;//invalid
+	}
 	//record the priority and location
 	int res = 0;
 	int min_pri = 100;
