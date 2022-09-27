@@ -143,18 +143,20 @@ bool check_parentheses(int sta, int end){
 	int res = 0;
 	for(int i = sta; i <= end && valid_expr == true && ans_return == true; i++){
 		int now_type = tokens[i].type;
+		if(now_type != '(' || now_type != ')')
+			continue;
 		switch(now_type){
 			case '(':
 			  res += 1;
 				if(i == end)
-					valid_expr = false;
+					valid_expr = false, printf("HERE B\n");
 				else
 				{
 					int next_type = tokens[i+1].type;
 					if(next_type == ')' || next_type == '+' || next_type == '-' || next_type == '*' || next_type == '/')
-						valid_expr = false;
+						valid_expr = false, printf("HERE C\n");
 					if(i != sta && tokens[i-1].type == NUM_TYPE)
-						valid_expr = false;
+						valid_expr = false, printf("HERE D\n");
 				}
 				/*
 					不能是结尾，后面不能跟运算符，前面不能有数字
@@ -163,14 +165,14 @@ bool check_parentheses(int sta, int end){
 			case ')':
 				res -= 1;
 				if(i == sta)
-					valid_expr = false;
+					valid_expr = false, printf("HERE E\n");
 				else
 				{
 					int last_type = tokens[i-1].type;
 					if(last_type == '(' || last_type == '+' || last_type == '-' || last_type == '*' || last_type == '/')
-						valid_expr = false;
+						valid_expr = false, printf("HERE F\n");
 					if(i != end && (tokens[i+1].type == NUM_TYPE || tokens[i+1].type == '(' || res < 0))
-						valid_expr = false;
+						valid_expr = false, printf("HERE G\n");
 				}
 				break;
 			default:
@@ -179,6 +181,7 @@ bool check_parentheses(int sta, int end){
 		if((i != end && res == 0) || valid_expr == false || (i == end && res != 0))
 			ans_return = false;
 	}
+	printf("cant check, start from %d to %d\n", sta, end);
 	return ans_return;
 }
 
@@ -284,6 +287,7 @@ word_t eval(int sta, int end){
 		if(op == -1)
 		{
 			valid_expr = false;
+			printf("HERE A\n");
 			return 0;
 		}
 		int op_type = tokens[op].type;
