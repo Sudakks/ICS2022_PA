@@ -134,7 +134,6 @@ static bool make_token(char *e) {
 }
 
 bool check_parentheses(int sta, int end){
-	printf("------------\n");
 	//to check all parentheses are valid or not
 	bool ans_return = true;
 	if(tokens[sta].type != '(' || tokens[end].type != ')')
@@ -146,14 +145,13 @@ bool check_parentheses(int sta, int end){
 		int now_type = tokens[i].type;
 		if(now_type != '(' || now_type != ')')
 			continue;
-		printf("reah\n");
 		switch(now_type){
 			case '(':
 			  res += 1;
 				if(i == end)
 				{
 					valid_expr = false;
-					printf("HERE B\n");
+			//		printf("HERE B\n");
 				}
 				else
 				{
@@ -161,12 +159,12 @@ bool check_parentheses(int sta, int end){
 					if(next_type == ')' || next_type == '+' || next_type == '-' || next_type == '*' || next_type == '/')
 					{
 						valid_expr = false;
-						printf("HERE C\n");
+					//	printf("HERE C\n");
 					}
 					if(i != sta && tokens[i-1].type == NUM_TYPE)
 					{
 						valid_expr = false;
-						printf("HERE D\n");
+//						printf("HERE D\n");
 					}
 				}
 				/*
@@ -178,7 +176,7 @@ bool check_parentheses(int sta, int end){
 				if(i == sta)
 				{
 					valid_expr = false;
-					printf("HERE E\n");
+		//			printf("HERE E\n");
 				}
 				else
 				{
@@ -186,27 +184,25 @@ bool check_parentheses(int sta, int end){
 					if(last_type == '(' || last_type == '+' || last_type == '-' || last_type == '*' || last_type == '/')
 					{
 						valid_expr = false;
-						printf("HERE F\n");
+					//	printf("HERE F\n");
 					}
 					if(i != end && (tokens[i+1].type == NUM_TYPE || tokens[i+1].type == '(' || res < 0))
 					{
 						valid_expr = false;
-						 printf("HERE G\n");
+//						 printf("HERE G\n");
 					}
 				}
 				break;
 			default:
 				break;
 		}
-		printf("reach here\n");
-		printf("now = %d, res = %d\n", i, res);
+		//printf("now = %d, res = %d\n", i, res);
 		if((i != end && res == 0) || valid_expr == false || (i == end && res != 0))
 		{
 			ans_return = false;
-			printf("Yes here, valid_expr == %d\n", valid_expr);
 		}
 	}
-	printf("check: %d, from %d to %d\n", ans_return, sta, end);
+//	printf("check: %d, from %d to %d\n", ans_return, sta, end);
 	return ans_return;
 }
 
@@ -221,7 +217,7 @@ word_t find_main_op(int sta, int end){
 	//pr4: the same prority, the most right side
 	int ops[NR_REGEX];//to store the valid operations
 	int num = 0;
-	printf("start from %d to %d, the valid_expr = %d\n", sta, end, valid_expr);
+//	printf("start from %d to %d, the valid_expr = %d\n", sta, end, valid_expr);
 	for(int i = sta; i <= end && valid_expr == true; i++)
 	{
 		//pr2
@@ -232,7 +228,6 @@ word_t find_main_op(int sta, int end){
 		{
 			if(i == sta || i == end)
 			{
-				printf("3333333\n");
 				valid_expr = false;//双目运算符不能是开头
 				break;
 			}
@@ -240,18 +235,14 @@ word_t find_main_op(int sta, int end){
 			{
 				int last_type = tokens[i-1].type;
 				int next_type = tokens[i+1].type;
-				printf("now i = %d, last = %d, next = %d\n", i, last_type, next_type);
-				printf("NUM_TYPE = %d\n", NUM_TYPE);
-				if(last_type != NUM_TYPE || last_type != ')')
+				if(last_type != NUM_TYPE && last_type != ')')
 				{
 					valid_expr = false;
-					printf("11111\n");
 					break;
 				}
-				if(next_type != NUM_TYPE || next_type != '(')
+				if(next_type != NUM_TYPE && next_type != '(')
 				{
 					valid_expr = false;
-					printf("222222\n");
 					break;
 				}
 			}//左右两边要么是括号，要么是数字
@@ -260,13 +251,12 @@ word_t find_main_op(int sta, int end){
 		int l = i - 1; 
 		int r = i + 1;
 		bool valid = true;
-		printf("now idx = %d\n", i);
 		while(valid == true && l >= sta)
 		{
 			if(tokens[l].type == ')')
 				break;
 			if(tokens[l].type == '(')
-				valid = false, printf("qq\n");
+				valid = false;
 			l--;
 		}
 		while(valid == true && r <= end)
@@ -274,10 +264,9 @@ word_t find_main_op(int sta, int end){
 			if(tokens[r].type == '(')
 				break;
 			if(tokens[r].type == ')')
-				valid = false, printf("ww\n");
+				valid = false;
 			r++;
 		}
-		printf("idx = %d, valid = %d\n", i, valid);
 		if(valid == true)
 		{
 		//	printf("valid in loc %d\n", i);
@@ -338,7 +327,7 @@ word_t eval(int sta, int end){
 		if(op == -1)
 		{
 			valid_expr = false;
-			printf("HERE A\n");
+		//	printf("HERE A\n");
 			return 0;
 		}
 		int op_type = tokens[op].type;
