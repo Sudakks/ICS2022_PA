@@ -141,7 +141,10 @@ bool check_parentheses(int sta, int end){
 	//if meet (, then plus 1, else minus 1
 	//if not in the end, the res <= 0, false	
 	int res = 0;
-	for(int i = sta; i <= end && valid_expr == true && ans_return == true; i++){
+	printf("yikaishi %d\n", ans_return);
+	for(int i = sta; i <= end && valid_expr == true; i++){
+		printf("now i = %d\n", i);
+		printf("i = %d, res = %d, valid_expr = %d\n", i, res, valid_expr);
 		int now_type = tokens[i].type;
 		if(now_type != '(' || now_type != ')')
 			continue;
@@ -196,8 +199,7 @@ bool check_parentheses(int sta, int end){
 			default:
 				break;
 		}
-		//printf("now = %d, res = %d\n", i, res);
-			printf("i = %d, res = %d, valid_expr = %d\n", i, res, valid_expr);
+		printf("reach!\n");
 		if((i != end && res == 0) || valid_expr == false || (i == end && res != 0))
 		{
 			ans_return = false;
