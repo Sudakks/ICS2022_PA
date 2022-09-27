@@ -232,6 +232,7 @@ word_t find_main_op(int sta, int end){
 		{
 			if(i == sta || i == end || tokens[i-1].type != NUM_TYPE || tokens[i+1].type != NUM_TYPE)
 			{
+				printf("i = %d, tokens[i-1].type = %d, tokens[i+1].type = %d\n", i, tokens[i-1].type, tokens[i+1].type);
 				printf("operator wrong\n");
 				valid_expr = false;//如果前后没有操作数，那么此时不合法（但是要考虑到单目运算符）
 				break;
