@@ -179,10 +179,9 @@ bool check_parentheses(int sta, int end){
 				break;
 		}
 		if((i != end && res == 0) || valid_expr == false || (i == end && res != 0))
-			ans_return = false;
+			ans_return = false, printf("Yes here, valid_expr == %d\n", valid_expr);
 	}
-	if(ans_return == false)
-	printf("cant check, start from %d to %d\n", sta, end);
+	printf("check: %d, from %d to %d\n", ans_return, sta, end);
 	return ans_return;
 }
 
