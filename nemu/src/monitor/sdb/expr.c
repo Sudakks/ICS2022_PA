@@ -240,6 +240,7 @@ word_t find_main_op(int sta, int end){
 			{
 				int last_type = tokens[i-1].type;
 				int next_type = tokens[i+1].type;
+				printf("now i = %d, last = %d, next = %d\n", i, last_type, next_type);
 				if(last_type != NUM_TYPE || last_type != ')')
 				{
 					valid_expr = false;
