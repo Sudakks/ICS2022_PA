@@ -143,10 +143,9 @@ bool check_parentheses(int sta, int end){
 	int res = 0;
 	printf("yikaishi %d\n", ans_return);
 	for(int i = sta; i <= end && valid_expr == true; i++){
-		printf("now i = %d\n", i);
 		printf("i = %d, res = %d, valid_expr = %d\n", i, res, valid_expr);
 		int now_type = tokens[i].type;
-		if(now_type != '(' || now_type != ')')
+		if(now_type != '(' && now_type != ')')
 			continue;
 		switch(now_type){
 			case '(':
