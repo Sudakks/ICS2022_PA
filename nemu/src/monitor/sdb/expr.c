@@ -230,13 +230,26 @@ word_t find_main_op(int sta, int end){
 		//judge whether it's valid
 		if(tokens[i].type == '+' || tokens[i].type == '-' || tokens[i].type == '*' || tokens[i].type == '/') 
 		{
-			if(i == sta || i == end || tokens[i-1].type != NUM_TYPE || tokens[i+1].type != NUM_TYPE || tokens[i-1].type != ')' || tokens[i+1].type != '(')
+			if(i == sta || i == end)
 			{
-				printf("i = %d, tokens[i-1].type = %d, tokens[i+1].type = %d\n", i, tokens[i-1].type, tokens[i+1].type);
-				printf("operator wrong\n");
-				valid_expr = false;//如果前后没有操作数(也可以是括号！)，那么此时不合法（但是要考虑到单目运算符）
+				valid_expr = false;//双目运算符不能是开头
 				break;
 			}
+			else
+			{
+				int last_type = tokens[i-1].type;
+				int next_type = tokens[i+1].type;
+				if(last_type != NUM_TYPE || last_type != ')')
+				{
+					valid_expr = false;
+					break;
+				}
+				else if(next_type != NUM_TYPE || next_type != '(')
+				{
+					valid_expr = false;
+					break;
+				}
+			}//左右两边要么是括号，要么是数字
 		}
 		//pr1
 		int l = i - 1; 
