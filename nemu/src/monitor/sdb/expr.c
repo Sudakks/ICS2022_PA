@@ -95,7 +95,7 @@ static bool make_token(char *e) {
         position += substr_len;
         if(substr_len > 32 && rules[i].token_type == NUM_TYPE)
 				{
-					printf("invalid input number!\n");
+					printf("Invalid input number! Length is exceeds 32\n");
 					return false;
 				}//it means the number is greater than the maximum number
 
@@ -172,7 +172,6 @@ word_t find_main_op(int sta, int end){
 	for(int i = sta; i <= end; i++)
 	{
 		//pr2
-		printf("invalid:%d\n", tokens[i].type);
 		if(tokens[i].pri <= 0 || tokens[i].type == NUM_TYPE)
 			continue;
 		//pr1
@@ -197,7 +196,7 @@ word_t find_main_op(int sta, int end){
 		}
 		if(valid == true)
 		{
-			printf("valid in loc %d\n", i);
+		//	printf("valid in loc %d\n", i);
 			ops[num] = i;
 			num++;
 		}
@@ -221,7 +220,7 @@ word_t find_main_op(int sta, int end){
 			}
 	}
 //	printf("res = %d\n", res);
-	printf("main op's type = %d\n", tokens[res].type);
+//	printf("main op's type = %d\n", tokens[res].type);
 	return res;
 }
 
@@ -256,8 +255,8 @@ word_t eval(int sta, int end){
 	//	printf("area1: %d, %d\narea2: %d, %d\n", sta, op-1,op+1,end);
 		word_t val1 = eval(sta, op - 1);
 		word_t val2 = eval(op + 1, end);
-		printf("val1 = %u, val2 = %u\n", val1, val2);
-	printf("type now = %d\n", op_type);
+	//	printf("val1 = %u, val2 = %u\n", val1, val2);
+	//	printf("type now = %d\n", op_type);
 		switch(op_type){
 			case '+':	return val1 + val2;
 			case '-': return val1 - val2;
