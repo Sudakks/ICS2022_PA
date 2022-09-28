@@ -117,8 +117,8 @@ static bool make_token(char *e) {
 							if(nr_token >= 2)
 								condition2 = (tokens[nr_token-1].type == '+' || tokens[nr_token-1].type == '-') && (tokens[nr_token-2].type == '+' || tokens[nr_token-2].type == '-');
 							else if(nr_token == 1)
-								condition1 = tokens[nr_token-1].type == '+' || tokens[nr_token+1].type == '-';
-							printf("c1 = %d, c2 = %d\n", condition1, condition2);
+								condition1 = tokens[nr_token-1].type == '+' || tokens[nr_token-1].type == '-';
+//							printf("c1 = %d, c2 = %d\n", condition1, condition2);
 							if(condition1 || condition2)
 							{
 									nr_token -= 1;
