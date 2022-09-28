@@ -122,7 +122,7 @@ static bool make_token(char *e) {
 							if(condition1 || condition2)
 							{
 									nr_token -= 1;
-									printf("要赋值的是:%d\n", tokens[nr_token].type);
+							//		printf("要赋值的是:%d\n", tokens[nr_token].type);
 									switch(tokens[nr_token].type){
 										case '+':
 											tokens[nr_token].str[0] = '+';
@@ -134,7 +134,7 @@ static bool make_token(char *e) {
 											assert(0);
 											break;
 								}
-									printf("nr_token = %d, fuhao = %d\n",nr_token, tokens[nr_token].str[0]);
+							//		printf("nr_token = %d, fuhao = %d\n",nr_token, tokens[nr_token].str[0]);
 									strncpy(tokens[nr_token].str+1, substr_start, substr_len);
 							}
 							else
@@ -142,10 +142,10 @@ static bool make_token(char *e) {
 								strncpy(tokens[nr_token].str, substr_start, substr_len);
 							}
 							tokens[nr_token].type = rules[i].token_type;
-							int num;
-							sscanf(tokens[nr_token].str, "%d", &num);
-							printf("single num = %d\n", num);
-			//				printf("now nr_token = %d\n", nr_token);
+							//int num;
+							//sscanf(tokens[nr_token].str, "%d", &num);
+							//printf("single num = %d\n", num);
+			        //printf("now nr_token = %d\n", nr_token);
 							tokens[nr_token].pri = rules[i].pri;
 							nr_token += 1;
 							break;
@@ -194,20 +194,20 @@ bool check_parentheses(int sta, int end){
 		//			printf("HERE B\n");
 				}
 				else
-			  	{
+				{
 					int next_type = tokens[i+1].type;
 					if(next_type == ')' || next_type == '+' || next_type == '-' || next_type == '*' || next_type == '/')
-			  		{
+		  		{
 						valid_expr = false;
-				//		printf("HERE C\n");
+						printf("HERE C\n");
 					}
 					if(i != sta && tokens[i-1].type == NUM_TYPE)
-					  {
+				  {
 						valid_expr = false;
-					//	printf("HERE D\n");
+						printf("HERE D\n");
 					}
 				}
- 				/* 
+ 				/*  
 					不能是结尾，后面不能跟运算符，前面不能有数字
 				*/
 				break;
@@ -216,20 +216,20 @@ bool check_parentheses(int sta, int end){
 				if(i == sta)
 				{
 					valid_expr = false;
-				//	printf("HERE E\n");
- 				} 
+					printf("HERE E\n");
+ 				}  
 				else
-				{ 
+				 { 
 					int last_type = tokens[i-1].type;
 					if(last_type == '(' || last_type == '+' || last_type == '-' || last_type == '*' || last_type == '/')
 					{
 						valid_expr = false;
-					//	printf("HERE F\n");
-		 			 }
+						printf("HERE F\n");
+		 		 	 }
 					if(i != end && (tokens[i+1].type == NUM_TYPE || tokens[i+1].type == '(' || res < 0))
-					{
+					 {
 						valid_expr = false;
-  				//	printf("HERE G\n");
+  					printf("HERE G\n");
 					 } 
 		 		}
 				break;
@@ -239,9 +239,9 @@ bool check_parentheses(int sta, int end){
 		if((i != end && res == 0) || valid_expr == false || (i == end && res != 0))
 	 	{
 			ans_return = false;
-		} 
+		}  
 	}
-//	printf("check: %d, from %d to %d\n", ans_return, sta, end);
+	printf("check: %d, from %d to %d\n", ans_return, sta, end);
 	return ans_return;
 }
 
@@ -361,12 +361,12 @@ word_t eval(int sta, int end){
 		return	eval(sta + 1, end - 1);
 	}
 	else
-	{
+	{ 
 		int op = find_main_op(sta, end);
 		if(op == -1)
-		{
+		 {
 			valid_expr = false;
-		//	printf("HERE A\n");
+			printf("HERE A\n");
 			return 0;
 		 }
 		int op_type = tokens[op].type;
