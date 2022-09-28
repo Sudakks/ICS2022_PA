@@ -14,7 +14,7 @@
 ***************************************************************************************/
 
 #include <isa.h>
-
+#include <assert.h>
 /* We use the POSIX regex functions to process regular expressions.
  * Type 'man regex' for more information about POSIX regex functions.
  */
@@ -126,8 +126,13 @@ static bool make_token(char *e) {
 									switch(tokens[nr_token].type){
 										case '+':
 											tokens[nr_token].str[0] = '+';
+											break;
 										case '-':
 											tokens[nr_token].str[0] = '-';
+											break;
+										default:
+											assert(0);
+											break;
 									printf("nr_token = %d, fuhao = %d\n",nr_token, tokens[nr_token].str[0]);
 									strncpy(tokens[nr_token].str+1, substr_start, substr_len);
 								}
