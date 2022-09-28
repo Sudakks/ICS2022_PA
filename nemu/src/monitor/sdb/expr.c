@@ -110,6 +110,7 @@ static bool make_token(char *e) {
 					case NUM_TYPE:
 							//判断前面是否带有符号
 							//若是第二个，然后前面是符号 or 前面有两个连续的符号，那么在读入的时候就填上符号
+							printf("start nr_token = %d\n", nr_token);
 							memset(tokens[nr_token].str, 0, 32);//clear length is 32
 							bool condition1 = false;
 							bool condition2 = false;
@@ -117,6 +118,7 @@ static bool make_token(char *e) {
 								condition2 = (tokens[nr_token-1].type == '+' || tokens[nr_token-1].type == '-') && (tokens[nr_token-2].type == '+' || tokens[nr_token-2].type == '-');
 							else if(nr_token == 1)
 								condition1 = tokens[nr_token-1].type == '+' || tokens[nr_token+1].type == '-';
+							printf("c1 = %d, c2 = %d\n", condition1, condition2);
 							if(condition1 || condition2)
 							{
 									nr_token -= 1;
@@ -134,6 +136,10 @@ static bool make_token(char *e) {
 								tokens[nr_token].type = rules[i].token_type;
 								strncpy(tokens[nr_token].str, substr_start, substr_len);
 							}
+							int num;
+							sscanf(tokens[nr_token].str, "%d", &num);
+							printf("single num = %d\n", num);
+							printf("now nr_token = %d\n", nr_token);
 							nr_token += 1;
 							break;
 					default:
