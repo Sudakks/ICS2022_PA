@@ -133,9 +133,9 @@ static bool make_token(char *e) {
 										default:
 											assert(0);
 											break;
+								}
 									printf("nr_token = %d, fuhao = %d\n",nr_token, tokens[nr_token].str[0]);
 									strncpy(tokens[nr_token].str+1, substr_start, substr_len);
-								}
 							}
 							else
 							{
