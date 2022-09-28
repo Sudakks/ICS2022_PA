@@ -127,7 +127,7 @@ static bool make_token(char *e) {
 											tokens[nr_token].str[0] = '+';
 										case '-':
 											tokens[nr_token].str[0] = '-';
-									tokens[nr_token].type = NUM_TYPE;
+									tokens[nr_token].type = rules[i].token_type;
 									strncpy(tokens[nr_token].str+1, substr_start, substr_len);
 								}
 							}
@@ -139,12 +139,12 @@ static bool make_token(char *e) {
 							int num;
 							sscanf(tokens[nr_token].str, "%d", &num);
 							printf("single num = %d\n", num);
-							printf("now nr_token = %d\n", nr_token);
+			//				printf("now nr_token = %d\n", nr_token);
+							tokens[nr_token].pri = rules[i].pri;
 							nr_token += 1;
 							break;
 					default:
-							if(rules[i].pri > 0)
-								tokens[nr_token].pri = rules[i].pri;
+							tokens[nr_token].pri = rules[i].pri;
 							tokens[nr_token].type = rules[i].token_type;
 							nr_token += 1;
 							break;
@@ -159,6 +159,10 @@ static bool make_token(char *e) {
       return false;
     }
   }
+	nr_token -= 1;
+	printf("nr_token = %d\n", nr_token);
+	for(int i = 0; i <= nr_token; i++)
+		printf("now type = %d\n", tokens[nr_token].type);
   return true;
 }
 
@@ -384,7 +388,7 @@ word_t expr(char *e, bool *success) {
 //  TODO();
 	*success = true;
 //now start to calculate the result
-  word_t ans = eval(0, nr_token - 1);
+  word_t ans = eval(0, nr_token);
 //	printf("valid_expr = %d\n", valid_expr);
 	if(valid_expr == true)
 	{
