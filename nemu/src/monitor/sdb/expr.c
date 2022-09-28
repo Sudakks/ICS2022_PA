@@ -122,6 +122,7 @@ static bool make_token(char *e) {
 							if(condition1 || condition2)
 							{
 									nr_token -= 1;
+									printf("要赋值的是:%d\n", tokens[nr_token].type);
 									switch(tokens[nr_token].type){
 										case '+':
 											tokens[nr_token].str[0] = '+';
