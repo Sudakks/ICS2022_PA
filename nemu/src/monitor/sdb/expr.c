@@ -95,7 +95,7 @@ static bool make_token(char *e) {
         position += substr_len;
         if(substr_len > 32 && rules[i].token_type == NUM_TYPE)
 				{
-					printf("Invalid input number! Length is exceeds 32\n");
+					printf("Invalid input number! Length exceeds 32\n");
 					return false;
 				}//it means the number is greater than the maximum number
 
@@ -108,9 +108,32 @@ static bool make_token(char *e) {
 					case TK_NOTYPE:	
 							break;
 					case NUM_TYPE:
+							//判断前面是否带有符号
+							//若是第二个，然后前面是符号 or 前面有两个连续的符号，那么在读入的时候就填上符号
 							memset(tokens[nr_token].str, 0, 32);//clear length is 32
-							tokens[nr_token].type = rules[i].token_type;
-							strncpy(tokens[nr_token].str, substr_start, substr_len);
+							bool condition1 = false;
+							bool condition2 = false;
+							if(nr_token >= 2)
+								condition2 = (tokens[nr_token-1].type == '+' || tokens[nr_token-1].type == '-') && (tokens[nr_token-2].type == '+' || tokens[nr_token-2].type == '-');
+							else if(nr_token == 1)
+								condition1 = tokens[nr_token-1].type == '+' || tokens[nr_token+1].type == '-';
+							if(condition1 || condition2)
+							{
+									nr_token -= 1;
+									switch(tokens[nr_token].type){
+										case '+':
+											tokens[nr_token].str[0] = '+';
+										case '-':
+											tokens[nr_token].str[0] = '-';
+									tokens[nr_token].type = NUM_TYPE;
+									strncpy(tokens[nr_token].str+1, substr_start, substr_len);
+								}
+							}
+							else
+							{
+								tokens[nr_token].type = rules[i].token_type;
+								strncpy(tokens[nr_token].str, substr_start, substr_len);
+							}
 							nr_token += 1;
 							break;
 					default:
@@ -141,35 +164,34 @@ bool check_parentheses(int sta, int end){
 	//if meet (, then plus 1, else minus 1
 	//if not in the end, the res <= 0, false	
 	int res = 0;
-	printf("yikaishi %d\n", ans_return);
 	for(int i = sta; i <= end && valid_expr == true; i++){
-		printf("i = %d, res = %d, valid_expr = %d\n", i, res, valid_expr);
+	//	printf("i = %d, res = %d, valid_expr = %d\n", i, res, valid_expr);
 		int now_type = tokens[i].type;
 		if(now_type != '(' && now_type != ')')
 			continue;
-		switch(now_type){
+		 switch(now_type){
 			case '(':
 			  res += 1;
 				if(i == end)
-				{
+		 		{
 					valid_expr = false;
-					printf("HERE B\n");
+		//			printf("HERE B\n");
 				}
 				else
-			 	{
+			  	{
 					int next_type = tokens[i+1].type;
 					if(next_type == ')' || next_type == '+' || next_type == '-' || next_type == '*' || next_type == '/')
-			 		{
+			  		{
 						valid_expr = false;
-						printf("HERE C\n");
+				//		printf("HERE C\n");
 					}
 					if(i != sta && tokens[i-1].type == NUM_TYPE)
-					 {
+					  {
 						valid_expr = false;
-						printf("HERE D\n");
+					//	printf("HERE D\n");
 					}
 				}
- 				/*
+ 				/* 
 					不能是结尾，后面不能跟运算符，前面不能有数字
 				*/
 				break;
@@ -178,33 +200,32 @@ bool check_parentheses(int sta, int end){
 				if(i == sta)
 				{
 					valid_expr = false;
-					printf("HERE E\n");
- 				}
+				//	printf("HERE E\n");
+ 				} 
 				else
-				{
+				{ 
 					int last_type = tokens[i-1].type;
 					if(last_type == '(' || last_type == '+' || last_type == '-' || last_type == '*' || last_type == '/')
 					{
 						valid_expr = false;
-						printf("HERE F\n");
-		 			}
+					//	printf("HERE F\n");
+		 			 }
 					if(i != end && (tokens[i+1].type == NUM_TYPE || tokens[i+1].type == '(' || res < 0))
 					{
 						valid_expr = false;
-  					printf("HERE G\n");
-					 }
+  				//	printf("HERE G\n");
+					 } 
 		 		}
 				break;
 			default:
 				break;
 		}
-		printf("reach!\n");
 		if((i != end && res == 0) || valid_expr == false || (i == end && res != 0))
-		{
+	 	{
 			ans_return = false;
 		} 
 	}
-	printf("check: %d, from %d to %d\n", ans_return, sta, end);
+//	printf("check: %d, from %d to %d\n", ans_return, sta, end);
 	return ans_return;
 }
 
@@ -227,18 +248,18 @@ word_t find_main_op(int sta, int end){
 			continue;
 		//judge whether it's valid
 		if(tokens[i].type == '+' || tokens[i].type == '-' || tokens[i].type == '*' || tokens[i].type == '/') 
-		{
+	 	{
 			if(i == sta || i == end)
-			{
+	 		{
 				valid_expr = false;//双目运算符不能是开头
 				break;
 		 	}
 			else
-			{
+	 		{
 				int last_type = tokens[i-1].type;
 				int next_type = tokens[i+1].type;
 				if(last_type != NUM_TYPE && last_type != ')')
-				{
+	 			{
 					valid_expr = false;
 					break;
 		 		}
@@ -246,7 +267,7 @@ word_t find_main_op(int sta, int end){
 		 		{
 					valid_expr = false;
 					break;
-				}
+	 			}
 		 	}//左右两边要么是括号，要么是数字
 		 }
 		//pr1
@@ -260,7 +281,7 @@ word_t find_main_op(int sta, int end){
 			if(tokens[l].type == '(')
 				valid = false;
 			l--;
-		} 
+	 	} 
 		while(valid == true && r <= end)
 		{
 			if(tokens[r].type == '(')
@@ -268,20 +289,20 @@ word_t find_main_op(int sta, int end){
 			if(tokens[r].type == ')')
 				valid = false;
 			r++;
-		} 
+	 	} 
 		if(valid == true)
-		{
+	 	{
 		//	printf("valid in loc %d\n", i);
 			ops[num] = i;
 			num++;
 		}
-	} 
+	 } 
 //	printf("num = %d\n", num);
 	if(num == 0)
 	{
-		printf("wrong from %d to %d\n", sta, end);
+	//	printf("wrong from %d to %d\n", sta, end);
 		return -1;//invalid
-	} 
+	}  
 	//record the priority and location
 	int res = 0;
 	int min_pri = 100;
@@ -295,8 +316,8 @@ word_t find_main_op(int sta, int end){
 				res = loc;
 				min_pri = pri;
 				max_loc = loc;
-			}
-	}
+		 	}
+	} 
 //	printf("res = %d\n", res);
 //	printf("main op's type = %d\n", tokens[res].type);
 	return res;
@@ -319,7 +340,7 @@ word_t eval(int sta, int end){
 	//printf("sin_token = %d\n", sin_token);
 	}
 	else if(check_parentheses(sta, end) == true)
-	{
+	{ 
 //		printf("true in %d, %d\n", sta, end);
 		return	eval(sta + 1, end - 1);
 	}
@@ -329,9 +350,9 @@ word_t eval(int sta, int end){
 		if(op == -1)
 		{
 			valid_expr = false;
-			printf("HERE A\n");
+		//	printf("HERE A\n");
 			return 0;
-		}
+		 }
 		int op_type = tokens[op].type;
 	//	printf("area1: %d, %d\narea2: %d, %d\n", sta, op-1,op+1,end);
 		word_t val1 = eval(sta, op - 1);
@@ -344,8 +365,8 @@ word_t eval(int sta, int end){
 			case '*': return val1 * val2;
 			case '/': return val1 / val2;
 			default: assert(0);
-			}
-	}
+			 }
+	} 
 }
 
 word_t expr(char *e, bool *success) {
