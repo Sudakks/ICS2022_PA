@@ -85,7 +85,7 @@ static bool make_token(char *e) {
     /* Try all rules one by one. */
 		while(e[position] != '\0'){
     for (i = 0; i < NR_REGEX; i ++) {
-      if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
+       if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
         char *substr_start = e + position;
         int substr_len = pmatch.rm_eo;
 
@@ -94,7 +94,7 @@ static bool make_token(char *e) {
 
         position += substr_len;
         if(substr_len > 32 && rules[i].token_type == NUM_TYPE)
-				{
+			 	{
 					printf("Invalid input number! Length exceeds 32\n");
 					return false;
 				}//it means the number is greater than the maximum number
@@ -104,7 +104,7 @@ static bool make_token(char *e) {
          * of tokens, some extra actions should be performed.
          */
 				//add the recognized token into array
-        switch (rules[i].token_type) {
+         switch (rules[i].token_type) {
 					case TK_NOTYPE:	
 							break;
 					case NUM_TYPE:
@@ -123,7 +123,7 @@ static bool make_token(char *e) {
 							{
 									nr_token -= 1;
 							//		printf("要赋值的是:%d\n", tokens[nr_token].type);
-									switch(tokens[nr_token].type){
+				 					switch(tokens[nr_token].type){
 										case '+':
 											tokens[nr_token].str[0] = '+';
 											break;
@@ -136,11 +136,11 @@ static bool make_token(char *e) {
 								}
 							//		printf("nr_token = %d, fuhao = %d\n",nr_token, tokens[nr_token].str[0]);
 									strncpy(tokens[nr_token].str+1, substr_start, substr_len);
-							}
+				 			}
 							else
 							{
 								strncpy(tokens[nr_token].str, substr_start, substr_len);
-							}
+				 			}
 							tokens[nr_token].type = rules[i].token_type;
 							//int num;
 							//sscanf(tokens[nr_token].str, "%d", &num);
@@ -158,17 +158,17 @@ static bool make_token(char *e) {
         }
         break;
       }
-    }
+     }
 
     if (i == NR_REGEX) {
       printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
       return false;
     }
-  }
+  } 
 	nr_token -= 1;
-	printf("nr_token = %d\n", nr_token);
-	for(int i = 0; i <= nr_token; i++)
-		printf("now type = %d\n", tokens[i].type);
+//	printf("nr_token = %d\n", nr_token);
+//	for(int i = 0; i <= nr_token; i++)
+	//	printf("now type = %d\n", tokens[i].type);
   return true;
 }
 
@@ -192,56 +192,56 @@ bool check_parentheses(int sta, int end){
 		 		{
 					valid_expr = false;
 		//			printf("HERE B\n");
-				}
+		 		}
 				else
-				{
+		 		{
 					int next_type = tokens[i+1].type;
 					if(next_type == ')' || next_type == '+' || next_type == '-' || next_type == '*' || next_type == '/')
-		  		{
+		   		{
 						valid_expr = false;
-						printf("HERE C\n");
+			//			printf("HERE C\n");
 					}
 					if(i != sta && tokens[i-1].type == NUM_TYPE)
-				  {
+				   {
 						valid_expr = false;
-						printf("HERE D\n");
+				//		printf("HERE D\n");
 					}
 				}
- 				/*  
+ 				/*   
 					不能是结尾，后面不能跟运算符，前面不能有数字
 				*/
 				break;
 			case ')':
 				res -= 1;
 				if(i == sta)
-				{
+				{ 
 					valid_expr = false;
-					printf("HERE E\n");
+				//	printf("HERE E\n");
  				}  
 				else
-				 { 
+				 {  
 					int last_type = tokens[i-1].type;
 					if(last_type == '(' || last_type == '+' || last_type == '-' || last_type == '*' || last_type == '/')
-					{
+					{ 
 						valid_expr = false;
-						printf("HERE F\n");
+					//	printf("HERE F\n");
 		 		 	 }
 					if(i != end && (tokens[i+1].type == NUM_TYPE || tokens[i+1].type == '(' || res < 0))
 					 {
 						valid_expr = false;
-  					printf("HERE G\n");
-					 } 
+  				//	printf("HERE G\n");
+					 }  
 		 		}
 				break;
 			default:
 				break;
-		}
+		 }
 		if((i != end && res == 0) || valid_expr == false || (i == end && res != 0))
-	 	{
+	 	{ 
 			ans_return = false;
 		}  
-	}
-	printf("check: %d, from %d to %d\n", ans_return, sta, end);
+	} 
+//	printf("check: %d, from %d to %d\n", ans_return, sta, end);
 	return ans_return;
 }
 
@@ -312,7 +312,7 @@ word_t find_main_op(int sta, int end){
 			ops[num] = i;
 			num++;
 		}
-	 } 
+	  } 
 //	printf("num = %d\n", num);
 	if(num == 0)
 	{
@@ -332,8 +332,8 @@ word_t find_main_op(int sta, int end){
 				res = loc;
 				min_pri = pri;
 				max_loc = loc;
-		 	}
-	} 
+		  	}
+	}  
 //	printf("res = %d\n", res);
 //	printf("main op's type = %d\n", tokens[res].type);
 	return res;
@@ -366,9 +366,9 @@ word_t eval(int sta, int end){
 		if(op == -1)
 		 {
 			valid_expr = false;
-			printf("HERE A\n");
+		//	printf("HERE A\n");
 			return 0;
-		 }
+		  }
 		int op_type = tokens[op].type;
 	//	printf("area1: %d, %d\narea2: %d, %d\n", sta, op-1,op+1,end);
 		word_t val1 = eval(sta, op - 1);
@@ -382,7 +382,7 @@ word_t eval(int sta, int end){
 			case '/': return val1 / val2;
 			default: assert(0);
 			 }
-	} 
+	}  
 }
 
 word_t expr(char *e, bool *success) {
