@@ -95,6 +95,8 @@ static bool make_token(char *e) {
 printf("len = %d\n", substr_len);
         position += substr_len;
 			printf("posi = %ca\n", e[position]);
+			if(e[position == '\0'])
+				printf("wrong\n");
         if(substr_len > 32 && rules[i].token_type == NUM_TYPE)
 			 	{
 					printf("Invalid input number! Length exceeds 32\n");
