@@ -260,10 +260,11 @@ word_t find_main_op(int sta, int end){
 		if(tokens[i].pri <= 0)
 			continue;
 		int now = tokens[i].type;
+		printf("now_type = %d\n", now);
 		//judge whether it's valid
-		if(now == '+' || now == '-' || now == '*' || now == '/' || now == SIN_MINUS) 
+		if(now == '+' || now == '-' || now == '*' || now == '/') 
 	 	{
-			if((i == sta || i == end) && now != SIN_MINUS)
+			if(i == sta || i == end)
 	 		{
 				valid_expr = false;//双目运算符不能是开头，但是可以是双目运算符
 				break;
@@ -283,7 +284,7 @@ word_t find_main_op(int sta, int end){
 					break;
 	 			}
 		 	}//左右两边要么是括号，要么是数字
-		 }
+		}
 		//pr1
 		int l = i - 1; 
 		int r = i + 1;
@@ -364,11 +365,11 @@ word_t eval(int sta, int end){
 		if(op == -1)
 	  {
 			valid_expr = false;
+	  	printf("area1: %d, %d\narea2: %d, %d\n", sta, op-1,op+1,end);
 	  	printf("HERE A\n");
 			return 0;
 		}
 		int op_type = tokens[op].type;
-		printf("area1: %d, %d\narea2: %d, %d\n", sta, op-1,op+1,end);
 		word_t val1 = eval(sta, op - 1);
 		word_t val2 = eval(op + 1, end);
 		printf("val1 = %u, val2 = %u\n", val1, val2);
