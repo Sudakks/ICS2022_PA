@@ -104,6 +104,7 @@ static bool make_token(char *e) {
          * of tokens, some extra actions should be performed.
          */
 				//add the recognized token into array
+				printf("now is what %d\n", rules[i].token_type);
          switch (rules[i].token_type) {
 					case TK_NOTYPE:	
 							break;
@@ -159,7 +160,6 @@ static bool make_token(char *e) {
         break;
       }
      }
-
     if (i == NR_REGEX) {
       printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
       return false;
