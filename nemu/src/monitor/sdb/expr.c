@@ -44,7 +44,7 @@ static struct rule {
   {"\\+", '+', 1},         // plus
 	{"-", '-', 1},
   {"==", TK_EQ, 0},        // equal
-	{"[0-9]*", NUM_TYPE, 0},
+	{"[0-9]+", NUM_TYPE, 0},
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -93,6 +93,7 @@ static bool make_token(char *e) {
       Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
             i, rules[i].regex, position, substr_len, substr_len, substr_start);
 
+printf("len = %d\n", substr_len);
         position += substr_len;
         if(substr_len > 32 && rules[i].token_type == NUM_TYPE)
 			 	{
