@@ -36,7 +36,7 @@ static struct rule {
    * Pay attention to the precedence level of different rules.
    */
 
-  {" +", TK_NOTYPE},    // spaces
+  {" +", TK_NOTYPE, 0},    // spaces
 	{"\\(", '(', 0},
 	{"\\)", ')', 0},
 	{"\\*", '*', 2},
@@ -390,6 +390,7 @@ word_t eval(int sta, int end){
 }
 
 word_t expr(char *e, bool *success) {
+	printf("3shi %c\n", e[2]);
   if (!make_token(e)) {
     *success = false;
 		printf("here\n");
