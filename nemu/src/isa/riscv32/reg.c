@@ -29,7 +29,7 @@ void isa_reg_display() {
 	for(int i = 0; i < len; i++)
 	{
 		printf("%s  %-16p  %u\n", regs[i], cpu.gpr+i, cpu.gpr[i]);
-		}
+	}
 }
 
 word_t isa_reg_str2val(const char *s, bool *success) {
