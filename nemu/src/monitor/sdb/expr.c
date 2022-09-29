@@ -356,7 +356,7 @@ word_t eval(int sta, int end){
 	} 
 	else if(check_parentheses(sta, end) == true)
 	{ 
-//		printf("true in %d, %d\n", sta, end);
+		printf("true in %d, %d\n", sta, end);
 		return	eval(sta + 1, end - 1);
 	} 
 	else
@@ -368,6 +368,7 @@ word_t eval(int sta, int end){
 	  	printf("HERE A\n");
 			return 0;
 		} 
+		printf("op = %d\n", op);
 	  printf("area1: %d, %d\narea2: %d, %d\n", sta, op-1,op+1,end);
 		int op_type = tokens[op].type;
 		word_t val1 = eval(sta, op - 1);
@@ -388,7 +389,6 @@ word_t eval(int sta, int end){
 word_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
-		printf("here\n");
     return 0;
   }
   /* TODO: Insert codes to evaluate the expression. */
