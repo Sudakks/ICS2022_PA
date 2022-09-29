@@ -326,7 +326,16 @@ word_t find_main_op(int sta, int end){
 	{  
 			int loc = ops[it];
 			int pri = tokens[loc].pri; 
-			if(pri < min_pri || (pri == min_pri && loc > max_loc))
+			if(tokens[loc].type == SIN_MINUS)
+			{
+				if(pri < min_pri)
+				{
+					res = loc;
+					min_pri = pri;
+					max_loc = loc;
+				}
+			}
+			else if(pri < min_pri || (pri == min_pri && loc > max_loc))
 		 	{
 				//printf("min_pri = %d, max_loc = %d\n", min_pri, max_loc);
 				//printf("loc = %d, pri = %d\n", loc, pri);
@@ -334,10 +343,6 @@ word_t find_main_op(int sta, int end){
 				min_pri = pri;
 				max_loc = loc;
 	   	}
-			if(sta == 1 && end == 4)
-			{ 
-				//printf("now res = %d\n", res);
-			}
 	}  
 //	printf("res = %d\n", res);
 //	printf("main op's type = %d\n", tokens[res].type);
