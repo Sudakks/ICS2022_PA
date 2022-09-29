@@ -374,13 +374,13 @@ word_t eval(int sta, int end){
 	{  
 		int op = find_main_op(sta, end);
 		if(op == -1)
-	  {
+	   {
 			valid_expr = false;
 	  	//printf("HERE A\n");
 			return 0;
 		}  
-		printf("op = %d\n", op);
-	  printf("area1: %d, %d\narea2: %d, %d\n", sta, op-1,op+1,end);
+	//	printf("op = %d\n", op);
+	 // printf("area1: %d, %d\narea2: %d, %d\n", sta, op-1,op+1,end);
 		int op_type = tokens[op].type;
 		word_t val1 = eval(sta, op - 1);
 		word_t val2 = eval(op + 1, end);
