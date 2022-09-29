@@ -397,5 +397,6 @@ word_t expr(char *e, bool *success) {
   ans = eval(0, nr_token);
 //printf("final ans = %d\n", ans);
 printf("suc = %d\n", *success);
+printf("ans = %d\n", ans);
 	return ans;
 }
