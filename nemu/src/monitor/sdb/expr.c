@@ -263,7 +263,7 @@ word_t find_main_op(int sta, int end){
 //		printf("now_type = %d\n", now);
 		//judge whether it's valid
 		if(now == '+' || (now == '-' && i != sta) || now == '*' || now == '/') 
-	  	{
+	 	{
 			if(i == sta || i == end)
 	  		{
 				valid_expr = false;//双目运算符不能是开头，但是可以是双目运算符
@@ -307,7 +307,7 @@ word_t find_main_op(int sta, int end){
 	 	} 
 		if(valid == true)
 	 	{
-		//	printf("valid in loc %d\n", i);
+			printf("valid in loc %d\n", i);
 			ops[num] = i;
 			num++;
 		}
@@ -315,7 +315,7 @@ word_t find_main_op(int sta, int end){
 //	printf("num = %d\n", num);
 	if(num == 0)
 	{
-	//	printf("wrong from %d to %d\n", sta, end);
+		printf("wrong from %d to %d\n", sta, end);
 		return -1;//invalid
 	}   
 	//record the priority and location
@@ -365,15 +365,15 @@ word_t eval(int sta, int end){
 		if(op == -1)
 	  {
 			valid_expr = false;
-	  //	printf("HERE A\n");
+	  	printf("HERE A\n");
 			return 0;
 		} 
-	 // printf("area1: %d, %d\narea2: %d, %d\n", sta, op-1,op+1,end);
+	  printf("area1: %d, %d\narea2: %d, %d\n", sta, op-1,op+1,end);
 		int op_type = tokens[op].type;
 		word_t val1 = eval(sta, op - 1);
 		word_t val2 = eval(op + 1, end);
-	//	printf("val1 = %u, val2 = %u\n", val1, val2);
-	//	printf("type now = %d\n", op_type);
+		printf("val1 = %u, val2 = %u\n", val1, val2);
+		printf("type now = %d\n", op_type);
 		switch(op_type){
 			case '+':	return val1 + val2;
 			case '-': return val1 - val2;
