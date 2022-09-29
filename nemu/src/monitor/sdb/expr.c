@@ -331,7 +331,11 @@ word_t find_main_op(int sta, int end){
 				res = loc;
 				min_pri = pri;
 				max_loc = loc;
-		  	}
+	  	}
+			if(sta == 1 && end == 4)
+			{
+				printf("now res = %d\n", res);
+			}
 	}  
 //	printf("res = %d\n", res);
 //	printf("main op's type = %d\n", tokens[res].type);
