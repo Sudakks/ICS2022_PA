@@ -62,7 +62,8 @@ static int cmd_si(char *args)
 {
 	int time;
 	char *arg = strtok(NULL, " ");
-  if (arg == NULL) {
+  if (arg == NULL)
+  {
 		time = 1;
 	}
 	else
