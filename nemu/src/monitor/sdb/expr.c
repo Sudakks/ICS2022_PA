@@ -400,7 +400,7 @@ word_t expr(char *e, bool *success) {
   /* TODO: Insert codes to evaluate the expression. */
   //now start to calculate the result
 	//特殊处理负数的情况
-	for(int i = 0; i <= nr_token; i++)
+	for(int i = nr_token; i >= 0; i--)
 	{
 		if(tokens[i].type != '-')
 			continue;
