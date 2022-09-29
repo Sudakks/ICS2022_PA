@@ -390,7 +390,13 @@ word_t eval(int sta, int end){
 			case '+':	return val1 + val2;
 			case '-': return val1 - val2;
 			case '*': return val1 * val2;
-			case '/': return val1 / val2;
+			case '/':
+				if(val2 == 0)
+				{
+					valid_expr = false;
+					return 0;
+				}
+				return val1 / val2;
 			case SIN_MINUS: return -val2;
 			default: assert(0);
 		 }
