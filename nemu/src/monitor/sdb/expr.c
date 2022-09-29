@@ -391,19 +391,10 @@ word_t expr(char *e, bool *success) {
     return 0;
   }
   /* TODO: Insert codes to evaluate the expression. */
-//  TODO();
 	*success = true;
+	word_t ans = 0;
 //now start to calculate the result
-  word_t ans = eval(0, nr_token);
-//	printf("valid_expr = %d\n", valid_expr);
-	if(valid_expr == true)
-	{
-		printf("final ans = %d\n", ans);
-		return ans;
-	}
-	else 
-	{
-		printf("Invalid expression, can't calculate!\n");
-		return 0;
-	}
+  ans = eval(0, nr_token);
+//printf("final ans = %d\n", ans);
+	return ans;
 }

@@ -68,7 +68,7 @@ static int cmd_si(char *args)
 	else
 	{
 		time = atoi(arg); 
-		}
+	}
 //	printf("time = %d\n", time);
 //parse the times cpu should execute
 	cpu_exec(time);
@@ -93,17 +93,23 @@ static int cmd_info(char *args){
 static int cmd_x(char *args){
 char *arg = strtok(NULL, " ");
 	if(arg == NULL)
+	{
+		printf("Lack enough arguments!\n");
 		return 0;
+	}
 	int time = atoi(arg);
 	arg = strtok(NULL, " ");
 	if(arg == NULL)
+	{
+		printf("Lack enough arguments!\n");
 		return 0;
+	}
 	paddr_t addr;
 	sscanf(arg, "%x", &addr);
 	int len = 4;
 	for(int i = 1; i <= time; i++)
 	{
-		printf("%#X %#X\n", addr, paddr_read(addr, len));
+		printf("%#X %#016X\n", addr, paddr_read(addr, len));
 		addr += 4;
 	}
 	return 0;
@@ -112,10 +118,17 @@ char *arg = strtok(NULL, " ");
 static int cmd_p(char *args){
 	char *arg = strtok(NULL, " ");
 	if(arg == NULL)
+	{
+		printf("Lack enough arguments!");
 		return 0;
+	}
 	bool *suc = malloc(sizeof(bool));
 	*suc = true;
-	expr(arg, suc);
+	word_t ans = expr(arg, suc);
+	if(*suc == true)
+		printf("%u\n", ans);
+	else
+		printf("Invalid exprssion! Can't calculate!\n");
 	return 0;
 }
 
