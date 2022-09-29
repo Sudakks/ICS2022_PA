@@ -412,10 +412,11 @@ word_t expr(char *e, bool *success) {
 		else
 		{
 			int t = tokens[i-1].type;
-			bool con = t == '+' || t == '-' || t == '*' || t == '/' || t== '(';
+			bool con = (t == '+' || t == '-' || t == '*' || t == '/' || t== '(');
 			if(con)
 			{
 				tokens[i].type = SIN_MINUS;
+				tokens[i].pri = 3;//这里可能要长改动，优先度会变化
 			}
 		}
 	}
