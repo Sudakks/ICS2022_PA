@@ -391,12 +391,11 @@ word_t expr(char *e, bool *success) {
     return 0;
   }
   /* TODO: Insert codes to evaluate the expression. */
-	*success = true;
-	word_t ans = 0;
-//now start to calculate the result
-  ans = eval(0, nr_token);
-//printf("final ans = %d\n", ans);
-printf("suc = %d\n", *success);
-printf("ans = %d\n", ans);
+  //now start to calculate the result
+  //printf("final ans = %d\n", ans);
+	word_t ans = eval(0, nr_token);
+	if(valid_expr != true)
+		*success = false;
+	printf("suc = %d\n", *success);
 	return ans;
 }
