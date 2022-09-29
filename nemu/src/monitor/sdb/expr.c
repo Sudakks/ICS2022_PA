@@ -400,7 +400,8 @@ word_t expr(char *e, bool *success) {
 			continue;
 		if(i == 0)
 		{
-			tokens[i].type = SIN_MINUS;
+			if(i + 1 <= nr_token && tokens[i+1].type == NUM_TYPE)
+				tokens[i].type = SIN_MINUS;
 		}
 		else
 		{
