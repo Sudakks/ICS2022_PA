@@ -63,14 +63,9 @@ static int cmd_si(char *args)
 	int time;
 	char *arg = strtok(NULL, " ");
   if (arg == NULL)
-  {
 		time = 1;
-	}
 	else
-	{
 		time = atoi(arg); 
-	}
-//	printf("time = %d\n", time);
 //parse the times cpu should execute
 	cpu_exec(time);
 	return 0;
@@ -92,7 +87,7 @@ static int cmd_info(char *args){
 
 
 static int cmd_x(char *args){
-char *arg = strtok(NULL, " ");
+  char *arg = strtok(NULL, " ");
 	if(arg == NULL)
 	{
 		printf("Lack enough arguments!\n");
@@ -110,7 +105,7 @@ char *arg = strtok(NULL, " ");
 	int len = 4;
 	for(int i = 1; i <= time; i++)
 	{
-		printf("%#X %#016X\n", addr, paddr_read(addr, len));
+		printf("%#X %#X\n", addr, paddr_read(addr, len));
 		addr += 4;
 	}
 	return 0;
