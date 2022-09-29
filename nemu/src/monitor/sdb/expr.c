@@ -92,11 +92,7 @@ static bool make_token(char *e) {
       Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
             i, rules[i].regex, position, substr_len, substr_len, substr_start);
 
-printf("len = %d\n", substr_len);
         position += substr_len;
-			printf("posi = %ca\n", e[position]);
-			if(e[position == '\0'])
-				printf("wrong\n");
         if(substr_len > 32 && rules[i].token_type == NUM_TYPE)
 			 	{
 					printf("Invalid input number! Length exceeds 32\n");
@@ -108,7 +104,6 @@ printf("len = %d\n", substr_len);
          * of tokens, some extra actions should be performed.
          */
 				//add the recognized token into array
-				printf("now is what %d\n", rules[i].token_type);
          switch (rules[i].token_type) {
 					case TK_NOTYPE:	
 							break;
@@ -123,7 +118,6 @@ printf("len = %d\n", substr_len);
 								condition2 = (tokens[nr_token-1].type == '+' || tokens[nr_token-1].type == '-') && (tokens[nr_token-2].type == '+' || tokens[nr_token-2].type == '-' || tokens[nr_token-2].type == '(');
 							else if(nr_token == 1)
 								condition1 = tokens[nr_token-1].type == '+' || tokens[nr_token-1].type == '-';
-							printf("c1 = %d, c2 = %d\n", condition1, condition2);
 							if(condition1 || condition2)
 							{
 									nr_token -= 1;
@@ -147,10 +141,10 @@ printf("len = %d\n", substr_len);
 								strncpy(tokens[nr_token].str, substr_start, substr_len);
 				 			}
 							tokens[nr_token].type = rules[i].token_type;
-							int num;
+							/*int num;
 							sscanf(tokens[nr_token].str, "%d", &num);
 							printf("single num = %d\n", num);
-			        printf("now nr_token = %d\n", nr_token);
+			        printf("now nr_token = %d\n", nr_token);*/
 							tokens[nr_token].pri = rules[i].pri;
 							nr_token += 1;
 							break;
@@ -390,7 +384,6 @@ word_t eval(int sta, int end){
 }
 
 word_t expr(char *e, bool *success) {
-	printf("3shi%ca\n", e[2]);
   if (!make_token(e)) {
     *success = false;
 		printf("here\n");
@@ -402,6 +395,5 @@ word_t expr(char *e, bool *success) {
 	word_t ans = eval(0, nr_token);
 	if(valid_expr != true)
 		*success = false;
-	printf("suc = %d\n", *success);
 	return ans;
 }
