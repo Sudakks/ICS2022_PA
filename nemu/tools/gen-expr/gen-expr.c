@@ -23,7 +23,7 @@
 // this should be enough
 static char buf[65536] = {};
 static char code_buf[65536 + 128] = {}; // a little larger than `buf`
-int idx = 0;
+static int idx = 0;
 static char *code_format =
 "#include <stdio.h>\n"
 "int main() { "
@@ -37,11 +37,10 @@ static uint32_t choose(int n)
 	return rand() % n;
 }
 
-void gen_rand_expr()
+void gen_rand_op()
 {
-	int choose_op = rand() % 4;
 	char op;
-	switch(choose_op)
+	switch(choose(4))
 	{
 		case 0:
 			op = '+';
@@ -56,29 +55,50 @@ void gen_rand_expr()
 			op = '/';
 			break;
 	}
-	buf[++idx] = op;
+	sprintf(buf + idx, "%c", op);
+	idx++;
 }
 
 void gen_num()
 {
-	buf[++idx] = rand() % 10;
+	sprintf(buf + idx, "%c", choose(10) + '0');
+	idx++;
 }
 
-static void gen_rand_expr() {
-  buf[0] = '\0';
-	switch(choose(4))
+void gen_space()
+{
+	switch(choose(15))
 	{
-		case 0: gen_num(); break;
-		case 1: 
-			buf[++idx] = '(';
-			gen_rand_expr();
-			buf[++idx] = ')';
+		case 7:
+		{
+		  sprintf(buf + idx, "%c", ' ');
+			idx++;
 			break;
-		case 2:
-			buf[++idx] = ' ';
+			default: break;
+		}
+	}
+}
+static void gen_rand_expr() {
+	if(idx >= 15)
+		return;
+	switch(choose(5))
+	{
+		case 0:
+		case 1:
+			gen_num(); 
+			break;
+		case 2: 
+			sprintf(buf + idx, "%c", '(');
+			idx++;
+			gen_space();
+			gen_rand_expr();
+			gen_space();
+			sprintf(buf + idx, "%c", ')');
+			idx++;
 			break;
 		default:
 			gen_rand_expr();
+			gen_space();
 			gen_rand_op();
 			gen_rand_expr();
 			break;
@@ -95,6 +115,7 @@ int main(int argc, char *argv[]) {
   int i;
   for (i = 0; i < loop; i ++) {
     gen_rand_expr();
+		idx = 0;
 
     sprintf(code_buf, code_format, buf);
 
