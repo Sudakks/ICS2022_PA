@@ -264,7 +264,7 @@ word_t find_main_op(int sta, int end){
 		//judge whether it's valid
 		if(now == '+' || now == '-' || now == '*' || now == '/') 
 	 	{
-			if(i == sta || i == end)
+			if((i == sta || i == end) && now != '-')
 	 		{
 				valid_expr = false;//双目运算符不能是开头，但是可以是双目运算符
 				break;
