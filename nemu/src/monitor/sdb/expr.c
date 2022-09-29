@@ -260,21 +260,21 @@ word_t find_main_op(int sta, int end){
 		if(tokens[i].pri <= 0)
 			continue;
 		int now = tokens[i].type;
-		printf("now_type = %d\n", now);
+//		printf("now_type = %d\n", now);
 		//judge whether it's valid
 		if(now == '+' || (now == '-' && i != sta) || now == '*' || now == '/') 
-	 	{
+	  	{
 			if(i == sta || i == end)
-	 		{
+	  		{
 				valid_expr = false;//双目运算符不能是开头，但是可以是双目运算符
 				break;
 		 	}
 			else
-	 		{
+	 	 	{
 				int last_type = tokens[i-1].type;
 				int next_type = tokens[i+1].type;
 				if(last_type != NUM_TYPE && last_type != ')')
-	 			{
+	 	 		{
 					valid_expr = false;
 					break;
 		 		}
@@ -282,7 +282,7 @@ word_t find_main_op(int sta, int end){
 		 		{
 					valid_expr = false;
 					break;
-	 			}
+	 	 		}
 		 	}//左右两边要么是括号，要么是数字
 		}
 		//pr1
@@ -317,17 +317,17 @@ word_t find_main_op(int sta, int end){
 	{
 	//	printf("wrong from %d to %d\n", sta, end);
 		return -1;//invalid
-	}  
+	}   
 	//record the priority and location
 	int res = 0;
 	int min_pri = 100;
 	int max_loc = -1;
 	for(int it = 0; it < num; it++)
-	{
+	{ 
 			int loc = ops[it];
 			int pri = tokens[loc].pri; 
 			if(pri < min_pri || (pri == min_pri && loc > max_loc))
-			{
+		 	{
 				res = loc;
 				min_pri = pri;
 				max_loc = loc;
@@ -365,15 +365,15 @@ word_t eval(int sta, int end){
 		if(op == -1)
 	  {
 			valid_expr = false;
-	  	printf("HERE A\n");
+	  //	printf("HERE A\n");
 			return 0;
-		}
-	  printf("area1: %d, %d\narea2: %d, %d\n", sta, op-1,op+1,end);
+		} 
+	 // printf("area1: %d, %d\narea2: %d, %d\n", sta, op-1,op+1,end);
 		int op_type = tokens[op].type;
 		word_t val1 = eval(sta, op - 1);
 		word_t val2 = eval(op + 1, end);
-		printf("val1 = %u, val2 = %u\n", val1, val2);
-		printf("type now = %d\n", op_type);
+	//	printf("val1 = %u, val2 = %u\n", val1, val2);
+	//	printf("type now = %d\n", op_type);
 		switch(op_type){
 			case '+':	return val1 + val2;
 			case '-': return val1 - val2;
@@ -382,7 +382,7 @@ word_t eval(int sta, int end){
 			case SIN_MINUS: return -val2;
 			default: assert(0);
 		 }
-	}  
+	}   
 }
 
 word_t expr(char *e, bool *success) {
