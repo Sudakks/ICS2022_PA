@@ -307,7 +307,7 @@ word_t find_main_op(int sta, int end){
 	 	} 
 		if(valid == true)
 	 	{
-			printf("valid in loc %d\n", i);
+			//printf("valid in loc %d\n", i);
 			ops[num] = i;
 			num++;
 		}
@@ -315,28 +315,28 @@ word_t find_main_op(int sta, int end){
 //	printf("num = %d\n", num);
 	if(num == 0)
 	{
-		printf("wrong from %d to %d\n", sta, end);
+		//printf("wrong from %d to %d\n", sta, end);
 		return -1;//invalid
-	}   
+	}    
 	//record the priority and location
 	int res = 0;
 	int min_pri = 100;
 	int max_loc = -1;
 	for(int it = 0; it < num; it++)
-	{ 
+	{  
 			int loc = ops[it];
 			int pri = tokens[loc].pri; 
 			if(pri < min_pri || (pri == min_pri && loc > max_loc))
 		 	{
-				printf("min_pri = %d, max_loc = %d\n", min_pri, max_loc);
-				printf("loc = %d, pri = %d\n", loc, pri);
+				//printf("min_pri = %d, max_loc = %d\n", min_pri, max_loc);
+				//printf("loc = %d, pri = %d\n", loc, pri);
 				res = loc;
 				min_pri = pri;
 				max_loc = loc;
-	  	}
+	   	}
 			if(sta == 1 && end == 4)
-			{
-				printf("now res = %d\n", res);
+			{ 
+				//printf("now res = %d\n", res);
 			}
 	}  
 //	printf("res = %d\n", res);
@@ -351,7 +351,7 @@ word_t eval(int sta, int end){
 	if(sta > end)
 	{
 		return 0;
-	}
+	} 
 	else if(sta == end)
 	{
 		//single token, just return
@@ -359,28 +359,28 @@ word_t eval(int sta, int end){
 		sscanf(tokens[sta].str, "%u", &sin_token);
 		return sin_token;
 	  //printf("sin_token = %d\n", sin_token);
-	} 
+	}  
 	else if(check_parentheses(sta, end) == true)
 	{ 
-		printf("true in %d, %d\n", sta, end);
+		//printf("true in %d, %d\n", sta, end);
 		return	eval(sta + 1, end - 1);
-	} 
+	}  
 	else
-	{ 
+	{  
 		int op = find_main_op(sta, end);
 		if(op == -1)
 	  {
 			valid_expr = false;
-	  	printf("HERE A\n");
+	  	//printf("HERE A\n");
 			return 0;
-		} 
-		printf("op = %d\n", op);
-	  printf("area1: %d, %d\narea2: %d, %d\n", sta, op-1,op+1,end);
+		}  
+		//printf("op = %d\n", op);
+	  //printf("area1: %d, %d\narea2: %d, %d\n", sta, op-1,op+1,end);
 		int op_type = tokens[op].type;
 		word_t val1 = eval(sta, op - 1);
 		word_t val2 = eval(op + 1, end);
-		printf("val1 = %u, val2 = %u\n", val1, val2);
-		printf("type now = %d\n", op_type);
+		//printf("val1 = %u, val2 = %u\n", val1, val2);
+		//printf("type now = %d\n", op_type);
 		switch(op_type){
 			case '+':	return val1 + val2;
 			case '-': return val1 - val2;
@@ -396,7 +396,7 @@ word_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
     return 0;
-  }
+  } 
   /* TODO: Insert codes to evaluate the expression. */
   //now start to calculate the result
 	//特殊处理负数的情况
@@ -414,11 +414,11 @@ word_t expr(char *e, bool *success) {
 			int t = tokens[i-1].type;
 			bool con = (t == '+' || t == '-' || t == '*' || t == '/' || t== '(');
 			if(con)
-			{
+		 	{
 				tokens[i].type = SIN_MINUS;
 				tokens[i].pri = 3;//这里可能要长改动，优先度会变化
 			}
-		}
+		 }
 	}
 	word_t ans = eval(0, nr_token);
 	if(valid_expr != true)
