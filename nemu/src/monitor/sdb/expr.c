@@ -21,7 +21,7 @@
 #include <regex.h>
 enum {
   TK_NOTYPE = 256, TK_EQ,
-	NUM_TYPE = '0',
+	NUM_TYPE,  SIN_MINUS,//将这个理解为单目运算符
   /* TODO: Add more token types */
 
 };
@@ -45,6 +45,7 @@ static struct rule {
 	{"-", '-', 1},
   {"==", TK_EQ, 0},        // equal
 	{"[0-9]+", NUM_TYPE, 0},
+	{"-", SIN_MINUS, 3},
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -110,9 +111,8 @@ static bool make_token(char *e) {
 					case NUM_TYPE:
 							//判断前面是否带有符号
 							//若是第二个，然后前面是符号 or 前面有两个连续的符号，那么在读入的时候就填上符号
-					//		printf("start nr_token = %d\n", nr_token);
 							memset(tokens[nr_token].str, 0, 32);//clear length is 32
-							bool condition1 = false;
+						/*	bool condition1 = false;
 							bool condition2 = false;
 							if(nr_token >= 2)
 								condition2 = (tokens[nr_token-1].type == '+' || tokens[nr_token-1].type == '-') && (tokens[nr_token-2].type == '+' || tokens[nr_token-2].type == '-' || tokens[nr_token-2].type == '(');
@@ -137,9 +137,9 @@ static bool make_token(char *e) {
 									strncpy(tokens[nr_token].str+1, substr_start, substr_len);
 				 			}
 							else
-							{
-								strncpy(tokens[nr_token].str, substr_start, substr_len);
-				 			}
+							{*/
+							strncpy(tokens[nr_token].str, substr_start, substr_len);
+				 			//}
 							tokens[nr_token].type = rules[i].token_type;
 							/*int num;
 							sscanf(tokens[nr_token].str, "%d", &num);
@@ -153,7 +153,6 @@ static bool make_token(char *e) {
 							tokens[nr_token].type = rules[i].token_type;
 							nr_token += 1;
 							break;
-//          default: TODO();
         }
         break;
       }
@@ -260,12 +259,13 @@ word_t find_main_op(int sta, int end){
 		//pr2
 		if(tokens[i].pri <= 0)
 			continue;
+		int now = tokens[i].type;
 		//judge whether it's valid
-		if(tokens[i].type == '+' || tokens[i].type == '-' || tokens[i].type == '*' || tokens[i].type == '/') 
+		if(now == '+' || now == '-' || now == '*' || now == '/' || now == SIN_MINUS) 
 	 	{
-			if(i == sta || i == end)
+			if((i == sta || i == end) && now != SIN_MINUS)
 	 		{
-				valid_expr = false;//双目运算符不能是开头
+				valid_expr = false;//双目运算符不能是开头，但是可以是双目运算符
 				break;
 		 	}
 			else
@@ -343,7 +343,7 @@ word_t eval(int sta, int end){
 		return 0;
 	if(sta > end)
 	{
-		return 0;//bad expressions
+		return 0;
 	}
 	else if(sta == end)
 	{
@@ -351,35 +351,35 @@ word_t eval(int sta, int end){
 		int sin_token;
 		sscanf(tokens[sta].str, "%u", &sin_token);
 		return sin_token;
-	  printf("sin_token = %d\n", sin_token);
-	}
+	  //printf("sin_token = %d\n", sin_token);
+	} 
 	else if(check_parentheses(sta, end) == true)
 	{ 
 //		printf("true in %d, %d\n", sta, end);
 		return	eval(sta + 1, end - 1);
-	}
+	} 
 	else
 	{ 
 		int op = find_main_op(sta, end);
 		if(op == -1)
-		 {
+	  {
 			valid_expr = false;
-	  	printf("HERE A\n");
+	  	//printf("HERE A\n");
 			return 0;
-		  }
+		}
 		int op_type = tokens[op].type;
-		printf("area1: %d, %d\narea2: %d, %d\n", sta, op-1,op+1,end);
+		//printf("area1: %d, %d\narea2: %d, %d\n", sta, op-1,op+1,end);
 		word_t val1 = eval(sta, op - 1);
 		word_t val2 = eval(op + 1, end);
-		printf("val1 = %u, val2 = %u\n", val1, val2);
-		printf("type now = %d\n", op_type);
+		//printf("val1 = %u, val2 = %u\n", val1, val2);
+		//printf("type now = %d\n", op_type);
 		switch(op_type){
 			case '+':	return val1 + val2;
 			case '-': return val1 - val2;
 			case '*': return val1 * val2;
 			case '/': return val1 / val2;
 			default: assert(0);
-			 }
+		 }
 	}  
 }
 
@@ -391,7 +391,25 @@ word_t expr(char *e, bool *success) {
   }
   /* TODO: Insert codes to evaluate the expression. */
   //now start to calculate the result
-  //printf("final ans = %d\n", ans);
+	//特殊处理负数的情况
+	for(int i = 0; i <= nr_token; i++)
+	{
+		if(tokens[i].type != '-')
+			continue;
+		if(i == 0)
+		{
+			tokens[i].type = SIN_MINUS;
+		}
+		else
+		{
+			int t = tokens[i-1].type;
+			bool con = t == '+' || t == '-' || t == '*' || t == '/' || t== '(';
+			if(con)
+			{
+				tokens[i].type = SIN_MINUS;
+			}
+		}
+	}
 	word_t ans = eval(0, nr_token);
 	if(valid_expr != true)
 		*success = false;
