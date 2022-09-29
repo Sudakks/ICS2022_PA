@@ -84,7 +84,6 @@ static bool make_token(char *e) {
   nr_token = 0;
     /* Try all rules one by one. */
 		while(e[position] != '\0'){
-			printf("posi = %c\n", e[position]);
     for (i = 0; i < NR_REGEX; i ++) {
        if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
         char *substr_start = e + position;
@@ -95,6 +94,7 @@ static bool make_token(char *e) {
 
 printf("len = %d\n", substr_len);
         position += substr_len;
+			printf("posi = %ca\n", e[position]);
         if(substr_len > 32 && rules[i].token_type == NUM_TYPE)
 			 	{
 					printf("Invalid input number! Length exceeds 32\n");
