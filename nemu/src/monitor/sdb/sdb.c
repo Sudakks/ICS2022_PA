@@ -117,15 +117,14 @@ char *arg = strtok(NULL, " ");
 }
 
 static int cmd_p(char *args){
-	char *arg = strtok(NULL, " ");
-	if(arg == NULL)
+	if(args == NULL)
 	{
 		printf("Lack enough arguments!");
 		return 0;
 	}
 	bool *suc = malloc(sizeof(bool));
 	*suc = true;
-	word_t ans = expr(arg, suc);
+	word_t ans = expr(args, suc);
 	if(*suc == true)
 		printf("%u\n", ans);
 	else
