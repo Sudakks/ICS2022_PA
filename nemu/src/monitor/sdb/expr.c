@@ -118,7 +118,7 @@ static bool make_token(char *e) {
 								condition2 = (tokens[nr_token-1].type == '+' || tokens[nr_token-1].type == '-') && (tokens[nr_token-2].type == '+' || tokens[nr_token-2].type == '-' || tokens[nr_token-2].type == '(');
 							else if(nr_token == 1)
 								condition1 = tokens[nr_token-1].type == '+' || tokens[nr_token-1].type == '-';
-//							printf("c1 = %d, c2 = %d\n", condition1, condition2);
+							printf("c1 = %d, c2 = %d\n", condition1, condition2);
 							if(condition1 || condition2)
 							{
 									nr_token -= 1;
@@ -142,10 +142,10 @@ static bool make_token(char *e) {
 								strncpy(tokens[nr_token].str, substr_start, substr_len);
 				 			}
 							tokens[nr_token].type = rules[i].token_type;
-							//int num;
-							//sscanf(tokens[nr_token].str, "%d", &num);
-							//printf("single num = %d\n", num);
-			        //printf("now nr_token = %d\n", nr_token);
+							int num;
+							sscanf(tokens[nr_token].str, "%d", &num);
+							printf("single num = %d\n", num);
+			        printf("now nr_token = %d\n", nr_token);
 							tokens[nr_token].pri = rules[i].pri;
 							nr_token += 1;
 							break;
