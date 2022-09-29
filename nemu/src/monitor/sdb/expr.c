@@ -419,6 +419,7 @@ word_t expr(char *e, bool *success) {
 				tokens[i].pri = 3;//这里可能要长改动，优先度会变化
 			}
 		 }
+		 printf("i = %d, now = %d\n",i, tokens[i].type);
 	}
 	word_t ans = eval(0, nr_token);
 	if(valid_expr != true)
