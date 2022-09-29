@@ -328,6 +328,8 @@ word_t find_main_op(int sta, int end){
 			int pri = tokens[loc].pri; 
 			if(pri < min_pri || (pri == min_pri && loc > max_loc))
 		 	{
+				printf("min_pri = %d, max_loc = %d\n", min_pri, max_loc);
+				printf("loc = %d, pri = %d\n", loc, pri);
 				res = loc;
 				min_pri = pri;
 				max_loc = loc;
