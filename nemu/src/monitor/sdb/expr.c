@@ -390,7 +390,7 @@ word_t eval(int sta, int end){
 }
 
 word_t expr(char *e, bool *success) {
-	printf("3shi %c\n", e[2]);
+	printf("3shi%ca\n", e[2]);
   if (!make_token(e)) {
     *success = false;
 		printf("here\n");
