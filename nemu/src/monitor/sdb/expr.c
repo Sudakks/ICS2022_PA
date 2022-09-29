@@ -374,8 +374,8 @@ word_t eval(int sta, int end){
 	  	//printf("HERE A\n");
 			return 0;
 		}  
-		//printf("op = %d\n", op);
-	  //printf("area1: %d, %d\narea2: %d, %d\n", sta, op-1,op+1,end);
+		printf("op = %d\n", op);
+	  printf("area1: %d, %d\narea2: %d, %d\n", sta, op-1,op+1,end);
 		int op_type = tokens[op].type;
 		word_t val1 = eval(sta, op - 1);
 		word_t val2 = eval(op + 1, end);
@@ -419,7 +419,6 @@ word_t expr(char *e, bool *success) {
 				tokens[i].pri = 3;//这里可能要长改动，优先度会变化
 			}
 		 }
-		 printf("i = %d, now = %d\n",i, tokens[i].type);
 	}
 	word_t ans = eval(0, nr_token);
 	if(valid_expr != true)
