@@ -22,6 +22,7 @@
 enum {
   TK_NOTYPE = 256, TK_EQ,
 	NUM_TYPE,  SIN_MINUS,//将这个理解为单目运算符
+	HEX, REG, TK_NEQ, TK_AND, TK_DEF,
   /* TODO: Add more token types */
 
 };
@@ -39,13 +40,18 @@ static struct rule {
   {" +", TK_NOTYPE, 0},    // spaces
 	{"\\(", '(', 0},
 	{"\\)", ')', 0},
-	{"\\*", '*', 2},
-	{"/", '/', 2},
-  {"\\+", '+', 1},         // plus
-	{"-", '-', 1},
-  {"==", TK_EQ, 0},        // equal
+	{"\\*", '*', 4},
+	{"/", '/', 4},
+  {"\\+", '+', 3},         // plus
+	{"-", '-', 3},
+  {"==", TK_EQ, 2},        // equal
 	{"[0-9]+", NUM_TYPE, 0},
-	{"-", SIN_MINUS, 3},
+	{"-", SIN_MINUS, 5},
+	{"0x[0-9]+", HEX, 0},
+	{"!=", TK_NEQ, 2},
+	{"\\&{2}", TK_AND, 1},
+	{"\\*", TK_DEF, 5},
+	{"\\$0 | [a-z]{2} | [a-z][0-9]{1,2}", REG, 0},
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -412,25 +418,40 @@ word_t expr(char *e, bool *success) {
   //now start to calculate the result
 	//特殊处理负数的情况
 	valid_expr = true;
+	bool con = 0;
 	for(int i = nr_token; i >= 0; i--)
 	{
-		if(tokens[i].type != '-')
-			continue;
-		if(i == 0)
+		if(tokens[i].type == '-')
 		{
-			if(i + 1 <= nr_token && tokens[i+1].type == NUM_TYPE)
-				tokens[i].type = SIN_MINUS;
-		}
-		else
-		{
-			int t = tokens[i-1].type;
-			bool con = (t == '+' || t == '-' || t == '*' || t == '/' || t== '(');
-			if(con)
-		 	{
-				tokens[i].type = SIN_MINUS;
-				tokens[i].pri = 3;//这里可能要长改动，优先度会变化
+			if(i == 0)
+			{
+				if(i + 1 <= nr_token && tokens[i+1].type == NUM_TYPE)
+					tokens[i].type = SIN_MINUS;
 			}
-		 }
+			else
+			{
+				int t = tokens[i-1].type;
+				con = (t == '+' || t == '-' || t == '*' || t == '/' || t== '(');
+				if(con)
+				{
+					tokens[i].type = SIN_MINUS;
+					tokens[i].pri = 5;//这里可能要长改动，优先度会变化
+				}
+			}
+		}
+		else if(tokens[i].type == '*')
+		{
+			if(i != 0)
+			{
+				int t = tokens[i-1].type;
+				con = t == '+' || t == '-' || t == '*' || t == '/' || t == TK_EQ || t == '(' || t == SIN_MINUS || t == TK_NEQ || t == TK_AND || t == '*';
+			}
+			if (i == 0 || con)
+			{
+				tokens[i].type = TK_DEF;
+				tokens[i].pri = 5; 
+			}
+		}
 	}
 	word_t ans = eval(0, nr_token);
 	if(valid_expr != true)
