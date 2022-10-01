@@ -411,6 +411,7 @@ word_t expr(char *e, bool *success) {
   /* TODO: Insert codes to evaluate the expression. */
   //now start to calculate the result
 	//特殊处理负数的情况
+	valid_expr = true;
 	for(int i = nr_token; i >= 0; i--)
 	{
 		if(tokens[i].type != '-')
