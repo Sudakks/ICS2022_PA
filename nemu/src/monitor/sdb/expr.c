@@ -46,7 +46,7 @@ static struct rule {
   {"\\+", '+', 3},         // plus
 	{"-", '-', 3},
   {"==", TK_EQ, 2},        // equal
-	{"0x([0-9])+", HEX, 0},
+	{"0x([0-9]|[a-f])+", HEX, 0},
 	{"[0-9]+", NUM_TYPE, 0},
 	{"-", SIN_MINUS, 5},
 	{"!=", TK_NEQ, 2},
