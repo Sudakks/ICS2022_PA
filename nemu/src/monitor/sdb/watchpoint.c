@@ -59,6 +59,7 @@ WP* new_wp(char* e)
 		WP* fr = free_;
 		fr->expression = e;
 		fr->suc = malloc(sizeof(bool));
+		*(fr->suc) = true;
 		fr->before = expr(e, fr->suc);
 		if(*(fr->expression) == true)
 			printf("suc = %d\n", *(fr->suc));
