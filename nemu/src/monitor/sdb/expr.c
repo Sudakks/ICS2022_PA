@@ -111,12 +111,11 @@ static bool make_token(char *e) {
          * of tokens, some extra actions should be performed.
          */
 				//add the recognized token into array
-				if(rules[i].token_type == HEX)
-					printf("hhhh %d\n", rules[i].token_type);
          switch (rules[i].token_type) {
 					case TK_NOTYPE:	
 							break;
 					case HEX:
+					case REG:
 					case NUM_TYPE:
 							//判断前面是否带有符号
 							//若是第二个，然后前面是符号 or 前面有两个连续的符号，那么在读入的时候就填上符号
