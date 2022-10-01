@@ -169,9 +169,6 @@ static bool make_token(char *e) {
     }
   } 
 	nr_token -= 1;
-//	printf("nr_token = %d\n", nr_token);
-//	for(int i = 0; i <= nr_token; i++)
-	//	printf("now type = %d\n", tokens[i].type);
   return true;
 }
 
@@ -318,7 +315,6 @@ word_t find_main_op(int sta, int end){
 			num++;
 		} 
 	  } 
-//	printf("num = %d\n", num);
 	if(num == 0)
 	{
 		//printf("wrong from %d to %d\n", sta, end);
@@ -343,15 +339,11 @@ word_t find_main_op(int sta, int end){
 			}
 			else if(pri < min_pri || (pri == min_pri && loc > max_loc))
 		 	{
-				//printf("min_pri = %d, max_loc = %d\n", min_pri, max_loc);
-				//printf("loc = %d, pri = %d\n", loc, pri);
 				res = loc;
 				min_pri = pri;
 				max_loc = loc;
 	   	 }
 	}   
-//	printf("res = %d\n", res);
-//	printf("main op's type = %d\n", tokens[res].type);
 	return res;
 }
 
@@ -366,17 +358,35 @@ word_t eval(int sta, int end){
 	else if(sta == end)
 	{
 		//single token, just return
-		int sin_token;
+		word_t n_10;//10进制
+		word_t n_16;//16进制
+		word_t n_reg;//寄存器的直
+		char *reg = malloc(sizeof(char));
+		bool *suc = malloc(sizeof(bool));
+		*suc = true;
+	//	*reg = " ";
 		//此时要看读的数是什么类型
 		switch(tokens[sta].type)
 		{
-			case NUM_TYPE:
-				sscanf(tokens[sta].str, "%u", &sin_token);
-				return sin_token;
-			case 	
+			case NUM_TYPE://10
+				sscanf(tokens[sta].str, "%u", &n_10);
+				return n_10;
+			case HEX://16 	
+				sscanf(tokens[sta].str, "%x", &n_16);
+				return n_16;
+			case REG:
+				sscanf(tokens[sta].str, "%s", reg);
+				n_reg = isa_reg_str2val(reg, suc); 
+				if(*suc == true)
+					return n_reg;
+				else
+				{
+					valid_expr = false;
+					return 0;
+				}
+				default:
+					assert(0);
 		}
-		sscanf(tokens[sta].str, "%u", &sin_token);
-		return sin_token;
 	  //printf("sin_token = %d\n", sin_token);
 	}   
 	else if(check_parentheses(sta, end) == true)
@@ -412,6 +422,10 @@ word_t eval(int sta, int end){
 		 		}
 				return val1 / val2;
 			case SIN_MINUS: return -val2;
+			case TK_EQ: return val1 == val2;
+			case TK_NEQ: return val1 != val2;
+			case TK_AND: return val1 && val2;
+//			case TK_DEF: return *val2;
 			default: assert(0);
 		 }
 	}   
