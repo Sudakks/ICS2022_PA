@@ -344,7 +344,6 @@ word_t eval(int sta, int end){
 				return n_10;
 			case HEX://16 	
 				sscanf(tokens[sta].str, "%x", &n_16);
-				printf("num = %x\n", n_16);
 				return n_16;
 			case REG:
 				sscanf(tokens[sta].str, "%s", reg);
@@ -396,7 +395,7 @@ word_t eval(int sta, int end){
 			case TK_EQ: return val1 == val2;
 			case TK_NEQ: return val1 != val2;
 			case TK_AND: return val1 && val2;
-			case TK_DEF: printf("DEF\n");return vaddr_read(val2, 4);
+			case TK_DEF: printf("ans = %u\n", vaddr_read(val2, 4));return vaddr_read(val2, 4);
 			default: assert(0);
 		 } 
 	}   
