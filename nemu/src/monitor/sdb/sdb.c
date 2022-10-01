@@ -26,7 +26,7 @@ word_t paddr_read(paddr_t addr, int len);
 void init_regex();
 word_t expr(char *e, bool *success);
 void init_wp_pool();
-struct watchpoint* new_wp(char* e);
+struct watchpoint* new_wp(char* e);//remember to add "struct"!!!
 #define EOF (-1)
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
@@ -213,7 +213,7 @@ void sdb_mainloop() {
     int i;
     for (i = 0; i < NR_CMD; i ++) {
       if (strcmp(cmd, cmd_table[i].name) == 0) {
-        if (cmd_table[i].handler(args) < 0) { nemu_state.state = NEMU_QUIT; return; }//it show we press q
+        if (cmd_table[i].handler(args) < 0) { nemu_state.state = NEMU_QUIT; return; }//it shows we press q
         break;
       }
     }

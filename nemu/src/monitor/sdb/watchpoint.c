@@ -14,6 +14,7 @@
 ***************************************************************************************/
 
 #include "sdb.h"
+#include <cpu/cpu.h>
 
 #define NR_WP 32
 
@@ -22,7 +23,8 @@ typedef struct watchpoint {
   struct watchpoint *next;
 	word_t now;//mark the now value and before value to compare whether the two are changed
 	word_t before;
-	char* expr;//the expression to calculate
+	char* expression;//the expression to calculate
+	bool *suc;
   /* TODO: Add more members if necessary */
 
 } WP;
@@ -52,22 +54,26 @@ WP* new_wp(char* e)
 	else
 	{ 
 		WP* fr = free_;
-		fr->expr = e;
+		fr->expression = e;
+		fr->suc = malloc(sizeof(bool));
+		fr->before = expr(e, fr->suc);
+		if(*(fr->suc) == false)
+			printf("Invalid expression! Can't watch this value!\n"); 
 		if(head == NULL)
 		{
 			//there is no wp exists
 			head = fr;
-		 }
+		}
 		else
 		{
 			//head insert
 			fr -> next = head;
 			head = fr;
-		}
+		} 
 		free_ = free_ -> next;
 		return fr;
 		//may need modify the info
-	}
+	} 
 }
 
 void free_wp(WP *wp)
@@ -76,4 +82,25 @@ void free_wp(WP *wp)
 	wp->next = free_;
 	free_ = wp;
 	//put the return one to the head of free_
+}
+
+void scan_wps()
+{
+	WP* sta = head;
+	while(sta != NULL)
+	{
+		sta->now = expr(sta->expression, sta->suc);
+		if(*sta->suc == true)
+		{
+			if(sta->now != sta->before)
+			{
+				printf("Watchpoint %d\n", sta->NO);
+				printf("Old value = %u\n", sta->before);
+				printf("New value = %u\n", sta->now);
+				sta->before = sta->now;
+				nemu_state.state = NEMU_STOP;
+			}
+		}
+		sta += 1;
+	}
 }
