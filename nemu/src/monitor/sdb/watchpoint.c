@@ -20,7 +20,9 @@
 typedef struct watchpoint {
   int NO;
   struct watchpoint *next;
-
+	word_t now;//mark the now value and before value to compare whether the two are changed
+	word_t before;
+	char* expr;//the expression to calculate
   /* TODO: Add more members if necessary */
 
 } WP;
