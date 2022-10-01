@@ -26,6 +26,7 @@ word_t paddr_read(paddr_t addr, int len);
 void init_regex();
 word_t expr(char *e, bool *success);
 void init_wp_pool();
+struct watchpoint* new_wp(char* e);
 #define EOF (-1)
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
@@ -71,7 +72,6 @@ static int cmd_si(char *args)
 	return 0;
 }
 
-
 static int cmd_info(char *args){
 	char *arg = strtok(NULL, " ");
 	if(strcmp(arg, "r") == 0){//arg is not a pointer, *arg is a pointer
@@ -114,7 +114,7 @@ static int cmd_x(char *args){
 static int cmd_p(char *args){
 	if(args == NULL)
 	{
-		printf("Lack enough arguments!");
+		printf("Lack enough arguments!\n");
 		return 0;
 	}
 	bool *suc = malloc(sizeof(bool));
@@ -124,6 +124,17 @@ static int cmd_p(char *args){
 		printf("%u\n", ans);
 	else
 		printf("Invalid exprssion! Can't calculate!\n");
+	return 0;
+}
+
+static int  cmd_w(char *args)
+{
+	if(args == NULL)
+	{ 
+		printf("Lack enough arguments!\n");
+		return 0;
+	}
+	new_wp(args);
 	return 0;
 }
 
@@ -139,6 +150,7 @@ static struct {
 	{ "info", "print the information of registers and the watchpoints", cmd_info},
 	{ "x", "scan the memory", cmd_x},
 	{ "p", "calculate the given expression", cmd_p},
+	{ "w", "set watchpoints", cmd_w},
   /* TODO: Add more commands */
 
 };

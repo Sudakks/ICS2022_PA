@@ -43,20 +43,21 @@ void init_wp_pool() {
 
 /* TODO: Implement the functionality of watchpoint */
 
-WP* new_wp()
+WP* new_wp(char* e)
 {
 	//give a free wp
 	//indicate there lacks enough free wp
 	if(free_ == NULL)
 		assert(0);
 	else
-	{
+	{ 
 		WP* fr = free_;
+		fr->expr = e;
 		if(head == NULL)
 		{
 			//there is no wp exists
 			head = fr;
-		}
+		 }
 		else
 		{
 			//head insert
