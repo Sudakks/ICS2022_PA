@@ -347,7 +347,6 @@ word_t eval(int sta, int end){
 			case REG:
 				sscanf(tokens[sta].str, "%s", reg);
 				n_reg = isa_reg_str2val(reg, suc); 
-				printf("suc = %d\n", *suc);
 				if(*suc == true)
 					return n_reg;
 				else
