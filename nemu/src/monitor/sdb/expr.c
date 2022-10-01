@@ -263,10 +263,10 @@ word_t find_main_op(int sta, int end){
 		if(tokens[i].pri <= 0)
 			continue;
 		int n = tokens[i].type;
-//		printf("now_type = %d\n", now);
+		printf("now_type = %d\n", n);
 		//judge whether it's valid
 		if(n == '+' || (n == '-' && i != sta) || n == '*' || n == '/' || n == TK_EQ || n == TK_NEQ || n == TK_AND) 
-	 	 {
+	 	{
 			if(i == sta || i == end)
 			{
 				valid_expr = false;//双目运算符不能是开头，但是可以是单目运算符
@@ -279,15 +279,17 @@ word_t find_main_op(int sta, int end){
 				if(last_type != NUM_TYPE && last_type != ')' && last_type != HEX && last_type != REG)
 	 	 		{
 					valid_expr = false;
+					printf("He1\n");
 					break;
 		 		}
 				if(next_type != NUM_TYPE && next_type != '(' && next_type != SIN_MINUS && next_type != HEX && next_type != REG)
 		 		{
+					printf("He2\n");
 					valid_expr = false;
 					break;
 	 	 		}
-		 	}//左右两边要么是括号，要么是数字
-		}
+			}//左右两边要么是括号，要么是数字
+	  }
 		//pr1
 		int l = i - 1; 
 		int r = i + 1;
