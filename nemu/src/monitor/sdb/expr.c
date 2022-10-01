@@ -417,7 +417,7 @@ word_t expr(char *e, bool *success) {
   /* TODO: Insert codes to evaluate the expression. */
   //now start to calculate the result
 	//特殊处理负数的情况
-	valid_expr = true;
+/*	valid_expr = true;
 	bool con = 0;
 	for(int i = nr_token; i >= 0; i--)
 	{
@@ -456,5 +456,6 @@ word_t expr(char *e, bool *success) {
 	word_t ans = eval(0, nr_token);
 	if(valid_expr != true)
 		*success = false;
-	return ans;
+	return ans;*/
+	return 0;
 }
