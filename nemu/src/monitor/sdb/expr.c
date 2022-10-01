@@ -450,13 +450,13 @@ word_t expr(char *e, bool *success) {
 		{
 			if(i == 0)
 			{
-				if(i + 1 <= nr_token && tokens[i+1].type == NUM_TYPE)
+				if(i + 1 <= nr_token && (tokens[i+1].type == NUM_TYPE || tokens[i+1].type == HEX))
 					tokens[i].type = SIN_MINUS;
 			}
 			else
 			{
 				int t = tokens[i-1].type;
-				con = (t == '+' || t == '-' || t == '*' || t == '/' || t== '(');
+				con = (t == '+' || t == '-' || t == '*' || t == '/' || t == '(' || t == TK_EQ || t == TK_NEQ || t == TK_AND || t == TK_DEF);
 				if(con)
 				{
 					tokens[i].type = SIN_MINUS;
