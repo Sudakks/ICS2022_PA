@@ -314,10 +314,10 @@ word_t find_main_op(int sta, int end){
 			ops[num] = i;
 			num++;
 		} 
-	  } 
+	} 
 	if(num == 0)
 	{
-		//printf("wrong from %d to %d\n", sta, end);
+		printf("wrong from %d to %d\n", sta, end);
 		return -1;//invalid
 	}     
 	//record the priority and location
@@ -342,7 +342,7 @@ word_t find_main_op(int sta, int end){
 				res = loc;
 				min_pri = pri;
 				max_loc = loc;
-	   	 }
+	    }
 	}   
 	return res;
 }
@@ -400,11 +400,11 @@ word_t eval(int sta, int end){
 		if(op == -1)
 	   {
 			valid_expr = false;
-	 // 	printf("HERE A\n");
+	  	printf("HERE A\n");
 			return 0;
 		}  
-	//	printf("op = %d\n", op);
-	//  printf("area1: %d, %d\narea2: %d, %d\n", sta, op-1,op+1,end);
+		printf("op = %d\n", op);
+	  printf("area1: %d, %d\narea2: %d, %d\n", sta, op-1,op+1,end);
 		int op_type = tokens[op].type;
 		word_t val1 = eval(sta, op - 1);
 		word_t val2 = eval(op + 1, end);
