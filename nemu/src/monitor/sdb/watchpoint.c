@@ -60,7 +60,8 @@ WP* new_wp(char* e)
 		fr->expression = e;
 		fr->suc = malloc(sizeof(bool));
 		fr->before = expr(e, fr->suc);
-		printf("suc = %d\n", *(fr->suc));
+		if(*(fr->expression) == true)
+			printf("suc = %d\n", *(fr->suc));
 		if(*(fr->suc) == false)
 			printf("Invalid expression! Can't watch this value!\n"); 
 		if(head == NULL)
