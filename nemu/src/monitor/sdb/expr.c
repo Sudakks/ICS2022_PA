@@ -111,7 +111,8 @@ static bool make_token(char *e) {
          * of tokens, some extra actions should be performed.
          */
 				//add the recognized token into array
-				printf("hhhh %d\n", rules[i].token_type);
+				if(rules[i].token_type == HEX)
+					printf("hhhh %d\n", rules[i].token_type);
          switch (rules[i].token_type) {
 					case TK_NOTYPE:	
 							break;
