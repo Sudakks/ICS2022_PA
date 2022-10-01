@@ -45,9 +45,9 @@ static struct rule {
   {"\\+", '+', 3},         // plus
 	{"-", '-', 3},
   {"==", TK_EQ, 2},        // equal
+	{"0x([0-9])+", HEX, 0},
 	{"[0-9]+", NUM_TYPE, 0},
 	{"-", SIN_MINUS, 5},
-	{"0x[0-9]+", HEX, 0},
 	{"!=", TK_NEQ, 2},
 	{"\\&{2}", TK_AND, 1},
 	{"\\*", TK_DEF, 5},
@@ -367,7 +367,6 @@ word_t eval(int sta, int end){
 		char *reg = malloc(sizeof(char));
 		bool *suc = malloc(sizeof(bool));
 		*suc = true;
-	//	*reg = " ";
 		//此时要看读的数是什么类型
 		switch(tokens[sta].type)
 		{
