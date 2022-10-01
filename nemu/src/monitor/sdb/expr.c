@@ -38,6 +38,7 @@ static struct rule {
    */
 
   {" +", TK_NOTYPE, 0},    // spaces
+	{"\\$0 | \\$([a-z]{2} | [a-z][0-9]{1,2})", REG, 0},
 	{"\\(", '(', 0},
 	{"\\)", ')', 0},
 	{"\\*", '*', 4},
@@ -51,7 +52,6 @@ static struct rule {
 	{"!=", TK_NEQ, 2},
 	{"\\&{2}", TK_AND, 1},
 	{"\\*", TK_DEF, 5},
-	{"\\$0 | \\$([a-z]{2} | [a-z][0-9]{1,2})", REG, 0},
 };
 
 #define NR_REGEX ARRLEN(rules)
