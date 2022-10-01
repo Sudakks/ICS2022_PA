@@ -43,97 +43,97 @@ word_t isa_reg_str2val(const char *s, bool *success) {
 	if(!strcmp(s, "$0"))
 		return cpu.gpr[$0];
 
-	if(!strcmp(s, "ra"))
+	if(!strcmp(s, "$ra"))
 		return cpu.gpr[ra];
 
-	if(!strcmp(s, "sp"))
+	if(!strcmp(s, "$sp"))
 		return cpu.gpr[sp];
 
-	if(!strcmp(s, "gp"))
+	if(!strcmp(s, "$gp"))
 		return cpu.gpr[gp];
 
-	if(!strcmp(s, "tp"))
+	if(!strcmp(s, "$tp"))
 		return cpu.gpr[tp];
 
-	if(!strcmp(s, "t0"))
+	if(!strcmp(s, "$t0"))
 		return cpu.gpr[t0];
 
-	if(!strcmp(s, "t1"))
+	if(!strcmp(s, "$t1"))
 		return cpu.gpr[t1];
 
-	if(!strcmp(s, "t2"))
+	if(!strcmp(s, "$t2"))
 		return cpu.gpr[t2];
 
-	if(!strcmp(s, "s0"))
+	if(!strcmp(s, "$s0"))
 		return cpu.gpr[s0];
 
-	if(!strcmp(s, "s1"))
+	if(!strcmp(s, "$s1"))
 		return cpu.gpr[s1];
 
-	if(!strcmp(s, "a0"))
+	if(!strcmp(s, "$a0"))
 		return cpu.gpr[a0];
 
-	if(!strcmp(s, "a1"))
+	if(!strcmp(s, "$a1"))
 		return cpu.gpr[a1];
 
-	if(!strcmp(s, "a2"))
+	if(!strcmp(s, "$a2"))
 		return cpu.gpr[a2];
 
-	if(!strcmp(s, "a3"))
+	if(!strcmp(s, "$a3"))
 		return cpu.gpr[a3];
 
-	if(!strcmp(s, "a4"))
+	if(!strcmp(s, "$a4"))
 		return cpu.gpr[a4];
 
-	if(!strcmp(s, "a5"))
+	if(!strcmp(s, "$a5"))
 		return cpu.gpr[a5];
 
-	if(!strcmp(s, "a6"))
+	if(!strcmp(s, "$a6"))
 		return cpu.gpr[a6];
 
-	if(!strcmp(s, "a7"))
+	if(!strcmp(s, "$a7"))
 		return cpu.gpr[a7];
 
-	if(!strcmp(s, "s2"))
+	if(!strcmp(s, "$s2"))
 		return cpu.gpr[s2];
 
-	if(!strcmp(s, "s3"))
+	if(!strcmp(s, "$s3"))
 		return cpu.gpr[s3];
 
-	if(!strcmp(s, "s4"))
+	if(!strcmp(s, "$s4"))
 		return cpu.gpr[s4];
 
-	if(!strcmp(s, "s5"))
+	if(!strcmp(s, "$s5"))
 		return cpu.gpr[s5];
 
-	if(!strcmp(s, "s6"))
+	if(!strcmp(s, "$s6"))
 		return cpu.gpr[s6];
 
-	if(!strcmp(s, "s7"))
+	if(!strcmp(s, "$s7"))
 		return cpu.gpr[s7];
 		
-	if(!strcmp(s, "s8"))
+	if(!strcmp(s, "$s8"))
 		return cpu.gpr[s8];
 
-	if(!strcmp(s, "s9"))
+	if(!strcmp(s, "$s9"))
 		return cpu.gpr[s9];
 
-	if(!strcmp(s, "s10"))
+	if(!strcmp(s, "$s10"))
 		return cpu.gpr[s10];
 
-	if(!strcmp(s, "s11"))
+	if(!strcmp(s, "$s11"))
 		return cpu.gpr[s11];
 
-	if(!strcmp(s, "t3"))
+	if(!strcmp(s, "$t3"))
 		return cpu.gpr[t3];
 
-	if(!strcmp(s, "t4"))
+	if(!strcmp(s, "$t4"))
 		return cpu.gpr[t4];
 
-	if(!strcmp(s, "t5"))
+	if(!strcmp(s, "$t5"))
 		return cpu.gpr[t5];
 
-	if(!strcmp(s, "t6"))
+	if(!strcmp(s, "$t6"))
 		return cpu.gpr[t6];
 	*success = false;
 	return 0;
