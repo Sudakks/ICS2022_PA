@@ -50,8 +50,20 @@ WP* new_wp()
 	else
 	{
 		WP* fr = free_;
+		if(head == NULL)
+		{
+			//there is no wp exists
+			head = fr;
+		}
+		else
+		{
+			//head insert
+			fr -> next = head;
+			head = fr;
+		}
 		free_ = free_ -> next;
 		return fr;
+		//may need modify the info
 	}
 }
 
