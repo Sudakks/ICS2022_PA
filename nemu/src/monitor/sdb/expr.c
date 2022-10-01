@@ -402,6 +402,7 @@ word_t eval(int sta, int end){
 }
 
 word_t expr(char *e, bool *success) {
+	printf("in suc = %d\n", *success);
   if (!make_token(e)) {
     *success = false;
     return 0;
