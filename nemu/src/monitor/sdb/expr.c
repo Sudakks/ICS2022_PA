@@ -445,10 +445,11 @@ word_t expr(char *e, bool *success) {
 			}
 		}
 	}
+	printf("1suc = %d\n", *success);
 	word_t ans = eval(0, nr_token);
 	if(valid_expr != true)
 		*success = false;
-	printf("eval suc = %d\n", *success);
+	printf("2suc = %d\n", *success);
 	return ans;
 	return 0;
 }
