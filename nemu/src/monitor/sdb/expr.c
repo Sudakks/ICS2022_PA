@@ -26,7 +26,7 @@ enum {
 
 };
 bool valid_expr = true;//stands whether the expression is valid
-
+const int op_num = 512;
 static struct rule {
   const char *regex;
   int token_type;
@@ -251,7 +251,7 @@ word_t find_main_op(int sta, int end){
 	//pr2: should be operation
 	//pr3: lower priority
 	//pr4: the same prority, the most right side
-	int ops[NR_REGEX];//to store the valid operations
+	int ops[512];//to store the valid operations
 	int num = 0;
 //	printf("start from %d to %d, the valid_expr = %d\n", sta, end, valid_expr);
 	for(int i = sta; i <= end && valid_expr == true; i++)
