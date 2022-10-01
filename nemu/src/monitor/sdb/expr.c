@@ -284,6 +284,7 @@ word_t find_main_op(int sta, int end){
 		 		}
 				if(next_type != NUM_TYPE && next_type != '(' && next_type != SIN_MINUS && next_type != HEX && next_type != REG)
 		 		{
+					printf("next_type = %d\n", next_type);
 					printf("He2\n");
 					valid_expr = false;
 					break;
