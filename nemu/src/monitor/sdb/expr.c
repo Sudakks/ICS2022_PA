@@ -232,7 +232,6 @@ word_t find_main_op(int sta, int end){
 		if(tokens[i].pri <= 0)
 			continue;
 		int n = tokens[i].type;
-		printf("now_type = %d\n", n);
 		//judge whether it's valid
 		if(n == '+' || (n == '-' && i != sta) || n == '*' || n == '/' || n == TK_EQ || n == TK_NEQ || n == TK_AND) 
 	 	{

@@ -39,7 +39,6 @@ void isa_reg_display() {
 }
 
 word_t isa_reg_str2val(const char *s, bool *success) {
-	printf("reg = %s\n", s);
 	if(!strcmp(s, "$0"))
 		return cpu.gpr[$0];
 
