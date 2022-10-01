@@ -119,8 +119,6 @@ static bool make_token(char *e) {
 					case NUM_TYPE:
 							//判断前面是否带有符号
 							//若是第二个，然后前面是符号 or 前面有两个连续的符号，那么在读入的时候就填上符号
-							if(rules[i].token_type == HEX)
-								printf("11111111\n");
 							memset(tokens[nr_token].str, 0, 32);//clear length is 32
 							strncpy(tokens[nr_token].str, substr_start, substr_len);
 							tokens[nr_token].type = rules[i].token_type;
@@ -355,20 +353,17 @@ word_t eval(int sta, int end){
 				return n_16;
 			case REG:
 				sscanf(tokens[sta].str, "%s", reg);
-				printf("now str = %s\n", reg);
 				n_reg = isa_reg_str2val(reg, suc); 
 				if(*suc == true)
 					return n_reg;
 				else
 				{
-					printf("nooo\n");
 					valid_expr = false;
 					return 0;
 				}
 				default:
 					assert(0);
 		}
-	  //printf("sin_token = %d\n", sin_token);
 	}   
 	else if(check_parentheses(sta, end) == true)
 	{ 
@@ -381,11 +376,11 @@ word_t eval(int sta, int end){
 		if(op == -1)
 	   {
 			valid_expr = false;
-	  	printf("HERE A\n");
+	  //	printf("HERE A\n");
 			return 0;
 		}  
-		printf("op = %d\n", op);
-	  printf("area1: %d, %d\narea2: %d, %d\n", sta, op-1,op+1,end);
+		//printf("op = %d\n", op);
+	  //printf("area1: %d, %d\narea2: %d, %d\n", sta, op-1,op+1,end);
 		int op_type = tokens[op].type;
 		word_t val1 = eval(sta, op - 1);
 		word_t val2 = eval(op + 1, end);
@@ -406,9 +401,9 @@ word_t eval(int sta, int end){
 			case TK_EQ: return val1 == val2;
 			case TK_NEQ: return val1 != val2;
 			case TK_AND: return val1 && val2;
-//			case TK_DEF: return *val2;
+			//case TK_DEF: return *val2;
 			default: assert(0);
-		 }
+		 } 
 	}   
 }
 
