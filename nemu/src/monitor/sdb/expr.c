@@ -114,38 +114,12 @@ static bool make_token(char *e) {
          switch (rules[i].token_type) {
 					case TK_NOTYPE:	
 							break;
+					case HEX:
 					case NUM_TYPE:
 							//判断前面是否带有符号
 							//若是第二个，然后前面是符号 or 前面有两个连续的符号，那么在读入的时候就填上符号
 							memset(tokens[nr_token].str, 0, 32);//clear length is 32
-						/*	bool condition1 = false;
-							bool condition2 = false;
-							if(nr_token >= 2)
-								condition2 = (tokens[nr_token-1].type == '+' || tokens[nr_token-1].type == '-') && (tokens[nr_token-2].type == '+' || tokens[nr_token-2].type == '-' || tokens[nr_token-2].type == '(');
-							else if(nr_token == 1)
-								condition1 = tokens[nr_token-1].type == '+' || tokens[nr_token-1].type == '-';
-							if(condition1 || condition2)
-							{
-									nr_token -= 1;
-							//		printf("要赋值的是:%d\n", tokens[nr_token].type);
-				 					switch(tokens[nr_token].type){
-										case '+':
-											tokens[nr_token].str[0] = '+';
-											break;
-										case '-':
-											tokens[nr_token].str[0] = '-';
-											break;
-										default:
-											assert(0);
-											break;
-								}
-							//		printf("nr_token = %d, fuhao = %d\n",nr_token, tokens[nr_token].str[0]);
-									strncpy(tokens[nr_token].str+1, substr_start, substr_len);
-				 			}
-							else
-							{*/
 							strncpy(tokens[nr_token].str, substr_start, substr_len);
-				 			//}
 							tokens[nr_token].type = rules[i].token_type;
 							/*int num;
 							sscanf(tokens[nr_token].str, "%d", &num);
@@ -378,6 +352,7 @@ word_t eval(int sta, int end){
 				return n_16;
 			case REG:
 				sscanf(tokens[sta].str, "%s", reg);
+				printf("now str = %s\n", reg);
 				n_reg = isa_reg_str2val(reg, suc); 
 				if(*suc == true)
 					return n_reg;
