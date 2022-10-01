@@ -265,26 +265,26 @@ word_t find_main_op(int sta, int end){
 		//pr2
 		if(tokens[i].pri <= 0)
 			continue;
-		int now = tokens[i].type;
+		int n = tokens[i].type;
 //		printf("now_type = %d\n", now);
 		//judge whether it's valid
-		if(now == '+' || (now == '-' && i != sta) || now == '*' || now == '/') 
+		if(n == '+' || (n == '-' && i != sta) || n == '*' || n == '/' || n == TK_EQ || n == TK_NEQ || n == TK_AND) 
 	 	 {
 			if(i == sta || i == end)
-	  		{
-				valid_expr = false;//双目运算符不能是开头，但是可以是双目运算符
+			{
+				valid_expr = false;//双目运算符不能是开头，但是可以是单目运算符
 				break;
 		 	}
 			else
 	 	 	{
 				int last_type = tokens[i-1].type;
 				int next_type = tokens[i+1].type;
-				if(last_type != NUM_TYPE && last_type != ')')
+				if(last_type != NUM_TYPE && last_type != ')' && last_type != HEX && last_type != REG)
 	 	 		{
 					valid_expr = false;
 					break;
 		 		}
-				if(next_type != NUM_TYPE && next_type != '(' && next_type != SIN_MINUS)
+				if(next_type != NUM_TYPE && next_type != '(' && next_type != SIN_MINUS && next_type != HEX && next_type != REG)
 		 		{
 					valid_expr = false;
 					break;
@@ -296,7 +296,7 @@ word_t find_main_op(int sta, int end){
 		int r = i + 1;
 		bool valid = true;
 		while(valid == true && l >= sta)
-		{
+		{ 
 			if(tokens[l].type == ')')
 				break;
 			if(tokens[l].type == '(')
@@ -310,13 +310,13 @@ word_t find_main_op(int sta, int end){
 			if(tokens[r].type == ')')
 				valid = false;
 			r++;
-	 	} 
+	 	}  
 		if(valid == true)
 	 	{
 			//printf("valid in loc %d\n", i);
 			ops[num] = i;
 			num++;
-		}
+		} 
 	  } 
 //	printf("num = %d\n", num);
 	if(num == 0)
@@ -367,6 +367,14 @@ word_t eval(int sta, int end){
 	{
 		//single token, just return
 		int sin_token;
+		//此时要看读的数是什么类型
+		switch(tokens[sta].type)
+		{
+			case NUM_TYPE:
+				sscanf(tokens[sta].str, "%u", &sin_token);
+				return sin_token;
+			case 	
+		}
 		sscanf(tokens[sta].str, "%u", &sin_token);
 		return sin_token;
 	  //printf("sin_token = %d\n", sin_token);
