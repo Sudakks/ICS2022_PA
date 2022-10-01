@@ -53,6 +53,9 @@ WP* new_wp(char* e)
 		assert(0);
 	else
 	{ 
+		for(int s = 0; s <= 12; s++)
+			printf("%c", e[s]);
+		printf("\n");
 		WP* fr = free_;
 		fr->expression = e;
 		fr->suc = malloc(sizeof(bool));
