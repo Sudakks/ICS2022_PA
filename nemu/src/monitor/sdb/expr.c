@@ -383,6 +383,7 @@ word_t eval(int sta, int end){
 					return n_reg;
 				else
 				{
+					printf("nooo\n");
 					valid_expr = false;
 					return 0;
 				}
