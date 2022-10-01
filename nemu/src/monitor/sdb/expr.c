@@ -238,7 +238,7 @@ bool check_parentheses(int sta, int end){
 			ans_return = false;
 		}  
 	} 
-	printf("check: %d, from %d to %d\n", ans_return, sta, end);
+	//printf("check: %d, from %d to %d\n", ans_return, sta, end);
 	return ans_return;
 }
 
@@ -255,7 +255,7 @@ word_t find_main_op(int sta, int end){
 	int num = 0;
 //	printf("start from %d to %d, the valid_expr = %d\n", sta, end, valid_expr);
 	for(int i = sta; i <= end && valid_expr == true; i++)
-	{
+	{ 
 		//pr2
 		if(tokens[i].pri <= 0)
 			continue;
@@ -263,7 +263,7 @@ word_t find_main_op(int sta, int end){
 //		printf("now_type = %d\n", now);
 		//judge whether it's valid
 		if(now == '+' || (now == '-' && i != sta) || now == '*' || now == '/') 
-	 	{
+	 	 {
 			if(i == sta || i == end)
 	  		{
 				valid_expr = false;//双目运算符不能是开头，但是可以是双目运算符
@@ -317,7 +317,7 @@ word_t find_main_op(int sta, int end){
 	{
 		//printf("wrong from %d to %d\n", sta, end);
 		return -1;//invalid
-	}    
+	}     
 	//record the priority and location
 	int res = 0;
 	int min_pri = 100;
@@ -342,8 +342,8 @@ word_t find_main_op(int sta, int end){
 				res = loc;
 				min_pri = pri;
 				max_loc = loc;
-	   	}
-	}  
+	   	 }
+	}   
 //	printf("res = %d\n", res);
 //	printf("main op's type = %d\n", tokens[res].type);
 	return res;
@@ -364,29 +364,29 @@ word_t eval(int sta, int end){
 		sscanf(tokens[sta].str, "%u", &sin_token);
 		return sin_token;
 	  //printf("sin_token = %d\n", sin_token);
-	}  
+	}   
 	else if(check_parentheses(sta, end) == true)
 	{ 
 		//printf("true in %d, %d\n", sta, end);
 		return	eval(sta + 1, end - 1);
-	}  
+	}   
 	else
 	{  
 		int op = find_main_op(sta, end);
 		if(op == -1)
 	   {
 			valid_expr = false;
-	  	printf("HERE A\n");
+	 // 	printf("HERE A\n");
 			return 0;
 		}  
-		printf("op = %d\n", op);
-	  printf("area1: %d, %d\narea2: %d, %d\n", sta, op-1,op+1,end);
+	//	printf("op = %d\n", op);
+	//  printf("area1: %d, %d\narea2: %d, %d\n", sta, op-1,op+1,end);
 		int op_type = tokens[op].type;
 		word_t val1 = eval(sta, op - 1);
 		word_t val2 = eval(op + 1, end);
-		printf("val1 = %u, val2 = %u\n", val1, val2);
+	//	printf("val1 = %u, val2 = %u\n", val1, val2);
 		//printf("type now = %d\n", op_type);
-		switch(op_type){
+		 switch(op_type){
 			case '+':	return val1 + val2;
 			case '-': return val1 - val2;
 			case '*': return val1 * val2;
@@ -395,7 +395,7 @@ word_t eval(int sta, int end){
 				{
 					valid_expr = false;
 					return 0;
-				}
+		 		}
 				return val1 / val2;
 			case SIN_MINUS: return -val2;
 			default: assert(0);
