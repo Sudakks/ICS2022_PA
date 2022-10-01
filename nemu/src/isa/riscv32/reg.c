@@ -135,5 +135,6 @@ word_t isa_reg_str2val(const char *s, bool *success) {
 	if(!strcmp(s, "$t6"))
 		return cpu.gpr[t6];
 	*success = false;
+	printf("change suc = %d\n", *success);
 	return 0;
 }
