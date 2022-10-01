@@ -112,9 +112,9 @@ static bool make_token(char *e) {
          * of tokens, some extra actions should be performed.
          */
 				//add the recognized token into array
+				if(rules[i].token_type == TK_NOTYPE)
+					continue;
          switch (rules[i].token_type) {
-					case TK_NOTYPE:	
-							break;
 					case HEX:
 					case REG:
 					case NUM_TYPE:
@@ -122,20 +122,13 @@ static bool make_token(char *e) {
 							//若是第二个，然后前面是符号 or 前面有两个连续的符号，那么在读入的时候就填上符号
 							memset(tokens[nr_token].str, 0, 32);//clear length is 32
 							strncpy(tokens[nr_token].str, substr_start, substr_len);
-							tokens[nr_token].type = rules[i].token_type;
-							/*int num;
-							sscanf(tokens[nr_token].str, "%d", &num);
-							printf("single num = %d\n", num);
-			        printf("now nr_token = %d\n", nr_token);*/
-							tokens[nr_token].pri = rules[i].pri;
-							nr_token += 1;
 							break;
 					default:
-							tokens[nr_token].pri = rules[i].pri;
-							tokens[nr_token].type = rules[i].token_type;
-							nr_token += 1;
 							break;
         }
+				tokens[nr_token].type = rules[i].token_type;
+				tokens[nr_token].pri = rules[i].pri;
+				nr_token += 1;
         break;
       }
      }
