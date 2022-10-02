@@ -41,9 +41,10 @@ void init_wp_pool() {
     wp_pool[i].next = (i == NR_WP - 1 ? NULL : &wp_pool[i + 1]);
 		wp_pool[i].last = (i == 0 ? NULL : &wp_pool[i - 1]);
   }
-
   head = NULL;
   free_ = wp_pool;
+	if((free_)->next == &wp_pool[1])
+		printf("yes next\n");
 }
 
 /* TODO: Implement the functionality of watchpoint */
