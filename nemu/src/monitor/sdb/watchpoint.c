@@ -25,7 +25,7 @@ typedef struct watchpoint {
 	word_t now;//mark the now value and before value to compare whether the two are changed
 	word_t before;
 //	char* expression;//the expression to calculate
-	char* expression;
+	char expression[100];
 	bool *suc;
   /* TODO: Add more members if necessary */
 
@@ -58,7 +58,7 @@ WP* new_wp(char* args, int temp)
 	{  
 		WP* fr = free_;
 		fr->before = temp;
-		//strcpy(fr->expression, args);
+		strcpy(fr->expression, args);
 		if(head == NULL)
 		{
 			//there is no wp exists
