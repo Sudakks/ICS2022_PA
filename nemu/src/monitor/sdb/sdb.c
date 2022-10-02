@@ -124,7 +124,7 @@ static int cmd_x(char *args){
 	int len = 4;
 	for(int i = 1; i <= time; i++)
 	{
-		printf("%#X %#X\n", addr, vaddr_read(addr, len));
+		printf("%#X %#10X\n", addr, vaddr_read(addr, len));
 		addr += 4;
 	}
 	return 0;
