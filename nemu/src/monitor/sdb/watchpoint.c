@@ -42,7 +42,7 @@ void init_wp_pool() {
   }
 
   head = NULL;
-  free_ = wp_pool+1;
+  free_ = wp_pool;
 }
 
 /* TODO: Implement the functionality of watchpoint */
@@ -56,7 +56,14 @@ WP* new_wp(char* e)
 	else
 	{ 
 		WP* fr = free_;
-		fr->expression = e;
+		//fr->expression = e;
+		//赋值直接！
+		int idx = 0;
+		while(e[idx] != '\0')
+		{
+			*(fr->expression + idx) = e[idx];
+			idx++;
+		}
 		fr->suc = malloc(sizeof(bool));
 		*(fr->suc) = true;
 		fr->before = expr(fr->expression, fr->suc);
