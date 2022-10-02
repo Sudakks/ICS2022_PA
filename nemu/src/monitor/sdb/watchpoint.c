@@ -104,13 +104,8 @@ void scan_wps()
 	while(sta != NULL)
 	{
 		sta->now = expr(sta->expression, sta->suc);
-		printf("AAAAAAA\n");
-		if(sta == NULL)
-			printf("wrong here\n");
-		printf("BBBBBB\n");
-		if(*(sta->suc) == true)
-		{
-			printf("reach here!\n");
+		printf("now = %d, before = %d\n", sta->now, sta->before);
+		printf("reach here!\n");
 			if(sta->now != sta->before)
 			{
 				printf("Watchpoint %d\n", sta->NO);
@@ -119,7 +114,6 @@ void scan_wps()
 				sta->before = sta->now;
 				nemu_state.state = NEMU_STOP;
 		 	}
-		}
 		sta = sta->next;
 	} 
 }
