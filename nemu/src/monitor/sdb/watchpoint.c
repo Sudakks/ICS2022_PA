@@ -40,7 +40,7 @@ void init_wp_pool() {
     wp_pool[i].NO = i;
     wp_pool[i].next = (i == NR_WP - 1 ? NULL : &wp_pool[i + 1]);
 		wp_pool[i].last = (i == 0 ? NULL : &wp_pool[i - 1]);
-		printf("addr %d = %p", i, &wp_pool[i]);
+		printf("addr %d = %p\n", i, &wp_pool[i]);
   }
   head = NULL;
   free_ = wp_pool;
