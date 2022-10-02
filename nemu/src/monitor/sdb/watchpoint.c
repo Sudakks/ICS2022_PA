@@ -175,6 +175,7 @@ bool del_wp(int idx)
 			free_wp(sta);
 			return true;
 		}
+		sta = sta->next;
 	}
 	return false;
 }
