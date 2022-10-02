@@ -128,7 +128,7 @@ void scan_wps()
 			if(sta->now != sta->before)
 			{
 				flag = 1;
-				printf("Watchpoint %d:  ", sta->NO);
+				printf("Hit watchpoint %d:  ", sta->NO);
 				print_expr(sta);
 				printf("Old value = %u\n", sta->before);
 				printf("New value = %u\n", sta->now);
@@ -154,3 +154,17 @@ void print_wps()
 	}
 }
 
+bool del_wp(int idx)
+{
+	WP* sta = head;
+	while(sta != NULL)
+	{
+		if(sta->NO == idx)
+		{
+			//find the target
+			free_wp(sta);
+			return true;
+		}
+	}
+	return false;
+}

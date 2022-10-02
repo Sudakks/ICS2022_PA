@@ -26,6 +26,7 @@ word_t paddr_read(paddr_t addr, int len);
 void init_regex();
 word_t expr(char *e, bool *success);
 void init_wp_pool();
+bool del_wp(int idx);
 struct watchpoint* new_wp(char* args, word_t temp);//remember to add "struct"!!!
 void print_wps();
 #define EOF (-1)
@@ -74,7 +75,7 @@ static int cmd_si(char *args)
 			printf("Invalid argument!\n");
 			return 0;
 		}
-	}
+	} 
 //parse the times cpu should execute
 	cpu_exec(time);
 	return 0;
@@ -143,7 +144,7 @@ static int cmd_p(char *args){
 	return 0;
 }
 
-static int  cmd_w(char *args)
+static int cmd_w(char *args)
 {
 	if(args == NULL)
 	{ 
@@ -160,6 +161,22 @@ static int  cmd_w(char *args)
 	new_wp(args, temp);
 	return 0;
 }
+static int cmd_d(char *args)
+{
+	char *arg = strtok(args, " ");
+	if(arg == NULL)
+	{
+		printf("Lack enough arguments!\n");
+		return 0;
+	}
+	int wp = atoi(arg);
+  bool suc = del_wp(wp);
+	if(suc == false)
+		printf("Failed! No such watchpoint!\n");
+	else
+		printf("Watchpoint %d deleted!\n", wp);
+	return 0;
+}
 
 static struct {
   const char *name;
@@ -174,6 +191,7 @@ static struct {
 	{ "x", "scan the memory", cmd_x},
 	{ "p", "calculate the given expression", cmd_p},
 	{ "w", "set watchpoints", cmd_w},
+	{ "d", "delete a certain watchpoint", cmd_d},
   /* TODO: Add more commands */
 
 };
