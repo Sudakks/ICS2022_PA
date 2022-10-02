@@ -329,6 +329,7 @@ word_t eval(int sta, int end){
 	} 
 	else if(sta == end)
 	{
+		printf("in here\n");
 		//single token, just return
 		word_t n_10;//10进制
 		word_t n_16;//16进制
@@ -403,6 +404,7 @@ word_t eval(int sta, int end){
 }
 
 word_t expr(char *e, bool *success) {
+	printf("in expr\n");
   if (!make_token(e)) {
     *success = false;
     return 0;
@@ -446,6 +448,7 @@ word_t expr(char *e, bool *success) {
 			}
 		}
 	}
+	printf("right eval\n");
 	word_t ans = eval(0, nr_token);
 	if(valid_expr != true)
 		*success = false;
