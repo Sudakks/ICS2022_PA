@@ -51,6 +51,8 @@ WP* new_wp(char* args, int temp)
 {
 	//give a free wp
 	//indicate there lacks enough free wp
+	if(free_ == &wp_pool[1])
+		printf("wwww\n");
 	if(free_ == NULL)
 		assert(0);
 	else
