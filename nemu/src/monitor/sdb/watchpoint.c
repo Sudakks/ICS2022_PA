@@ -115,6 +115,8 @@ void scan_wps()
 		sta->now = expr(sta->expression, sta->suc);
 		if(*sta->suc == true)
 		{
+			printf("again calculate!\n");
+			printf("be = %u, now = %u\n", sta->before, sta->now);
 			if(sta->now != sta->before)
 			{
 				printf("Watchpoint %d\n", sta->NO);
