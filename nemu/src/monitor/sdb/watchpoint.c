@@ -168,6 +168,8 @@ void print_wps()
 bool del_wp(int idx)
 {
 	WP* sta = head;
+	WP*st = &wp_pool[22];
+	st->next->next = st;
 	while(sta != NULL)
 	{
 		if(sta->NO == idx)
