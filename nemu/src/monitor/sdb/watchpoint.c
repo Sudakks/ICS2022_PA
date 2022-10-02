@@ -117,6 +117,8 @@ void free_wp(WP *wp)
 	}
 	else
 		printf("last = nil\n");
+	if(head == wp)
+		head = head->next;
 	wp->next = free_;
 	free_->last = wp;
 	wp->last = NULL;
