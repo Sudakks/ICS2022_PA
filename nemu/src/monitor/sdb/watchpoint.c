@@ -60,7 +60,7 @@ WP* new_wp(char* e)
 		//赋值直接！
 		fr->expression = malloc(sizeof(char));
 		int idx = 0;
-		while(*(e + idx) != '\0')
+		while(*(e + idx) != '\n')
 		{
 			*(fr->expression + idx) = *(e + idx);
 			idx++;
