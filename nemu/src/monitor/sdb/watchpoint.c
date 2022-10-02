@@ -24,8 +24,8 @@ typedef struct watchpoint {
 	struct watchpoint *last;//point to last one
 	word_t now;//mark the now value and before value to compare whether the two are changed
 	word_t before;
-	char* expression;//the expression to calculate
-//	char expression[100];
+	//char* expression;//the expression to calculate
+	char expression[512];
 	bool *suc;
   /* TODO: Add more members if necessary */
 
