@@ -104,7 +104,9 @@ void scan_wps()
 	while(sta != NULL)
 	{
 		sta->now = expr(sta->expression, sta->suc);
+		printf("AAAAAAA\n");
 		printf("suc = %d\n", *(sta->suc));
+		printf("BBBBBB\n");
 		if(*(sta->suc) == true)
 		{
 			printf("reach here!\n");
