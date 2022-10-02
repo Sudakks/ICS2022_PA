@@ -56,7 +56,7 @@ WP* new_wp(char* e)
 	else
 	{ 
 		WP* fr = free_;
-		//fr->expression = e;
+		fr->expression = e;
 		//赋值直接！
 		//int idx = 0;
 		/*while(e[idx] != '\0')
