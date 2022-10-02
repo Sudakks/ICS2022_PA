@@ -56,9 +56,10 @@ WP* new_wp(char* args, int temp)
 		assert(0);
 	else
 	{  
-		WP* fr = free_;
+		WP* fr;
+		fr = free_;
 		fr->before = temp;
-//		strcpy(fr->expression, args);
+		strcpy(fr->expression, args);
 		if(head == NULL)
 		{
 			//there is no wp exists
