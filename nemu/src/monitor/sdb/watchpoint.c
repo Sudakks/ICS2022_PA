@@ -100,11 +100,11 @@ void scan_wps()
 		{
 			if(sta->now != sta->before)
 			{
-				printf("Watchpoint %d\n", sta->NO);
+			/*	printf("Watchpoint %d\n", sta->NO);
 				printf("Old value = %u\n", sta->before);
 				printf("New value = %u\n", sta->now);
 				sta->before = sta->now;
-				nemu_state.state = NEMU_STOP;
+				nemu_state.state = NEMU_STOP;*/
 			}
 		}
 		sta += 1;
