@@ -370,23 +370,23 @@ word_t eval(int sta, int end){
 		if(op == -1)
 	   {
 			valid_expr = false;
-	  	printf("HERE A\n");
+	  	//printf("HERE A\n");
 			return 0;
 		}  
 		printf("op = %d\n", op);
-	  printf("area1: %d, %d\narea2: %d, %d\n", sta, op-1,op+1,end);
+	  //printf("area1: %d, %d\narea2: %d, %d\n", sta, op-1,op+1,end);
 		int op_type = tokens[op].type;
 		word_t val1 = eval(sta, op - 1);
 		word_t val2 = eval(op + 1, end);
 	//	printf("val1 = %u, val2 = %u\n", val1, val2);
-		//printf("type now = %d\n", op_type);
+		printf("type now = %d\n", op_type);
 		 switch(op_type){
 			case '+':	return val1 + val2;
 			case '-': return val1 - val2;
 			case '*': return val1 * val2;
 			case '/':
 				if(val2 == 0)
-				{
+				{ 
 					valid_expr = false;
 					return 0;
 		 		}
@@ -395,9 +395,9 @@ word_t eval(int sta, int end){
 			case TK_EQ: return val1 == val2;
 			case TK_NEQ: return val1 != val2;
 			case TK_AND: return val1 && val2;
-			case TK_DEF: printf("ans = %u\n", vaddr_read(val2, 4));return vaddr_read(val2, 4);
+			case TK_DEF: printf("DEF!!\nans = %u\n", vaddr_read(val2, 4));return vaddr_read(val2, 4);
 			default: assert(0);
-		 } 
+		 }  
 	}   
 }
 
