@@ -105,7 +105,8 @@ void scan_wps()
 	{
 		sta->now = expr(sta->expression, sta->suc);
 		printf("AAAAAAA\n");
-		printf("suc = %d\n", *(sta->suc));
+		if(sta == NULL)
+			printf("wrong here\n");
 		printf("BBBBBB\n");
 		if(*(sta->suc) == true)
 		{
