@@ -58,12 +58,13 @@ WP* new_wp(char* e)
 		WP* fr = free_;
 		fr->expression = e;
 		//赋值直接！
-		//int idx = 0;
-		/*while(e[idx] != '\0')
+		fr->expression = malloc(sizeof(char));
+		int idx = 0;
+		while(*(e + idx) != '\0')
 		{
-			*(fr->expression + idx) = e[idx];
+			*(fr->expression + idx) = *(e + idx);
 			idx++;
-		}*/
+		}
 		fr->suc = malloc(sizeof(bool));
 		*(fr->suc) = true;
 		fr->before = expr(fr->expression, fr->suc);
