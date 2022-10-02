@@ -462,7 +462,10 @@ word_t expr(char *e, bool *success) {
 	printf("anss = %u\n", ans);
 	int xx = 0;
 	while(e[xx] != '\0')
+	{
 		printf("%c", e[xx]);
+		xx++;
+	}
 	printf("\n");
 	return ans;
 	return 0;
