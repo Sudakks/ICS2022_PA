@@ -109,9 +109,9 @@ void scan_wps()
 	WP* sta = head;
 	if(sta == NULL)
 		printf("null!\n");
-	/*while(sta != NULL)
+	while(sta != NULL)
 	{
-		printf("NO = %d\n", sta->NO);
+		/*printf("NO = %d\n", sta->NO);
 		sta->now = expr(sta->expression, sta->suc);
 		if(*sta->suc == true)
 		{
@@ -123,7 +123,7 @@ void scan_wps()
 				sta->before = sta->now;
 				nemu_state.state = NEMU_STOP;
 			}
-		}
+		}*/
 		sta++;
-	}*/
+	}
 }
