@@ -105,6 +105,7 @@ void free_wp(WP *wp)
 
 void scan_wps()
 {
+	int flag = 0;//indicate whether there has some values to be changed
 	WP* sta = head;
 	while(sta != NULL)
 	{
@@ -114,12 +115,20 @@ void scan_wps()
 	//	printf("reach here!\n");
 			if(sta->now != sta->before)
 			{
-				printf("Watchpoint %d\n", sta->NO);
+				flag = 1;
+				printf("Watchpoint %d  ", sta->NO);
+				int i = 0;
+				while(sta->expression[i] != '\0')
+				{
+					printf("%c", (sta->expression[i]));
+					i++;
+				}
 				printf("Old value = %u\n", sta->before);
 				printf("New value = %u\n", sta->now);
 				sta->before = sta->now;
-				nemu_state.state = NEMU_STOP;
 		 	}
 		sta = sta->next;
 	} 
+	if(flag == 1)
+		nemu_state.state = NEMU_STOP;
 }
