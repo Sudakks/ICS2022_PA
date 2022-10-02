@@ -21,6 +21,7 @@
 typedef struct watchpoint {
   int NO;
   struct watchpoint *next;
+	struct watchpoint *last;//point to last one
 	word_t now;//mark the now value and before value to compare whether the two are changed
 	word_t before;
 	char* expression;//the expression to calculate
@@ -37,6 +38,7 @@ void init_wp_pool() {
   for (i = 0; i < NR_WP; i ++) {
     wp_pool[i].NO = i;
     wp_pool[i].next = (i == NR_WP - 1 ? NULL : &wp_pool[i + 1]);
+		wp_pool[i].last = (i == 0 ? NULL : &wp_pool[i - 1]);
   }
 
   head = NULL;
@@ -53,28 +55,30 @@ WP* new_wp(char* e)
 		assert(0);
 	else
 	{ 
-		for(int s = 0; s <= 12; s++)
-			printf("%c", e[s]);
-		printf("\n");
 		WP* fr = free_;
 		fr->expression = e;
 		fr->suc = malloc(sizeof(bool));
 		*(fr->suc) = true;
 		fr->before = expr(e, fr->suc);
-		if(*(fr->expression) == true)
-			printf("suc = %d\n", *(fr->suc));
 		if(*(fr->suc) == false)
 			printf("Invalid expression! Can't watch this value!\n"); 
+		else 
+			printf("yes cal\n");
 		if(head == NULL)
 		{
 			//there is no wp exists
+			printf("set first\n");
 			head = fr;
+			head->last = NULL;
+			head->next = NULL;
 		}
 		else
 		{
 			//head insert
 			fr -> next = head;
+			head->last = fr;
 			head = fr;
+			head->last = NULL;
 		} 
 		free_ = free_ -> next;
 		return fr;
@@ -85,7 +89,17 @@ WP* new_wp(char* e)
 void free_wp(WP *wp)
 {
 	//return the wp back to free_
+	if(wp->next != NULL)
+	{
+		wp->next->last = wp->last;
+	}
+	if(wp->last != NULL)
+	{
+		wp->last->next = wp->next;
+	}
 	wp->next = free_;
+	free_->last = wp;
+	wp->last = NULL;
 	free_ = wp;
 	//put the return one to the head of free_
 }
@@ -93,6 +107,8 @@ void free_wp(WP *wp)
 void scan_wps()
 {
 	WP* sta = head;
+	if(head == NULL)
+		printf("null!\n");
 	while(sta != NULL)
 	{
 		printf("NO = %d\n", sta->NO);
