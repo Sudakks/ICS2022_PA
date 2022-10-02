@@ -110,6 +110,13 @@ void scan_wps()
 	while(sta != NULL)
 	{
 	//	printf("NO = %d\n", sta->NO);
+		int xx = 0;
+		while(sta->expression[xx] != '\0')
+			{
+				printf("%c", sta->expression[xx]);
+				xx++;
+			}
+			printf("\n");
 		sta->now = expr(sta->expression, sta->suc);
 		if(*sta->suc == true)
 		{
@@ -122,8 +129,8 @@ void scan_wps()
 				printf("New value = %u\n", sta->now);
 				sta->before = sta->now;
 				nemu_state.state = NEMU_STOP;
-			}
-		}
+		 	}
+		 }
 		sta = sta->next;
-	}
+	} 
 }
