@@ -111,6 +111,7 @@ void scan_wps()
 	{
 	//	printf("NO = %d\n", sta->NO);
 		int xx = 0;
+		printf("in scan\n");
 		while(sta->expression[xx] != '\0')
 			{
 				printf("%c", sta->expression[xx]);
