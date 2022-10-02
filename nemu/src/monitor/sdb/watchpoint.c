@@ -59,9 +59,16 @@ WP* new_wp(char* e)
 		fr->expression = e;
 		fr->suc = malloc(sizeof(bool));
 		*(fr->suc) = true;
-		fr->before = expr(e, fr->suc);
+		fr->before = expr(fr->expression, fr->suc);
 		if(*(fr->suc) == false)
 			printf("Invalid expression! Can't watch this value!\n"); 
+		int xx = 0;
+		while(*(fr->expression + xx) != '\0')
+			{
+				printf("%c", *(fr->expression));
+				xx++;
+			}
+			printf("\n");
 		if(head == NULL)
 		{
 			//there is no wp exists
