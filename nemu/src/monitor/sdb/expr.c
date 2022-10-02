@@ -132,7 +132,6 @@ static bool make_token(char *e) {
         break;
       }
      }
-		 printf("nr_token = %d\n", nr_token);
     if (i == NR_REGEX) {
       printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
       return false;
@@ -321,7 +320,6 @@ word_t find_main_op(int sta, int end){
 
 word_t eval(int sta, int end){
 	//need to identify the invalid expr
-	printf("sta = %d, end = %d\n", sta, end);
 	if(valid_expr == false)
 		return 0;
 	if(sta > end)
@@ -330,7 +328,6 @@ word_t eval(int sta, int end){
 	} 
 	else if(sta == end)
 	{
-		printf("in here\n");
 		//single token, just return
 		word_t n_10;//10进制
 		word_t n_16;//16进制
@@ -350,7 +347,6 @@ word_t eval(int sta, int end){
 			case REG:
 				sscanf(tokens[sta].str, "%s", reg);
 				n_reg = isa_reg_str2val(reg, suc); 
-				printf("REG: %u\n", n_reg);
 				if(*suc == true)
 					return n_reg;
 				else
@@ -376,20 +372,20 @@ word_t eval(int sta, int end){
 	  	//printf("HERE A\n");
 			return 0;
 		}  
-		printf("op = %d\n", op);
+	//	printf("op = %d\n", op);
 	  //printf("area1: %d, %d\narea2: %d, %d\n", sta, op-1,op+1,end);
 		int op_type = tokens[op].type;
 		word_t val1 = eval(sta, op - 1);
 		word_t val2 = eval(op + 1, end);
 	//	printf("val1 = %u, val2 = %u\n", val1, val2);
-		printf("type now = %d\n", op_type);
-		 switch(op_type){
+	//	printf("type now = %d\n", op_type);
+		  switch(op_type){
 			case '+':	return val1 + val2;
 			case '-': return val1 - val2;
 			case '*': return val1 * val2;
 			case '/':
 				if(val2 == 0)
-				{ 
+		 		{ 
 					valid_expr = false;
 					return 0;
 		 		}
@@ -398,14 +394,13 @@ word_t eval(int sta, int end){
 			case TK_EQ: return val1 == val2;
 			case TK_NEQ: return val1 != val2;
 			case TK_AND: return val1 && val2;
-			case TK_DEF: printf("DEF!!\nans = %u\n", vaddr_read(val2, 4));return vaddr_read(val2, 4);
+			case TK_DEF: return vaddr_read(val2, 4);
 			default: assert(0);
 		 }  
 	}   
 }
 
 word_t expr(char *e, bool *success) {
-	printf("in expr\n");
   if (!make_token(e)) {
     *success = false;
     return 0;
@@ -460,15 +455,6 @@ word_t expr(char *e, bool *success) {
 	word_t ans = eval(0, nr_token);
 	if(valid_expr != true)
 		*success = false;
-	printf("anss = %u\n", ans);
-	printf("after end---------\n");
-	int xx = 0;
-	while(e[xx] != '\0')
-	{
-		printf("%c", e[xx]);
-		xx++;
-	}
-	printf("\n");
 	return ans;
 	return 0;
 }
