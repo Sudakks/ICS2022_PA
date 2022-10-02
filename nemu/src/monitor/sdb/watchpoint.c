@@ -106,8 +106,8 @@ void free_wp(WP *wp)
 
 void scan_wps()
 {
-	WP* sta = head;
-	if(head == NULL)
+	//WP* sta = head;
+	/*if(head == NULL)
 		printf("null!\n");
 	while(sta != NULL)
 	{
@@ -117,13 +117,13 @@ void scan_wps()
 		{
 			if(sta->now != sta->before)
 			{
-			/*	printf("Watchpoint %d\n", sta->NO);
+				printf("Watchpoint %d\n", sta->NO);
 				printf("Old value = %u\n", sta->before);
 				printf("New value = %u\n", sta->now);
 				sta->before = sta->now;
-				nemu_state.state = NEMU_STOP;*/
+				nemu_state.state = NEMU_STOP;
 			}
 		}
 		sta++;
-	}
+	}*/
 }
