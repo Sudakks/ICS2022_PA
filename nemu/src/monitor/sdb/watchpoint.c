@@ -40,7 +40,7 @@ void init_wp_pool() {
     wp_pool[i].NO = i;
     wp_pool[i].next = (i == NR_WP - 1 ? NULL : &wp_pool[i + 1]);
 		wp_pool[i].last = (i == 0 ? NULL : &wp_pool[i - 1]);
-		printf("addr %d = %p\n", i, &wp_pool[i]);
+		//printf("addr %d = %p\n", i, &wp_pool[i]);
   }
   head = NULL;
   free_ = wp_pool;
@@ -52,7 +52,7 @@ WP* new_wp(char* args, int temp)
 {
 	//give a free wp
 	//indicate there lacks enough free wp
-	printf("free addr = %p\n", free_);
+	//printf("free addr = %p\n", free_);
 	if(free_ == NULL)
 		assert(0);
 	else
@@ -79,18 +79,7 @@ WP* new_wp(char* args, int temp)
 			head = fr;
 			head->last = NULL;
 		} 
-		/*if(free_ == &wp_pool[0])
-			printf("now is 0\n");
-		if(wp_pool[0].next == NULL)
-			printf("next is null\n");
-		if(wp_pool[0].next == &wp_pool[1])
-			printf("next is 1\n");
-		if(free_->next == &wp_pool[1])
-			printf("should be right\n");
-		if(free_->next == NULL)
-			printf("why nil\n");
-		printf("reach here\n");*/
-		printf("next addr = %p\n", free_);
+		//printf("next addr = %p\n", free_);
 		return fr;
 		//may need modify the info
 	}  
