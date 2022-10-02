@@ -68,6 +68,7 @@ WP* new_wp(char* args, int temp)
 		}
 		else
 		{
+			printf("have one\n");
 			//head insert
 			fr -> next = head;
 			head->last = fr;
