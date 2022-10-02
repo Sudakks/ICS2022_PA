@@ -455,6 +455,7 @@ word_t expr(char *e, bool *success) {
 		printf("%c", e[xx]);
 		xx++;
 	}
+	printf("\n");
 }
 	word_t ans = eval(0, nr_token);
 	if(valid_expr != true)

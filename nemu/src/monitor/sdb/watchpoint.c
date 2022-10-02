@@ -106,7 +106,7 @@ void scan_wps()
 	WP* sta = head;
 	while(sta != NULL)
 	{
-	//	printf("NO = %d\n", sta->NO);
+		printf("NO = %d\n", sta->NO);
 		int xx = 0;
 		printf("when scan in---------\n");
 		while(sta->expression[xx] != '\0')
