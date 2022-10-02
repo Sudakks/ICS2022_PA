@@ -24,8 +24,8 @@ typedef struct watchpoint {
 	struct watchpoint *last;//point to last one
 	word_t now;//mark the now value and before value to compare whether the two are changed
 	word_t before;
-//	char* expression;//the expression to calculate
-	char expression[100];
+	char* expression;//the expression to calculate
+//	char expression[100];
 	bool *suc;
   /* TODO: Add more members if necessary */
 
@@ -103,7 +103,8 @@ void scan_wps()
 	WP* sta = head;
 	while(sta != NULL)
 	{
-		sta->now = expr(sta->expression, sta->suc);
+		bool suc = true;
+		sta->now = expr(sta->expression, &suc);
 	//	printf("now = %d, before = %d\n", sta->now, sta->before);
 	//	printf("reach here!\n");
 			if(sta->now != sta->before)

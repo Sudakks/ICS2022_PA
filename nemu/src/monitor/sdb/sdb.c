@@ -66,7 +66,14 @@ static int cmd_si(char *args)
   if (arg == NULL)
 		time = 1;
 	else
+	{
 		time = atoi(arg); 
+		if(time < 0)
+		{
+			printf("Invalid input!\n");
+			return 0;
+		}
+	}
 //parse the times cpu should execute
 	cpu_exec(time);
 	return 0;
