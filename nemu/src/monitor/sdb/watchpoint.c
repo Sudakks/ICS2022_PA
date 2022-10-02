@@ -35,7 +35,6 @@ static WP wp_pool[NR_WP] = {};
 static WP *head = NULL, *free_ = NULL;
 
 void init_wp_pool() {
-	printf("init\n");
   int i;
   for (i = 0; i < NR_WP; i ++) {
     wp_pool[i].NO = i;
@@ -44,8 +43,6 @@ void init_wp_pool() {
   }
   head = NULL;
   free_ = wp_pool;
-	if((free_)->next == &wp_pool[1])
-		printf("yes next\n");
 }
 
 /* TODO: Implement the functionality of watchpoint */
@@ -60,6 +57,8 @@ WP* new_wp(char* args, int temp)
 	{  
 		if(free_ == &wp_pool[0])
 			printf("yes 0\n");
+		if(free_->next == &wp_pool[1])
+			printf("yes1\n");
 		WP* fr = free_;
 		fr->before = temp;
 		strcpy(fr->expression, args);
