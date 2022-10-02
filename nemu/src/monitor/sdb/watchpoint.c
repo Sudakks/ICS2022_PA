@@ -56,6 +56,8 @@ WP* new_wp(char* args, int temp)
 		assert(0);
 	else
 	{  
+		if(free_ == &wp_pool[0])
+			printf("yes 0\n");
 		WP* fr = free_;
 		fr->before = temp;
 		strcpy(fr->expression, args);
@@ -76,6 +78,8 @@ WP* new_wp(char* args, int temp)
 			head->last = NULL;
 		} 
 		free_ = free_ -> next;
+		if(free_ == &wp_pool[1])
+			printf("yes 1\n");
 		return fr;
 		//may need modify the info
 	}  
