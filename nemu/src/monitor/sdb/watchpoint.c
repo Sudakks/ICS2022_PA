@@ -69,6 +69,7 @@ WP* new_wp(char* args, int temp)
 	{  
 		WP* fr = free_;
 		fr->before = temp;
+		memset(fr->expression, 0, sizeof(fr->expression));
 		strcpy(fr->expression, args);
 		if(head == NULL)
 		{
@@ -102,12 +103,18 @@ void free_wp(WP *wp)
 	//return the wp back to free_
 	if(wp->next != NULL)
 	{
+		printf("next NO = %d\n", wp->next->NO);
 		wp->next->last = wp->last;
 	}
+	else
+		printf("next = nil\n");
 	if(wp->last != NULL)
 	{
+		printf("last NO = %d\n", wp->last->NO);
 		wp->last->next = wp->next;
 	}
+	else
+		printf("last = nil\n");
 	wp->next = free_;
 	free_->last = wp;
 	wp->last = NULL;
