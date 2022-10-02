@@ -129,6 +129,7 @@ void scan_wps()
 			{
 				flag = 1;
 				printf("Watchpoint %d  ", sta->NO);
+				print_expr(sta);
 				printf("Old value = %u\n", sta->before);
 				printf("New value = %u\n", sta->now);
 				sta->before = sta->now;
