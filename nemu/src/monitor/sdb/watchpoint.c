@@ -56,22 +56,12 @@ WP* new_wp(char* e)
 	else
 	{ 
 		WP* fr = free_;
-
-		int len = strlen(e);
-		for(int i = 0; i < len; i++)
-			printf("i = %d, A%cA\n", i, *(e+i));
-		printf("len = %d\n", len);
-		fr->expression = (char*)malloc(len);
-	//	for(int i = 0; i < len; i++)
-		//	*(fr->expression + i) = *(e + i);
-
-		//int idx = 0;
+		fr->expression = e;
 		fr->suc = malloc(sizeof(bool));
 		*(fr->suc) = true;
 		fr->before = expr(fr->expression, fr->suc);
 		if(*(fr->suc) == false)
 			printf("Invalid expression! Can't watch this value!\n"); 
-		printf("at first idx = %d\n", fr->NO);
 		int xx = 0;
 		printf("第一次计算后\n");
 		while(*(fr->expression + xx) != '\0')
@@ -124,7 +114,6 @@ void scan_wps()
 	WP* sta = head;
 	while(sta != NULL)
 	{
-		printf("NO = %d\n", sta->NO);
 		int xx = 0;
 		printf("when scan in---------\n");
 		while(*(sta->expression+xx) != '\0')
@@ -136,7 +125,6 @@ void scan_wps()
 		sta->now = expr(sta->expression, sta->suc);
 		if(*sta->suc == true)
 		{
-			printf("again calculate!\n");
 			printf("be = %u, now = %u\n", sta->before, sta->now);
 			if(sta->now != sta->before)
 			{
