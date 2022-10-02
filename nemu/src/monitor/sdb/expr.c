@@ -332,12 +332,11 @@ word_t eval(int sta, int end){
 		word_t n_10;//10进制
 		word_t n_16;//16进制
 		word_t n_reg;//寄存器的直
-		char *reg = malloc(sizeof(char));
-		bool *suc = malloc(sizeof(bool));
-		*suc = true;
+		char *reg = (char*)malloc(sizeof(char*));
+		bool suc = true;
 		//此时要看读的数是什么类型
 		switch(tokens[sta].type)
-		{
+		{ 
 			case NUM_TYPE://10
 				sscanf(tokens[sta].str, "%u", &n_10);
 				return n_10;
@@ -346,11 +345,11 @@ word_t eval(int sta, int end){
 				return n_16;
 			case REG:
 				sscanf(tokens[sta].str, "%s", reg);
-				n_reg = isa_reg_str2val(reg, suc); 
-				if(*suc == true)
+				n_reg = isa_reg_str2val(reg, &suc); 
+				if(suc == true)
 					return n_reg;
 				else
-				{
+				{ 
 					valid_expr = false;
 					return 0;
 				}
