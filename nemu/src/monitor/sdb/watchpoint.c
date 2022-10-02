@@ -24,7 +24,8 @@ typedef struct watchpoint {
 	struct watchpoint *last;//point to last one
 	word_t now;//mark the now value and before value to compare whether the two are changed
 	word_t before;
-	char* expression;//the expression to calculate
+//	char* expression;//the expression to calculate
+	char expression[10];
 	bool *suc;
   /* TODO: Add more members if necessary */
 
@@ -56,20 +57,19 @@ WP* new_wp(char* e)
 	else
 	{ 
 		WP* fr = free_;
-		fr->expression = e;
+	//	fr->expression = e;
+		fr->expression[0] = '$';
+		fr->expression[1]= 't';
+		fr->expression[2] = '0';
 		fr->suc = malloc(sizeof(bool));
 		*(fr->suc) = true;
 		fr->before = expr(fr->expression, fr->suc);
 		if(*(fr->suc) == false)
 			printf("Invalid expression! Can't watch this value!\n"); 
-		int xx = 0;
 		printf("第一次计算后\n");
-		while(*(fr->expression + xx) != '\0')
-			{
-				printf("%c", *(fr->expression+xx));
-				xx++;
-			}
-			printf("\n");
+		for(int i = 0; i < 3; i++)
+			printf("%c", fr->expression[i]);
+		printf("\n");
 		if(head == NULL)
 		{
 			//there is no wp exists
@@ -88,7 +88,7 @@ WP* new_wp(char* e)
 		free_ = free_ -> next;
 		return fr;
 		//may need modify the info
-	} 
+	}  
 }
 
 void free_wp(WP *wp)
@@ -114,14 +114,15 @@ void scan_wps()
 	WP* sta = head;
 	while(sta != NULL)
 	{
-		int xx = 0;
 		printf("when scan in---------\n");
-		while(*(sta->expression+xx) != '\0')
+		/*while(*(sta->expression+xx) != '\0')
 			{
 				printf("%c",*( sta->expression+xx));
 				xx++;
-			}
-			printf("\n");
+			}*/
+		for(int i = 0; i < 3; i++)
+			printf("%c", sta->expression[i]);
+		printf("\n");
 		sta->now = expr(sta->expression, sta->suc);
 		if(*sta->suc == true)
 		{
