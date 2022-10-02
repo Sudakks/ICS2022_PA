@@ -321,6 +321,7 @@ word_t find_main_op(int sta, int end){
 
 word_t eval(int sta, int end){
 	//need to identify the invalid expr
+	printf("sta = %d, end = %d\n", sta, end);
 	if(valid_expr == false)
 		return 0;
 	if(sta > end)
@@ -448,7 +449,6 @@ word_t expr(char *e, bool *success) {
 			}
 		}
 	}
-	printf("right eval\n");
 	word_t ans = eval(0, nr_token);
 	if(valid_expr != true)
 		*success = false;
