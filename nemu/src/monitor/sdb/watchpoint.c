@@ -62,12 +62,9 @@ WP* new_wp(char* e)
 		fr->before = expr(e, fr->suc);
 		if(*(fr->suc) == false)
 			printf("Invalid expression! Can't watch this value!\n"); 
-		else 
-			printf("yes cal\n");
 		if(head == NULL)
 		{
 			//there is no wp exists
-			printf("set first\n");
 			head = fr;
 			head->last = NULL;
 			head->next = NULL;
@@ -111,7 +108,7 @@ void scan_wps()
 	{
 	//	printf("NO = %d\n", sta->NO);
 		int xx = 0;
-		printf("in scan\n");
+		printf("when scan in---------\n");
 		while(sta->expression[xx] != '\0')
 			{
 				printf("%c", sta->expression[xx]);

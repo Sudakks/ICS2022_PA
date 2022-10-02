@@ -90,14 +90,7 @@ static bool make_token(char *e) {
   int i;
   regmatch_t pmatch;
   nr_token = 0;
-	int xx = 0;
     /* Try all rules one by one. */
-		while(e[xx] != '\0')
-		{
-			printf("%c", e[xx]);
-			xx++;
-		}
-		printf("\n");
 		while(e[position] != '\0'){
     for (i = 0; i < NR_REGEX; i ++) {
        if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
@@ -455,11 +448,19 @@ word_t expr(char *e, bool *success) {
 				tokens[i].pri = 5; 
 			}
 		}
+	printf("before end---------\n");
+	int xx = 0;
+	while(e[xx] != '\0')
+	{
+		printf("%c", e[xx]);
+		xx++;
 	}
+}
 	word_t ans = eval(0, nr_token);
 	if(valid_expr != true)
 		*success = false;
 	printf("anss = %u\n", ans);
+	printf("after end---------\n");
 	int xx = 0;
 	while(e[xx] != '\0')
 	{
