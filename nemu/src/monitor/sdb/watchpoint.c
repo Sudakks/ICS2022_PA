@@ -17,7 +17,7 @@
 #include <cpu/cpu.h>
 
 #define NR_WP 32
-
+word_t expr(char *e, bool *success);
 typedef struct watchpoint {
   int NO;
   struct watchpoint *next;
@@ -107,11 +107,9 @@ void free_wp(WP *wp)
 void scan_wps()
 {
 	WP* sta = head;
-	if(sta == NULL)
-		printf("null!\n");
 	while(sta != NULL)
 	{
-		printf("NO = %d\n", sta->NO);
+	//	printf("NO = %d\n", sta->NO);
 		sta->now = expr(sta->expression, sta->suc);
 		if(*sta->suc == true)
 		{
