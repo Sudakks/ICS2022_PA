@@ -59,6 +59,8 @@ WP* new_wp(char* args, int temp)
 			printf("yes 0\n");
 		if(free_->next == &wp_pool[1])
 			printf("yes1\n");
+		if(&wp_pool[1] == NULL)
+			printf("Null\n");
 		WP* fr = free_;
 		fr->before = temp;
 		strcpy(fr->expression, args);
