@@ -443,14 +443,6 @@ word_t expr(char *e, bool *success) {
 				tokens[i].pri = 5; 
 			}
 		}
-	printf("before end---------\n");
-	int xx = 0;
-	while(e[xx] != '\0')
-	{
-		printf("%c", e[xx]);
-		xx++;
-	}
-	printf("\n");
 }
 	word_t ans = eval(0, nr_token);
 	if(valid_expr != true)
