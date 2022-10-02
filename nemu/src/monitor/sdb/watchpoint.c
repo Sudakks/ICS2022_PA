@@ -62,6 +62,7 @@ WP* new_wp(char* e)
 		fr->before = expr(fr->expression, fr->suc);
 		if(*(fr->suc) == false)
 			printf("Invalid expression! Can't watch this value!\n"); 
+		printf("at first idx = %d\n", fr->NO);
 		int xx = 0;
 		printf("第一次计算后\n");
 		while(*(fr->expression + xx) != '\0')
