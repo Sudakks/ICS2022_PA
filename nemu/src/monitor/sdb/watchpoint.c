@@ -56,13 +56,14 @@ WP* new_wp(char* e)
 	else
 	{ 
 		WP* fr = free_;
-		fr->expression = e;
+		//fr->expression = e;
 		//赋值直接！
 		fr->expression = malloc(sizeof(char));
 		int idx = 0;
 		while(*(e + idx) != '\n')
 		{
-			*(fr->expression + idx) = *(e + idx);
+		//	*(fr->expression + idx) = *(e + idx);
+		printf("%c", *(e+idx));
 			idx++;
 		}
 		printf("len = %d\n", idx--);
