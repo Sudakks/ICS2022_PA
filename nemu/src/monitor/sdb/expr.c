@@ -90,7 +90,14 @@ static bool make_token(char *e) {
   int i;
   regmatch_t pmatch;
   nr_token = 0;
+	int xx = 0;
     /* Try all rules one by one. */
+		while(e[xx] != '\0')
+		{
+			printf("%c", e[xx]);
+			xx++;
+		}
+		printf("\n");
 		while(e[position] != '\0'){
     for (i = 0; i < NR_REGEX; i ++) {
        if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
@@ -410,7 +417,6 @@ word_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   } 
-	printf("now nr_token = %d\n", nr_token);
   /* TODO: Insert codes to evaluate the expression. */
   //now start to calculate the result
 	//特殊处理负数的情况
