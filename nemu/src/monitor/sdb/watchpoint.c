@@ -103,14 +103,16 @@ void free_wp(WP *wp)
 	//return the wp back to free_
 	if(wp->next != NULL)
 	{
-		printf("next NO = %d\n", wp->next->NO);
+		printf("ss\n");
+		//printf("next NO = %d\n", wp->next->NO);
 		wp->next->last = wp->last;
 	}
 	else
 		printf("next = nil\n");
 	if(wp->last != NULL)
 	{
-		printf("last NO = %d\n", wp->last->NO);
+		printf("ww\n");
+		//printf("last NO = %d\n", wp->last->NO);
 		wp->last->next = wp->next;
 	}
 	else
@@ -169,6 +171,7 @@ bool del_wp(int idx)
 		if(sta->NO == idx)
 		{
 			//find the target
+			printf("find!\n");
 			free_wp(sta);
 			return true;
 		}
