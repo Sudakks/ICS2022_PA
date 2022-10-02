@@ -448,6 +448,7 @@ word_t expr(char *e, bool *success) {
 	word_t ans = eval(0, nr_token);
 	if(valid_expr != true)
 		*success = false;
+	printf("anss = %u\n", ans);
 	return ans;
 	return 0;
 }
