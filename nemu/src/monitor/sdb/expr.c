@@ -332,7 +332,7 @@ word_t eval(int sta, int end){
 		word_t n_10;//10进制
 		word_t n_16;//16进制
 		word_t n_reg;//寄存器的直
-		char *reg = (char*)malloc(sizeof(char*));
+		char *reg = (char*)malloc(7);
 		bool suc = true;
 		//此时要看读的数是什么类型
 		switch(tokens[sta].type)
