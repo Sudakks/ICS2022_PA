@@ -65,6 +65,7 @@ WP* new_wp(char* e)
 			*(fr->expression + idx) = *(e + idx);
 			idx++;
 		}
+		printf("len = %d\n", idx--);
 		fr->suc = malloc(sizeof(bool));
 		*(fr->suc) = true;
 		fr->before = expr(fr->expression, fr->suc);
