@@ -63,9 +63,10 @@ WP* new_wp(char* e)
 		if(*(fr->suc) == false)
 			printf("Invalid expression! Can't watch this value!\n"); 
 		int xx = 0;
+		printf("第一次计算后\n");
 		while(*(fr->expression + xx) != '\0')
 			{
-				printf("%c", *(fr->expression));
+				printf("%c", *(fr->expression+xx));
 				xx++;
 			}
 			printf("\n");
