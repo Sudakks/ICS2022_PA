@@ -149,7 +149,7 @@ void print_wps()
 	{
 		printf("%-9d", sta->NO);
 		print_expr(sta);
-		sta++;
+		sta = sta->next;
 	}
 }
 
