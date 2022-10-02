@@ -33,6 +33,16 @@ typedef struct watchpoint {
 
 static WP wp_pool[NR_WP] = {};
 static WP *head = NULL, *free_ = NULL;
+void print_expr(WP *sta)
+{
+		int i = 0;
+		while(sta->expression[i] != '\0')
+		{
+			printf("%c", (sta->expression[i]));
+			i++;
+		}
+		printf("\n");
+}
 
 void init_wp_pool() {
   int i;
@@ -80,6 +90,8 @@ WP* new_wp(char* args, int temp)
 			head->last = NULL;
 		} 
 		//printf("next addr = %p\n", free_);
+		printf("Set watchpoint %d  ", fr->NO);
+		print_expr(fr);
 		return fr;
 		//may need modify the info
 	}  
@@ -117,13 +129,7 @@ void scan_wps()
 			{
 				flag = 1;
 				printf("Watchpoint %d  ", sta->NO);
-				int i = 0;
-				while(sta->expression[i] != '\0')
-				{
-					printf("%c", (sta->expression[i]));
-					i++;
-				}
-				printf("\nOld value = %u\n", sta->before);
+				printf("Old value = %u\n", sta->before);
 				printf("New value = %u\n", sta->now);
 				sta->before = sta->now;
 		 	}
