@@ -69,16 +69,15 @@ WP* new_wp(char* args, int temp)
 		}
 		else
 		{
-			printf("have one\n");
 			//head insert
 			fr -> next = head;
 			head->last = fr;
 			head = fr;
 			head->last = NULL;
 		} 
+		printf("reach here\n");
 		free_ = free_ -> next;
-		if(free_ == &wp_pool[1])
-			printf("yes 1\n");
+		printf("next addr = %p\n", free_);
 		return fr;
 		//may need modify the info
 	}  
