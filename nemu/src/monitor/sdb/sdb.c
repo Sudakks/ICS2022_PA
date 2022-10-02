@@ -26,7 +26,7 @@ word_t paddr_read(paddr_t addr, int len);
 void init_regex();
 word_t expr(char *e, bool *success);
 void init_wp_pool();
-struct watchpoint* new_wp(char* e);//remember to add "struct"!!!
+struct watchpoint* new_wp(char* args, word_t temp);//remember to add "struct"!!!
 #define EOF (-1)
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
@@ -134,7 +134,14 @@ static int  cmd_w(char *args)
 		printf("Lack enough arguments!\n");
 		return 0;
 	}
-	new_wp(args);
+	bool suc = true;
+	word_t temp = expr(args, &suc);
+	if(suc == false)
+	{
+		printf("Invalid expression! Can't watch this value!\n");
+		return 0;
+	}
+	new_wp(args, temp);
 	return 0;
 }
 

@@ -48,25 +48,17 @@ void init_wp_pool() {
 
 /* TODO: Implement the functionality of watchpoint */
 
-WP* new_wp(char* e)
+WP* new_wp(char* args, int temp)
 {
 	//give a free wp
 	//indicate there lacks enough free wp
 	if(free_ == NULL)
 		assert(0);
 	else
-	{ 
+	{  
 		WP* fr = free_;
-		strcpy(fr->expression, e);
-		fr->suc = malloc(sizeof(bool));
-		*(fr->suc) = true;
-		fr->before = expr(fr->expression, fr->suc);
-		if(*(fr->suc) == false)
-			printf("Invalid expression! Can't watch this value!\n"); 
-		/*printf("第一次计算后\n");
-		for(int i = 0; i < 3; i++)
-			printf("%c", fr->expression[i]);
-		printf("\n");*/
+		fr->before = temp;
+		strcpy(fr->expression, args);
 		if(head == NULL)
 		{
 			//there is no wp exists
@@ -111,19 +103,9 @@ void scan_wps()
 	WP* sta = head;
 	while(sta != NULL)
 	{
-		//printf("when scan in---------\n");
-		/*while(*(sta->expression+xx) != '\0')
-			{
-				printf("%c",*( sta->expression+xx));
-				xx++;
-			}*/
-		/*for(int i = 0; i < 3; i++)
-			printf("%c", sta->expression[i]);
-		printf("\n");*/
 		sta->now = expr(sta->expression, sta->suc);
 		if(*sta->suc == true)
 		{
-			printf("be = %u, now = %u\n", sta->before, sta->now);
 			if(sta->now != sta->before)
 			{
 				printf("Watchpoint %d\n", sta->NO);
