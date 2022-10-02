@@ -144,10 +144,11 @@ void print_wps()
 {
 	//print the information of wps
 	WP* sta = head;
-	printf("NO       What\n");
+	printf("NO       Old Value      What\n");
 	while(sta != NULL)
 	{
 		printf("%-9d", sta->NO);
+		printf("%-15u", sta->before);
 		print_expr(sta);
 		sta = sta->next;
 	}
