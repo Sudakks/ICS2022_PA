@@ -58,8 +58,10 @@ WP* new_wp(char* e)
 		WP* fr = free_;
 
 		int len = strlen(e);
+		for(int i = 0; i < len; i++)
+			printf("i = %d, A%cA\n", i, *(e+i));
 		printf("len = %d\n", len);
-		//fr->expression = malloc(sizeof(char));
+		fr->expression = (char*)malloc(len);
 	//	for(int i = 0; i < len; i++)
 		//	*(fr->expression + i) = *(e + i);
 
