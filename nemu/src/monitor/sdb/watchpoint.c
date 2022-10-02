@@ -75,6 +75,16 @@ WP* new_wp(char* args, int temp)
 			head = fr;
 			head->last = NULL;
 		} 
+		if(free_ == &wp_pool[0])
+			printf("now is 0\n");
+		if(wp_pool[0].next == NULL)
+			printf("next is null\n");
+		if(wp_pool[0].next == &wp_pool[1])
+			printf("next is 1\n");
+		if(free_->next == &wp_pool[1])
+			printf("should be right\n");
+		if(free_->next == NULL)
+			printf("why nil\n");
 		printf("reach here\n");
 		free_ = free_ -> next;
 		printf("next addr = %p\n", free_);
