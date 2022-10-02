@@ -42,6 +42,7 @@ void init_wp_pool() {
 		wp_pool[i].last = (i == 0 ? NULL : &wp_pool[i - 1]);
 		printf("addr %d = %p\n", i, &wp_pool[i]);
   }
+	printf("right? %d\n", wp_pool[0].next == &wp_pool[1]);
   head = NULL;
   free_ = wp_pool;
 }
