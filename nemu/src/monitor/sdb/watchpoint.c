@@ -123,7 +123,7 @@ void scan_wps()
 					printf("%c", (sta->expression[i]));
 					i++;
 				}
-				printf("Old value = %u\n", sta->before);
+				printf("\nOld value = %u\n", sta->before);
 				printf("New value = %u\n", sta->now);
 				sta->before = sta->now;
 		 	}
