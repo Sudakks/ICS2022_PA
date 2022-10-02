@@ -117,9 +117,9 @@ void scan_wps()
 		printf("NO = %d\n", sta->NO);
 		int xx = 0;
 		printf("when scan in---------\n");
-		while(sta->expression[xx] != '\0')
+		while(*(sta->expression+xx) != '\0')
 			{
-				printf("%c", sta->expression[xx]);
+				printf("%c",*( sta->expression+xx));
 				xx++;
 			}
 			printf("\n");
