@@ -90,7 +90,7 @@ WP* new_wp(char* args, int temp)
 			head->last = NULL;
 		} 
 		//printf("next addr = %p\n", free_);
-		printf("Set watchpoint %d  ", fr->NO);
+		printf("Set watchpoint %d:  ", fr->NO);
 		print_expr(fr);
 		return fr;
 		//may need modify the info
@@ -128,14 +128,28 @@ void scan_wps()
 			if(sta->now != sta->before)
 			{
 				flag = 1;
-				printf("Watchpoint %d  ", sta->NO);
+				printf("Watchpoint %d:  ", sta->NO);
 				print_expr(sta);
 				printf("Old value = %u\n", sta->before);
 				printf("New value = %u\n", sta->now);
 				sta->before = sta->now;
-		 	}
+		  	}
 		sta = sta->next;
-	} 
+	}  
 	if(flag == 1)
 		nemu_state.state = NEMU_STOP;
 }
+
+void print_wps()
+{
+	//print the information of wps
+	WP* sta = head;
+	printf("NO       What\n");
+	while(sta != NULL)
+	{
+		printf("%-9d", sta->NO);
+		print_expr(sta);
+		sta++;
+	}
+}
+

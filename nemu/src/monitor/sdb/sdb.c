@@ -27,6 +27,7 @@ void init_regex();
 word_t expr(char *e, bool *success);
 void init_wp_pool();
 struct watchpoint* new_wp(char* args, word_t temp);//remember to add "struct"!!!
+void print_wps();
 #define EOF (-1)
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
@@ -70,7 +71,7 @@ static int cmd_si(char *args)
 		time = atoi(arg); 
 		if(time < 0)
 		{
-			printf("Invalid input!\n");
+			printf("Invalid argument!\n");
 			return 0;
 		}
 	}
@@ -81,15 +82,18 @@ static int cmd_si(char *args)
 
 static int cmd_info(char *args){
 	char *arg = strtok(NULL, " ");
-	if(strcmp(arg, "r") == 0){//arg is not a pointer, *arg is a pointer
+	if(strcmp(arg, "r") == 0)
+	{//arg is not a pointer, *arg is a pointer
 		//print the registers
 		isa_reg_display();
-		}
-	else{
-		//print the watchpoints
-		/*TODO: add new function?*/
-		}
-		return 0;
+	}
+	else if(strcmp(arg, "w") == 0)
+	{
+		print_wps();
+	}
+	else 
+		printf("Invalid argument!\n");
+	return 0;
 }
 
 
@@ -107,8 +111,14 @@ static int cmd_x(char *args){
 		printf("Lack enough arguments!\n");
 		return 0;
 	}
-	paddr_t addr;
-	sscanf(arg, "%x", &addr);
+	bool suc = true;
+	paddr_t addr = expr(arg, &suc);
+	if(suc == false)
+	{
+		printf("Invalid argument!\n");
+		return 0;
+	}
+	//sscanf(arg, "%x", &addr);
 	int len = 4;
 	for(int i = 1; i <= time; i++)
 	{
@@ -124,10 +134,9 @@ static int cmd_p(char *args){
 		printf("Lack enough arguments!\n");
 		return 0;
 	}
-	bool *suc = malloc(sizeof(bool));
-	*suc = true;
-	word_t ans = expr(args, suc);
-	if(*suc == true)
+	bool suc = true;
+	word_t ans = expr(args, &suc);
+	if(suc == true)
 		printf("%u\n", ans);
 	else
 		printf("Invalid exprssion! Can't calculate!\n");
