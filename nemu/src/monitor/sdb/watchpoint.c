@@ -26,7 +26,6 @@ typedef struct watchpoint {
 	word_t before;
 	//char* expression;//the expression to calculate
 	char expression[512];
-	bool *suc;
   /* TODO: Add more members if necessary */
 
 } WP;
@@ -103,20 +102,12 @@ void free_wp(WP *wp)
 	//return the wp back to free_
 	if(wp->next != NULL)
 	{
-		printf("ss\n");
-		//printf("next NO = %d\n", wp->next->NO);
 		wp->next->last = wp->last;
 	}
-	else
-		printf("next = nil\n");
 	if(wp->last != NULL)
 	{
-		printf("ww\n");
-		//printf("last NO = %d\n", wp->last->NO);
 		wp->last->next = wp->next;
 	}
-	else
-		printf("last = nil\n");
 	if(head == wp)
 		head = head->next;
 	wp->next = free_;
@@ -134,8 +125,6 @@ void scan_wps()
 	{
 		bool suc = true;
 		sta->now = expr(sta->expression, &suc);
-	//	printf("now = %d, before = %d\n", sta->now, sta->before);
-	//	printf("reach here!\n");
 			if(sta->now != sta->before)
 			{
 				flag = 1;
@@ -173,7 +162,6 @@ bool del_wp(int idx)
 		if(sta->NO == idx)
 		{
 			//find the target
-			printf("find!\n");
 			free_wp(sta);
 			return true;
 		}
