@@ -59,3 +59,5 @@ else
 # Include rules to build NEMU
 include $(NEMU_HOME)/scripts/native.mk
 endif
+#CODE_LINES = $(find . -name "*.[hc] | xargs wc -l")
+
