@@ -1,5 +1,11 @@
 #define concat_temp(x, y) x ## y
 #define concat(x, y) concat_temp(x, y)
+/*这里有一个宏转化的过程：
+因为对于有##的地方的参数，如果是宏，则不会展开
+所以这里加入一个temp，先对参数进行一个宏展开，再##拼接
+##是拼接宏的参数
+#是将宏的参数，变成字符串
+*/
 #define MAP(c, f) c(f)
 
 #if __riscv_xlen == 32

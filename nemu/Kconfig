@@ -121,6 +121,10 @@ endmenu
 
 menu "Testing and Debugging"
 
+config WATCHPOINT
+	depends on CONFIG_WATCHPOINT
+	bool "Enable the checkout of watchpoints"
+	default "false"
 
 config TRACE
   bool "Enable tracer"

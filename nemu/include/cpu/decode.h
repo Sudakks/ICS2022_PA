@@ -87,6 +87,7 @@ finish:
 
 
 // --- pattern matching wrappers for decode ---
+//读是什么操作
 #define INSTPAT(pattern, ...) do { \
   uint64_t key, mask, shift; \
   pattern_decode(pattern, STRLEN(pattern), &key, &mask, &shift); \
