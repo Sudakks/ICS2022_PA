@@ -332,7 +332,6 @@ word_t eval(int sta, int end){
 		word_t n_10;//10进制
 		word_t n_16;//16进制
 		word_t n_reg;//寄存器的直
-	//	char *reg = (char*)malloc(7);//leak!!!TODO
 		bool suc = true;
 		//此时要看读的数是什么类型
 		switch(tokens[sta].type)
@@ -344,9 +343,7 @@ word_t eval(int sta, int end){
 				sscanf(tokens[sta].str, "%x", &n_16);
 				return n_16;
 			case REG:
-				//sscanf(tokens[sta].str, "%s", reg);
 				n_reg = isa_reg_str2val(tokens[sta].str, &suc); 
-		//		free(reg);
 				if(suc == true)
 					return n_reg;
 				else
