@@ -74,10 +74,7 @@ static int decode_exec(Decode *s) {
 	//mv 伪指令，相当于addi的立即数是0 
 	INSTPAT("0000000 00000 ????? 000 ????? 00100 11", mv     , I, R(dest) = R(src1) + imm);//
 	//j jal, rd = x0
-	INSTPAT("??????? ????? ????? ??? 00000 11011 11", j      , U, R(dest) = s->pc + 4, s->pc = s->pc + imm);
-	
-	printf("---------------\n");
-	printf("pc = %x\n", s->pc);
+	INSTPAT("??????? ????? ????? ??? 00000 11011 11", j      , JAL, R(dest) = s->pc + 4, s->dnpc = s->pc + imm);
 
 
   INSTPAT("0000000 00001 00000 000 00000 11100 11", ebreak , N, NEMUTRAP(s->pc, R(10))); // R(10) is $a0
