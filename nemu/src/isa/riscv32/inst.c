@@ -46,7 +46,7 @@ static void decode_operand(Decode *s, int *dest, word_t *src1, word_t *src2, wor
     case TYPE_I: src1R();          immI(); break;
     case TYPE_U:                   immU(); break;
     case TYPE_S: src1R(); src2R(); immS(); break;
-		case TYPE_JAL:								 immJAL(); printf("imm = %p\n", imm);break;
+		case TYPE_JAL:								 immJAL(); printf("imm = %u\n", *imm);break;
   }
 }
 
@@ -82,6 +82,7 @@ static int decode_exec(Decode *s) {
   INSTPAT("??????? ????? ????? ??? ????? ????? ??", inv    , N, INV(s->pc));
   INSTPAT_END();
 
+printf("pc = %u\n", s->pc);
   R(0) = 0; // reset $zero to 0
 
   return 0;
