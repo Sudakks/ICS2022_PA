@@ -50,6 +50,7 @@ static char* rl_gets() {
 }
 
 static int cmd_c(char *args) {
+	printf("here\n");
   cpu_exec(-1);
   return 0;
 }
