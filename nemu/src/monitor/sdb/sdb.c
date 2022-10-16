@@ -70,7 +70,8 @@ static int cmd_si(char *args)
 		time = 1;
 	else
 	{
-		time = atoi(arg); 
+		sscanf(arg, "%d", &time);
+		//time = atoi(arg); 
 		if(time < 0)
 		{
 			printf("Invalid argument!\n");
@@ -188,11 +189,11 @@ static struct {
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
   { "si", "Excute step by step", cmd_si},
-	{ "info", "print the information of registers and the watchpoints", cmd_info},
-	{ "x", "scan the memory", cmd_x},
-	{ "p", "calculate the given expression", cmd_p},
-	{ "w", "set watchpoints", cmd_w},
-	{ "d", "delete a certain watchpoint", cmd_d},
+	{ "info", "Print the information of registers and the watchpoints", cmd_info},
+	{ "x", "Scan the memory", cmd_x},
+	{ "p", "Calculate the given expression", cmd_p},
+	{ "w", "Set watchpoints", cmd_w},
+	{ "d", "Delete a certain watchpoint", cmd_d},
   /* TODO: Add more commands */
 
 };
