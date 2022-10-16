@@ -71,7 +71,6 @@ static int cmd_si(char *args)
 	else
 	{
 		sscanf(arg, "%d", &time);
-		//time = atoi(arg); 
 		if(time < 0)
 		{
 			printf("Invalid argument!\n");
