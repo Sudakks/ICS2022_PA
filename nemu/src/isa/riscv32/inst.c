@@ -105,12 +105,12 @@ static int decode_exec(Decode *s) {
 	//beq branch equal
 	//beqz伪指令 branch equal to zero,src2 == 0
 	INSTPAT("??????? ????? ????? 000 ????? 11000 11", beq     , B,
-		if(src1 == src2)	s->dnpc += imm, printf("beq\n");
+		if(src1 == src2)	s->dnpc = s->pc + imm;
 	);
 
 	//bne branch if not equal
 	INSTPAT("??????? ????? ????? 001 ????? 11000 11", bne      , B,
-		if(src1 != src2)	s->dnpc += imm, printf("bne\n");
+		if(src1 != src2)	s->dnpc = s->pc + imm;
 	);
 	//P156 Instruction Set
 
