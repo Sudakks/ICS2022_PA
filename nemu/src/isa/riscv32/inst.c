@@ -35,7 +35,7 @@ enum {
 #define immS() do { *imm = (SEXT(BITS(i, 31, 25), 7) << 5) | BITS(i, 11, 7); } while(0)
 //ATTENTION: 先对立即数左移2位，再立即数拓展!!!
 #define immJAL() do { *imm = SEXT((BITS(i, 31, 31) << 19 | BITS(i, 19, 12) << 11 | BITS(i, 20, 20) << 8 | BITS(i, 30, 21) << 1), 20); } while(0)
-#define immB() do { *imm = SEXT(BITS(i, 31, 31), 1) << 11 | SEXT(BITS(i, 7, 7), 1) << 10 | SEXT(BITS(i, 30, 25), 6) << 4 | BITS(i, 11, 8); } while(0)
+#define immB() do { *imm = SEXT(SEXT(BITS(i, 31, 31), 1) << 11 | BITS(i, 7, 7) << 10 | SEXT(BITS(i, 30, 25), 6) << 4 | BITS(i, 11, 8), 12) << 1; } while(0)
 
 //读出操作数
 static void decode_operand(Decode *s, int *dest, word_t *src1, word_t *src2, word_t *imm, int type) {
