@@ -76,6 +76,7 @@ static int decode_exec(Decode *s) {
 	//j jal, rd = x0
 	INSTPAT("??????? ????? ????? ??? 00000 11011 11", j      , U, R(dest) = s->pc + 4, s->pc = s->pc + imm);
 	
+	printf("---------------\n");
 	printf("pc = %x\n", s->pc);
 
 
