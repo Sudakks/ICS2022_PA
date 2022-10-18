@@ -34,7 +34,7 @@ enum {
 #define immU() do { *imm = SEXT(BITS(i, 31, 12), 20) << 12; } while(0)
 #define immS() do { *imm = (SEXT(BITS(i, 31, 25), 7) << 5) | BITS(i, 11, 7); } while(0)
 //ATTENTION: 先对立即数左移2位，再立即数拓展!!!
-#define immJAL() do { *imm = (SEXT(BITS(i, 31, 31), 1) << 19 | SEXT(BITS(i, 19, 12), 8) << 11 | SEXT(BITS(i, 20, 20), 1) << 8 | BITS(i, 30, 21)) << 1; } while(0)
+#define immJAL() do { *imm = (SEXT(BITS(i, 31, 31), 1) << 19 | SEXT(BITS(i, 19, 12), 8) << 11 | SEXT(BITS(i, 20, 20), 1) << 10 | BITS(i, 30, 21)) << 1; } while(0)
 #define immB() do { *imm = (SEXT(BITS(i, 31, 31), 1) << 11 | BITS(i, 7, 7) << 10 | SEXT(BITS(i, 30, 25), 6) << 4 | BITS(i, 11, 8)) << 1; } while(0)
 #define shamt() do { *imm = SEXT(BITS(i, 25, 20), 6); } while(0)
 
