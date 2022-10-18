@@ -26,6 +26,7 @@ enum {
   TYPE_I, TYPE_U, TYPE_S,
   TYPE_N, // none
 	TYPE_JAL, TYPE_R, TYPE_B,
+	TYPE_I_SHAMT,
 };
 
 #define src1R() do { *src1 = R(rs1); } while (0)
@@ -36,6 +37,7 @@ enum {
 //ATTENTION: 先对立即数左移2位，再立即数拓展!!!
 #define immJAL() do { *imm = (SEXT(BITS(i, 31, 31), 1) << 19 | SEXT(BITS(i, 19, 12), 8) << 11 | SEXT(BITS(i, 20, 20), 1) << 8 | BITS(i, 30, 21)) << 1; } while(0)
 #define immB() do { *imm = (SEXT(BITS(i, 31, 31), 1) << 11 | BITS(i, 7, 7) << 10 | SEXT(BITS(i, 30, 25), 6) << 4 | BITS(i, 11, 8)) << 1; } while(0)
+#define shamt() do { *imm = SEXT(BITS(i, 25, 20), 6); } while(0)
 
 //读出操作数
 static void decode_operand(Decode *s, int *dest, word_t *src1, word_t *src2, word_t *imm, int type) {
@@ -51,6 +53,7 @@ static void decode_operand(Decode *s, int *dest, word_t *src1, word_t *src2, wor
 		case TYPE_JAL:								 immJAL(); break;
 		case TYPE_R: src1R(); src2R();       ; break;
 		case TYPE_B: src1R(); src2R(); immB(); break;
+		case TYPE_I_SHAMT: src1R();    shamt(); break;
   }
 }
 
@@ -85,7 +88,8 @@ static int decode_exec(Decode *s) {
 	//seqz伪命令，即imm = 1
 	INSTPAT("??????? ????? ????? 011 ????? 00100 11", sltiu  , I, (src1 < imm) ? (R(dest) = 1) : (R(dest) = 0));
 	INSTPAT("??????? ????? ????? 111 ????? 00100 11", andi   , I, R(dest) = imm & src1);
-	INSTPAT("0000000 ????? ????? 001 ????? 00100 11", slli   , I, R(dest) = src1 << imm, printf("imm = %x, src1 = %x\n", imm, src1));
+	INSTPAT("000000 ?????? ????? 001 ????? 00100 11", slli   , I, R(dest) = src1 << imm, printf("imm = %x, src1 = %x\n", imm, src1));
+	INSTPAT("010000 ?????? ????? 101 ????? 00100 11", srai   , I_SHAMT, R(dest) = ((int)src1 >> imm));
 
 
 	//jump
