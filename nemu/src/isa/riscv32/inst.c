@@ -36,7 +36,6 @@ enum {
 //ATTENTION: 先对立即数左移2位，再立即数拓展!!!
 #define immJAL() do { *imm = (SEXT(BITS(i, 31, 31), 1) << 19 | SEXT(BITS(i, 19, 12), 8) << 11 | SEXT(BITS(i, 20, 20), 1) << 10 | BITS(i, 30, 21)) << 1; } while(0)
 #define immB() do { *imm = (SEXT(BITS(i, 31, 31), 1) << 11 | BITS(i, 7, 7) << 10 | SEXT(BITS(i, 30, 25), 6) << 4 | BITS(i, 11, 8)) << 1; } while(0)
-#define shamt() do { *imm = SEXT(BITS(i, 25, 20), 6); } while(0)
 
 //读出操作数
 static void decode_operand(Decode *s, int *dest, word_t *src1, word_t *src2, word_t *imm, int type) {
@@ -147,6 +146,7 @@ static int decode_exec(Decode *s) {
 
 
 	INSTPAT("??????? ????? ????? 001 ????? 01000 11", sh        , S, Mw(src1 + imm, 2, src2));
+	INSTPAT("??????? ????? ????? 000 ????? 01000 11", sb        , S, Mw(src1 + imm, 1, src2));
 
   INSTPAT("0000000 00001 00000 000 00000 11100 11", ebreak , N, NEMUTRAP(s->pc, R(10))); // R(10) is $a0
   INSTPAT("??????? ????? ????? ??? ????? ????? ??", inv    , N, INV(s->pc));
