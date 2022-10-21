@@ -16,7 +16,7 @@ void putch(char ch) {
 
 void halt(int code) {
   nemu_trap(code);
-
+	//标志结束的结束码
   // should not reach here
   while (1);
 }
