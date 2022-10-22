@@ -53,7 +53,7 @@ char *strcat(char *dst, const char *src) {
 int strcmp(const char *s1, const char *s2) {
 	assert(s1 != NULL && s2 != NULL);
 	while(*s1 && *(unsigned char*)s1 == *(unsigned char*)s2)
-	{
+	{ 
 		s1++;
 		s2++;
 	}
@@ -97,7 +97,7 @@ void *memmove(void *dst, const void *src, size_t n) {
 		d[i] = temp[i];
 	free(temp);
 	return ret;
-	/*if(src > dst)
+	/*if(src >  dst)
 	{//这里说明不会重叠
 		while(n--)//遇到'\0'不会停下来
 		{
@@ -123,13 +123,13 @@ void *memcpy(void *out, const void *in, size_t n) {
 	void *ret = out;
 	char* o = (char*)out;
 	char* i = (char*)in;
-	while(n--)
+	/*while(n--)
 	{
 		*o++ = *i++;
 	}
-	return ret;
+	return ret;*/
 	//判断是向后拷贝，还是向前拷贝
-/*	if(o < i)
+	if(o < i)
 	{
 		while(n--)
 			*o++ = *i++;
@@ -143,7 +143,7 @@ void *memcpy(void *out, const void *in, size_t n) {
 			*o-- = *i--;
 		}
 	}
-	return ret;*/
+	return ret;
 }
 
 int memcmp(const void *s1, const void *s2, size_t n) {
