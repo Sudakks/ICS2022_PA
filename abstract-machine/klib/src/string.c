@@ -133,11 +133,6 @@ void *memcpy(void *out, const void *in, size_t n) {
 	void *ret = out;
 	char* o = (char*)out;
 	char* i = (char*)in;
-	/*while(n--)
-	{
-		*o++ = *i++;
-	}
-	return ret;*/
 	//判断是向后拷贝，还是向前拷贝
 	if(o < i)
 	{
@@ -157,9 +152,6 @@ void *memcpy(void *out, const void *in, size_t n) {
 }
 
 int memcmp(const void *s1, const void *s2, size_t n) {
-/*	char* ss1 = (char*) s1;
-	char* ss2 = (char*) s2;
-	return strncmp(ss1, ss2, n);*/
 	unsigned char c1, c2;
 	while (n > 0)
 	{
