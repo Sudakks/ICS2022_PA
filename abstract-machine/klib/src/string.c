@@ -11,13 +11,16 @@ size_t strlen(const char *s) {
 }
 
 char *strcpy(char *dst, const char *src) {
+	//会复制结尾的'\0'
 	assert(dst != NULL && src != NULL);
 	char *ret = dst;
+	/*while((*dest++ = *src++) != '\0')
+	{}*/
 	while(*src != '\0')
 	{
 		*dst++ = *src++;
 	}
-	*dst = *src;//要复制最后一个'\0'!!!
+	*dst = '\0';//要复制最后一个'\0'!!!
 	return ret;
 }
 
@@ -138,12 +141,12 @@ void *memcpy(void *out, const void *in, size_t n) {
 	{
 		while(n--)
 			*o++ = *i++;
+		*o = '\0';
 	}
 	else
 	{
-		o = o + n;
-		i = i + n;
-		n++;
+		*o = '\0';
+		o = o + n - 1;
 		while(n--)
 		{
 			*o-- = *i--;
