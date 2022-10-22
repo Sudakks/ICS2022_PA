@@ -147,6 +147,7 @@ void *memcpy(void *out, const void *in, size_t n) {
 	{
 		*o = '\0';
 		o = o + n - 1;
+		i = i + n - 1;
 		while(n--)
 		{
 			*o-- = *i--;
