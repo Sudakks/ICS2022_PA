@@ -13,31 +13,15 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   panic("Not implemented");
 }
 
-int int2string(char* out, int num)
-{
-	int val[20];
-	int len = 0;
-	while(1)
-	{
-		if(num == 0)
-			break;
-		len++;
-		val[len] = num % 10;
-		num = num / 10;
-	}
-	for(int i = len; i >= 1; i--)
-	{
-		*out++ = val[i] + '0';
-	}
-	return len;
-}
 int sprintf(char *out, const char *fmt, ...) {
 	//先读到%
 	va_list ap;
 	va_start(ap, fmt);
 	char* s;
-	int num_d;
+	int num;
 	int ret = 0;
+	int val[20];
+	int len;
 	while(*fmt != '\0')
 	{
 		if(*fmt == '%')
@@ -48,9 +32,22 @@ int sprintf(char *out, const char *fmt, ...) {
 			{
 				case 'd':
 				//读数字
-			  	num_d = va_arg(ap, int);
+			  	num = va_arg(ap, int);
+					len = 0;
+					while(1)
+					{
+						if(num == 0)
+						break;
+						len++;
+						val[len] = num % 10;
+						num = num / 10;
+					}
+					for(int i = len; i >= 1; i--)
+					{
+						*out++ = val[i] + '0';
+					}
 					//自己写一个int转为char*的函数？
-					ret += int2string(out, num_d);
+					ret += len;
 					break;
 				case 's':
 					s = va_arg(ap, char*);//因为写string没有高亮，，，
