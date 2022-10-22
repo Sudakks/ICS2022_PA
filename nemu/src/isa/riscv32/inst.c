@@ -25,7 +25,7 @@
 enum {
   TYPE_I, TYPE_U, TYPE_S,
   TYPE_N, // none
-	TYPE_JAL, TYPE_R, TYPE_B,
+	TYPE_J, TYPE_R, TYPE_B,
 };
 
 #define src1R() do { *src1 = R(rs1); } while (0)
@@ -34,7 +34,7 @@ enum {
 #define immU() do { *imm = SEXT(BITS(i, 31, 12), 20) << 12; } while(0)
 #define immS() do { *imm = (SEXT(BITS(i, 31, 25), 7) << 5) | BITS(i, 11, 7); } while(0)
 //ATTENTION: 先对立即数左移2位，再立即数拓展!!!
-#define immJAL() do { *imm = (SEXT(BITS(i, 31, 31), 1) << 19 | SEXT(BITS(i, 19, 12), 8) << 11 | SEXT(BITS(i, 20, 20), 1) << 10 | BITS(i, 30, 21)) << 1; } while(0)
+#define immJ() do { *imm = (SEXT(BITS(i, 31, 31), 1) << 19 | SEXT(BITS(i, 19, 12), 8) << 11 | SEXT(BITS(i, 20, 20), 1) << 10 | BITS(i, 30, 21)) << 1; } while(0)
 #define immB() do { *imm = (SEXT(BITS(i, 31, 31), 1) << 11 | SEXT(BITS(i, 7, 7), 1) << 10 | SEXT(BITS(i, 30, 25), 6) << 4 | BITS(i, 11, 8)) << 1; } while(0)
 
 //读出操作数
@@ -48,7 +48,7 @@ static void decode_operand(Decode *s, int *dest, word_t *src1, word_t *src2, wor
     case TYPE_I: src1R();          immI(); break;
     case TYPE_U:                   immU(); break;
     case TYPE_S: src1R(); src2R(); immS(); break;
-		case TYPE_JAL:								 immJAL(); break;
+		case TYPE_J:								   immJ(); break;
 		case TYPE_R: src1R(); src2R();       ; break;
 		case TYPE_B: src1R(); src2R(); immB(); break;
   }
@@ -97,17 +97,12 @@ static int decode_exec(Decode *s) {
 
 
 	//jump
-	INSTPAT("??????? ????? ????? ??? ????? 11011 11", jal    , JAL, R(dest) = s->pc + 4, s->dnpc = s->pc + imm);//
-
-	//
-	//mv 伪指令，相当于addi的立即数是0 
-	//INSTPAT("0000000 00000 ????? 000 ????? 00100 11", mv     , I, R(dest) = R(src1) + imm);//
-
-	//j伪指令 jal, rd = x0
-	//INSTPAT("??????? ????? ????? ??? 00000 11011 11", j      , JAL, R(dest) = s->pc + 4, s->dnpc = s->pc + imm);
+	INSTPAT("??????? ????? ????? ??? ????? 11011 11", jal    , J, R(dest) = s->pc + 4, s->dnpc = s->pc + imm);//
 
 
-	//add
+
+
+		//add
 	INSTPAT("0000000 ????? ????? 000 ????? 01100 11", add    , R, R(dest) = src1 + src2);
 	//sub
 	INSTPAT("0100000 ????? ????? 000 ????? 01100 11", sub    , R, R(dest) = src1 - src2);
@@ -127,8 +122,6 @@ static int decode_exec(Decode *s) {
 	INSTPAT("0000001 ????? ????? 100 ????? 01100 11", div    , R, R(dest) = (sword_t)src1 / (sword_t)src2);
 	INSTPAT("0100000 ????? ????? 101 ????? 01100 11", sra    , R, R(dest) = (sword_t)src1 >> (src2 & 0x0000001f));
 	INSTPAT("0000000 ????? ????? 101 ????? 01100 11", srl    , R, R(dest) = src1 >> (src2 & 0x0000001f));
-
-
 
 
 	//beq branch equal
@@ -158,8 +151,8 @@ static int decode_exec(Decode *s) {
 	//P156 Instruction Set
 
 
-	INSTPAT("??????? ????? ????? 001 ????? 01000 11", sh        , S, Mw(src1 + imm, 2, src2));
-	INSTPAT("??????? ????? ????? 000 ????? 01000 11", sb        , S, Mw(src1 + imm, 1, src2));
+	INSTPAT("??????? ????? ????? 001 ????? 01000 11", sh        , S, Mw(src1 + imm, 2, (src2 << 16) >> 16));
+	INSTPAT("??????? ????? ????? 000 ????? 01000 11", sb        , S, Mw(src1 + imm, 1, (src2 << 8) >> 8));
 
   INSTPAT("0000000 00001 00000 000 00000 11100 11", ebreak , N, NEMUTRAP(s->pc, R(10))); // R(10) is $a0
   INSTPAT("??????? ????? ????? ??? ????? ????? ??", inv    , N, INV(s->pc));
