@@ -13,9 +13,8 @@
 # See the Mulan PSL v2 for more details.
 #**************************************************************************************/
 # My count
-CODE_LINE = find . -name "*.c" |xargs cat|grep -v ^$|wc -l
 count:
-	echo $(CODE_LINE)
+	@find . -type f -name "*.[hc]" | xargs cat | wc -l
 	
 # Sanity check
 ifeq ($(wildcard $(NEMU_HOME)/src/nemu-main.c),)
