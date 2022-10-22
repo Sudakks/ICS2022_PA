@@ -37,7 +37,7 @@ int sprintf(char *out, const char *fmt, ...) {
 					while(1)
 					{
 						if(num == 0)
-						break;
+							break;
 						len++;
 						val[len] = num % 10;
 						num = num / 10;
@@ -60,7 +60,8 @@ int sprintf(char *out, const char *fmt, ...) {
 		}
 		else
 		{
-			*out++ = *fmt;
+			*out = *fmt;
+			out++;
 		}
 		fmt++;
 	}
