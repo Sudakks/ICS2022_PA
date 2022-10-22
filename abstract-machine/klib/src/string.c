@@ -143,6 +143,7 @@ void *memcpy(void *out, const void *in, size_t n) {
 	{
 		o = o + n;
 		i = i + n;
+		n++;
 		while(n--)
 		{
 			*o-- = *i--;

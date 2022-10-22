@@ -54,6 +54,7 @@ int sprintf(char *out, const char *fmt, ...) {
 					break;
 				case 's':
 					s = va_arg(ap, char*);//因为写string没有高亮，，，
+					//这里！要主动给s后面添加一个'\0'!
 					memcpy(out, s, strlen(s));
 					out += strlen(s);
 					ret += strlen(s);
