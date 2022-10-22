@@ -66,6 +66,7 @@ int sprintf(char *out, const char *fmt, ...) {
 		fmt++;
 	}
 	va_end(ap);
+	*out = '\0';
 	return ret;
   //panic("Not implemented");
 }
