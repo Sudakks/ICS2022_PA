@@ -71,6 +71,8 @@ void iringbuff_add(Decode *s, char* str)
 	{
 		if(i+ it->logbuf == NULL)
 			printf("null!\n");
+		else
+			*(i + it->logbuf) = 1;
 		//it->logbuf[i] = str[i];
 		if(*(str + i) == '\0')
 			 break;
