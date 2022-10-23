@@ -35,7 +35,8 @@ static int read = 0;//这个是开始读的地址
 static int write = -1;//用来写的地址
 static int num = 0;//用来记录环形区的数量
 typedef struct{
-	Decode* inst;//内部存的是指令的地址
+	//Decode* inst;//内部存的是指令的地址
+	char logbuf[128];
 } RB; 
 static RB ringbuff[MAX_INST_TO_PRINT] = {};
 
@@ -65,15 +66,10 @@ void iringbuff_add(Decode *s, char* str)
 	else
 		read = (read + 1) % MAX_INST_TO_PRINT;
 	write = (write + 1) % MAX_INST_TO_PRINT;
-	Decode* it = ringbuff[write].inst;
 //	strcpy(it->logbuf, str);
 	for(int i = 0; i <= 2;i++)
 	{
-		if(i+ it->logbuf == NULL)
-			printf("null!\n");
-		else
-			printf("--> %c\n", it->logbuf[i]);
-		//it->logbuf[i] = str[i];
+		ringbuff[write].logbuf[i] = str[i];
 		if(*(str + i) == '\0')
 			 break;
 		printf("i = %d, c = %c\n", i, str[i]);
@@ -83,7 +79,7 @@ void iringbuff_add(Decode *s, char* str)
 
 void iringbuff_print()
 {
-	int cnt = num;
+/*	int cnt = num;
 	int start = read;
 	while(cnt--)
 	{
@@ -96,7 +92,7 @@ void iringbuff_print()
 					printf("%c", s->logbuf[idx]);
 			}
 		start = (start + 1) % MAX_INST_TO_PRINT;
-	}
+	}*/
 }
 
 static void exec_once(Decode *s, vaddr_t pc) {
