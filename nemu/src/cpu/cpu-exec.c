@@ -72,11 +72,10 @@ void iringbuff_add(char* str)
 void iringbuff_print()
 {
 	//打印pc和汇编代码
-	int cnt = num;
 	int start = read;
-	while(cnt--)
+	for(int cnt = 0; cnt < num; cnt++)
 	{
-			if(cnt == 0)
+			if(cnt == num - 1)
 				printf("--->");
 			for(int idx = 0; ;idx++)
 			{
@@ -128,8 +127,6 @@ static void execute(uint64_t n) {
     exec_once(&s, cpu.pc);
     g_nr_guest_inst ++;
     trace_and_difftest(&s, cpu.pc);
-		//run error print
-		iringbuff_print();
     if (nemu_state.state != NEMU_RUNNING) 
 		{
 			iringbuff_print();
