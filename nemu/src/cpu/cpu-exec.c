@@ -74,6 +74,7 @@ void iringbuff_print()
 	//打印pc和汇编代码
 	int cnt = num;
 	int start = read;
+	printf("!!!!!!!!\n");
 	while(cnt--)
 	{
 			if(cnt == 1)
