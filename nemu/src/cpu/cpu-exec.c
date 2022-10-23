@@ -30,7 +30,7 @@ uint64_t g_nr_guest_inst = 0;
 static uint64_t g_timer = 0; // unit: us
 static bool g_print_step = false;
 
-//环形区变量申明
+/*//环形区变量申明
 static int read = 0;//这个是开始读的地址
 static int write = -1;//用来写的地址
 static int num = 0;//用来记录环形区的数量
@@ -39,7 +39,7 @@ typedef struct{
 	Decode* inst;//内部存的是指令的地址
 } RB; 
 static RB ringbuff[ringbuff_size] = {};
-
+*/
 void scan_wps();
 void device_update();
 void iringbuff_add(Decode *s);
@@ -57,7 +57,7 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 	scan_wps();
 //#endif
 }
-
+/*
 void iringbuff_add(Decode *s)
 {
 	//指令环形缓冲区，存储，然后输出信息
@@ -77,7 +77,7 @@ void iringbuff_print()
 	{
 		Decode* s = ringbuff[start].inst;
 		printf("now = %d, s = %p\n", start, s);
-		/*char *p = s->logbuf;
+		char *p = s->logbuf;
 		p += snprintf(p, sizeof(s->logbuf), FMT_WORD ":", s->pc);
 		int ilen = s->snpc - s->pc;
 		int i;
@@ -94,7 +94,7 @@ void iringbuff_print()
 
 		void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
 		disassemble(p, s->logbuf + sizeof(s->logbuf) - p,
-      MUXDEF(CONFIG_ISA_x86, s->snpc, s->pc), (uint8_t *)&s->isa.inst.val, ilen);*/
+      MUXDEF(CONFIG_ISA_x86, s->snpc, s->pc), (uint8_t *)&s->isa.inst.val, ilen);
 		for(int idx = 0; ;idx++)
 			{
 				if(s->logbuf[idx] == '\0')
@@ -105,12 +105,12 @@ void iringbuff_print()
 		start = (start + 1) % ringbuff_size;
 	}
 }
-
+*/
 static void exec_once(Decode *s, vaddr_t pc) {
   s->pc = pc;
   s->snpc = pc;
   isa_exec_once(s);
-	iringbuff_print();
+	//iringbuff_print();
   cpu.pc = s->dnpc;
 #ifdef CONFIG_ITRACE
   char *p = s->logbuf;
@@ -131,7 +131,7 @@ static void exec_once(Decode *s, vaddr_t pc) {
   void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
   disassemble(p, s->logbuf + sizeof(s->logbuf) - p,
       MUXDEF(CONFIG_ISA_x86, s->snpc, s->pc), (uint8_t *)&s->isa.inst.val, ilen);
-	iringbuff_add(s);//add instruction to ringbuff every time i decode an inst
+	//iringbuff_add(s);//add instruction to ringbuff every time i decode an inst
 #endif
 }
 
