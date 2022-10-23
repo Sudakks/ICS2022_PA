@@ -135,13 +135,12 @@ static void execute(uint64_t n) {
 			printf("n == %ld, not run\n", n);
     if (nemu_state.state != NEMU_RUNNING) 
 		{
+			printf("------------------");
 			iringbuff_print();
 			break;
 		}
     IFDEF(CONFIG_DEVICE, device_update());
   }
-		iringbuff_print();
-
 }
 
 static void statistic() {
