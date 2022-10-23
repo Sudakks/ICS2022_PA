@@ -77,7 +77,7 @@ void iringbuff_print()
 	int start = read;
 	while(cnt--)
 	{
-			printf("%#lx: \n", ringbuff[start].pc);
+			printf("%#lx: ", ringbuff[start].pc);
 			for(int idx = 0; ;idx++)
 			{
 					printf("%c", ringbuff[start].logbuf[idx]);
