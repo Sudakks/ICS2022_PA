@@ -65,23 +65,25 @@ void iringbuff_add(Decode *s)
 	else
 		read = (read + 1) % MAX_INST_TO_PRINT;
 	write = (write + 1) % MAX_INST_TO_PRINT;
-	Decode* it = ringbuff[write].inst;
-	strcpy(it->logbuf, s->logbuf);
+//	Decode* it = ringbuff[write].inst;
+//	strcpy(it->logbuf, s->logbuf);
 }
+
+
 void iringbuff_print()
 {
 	int cnt = num;
 	int start = read;
 	while(cnt--)
 	{
-			/*Decode *s = ringbuff[start].inst;
+			Decode *s = ringbuff[start].inst;
 			for(int idx = 0; ;idx++)
 			{
 				if(s->logbuf[idx] == '\0')
 					break;
 				else
 					printf("%c", s->logbuf[idx]);
-			}*/
+			}
 		start = (start + 1) % MAX_INST_TO_PRINT;
 	}
 }
@@ -110,7 +112,7 @@ static void exec_once(Decode *s, vaddr_t pc) {
   void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
   disassemble(p, s->logbuf + sizeof(s->logbuf) - p,
       MUXDEF(CONFIG_ISA_x86, s->snpc, s->pc), (uint8_t *)&s->isa.inst.val, ilen);
-	//iringbuff_add(s);
+	iringbuff_add(s);
 	iringbuff_print();
 	//add instruction to ringbuff every time it has its logbuf
 #endif
