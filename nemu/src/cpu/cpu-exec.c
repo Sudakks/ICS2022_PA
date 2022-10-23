@@ -68,6 +68,12 @@ void iringbuff_add(Decode *s)
 	Decode* it = ringbuff[write].inst;
 	printf("size 1 = %lu\n", sizeof(it->logbuf));
 	printf("size 2 = %lu\n", sizeof(s->logbuf));
+	int c = 0;
+	while(*(s->logbuf) != '\0')
+	{
+		printf("c = %d, %c\n", c, s->logbuf[c]);
+		c++;
+	}
 	//strcpy(it->logbuf, s->logbuf);
 }
 
