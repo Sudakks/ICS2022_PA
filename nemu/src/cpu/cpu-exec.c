@@ -129,13 +129,9 @@ static void execute(uint64_t n) {
     g_nr_guest_inst ++;
     trace_and_difftest(&s, cpu.pc);
 		//run error print
-		if(nemu_state.state == NEMU_RUNNING)
-			printf("n == %ld, still run\n", n);
-		else
-			printf("n == %ld, not run\n", n);
+		printf("n = %ld\n", n);
     if (nemu_state.state != NEMU_RUNNING) 
 		{
-			printf("------------------");
 			iringbuff_print();
 			break;
 		}
