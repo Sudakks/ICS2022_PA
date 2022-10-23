@@ -29,8 +29,20 @@ CPU_state cpu = {};
 uint64_t g_nr_guest_inst = 0;
 static uint64_t g_timer = 0; // unit: us
 static bool g_print_step = false;
+
+//环形区变量申明
+static int idx = -1;//这个是环形区域的下标
+#define ringbuff_size 10
+typedef struct{
+	Decode* inst;//内部存的是指令的地址
+} RB; 
+static RB ringbuff[ringbuff_size] = {};
+
 void scan_wps();
 void device_update();
+void iringbuff_add(Decode *s);
+void iringbuff_print();
+
 
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 #ifdef CONFIG_ITRACE_COND
@@ -44,12 +56,46 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 //#endif
 }
 
+void iringbuff_add(Decode *s)
+{
+	//指令环形缓冲区，存储，然后输出信息
+	idx = (idx + 1) % ringbuff_size;
+	ringbuff[idx].inst = s;
+}
+void iringbuff_print()
+{
+	for(int i = 0; i <= idx; i++)
+	{
+		if(i == idx)
+			printf("--->");
+		Decode* s = ringbuff[i].inst;
+		char *p = s->logbuf;
+		p += snprintf(p, sizeof(s->logbuf), FMT_WORD ":", s->pc);
+		int ilen = s->snpc - s->pc;
+		int i;
+		uint8_t *inst = (uint8_t *)&s->isa.inst.val;
+		for (i = ilen - 1; i >= 0; i --) {
+			 p += snprintf(p, 4, " %02x", inst[i]);
+		}
+		int ilen_max = MUXDEF(CONFIG_ISA_x86, 8, 4);
+		int space_len = ilen_max - ilen;
+		if (space_len < 0) space_len = 0;
+		space_len = space_len * 3 + 1;
+		memset(p, ' ', space_len);
+		p += space_len;
+
+		void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
+		disassemble(p, s->logbuf + sizeof(s->logbuf) - p,
+      MUXDEF(CONFIG_ISA_x86, s->snpc, s->pc), (uint8_t *)&s->isa.inst.val, ilen);
+
+	}
+}
+
 static void exec_once(Decode *s, vaddr_t pc) {
   s->pc = pc;
   s->snpc = pc;
-	//printf("before pc = %x\n", pc);
   isa_exec_once(s);
-	//printf("after pc = %x\n", cpu.pc);
+	iringbuff_add(s);//add instruction to ringbuff every time i decode an inst
   cpu.pc = s->dnpc;
 #ifdef CONFIG_ITRACE
   char *p = s->logbuf;
@@ -73,6 +119,7 @@ static void exec_once(Decode *s, vaddr_t pc) {
 #endif
 }
 
+
 static void execute(uint64_t n) {
   Decode s;
 	/*execute the function exec_once for n times*/
@@ -80,7 +127,12 @@ static void execute(uint64_t n) {
     exec_once(&s, cpu.pc);
     g_nr_guest_inst ++;
     trace_and_difftest(&s, cpu.pc);
-    if (nemu_state.state != NEMU_RUNNING) break;
+    if (nemu_state.state != NEMU_RUNNING) 
+		{
+			iringbuff_print();
+			break;
+		}
+		//在这里判断，如果不是正常运行就输出环形区域的指令内容
     IFDEF(CONFIG_DEVICE, device_update());
   }
 }
