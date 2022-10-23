@@ -128,15 +128,16 @@ static void execute(uint64_t n) {
     exec_once(&s, cpu.pc);
     g_nr_guest_inst ++;
     trace_and_difftest(&s, cpu.pc);
-		if(nemu_state.state == NEMU_RUNNING)
-			printf("n = %ld, still run \n", n);
+		//run error print
+			if(nemu_state.state == NEMU_RUNNING)
+		printf("n == %ld, still run\n", n);
+		else
+			printf("n == %ld, not run\n", n);
     if (nemu_state.state != NEMU_RUNNING) 
 		{
-			printf("into print\n");
 			iringbuff_print();
 			break;
 		}
-		//在这里判断，如果不是正常运行就输出环形区域的指令内容
     IFDEF(CONFIG_DEVICE, device_update());
   }
 }
