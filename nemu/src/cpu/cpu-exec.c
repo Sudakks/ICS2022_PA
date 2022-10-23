@@ -68,31 +68,23 @@ void iringbuff_add(Decode *s, char* str)
 	write = (write + 1) % MAX_INST_TO_PRINT;
 //	strcpy(it->logbuf, str);
 	strcpy(ringbuff[write].logbuf, str);
-/*	for(int i = 0; ;i++)
-	{
-		ringbuff[write].logbuf[i] = str[i];
-		if(*(str + i) == '\0')
-			 break;
-	}*/
 }
 
 
 void iringbuff_print()
 {
-/*	int cnt = num;
+	int cnt = num;
 	int start = read;
 	while(cnt--)
 	{
-			Decode *s = ringbuff[start].inst;
 			for(int idx = 0; ;idx++)
 			{
-				if(s->logbuf[idx] == '\0')
-					break;
-				else
-					printf("%c", s->logbuf[idx]);
+					printf("%c", ringbuff[start].logbuf[idx]);
+					if(ringbuff[start].logbuf[idx] == '\0')
+						break;
 			}
 		start = (start + 1) % MAX_INST_TO_PRINT;
-	}*/
+	}
 }
 
 static void exec_once(Decode *s, vaddr_t pc) {
