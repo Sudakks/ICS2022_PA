@@ -79,7 +79,7 @@ void iringbuff_print()
 	while(cnt--)
 	{
 		Decode* s = ringbuff[start].inst;
-		printf("now = %d\n", start);
+		printf("now = %d, s = %p\n", start, s);
 		char *p = s->logbuf;
 		p += snprintf(p, sizeof(s->logbuf), FMT_WORD ":", s->pc);
 		int ilen = s->snpc - s->pc;
