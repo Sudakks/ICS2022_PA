@@ -31,7 +31,9 @@ static uint64_t g_timer = 0; // unit: us
 static bool g_print_step = false;
 
 //环形区变量申明
-static int idx = -1;//这个是环形区域的下标
+static int read = 0;//这个是开始读的地址
+static int write = -1;//用来写的地址
+static int num = 0;//用来记录环形区的数量
 #define ringbuff_size 10
 typedef struct{
 	Decode* inst;//内部存的是指令的地址
@@ -59,17 +61,20 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 void iringbuff_add(Decode *s)
 {
 	//指令环形缓冲区，存储，然后输出信息
-	idx = (idx + 1) % ringbuff_size;
-	ringbuff[idx].inst = s;
+	if(num != ringbuff_size)
+		num++;
+	else
+		read = (read + 1) % ringbuff_size;
+	write = (write + 1) % ringbuff_size;
+	ringbuff[write].inst = s;
 }
 void iringbuff_print()
 {
-	for(int j = 0; j <= idx; j++)
+	int cnt = num;
+	int start = read;
+	while(cnt--)
 	{
-		printf("j = %d, idx = %d\n", j, idx);
-		if(j == idx)
-			printf("--->");
-		Decode* s = ringbuff[j].inst;
+		Decode* s = ringbuff[start].inst;
 		char *p = s->logbuf;
 		p += snprintf(p, sizeof(s->logbuf), FMT_WORD ":", s->pc);
 		int ilen = s->snpc - s->pc;
@@ -88,7 +93,7 @@ void iringbuff_print()
 		void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
 		disassemble(p, s->logbuf + sizeof(s->logbuf) - p,
       MUXDEF(CONFIG_ISA_x86, s->snpc, s->pc), (uint8_t *)&s->isa.inst.val, ilen);
-
+		start = (start + 1) % ringbuff_size;
 	}
 }
 
