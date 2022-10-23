@@ -30,16 +30,15 @@ uint64_t g_nr_guest_inst = 0;
 static uint64_t g_timer = 0; // unit: us
 static bool g_print_step = false;
 
-/*//环形区变量申明
+//环形区变量申明
 static int read = 0;//这个是开始读的地址
 static int write = -1;//用来写的地址
 static int num = 0;//用来记录环形区的数量
-#define ringbuff_size 10
 typedef struct{
 	Decode* inst;//内部存的是指令的地址
 } RB; 
-static RB ringbuff[ringbuff_size] = {};
-*/
+static RB ringbuff[MAX_INST_TO_PRINT] = {};
+
 void scan_wps();
 void device_update();
 void iringbuff_add(Decode *s);
@@ -57,15 +56,15 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 	scan_wps();
 //#endif
 }
-/*
+
 void iringbuff_add(Decode *s)
 {
 	//指令环形缓冲区，存储，然后输出信息
-	if(num != ringbuff_size)
+	if(num != MAX_INST_TO_PRINT)
 		num++;
 	else
-		read = (read + 1) % ringbuff_size;
-	write = (write + 1) % ringbuff_size;
+		read = (read + 1) % MAX_INST_TO_PRINT;
+	write = (write + 1) % MAX_INST_TO_PRINT;
 	Decode* it = ringbuff[write].inst;
 	strcpy(it->logbuf, s->logbuf);
 }
@@ -75,37 +74,18 @@ void iringbuff_print()
 	int start = read;
 	while(cnt--)
 	{
-		Decode* s = ringbuff[start].inst;
-		printf("now = %d, s = %p\n", start, s);
-		char *p = s->logbuf;
-		p += snprintf(p, sizeof(s->logbuf), FMT_WORD ":", s->pc);
-		int ilen = s->snpc - s->pc;
-		int i;
-		uint8_t *inst = (uint8_t *)&s->isa.inst.val;
-		for (i = ilen - 1; i >= 0; i --) {
-			 p += snprintf(p, 4, " %02x", inst[i]);
-		}
-		int ilen_max = MUXDEF(CONFIG_ISA_x86, 8, 4);
-		int space_len = ilen_max - ilen;
-		if (space_len < 0) space_len = 0;
-		space_len = space_len * 3 + 1;
-		memset(p, ' ', space_len);
-		p += space_len;
-
-		void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
-		disassemble(p, s->logbuf + sizeof(s->logbuf) - p,
-      MUXDEF(CONFIG_ISA_x86, s->snpc, s->pc), (uint8_t *)&s->isa.inst.val, ilen);
-		for(int idx = 0; ;idx++)
+			Decode *s = ringbuff[start].inst;
+			for(int idx = 0; ;idx++)
 			{
 				if(s->logbuf[idx] == '\0')
 					break;
 				else
-						printf("%c", s->logbuf[idx]);
+					printf("%c", s->logbuf[idx]);
 			}
-		start = (start + 1) % ringbuff_size;
+		start = (start + 1) % MAX_INST_TO_PRINT;
 	}
 }
-*/
+
 static void exec_once(Decode *s, vaddr_t pc) {
   s->pc = pc;
   s->snpc = pc;
