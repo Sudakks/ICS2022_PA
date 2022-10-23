@@ -74,14 +74,14 @@ void iringbuff_print()
 	int start = read;
 	while(cnt--)
 	{
-			Decode *s = ringbuff[start].inst;
+			/*Decode *s = ringbuff[start].inst;
 			for(int idx = 0; ;idx++)
 			{
 				if(s->logbuf[idx] == '\0')
 					break;
 				else
 					printf("%c", s->logbuf[idx]);
-			}
+			}*/
 		start = (start + 1) % MAX_INST_TO_PRINT;
 	}
 }
