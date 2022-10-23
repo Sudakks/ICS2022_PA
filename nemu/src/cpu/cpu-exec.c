@@ -61,10 +61,10 @@ void iringbuff_add(Decode *s)
 	//指令环形缓冲区，存储，然后输出信息
 	idx = (idx + 1) % ringbuff_size;
 	ringbuff[idx].inst = s;
-	printf("yes at %d\n", idx);
 }
 void iringbuff_print()
 {
+	printf("idx = %d\n", idx);
 	for(int i = 0; i <= idx; i++)
 	{
 		if(i == idx)
