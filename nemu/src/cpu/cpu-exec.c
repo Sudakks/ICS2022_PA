@@ -74,10 +74,8 @@ void iringbuff_print()
 	//打印pc和汇编代码
 	int cnt = num;
 	int start = read;
-	printf("!!!!!!!!\n");
 	while(cnt--)
 	{
-	printf("cnt = %d\n", cnt);
 			if(cnt == 0)
 				printf("--->");
 			for(int idx = 0; ;idx++)
