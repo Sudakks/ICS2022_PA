@@ -64,13 +64,12 @@ void iringbuff_add(Decode *s)
 }
 void iringbuff_print()
 {
-	for(int i = 0; i <= idx; i++)
+	for(int j = 0; j <= idx; j++)
 	{
-		printf("i = %d, idx = %d\n", i, idx);
-		//if(i == idx)
-			//printf("--->");
-		Decode* s = ringbuff[i].inst;
-		printf("here i = %d\n", i);
+		printf("j = %d, idx = %d\n", j, idx);
+		if(j == idx)
+			printf("--->");
+		Decode* s = ringbuff[j].inst;
 		char *p = s->logbuf;
 		p += snprintf(p, sizeof(s->logbuf), FMT_WORD ":", s->pc);
 		int ilen = s->snpc - s->pc;
