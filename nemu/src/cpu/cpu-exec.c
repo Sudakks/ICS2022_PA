@@ -64,9 +64,9 @@ void iringbuff_add(Decode *s)
 }
 void iringbuff_print()
 {
-	printf("idx = %d\n", idx);
 	for(int i = 0; i <= idx; i++)
 	{
+		printf("i = %d, idx = %d\n", i, idx);
 		if(i == idx)
 			printf("--->");
 		Decode* s = ringbuff[i].inst;
