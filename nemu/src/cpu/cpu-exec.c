@@ -70,6 +70,7 @@ void iringbuff_print()
 		//if(i == idx)
 			//printf("--->");
 		Decode* s = ringbuff[i].inst;
+		printf("here i = %d\n", i);
 		char *p = s->logbuf;
 		p += snprintf(p, sizeof(s->logbuf), FMT_WORD ":", s->pc);
 		int ilen = s->snpc - s->pc;
