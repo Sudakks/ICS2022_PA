@@ -68,6 +68,7 @@ void iringbuff_add(Decode *s)
 		read = (read + 1) % ringbuff_size;
 	write = (write + 1) % ringbuff_size;
 	ringbuff[write].inst = s;
+	printf("wirte = %d\n", write);
 }
 void iringbuff_print()
 {
