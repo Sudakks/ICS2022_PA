@@ -61,19 +61,20 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 void iringbuff_add(Decode *s)
 {
 	//指令环形缓冲区，存储，然后输出信息
-	printf("step\n");
 	if(num != ringbuff_size)
 		num++;
 	else
 		read = (read + 1) % ringbuff_size;
 	write = (write + 1) % ringbuff_size;
-	ringbuff[write].inst = s;
-	printf("wirte = %d, s = %p\n", write, s);
+	Decode* it = ringbuff[write].inst;
+	it->pc = s->pc;
+	it->snpc = s->snpc;
+	it->dnpc = s->dnpc;
+	it->isa = s->isa;
+	strcpy(it->logbuf, s->logbuf);
 }
 void iringbuff_print()
 {
-	printf("num = %d\n", num);
-	printf("read = %d\n", read);
 	int cnt = num;
 	int start = read;
 	while(cnt--)
