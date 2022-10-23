@@ -81,7 +81,10 @@ void iringbuff_print()
 			{
 					printf("%c", ringbuff[start].logbuf[idx]);
 					if(ringbuff[start].logbuf[idx] == '\0')
+					{
+						printf("\n");
 						break;
+					}
 			}
 		start = (start + 1) % MAX_INST_TO_PRINT;
 	}
