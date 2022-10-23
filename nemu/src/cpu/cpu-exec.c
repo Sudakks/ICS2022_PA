@@ -97,6 +97,7 @@ static void exec_once(Decode *s, vaddr_t pc) {
   s->snpc = pc;
   isa_exec_once(s);
 	iringbuff_add(s);//add instruction to ringbuff every time i decode an inst
+	iringbuff_print();
   cpu.pc = s->dnpc;
 #ifdef CONFIG_ITRACE
   char *p = s->logbuf;
@@ -129,7 +130,6 @@ static void execute(uint64_t n) {
     g_nr_guest_inst ++;
     trace_and_difftest(&s, cpu.pc);
 		//run error print
-		printf("n = %ld\n", n);
     if (nemu_state.state != NEMU_RUNNING) 
 		{
 			iringbuff_print();
