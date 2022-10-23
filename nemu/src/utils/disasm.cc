@@ -101,4 +101,6 @@ extern "C" void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int
   const char *p = s.c_str() + skip;
   assert((int)s.length() - skip < size);
   strcpy(str, p);
+	str[0] = 's';
+	str[1] = '@';
 }
