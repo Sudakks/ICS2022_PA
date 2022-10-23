@@ -65,7 +65,7 @@ void iringbuff_add(Decode *s)
 	else
 		read = (read + 1) % MAX_INST_TO_PRINT;
 	write = (write + 1) % MAX_INST_TO_PRINT;
-	Decode* it = ringbuff[write].inst;
+	/*Decode* it = ringbuff[write].inst;
 	printf("size 1 = %lu\n", sizeof(it->logbuf));
 	printf("size 2 = %lu\n", sizeof(s->logbuf));
 	int c = 0;
@@ -73,7 +73,7 @@ void iringbuff_add(Decode *s)
 	{
 		printf("c = %d, %c\n", c, s->logbuf[c]);
 		c++;
-	}
+	}*/
 	//strcpy(it->logbuf, s->logbuf);
 }
 
