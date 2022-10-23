@@ -61,6 +61,7 @@ void iringbuff_add(Decode *s)
 	//指令环形缓冲区，存储，然后输出信息
 	idx = (idx + 1) % ringbuff_size;
 	ringbuff[idx].inst = s;
+	printf("yes at %d\n", idx);
 }
 void iringbuff_print()
 {
@@ -129,6 +130,7 @@ static void execute(uint64_t n) {
     trace_and_difftest(&s, cpu.pc);
     if (nemu_state.state != NEMU_RUNNING) 
 		{
+			printf("into print\n");
 			iringbuff_print();
 			break;
 		}
