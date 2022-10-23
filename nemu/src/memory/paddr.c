@@ -13,6 +13,7 @@
 * See the Mulan PSL v2 for more details.
 ***************************************************************************************/
 
+#include <cpu/cpu.h>
 #include <memory/host.h>
 #include <memory/paddr.h>
 #include <device/mmio.h>
