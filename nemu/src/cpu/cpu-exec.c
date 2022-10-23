@@ -35,14 +35,14 @@ static int read = 0;//这个是开始读的地址
 static int write = -1;//用来写的地址
 static int num = 0;//用来记录环形区的数量
 typedef struct{
-	//Decode* inst;//内部存的是指令的地址
 	char logbuf[128];
+	uint64_t pc;
 } RB; 
 static RB ringbuff[MAX_INST_TO_PRINT] = {};
 
 void scan_wps();
 void device_update();
-void iringbuff_add(Decode *s, char* str);
+void iringbuff_add(Decode *s, char* str, uint64_t pc);
 void iringbuff_print();
 
 
@@ -58,7 +58,7 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 //#endif
 }
 
-void iringbuff_add(Decode *s, char* str)
+void iringbuff_add(Decode *s, char* str, uint64_t pc)
 {
 	//指令环形缓冲区，存储，然后输出信息
 	if(num != MAX_INST_TO_PRINT)
@@ -66,8 +66,8 @@ void iringbuff_add(Decode *s, char* str)
 	else
 		read = (read + 1) % MAX_INST_TO_PRINT;
 	write = (write + 1) % MAX_INST_TO_PRINT;
-//	strcpy(it->logbuf, str);
 	strcpy(ringbuff[write].logbuf, str);
+	ringbuff[write].pc = pc;
 }
 
 
@@ -77,6 +77,7 @@ void iringbuff_print()
 	int start = read;
 	while(cnt--)
 	{
+			printf("%#lx: \n", ringbuff[start].pc);
 			for(int idx = 0; ;idx++)
 			{
 					printf("%c", ringbuff[start].logbuf[idx]);
@@ -114,7 +115,7 @@ static void exec_once(Decode *s, vaddr_t pc) {
   void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
   disassemble(p, s->logbuf + sizeof(s->logbuf) - p,
       MUXDEF(CONFIG_ISA_x86, s->snpc, s->pc), (uint8_t *)&s->isa.inst.val, ilen);
-  	iringbuff_add(s, p);
+  iringbuff_add(s, p, s->pc);
 	iringbuff_print();
 	//add instruction to ringbuff every time it has its logbuf
 #endif
