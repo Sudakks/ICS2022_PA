@@ -75,6 +75,7 @@ void iringbuff_print()
 	int cnt = num;
 	int start = read;
 	printf("!!!!!!!!\n");
+	printf("cnt = %d\n", cnt);
 	while(cnt--)
 	{
 			if(cnt == 1)
