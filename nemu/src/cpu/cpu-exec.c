@@ -146,7 +146,7 @@ static void execute(uint64_t n) {
 		//run error print
     if (nemu_state.state != NEMU_RUNNING) 
 		{
-			iringbuff_print();
+//			iringbuff_print();
 			break;
 		}
     IFDEF(CONFIG_DEVICE, device_update());
