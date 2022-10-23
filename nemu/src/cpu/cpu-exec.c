@@ -67,10 +67,6 @@ void iringbuff_add(Decode *s)
 		read = (read + 1) % ringbuff_size;
 	write = (write + 1) % ringbuff_size;
 	Decode* it = ringbuff[write].inst;
-	it->pc = s->pc;
-	it->snpc = s->snpc;
-	it->dnpc = s->dnpc;
-	it->isa = s->isa;
 	strcpy(it->logbuf, s->logbuf);
 }
 void iringbuff_print()
@@ -81,7 +77,7 @@ void iringbuff_print()
 	{
 		Decode* s = ringbuff[start].inst;
 		printf("now = %d, s = %p\n", start, s);
-		char *p = s->logbuf;
+		/*char *p = s->logbuf;
 		p += snprintf(p, sizeof(s->logbuf), FMT_WORD ":", s->pc);
 		int ilen = s->snpc - s->pc;
 		int i;
@@ -98,7 +94,14 @@ void iringbuff_print()
 
 		void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
 		disassemble(p, s->logbuf + sizeof(s->logbuf) - p,
-      MUXDEF(CONFIG_ISA_x86, s->snpc, s->pc), (uint8_t *)&s->isa.inst.val, ilen);
+      MUXDEF(CONFIG_ISA_x86, s->snpc, s->pc), (uint8_t *)&s->isa.inst.val, ilen);*/
+		for(int idx = 0; ;idx++)
+			{
+				if(s->logbuf[idx] == '\0')
+					break;
+				else
+						printf("%c", s->logbuf[idx]);
+			}
 		start = (start + 1) % ringbuff_size;
 	}
 }
@@ -107,7 +110,6 @@ static void exec_once(Decode *s, vaddr_t pc) {
   s->pc = pc;
   s->snpc = pc;
   isa_exec_once(s);
-	iringbuff_add(s);//add instruction to ringbuff every time i decode an inst
 	iringbuff_print();
   cpu.pc = s->dnpc;
 #ifdef CONFIG_ITRACE
@@ -129,6 +131,7 @@ static void exec_once(Decode *s, vaddr_t pc) {
   void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
   disassemble(p, s->logbuf + sizeof(s->logbuf) - p,
       MUXDEF(CONFIG_ISA_x86, s->snpc, s->pc), (uint8_t *)&s->isa.inst.val, ilen);
+	iringbuff_add(s);//add instruction to ringbuff every time i decode an inst
 #endif
 }
 
