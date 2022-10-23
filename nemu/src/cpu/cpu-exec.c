@@ -41,7 +41,7 @@ static RB ringbuff[MAX_INST_TO_PRINT] = {};
 
 void scan_wps();
 void device_update();
-void iringbuff_add(Decode *s);
+void iringbuff_add(Decode *s, char* str);
 void iringbuff_print();
 
 
@@ -57,7 +57,7 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 //#endif
 }
 
-void iringbuff_add(Decode *s)
+void iringbuff_add(Decode *s, char* str)
 {
 	//指令环形缓冲区，存储，然后输出信息
 	if(num != MAX_INST_TO_PRINT)
@@ -65,8 +65,8 @@ void iringbuff_add(Decode *s)
 	else
 		read = (read + 1) % MAX_INST_TO_PRINT;
 	write = (write + 1) % MAX_INST_TO_PRINT;
-	/*Decode* it = ringbuff[write].inst;
-	printf("size 1 = %lu\n", sizeof(it->logbuf));
+	Decode* it = ringbuff[write].inst;
+	/*printf("size 1 = %lu\n", sizeof(it->logbuf));
 	printf("size 2 = %lu\n", sizeof(s->logbuf));
 	int c = 0;
 	while(*(s->logbuf) != '\0')
@@ -75,6 +75,7 @@ void iringbuff_add(Decode *s)
 		c++;
 	}*/
 	//strcpy(it->logbuf, s->logbuf);
+	strcpy(it->logbuf, str);
 }
 
 
@@ -120,8 +121,7 @@ static void exec_once(Decode *s, vaddr_t pc) {
   void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
   disassemble(p, s->logbuf + sizeof(s->logbuf) - p,
       MUXDEF(CONFIG_ISA_x86, s->snpc, s->pc), (uint8_t *)&s->isa.inst.val, ilen);
-	printf("len = %lu\n",s->logbuf + sizeof(s->logbuf) - p);
-	iringbuff_add(s);
+	iringbuff_add(s, p);
 //	iringbuff_print();
 	//add instruction to ringbuff every time it has its logbuf
 #endif
