@@ -113,7 +113,7 @@ static void exec_once(Decode *s, vaddr_t pc) {
   disassemble(p, s->logbuf + sizeof(s->logbuf) - p,
       MUXDEF(CONFIG_ISA_x86, s->snpc, s->pc), (uint8_t *)&s->isa.inst.val, ilen);
 	iringbuff_add(s);
-	iringbuff_print();
+//	iringbuff_print();
 	//add instruction to ringbuff every time it has its logbuf
 #endif
 }
@@ -129,7 +129,7 @@ static void execute(uint64_t n) {
 		//run error print
     if (nemu_state.state != NEMU_RUNNING) 
 		{
-//			iringbuff_print();
+			iringbuff_print();
 			break;
 		}
     IFDEF(CONFIG_DEVICE, device_update());
