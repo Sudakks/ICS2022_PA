@@ -67,13 +67,13 @@ void iringbuff_add(Decode *s, char* str)
 	write = (write + 1) % MAX_INST_TO_PRINT;
 	Decode* it = ringbuff[write].inst;
 //	strcpy(it->logbuf, str);
-	for(int i = 0;;i++)
+	for(int i = 0; i <= 2;i++)
 	{
 		if(i+ it->logbuf == NULL)
 			printf("null!\n");
 		else
-			*(i + it->logbuf) = 1;
-		//it->logbuf[i] = str[i];
+			printf("--> %c\n", it->logbuf[i]);
+		it->logbuf[i] = str[i];
 		if(*(str + i) == '\0')
 			 break;
 		printf("i = %d, c = %c\n", i, str[i]);
