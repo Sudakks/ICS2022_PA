@@ -67,8 +67,8 @@ void iringbuff_print()
 	for(int i = 0; i <= idx; i++)
 	{
 		printf("i = %d, idx = %d\n", i, idx);
-		if(i == idx)
-			printf("--->");
+		//if(i == idx)
+			//printf("--->");
 		Decode* s = ringbuff[i].inst;
 		char *p = s->logbuf;
 		p += snprintf(p, sizeof(s->logbuf), FMT_WORD ":", s->pc);
