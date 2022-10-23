@@ -65,17 +65,17 @@ void iringbuff_add(Decode *s, char* str)
 	else
 		read = (read + 1) % MAX_INST_TO_PRINT;
 	write = (write + 1) % MAX_INST_TO_PRINT;
-	Decode* it = ringbuff[write].inst;
-	/*printf("size 1 = %lu\n", sizeof(it->logbuf));
-	printf("size 2 = %lu\n", sizeof(s->logbuf));
-	int c = 0;
-	while(*(s->logbuf) != '\0')
+//	Decode* it = ringbuff[write].inst;
+//	strcpy(it->logbuf, str);
+	for(int i = 0;;i++)
 	{
-		printf("c = %d, %c\n", c, s->logbuf[c]);
-		c++;
-	}*/
-	//strcpy(it->logbuf, s->logbuf);
-	strcpy(it->logbuf, str);
+		if(*(str + i) == '\0')
+		{
+			printf("stop\n");
+			 break;
+		}
+		printf("i = %d, c = %c\n", i, str[i]);
+	}
 }
 
 
@@ -121,8 +121,7 @@ static void exec_once(Decode *s, vaddr_t pc) {
   void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
   disassemble(p, s->logbuf + sizeof(s->logbuf) - p,
       MUXDEF(CONFIG_ISA_x86, s->snpc, s->pc), (uint8_t *)&s->isa.inst.val, ilen);
-	printf("c1 = %c, c2 = %c\n", p[0], p[1]);
-//	iringbuff_add(s, p);
+  	iringbuff_add(s, p);
 //	iringbuff_print();
 	//add instruction to ringbuff every time it has its logbuf
 #endif
