@@ -73,7 +73,7 @@ void iringbuff_add(Decode *s, char* str)
 			printf("null!\n");
 		else
 			printf("--> %c\n", it->logbuf[i]);
-		it->logbuf[i] = str[i];
+		//it->logbuf[i] = str[i];
 		if(*(str + i) == '\0')
 			 break;
 		printf("i = %d, c = %c\n", i, str[i]);
