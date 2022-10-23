@@ -99,6 +99,7 @@ static void exec_once(Decode *s, vaddr_t pc) {
 	iringbuff_add(s);//add instruction to ringbuff every time i decode an inst
   cpu.pc = s->dnpc;
 #ifdef CONFIG_ITRACE
+	printf("all here print\n");
   char *p = s->logbuf;
   p += snprintf(p, sizeof(s->logbuf), FMT_WORD ":", s->pc);
   int ilen = s->snpc - s->pc;
