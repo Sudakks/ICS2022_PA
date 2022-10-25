@@ -63,7 +63,7 @@ word_t paddr_read(paddr_t addr, int len) {
   if (likely(in_pmem(addr))) 
 	{
 		word_t ret = pmem_read(addr, len);
-		printf("addr: %#x, len: %d, read: %u\n", addr, len, ret);
+		printf("--- addr: %#x, len: %d, read: %u ---\n", addr, len, ret);
 		return ret; 
 	}
   IFDEF(CONFIG_DEVICE, return mmio_read(addr, len));
@@ -74,10 +74,10 @@ word_t paddr_read(paddr_t addr, int len) {
 void paddr_write(paddr_t addr, int len, word_t data) {
   if (likely(in_pmem(addr)))
 	{ 
-		printf("addr: %#x, len: %d, write: %u", addr, len, data);
+		printf("--- addr: %#x, len: %d, write: %u ---\n", addr, len, data);
 		pmem_write(addr, len, data); 
 		return; 
-	}
+	} 
   IFDEF(CONFIG_DEVICE, mmio_write(addr, len, data); return);
   out_of_bound(addr);
 }
