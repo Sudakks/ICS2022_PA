@@ -13,15 +13,17 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   panic("Not implemented");
 }
 
-int sprintf(char *out, const char *fmt, ...) {
+int mysprintf(char *out, const char *fmt, ...) {
 	//先读到%
+	char* tmp = out;
 	va_list ap;
 	va_start(ap, fmt);
 	char* s;
 	int num;
+	long long llnum;
 	int ret = 0;
 	int val[20];
-	int len;
+	int len; 
 	while(*fmt != '\0')
 	{
 		if(*fmt == '%')
@@ -32,19 +34,29 @@ int sprintf(char *out, const char *fmt, ...) {
 			{
 				case 'd':
 				//读数字
-			  	num = va_arg(ap, int);
+			  		num = va_arg(ap, long long);			  		
 					len = 0;
+					llnum = (long long)num;
+					//似乎没有判断为负的情况 
+					if(num < 0)
+					{
+						llnum = -llnum;	
+						*tmp++ = '-';					
+					}							
 					while(1)
 					{
-						if(num == 0)
+						if(llnum == 0)
 							break;
-						len++;
-						val[len] = num % 10;
-						num = num / 10;
-					}
+						val[++len] = llnum % 10;
+						llnum = llnum / 10;
+					}					
+					if(len == 0)
+						val[++len] = 0; //相当于特判了是0的情况 
+									
 					for(int i = len; i >= 1; i--)
 					{
-						*out++ = val[i] + '0';
+						*tmp = val[i] + '0';
+						tmp++;
 					}
 					//自己写一个int转为char*的函数？
 					ret += len;
@@ -52,24 +64,24 @@ int sprintf(char *out, const char *fmt, ...) {
 				case 's':
 					s = va_arg(ap, char*);//因为写string没有高亮，，，
 					//这里！要主动给s后面添加一个'\0'!
-					memcpy(out, s, strlen(s));
-					out += strlen(s);
+					memcpy(tmp, s, strlen(s));
+					tmp += strlen(s);
 					ret += strlen(s);
 					break;
 			}
 		}
 		else
 		{
-			*out = *fmt;
-			out++;
+			*tmp = *fmt;
+			tmp++;
 		}
 		fmt++;
 	}
 	va_end(ap);
-	*out = '\0';
+	*tmp = '\0';
 	return ret;
-  //panic("Not implemented");
 }
+
 
 int snprintf(char *out, size_t n, const char *fmt, ...) {
   panic("Not implemented");

@@ -25,20 +25,18 @@ char *strcpy(char *dst, const char *src) {
 }
 
 char *strncpy(char *dst, const char *src, size_t n) {
-	assert(dst != NULL && src != NULL);
-	char *ret = dst;
-	while(n--)
-	{
-		if(*src != '\0')
-		{
-			*dst++ = *src++;
-		}
-		else
-		{
-			*dst++ = '\0';
-		}
+	//Do not copy the '\0' in the tail
+        assert(dest!=NULL && src!=NULL);  
+        char* temp=dest;  
+        int i = 0;  
+        while(i++ < len)
+        {
+        	if(*src != '\0')
+        		*temp++ = *src++;
+            	else
+            		*temp++ = '\0';
 	}
-	return ret;
+        return dest; 
 }
 
 char *strcat(char *dst, const char *src) {
@@ -55,14 +53,6 @@ char *strcat(char *dst, const char *src) {
 
 int strcmp(const char *s1, const char *s2) {
 	assert(s1 != NULL && s2 != NULL);
-	/*
-	while(*s1 && *(unsigned char*)s1 == *(unsigned char*)s2)
-	{ 
-		s1++;
-		s2++;
-	}
-	return *s1 - *s2;
-	*/
 	while(*(unsigned char*)s1 == *((unsigned char*)s2))
 	{
 		if(*s1 == '\0')
@@ -78,8 +68,11 @@ int strncmp(const char *s1, const char *s2, size_t n) {
 		return 0;
 	while(n-- && *s1 != '\0' && *(unsigned char*)s1 == *(unsigned char*)s2)
 	{
+		
 		s1++;
 		s2++;
+		if(n == 0)
+			return 0;
 	}
 	return *s1 - *s2;
 }
@@ -131,40 +124,29 @@ void *memmove(void *dst, const void *src, size_t n) {
 }
 
 void *memcpy(void *out, const void *in, size_t n) {
+	//不会拷贝最后的'\0'，所以在使用时拷贝的长度为strlen(in) + 1 
 	if(n <= 0 || out == NULL || in == NULL)
 		return out;
 	void *ret = out;
-	char* o = (char*)out;
-	char* i = (char*)in;
-	//判断是向后拷贝，还是向前拷贝
-	if(o < i)
+	char* tmp_o = (char*)out;
+	char* tmp_i = (char*)in;
+	int i = 0;
+	while(i++ < n)
 	{
-		while(n--)
-			*o++ = *i++;
-		*o = '\0';
+		*tmp_o++ = *tmp_i++;	
 	}
-	else
-	{
-		*o = '\0';
-		o = o + n - 1;
-		i = i + n - 1;
-		while(n--)
-		{
-			*o-- = *i--;
-		}
-	}
+	//当区间出现重叠时有UB行为产生
 	return ret;
 }
 
 int memcmp(const void *s1, const void *s2, size_t n) {
 	unsigned char c1, c2;
-	while (n > 0)
+	while (n-- > 0)
 	{
-    c1 = *(unsigned char*)s1++;
-    c2 = *(unsigned char*)s2++;
-    if (c1 == '\0' || c1 != c2)
-        return c1 - c2;
-    n--;
+    		c1 = *(unsigned char*)s1++;
+    		c2 = *(unsigned char*)s2++;
+    		if (c1 == '\0' || c1 != c2)
+        		return c1 - c2;
 	}
 	return 0;
 }

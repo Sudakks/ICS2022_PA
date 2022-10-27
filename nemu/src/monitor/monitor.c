@@ -24,6 +24,27 @@ void init_device();
 void init_sdb();
 void init_disasm(const char *triple);
 
+//elf process
+void read_elf_header(char* buff, char* filename);
+#define ehsize 52;//elf的head size固定为52
+#define eshsize 40;//elf的section header的大小固定为40字节
+typedef struct
+{
+	word_t e_shoff;//section header offset
+	word_t e_shentsize;// size
+	word_t e_shnum;// number
+	word_t e_shstrndx; //section header string table idx,该项在sh中的索引
+} elf_header;
+
+typedef struct
+{
+	word_t sh_name;	//in string table idx
+	word_t sh_type; //strtab or symtab
+	word_t sh_offset;// 
+	word_t sh_size; //size
+	word_t sh_entsize;// entry size
+} elf_sec_header;
+
 static void welcome() {
   Log("Trace: %s", MUXDEF(CONFIG_TRACE, ANSI_FMT("ON", ANSI_FG_GREEN), ANSI_FMT("OFF", ANSI_FG_RED)));
   IFDEF(CONFIG_TRACE, Log("If trace is enabled, a log file will be generated "
@@ -67,6 +88,16 @@ static long load_img() {
   fclose(fp);
   return size;
 }
+
+void read_elf_header(char* buff, char* filename)
+{
+	/*FILE* fp = fopen(filename, "r");//read only
+	fseek(fp, 0, SEEK_SET);
+	int ret = fread(buff, ehsize, 1, fp);
+	assert(ret == 1);//return size == read in number
+	fclose(fp);*/
+}
+
 
 static int parse_args(int argc, char *argv[]) {
   const struct option table[] = {
