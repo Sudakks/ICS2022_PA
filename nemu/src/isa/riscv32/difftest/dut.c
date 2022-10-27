@@ -20,16 +20,16 @@
 
 bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
 	//compare reg value and PC
-	/*if(ref_r -> pc != pc)
+	if(ref_r -> pc != pc)
 		return false;
 //	int len = sizeof(regs) / sizeof(regs[0]);
-int len = 32;
+	/*int len = 32;
 	for(int i = 0; i < len; i++)
 	{
 		if(cpu.gpr[i] != ref_r->gpr[i])
 			return false;
-	}
-	*/return true;
+	}*/
+	return true;
 }
 
 void isa_difftest_attach() {
