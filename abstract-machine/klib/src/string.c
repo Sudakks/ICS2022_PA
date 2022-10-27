@@ -26,17 +26,17 @@ char *strcpy(char *dst, const char *src) {
 
 char *strncpy(char *dst, const char *src, size_t n) {
 	//Do not copy the '\0' in the tail
-        assert(dest!=NULL && src!=NULL);  
-        char* temp=dest;  
+        assert(dst!=NULL && src!=NULL);  
+        char* temp = dst;  
         int i = 0;  
-        while(i++ < len)
-        {
+        while(i++ < n)
+        { 
         	if(*src != '\0')
         		*temp++ = *src++;
             	else
             		*temp++ = '\0';
 	}
-        return dest; 
+        return dst; 
 }
 
 char *strcat(char *dst, const char *src) {
