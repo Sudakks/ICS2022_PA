@@ -13,7 +13,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   panic("Not implemented");
 }
 
-int mysprintf(char *out, const char *fmt, ...) {
+int sprintf(char *out, const char *fmt, ...) {
 	//先读到%
 	char* tmp = out;
 	va_list ap;
