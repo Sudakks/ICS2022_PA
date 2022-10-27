@@ -14,16 +14,14 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
 }
 
 int sprintf(char *out, const char *fmt, ...) {
-	//先读到%
-	char* tmp = out;
 	va_list ap;
 	va_start(ap, fmt);
 	char* s;
 	int num;
-	long long llnum;
 	int ret = 0;
 	int val[20];
 	int len; 
+	bool neg = false; 
 	while(*fmt != '\0')
 	{
 		if(*fmt == '%')
@@ -34,29 +32,33 @@ int sprintf(char *out, const char *fmt, ...) {
 			{
 				case 'd':
 				//读数字
-			  		num = va_arg(ap, long long);			  		
+			  		num = va_arg(ap, int);			  		
 					len = 0;
-					llnum = (long long)num;
 					//似乎没有判断为负的情况 
 					if(num < 0)
 					{
-						llnum = -llnum;	
-						*tmp++ = '-';					
+						neg = true;	
+						*out++ = '-';					
 					}							
 					while(1)
 					{
-						if(llnum == 0)
+						if(num == 0)
 							break;
-						val[++len] = llnum % 10;
-						llnum = llnum / 10;
+						len++;
+						val[len] = num % 10;
+						//printf("now = %d\n", val[len]);
+						num = num / 10;
+						if(neg == true)
+							val[len] = -val[len];						
 					}					
 					if(len == 0)
 						val[++len] = 0; //相当于特判了是0的情况 
 									
 					for(int i = len; i >= 1; i--)
 					{
-						*tmp = val[i] + '0';
-						tmp++;
+						*out = val[i] + '0';
+						//printf("out = %c\n", *out);
+						out++;
 					}
 					//自己写一个int转为char*的函数？
 					ret += len;
@@ -64,21 +66,21 @@ int sprintf(char *out, const char *fmt, ...) {
 				case 's':
 					s = va_arg(ap, char*);//因为写string没有高亮，，，
 					//这里！要主动给s后面添加一个'\0'!
-					memcpy(tmp, s, strlen(s));
-					tmp += strlen(s);
+					memcpy(out, s, strlen(s));
+					out += strlen(s);
 					ret += strlen(s);
 					break;
 			}
 		}
 		else
 		{
-			*tmp = *fmt;
-			tmp++;
+			*out = *fmt;
+			out++;
 		}
 		fmt++;
 	}
 	va_end(ap);
-	*tmp = '\0';
+	*out = '\0';
 	return ret;
 }
 
