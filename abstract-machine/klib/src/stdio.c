@@ -4,16 +4,65 @@
 #include <stdarg.h>
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
+#define MAX_STR_SIZE 512
+
+void put_str(int cnt, const char* str)
+{
+	//putch str
+	for(int i = 0; i < cnt; i++)
+	{
+		putch(*(i + str));
+	}
+}
 
 int printf(const char *fmt, ...) {
 	/*
 	实现：
 	利用sprintf将数据读到一个out里面，利用putch函数输出
 	*/
-	char out[100];
-	sprintf(out, fmt, ...);
-	i==;
-  panic("Not implemented");
+	va_list ap;
+	va_start(ap, fmt);
+	int num;
+	int str_cnt;
+	int ret = 0;
+	static char mystr[MAX_STR_SIZE];
+	while(*fmt != '\0')
+	{
+		if(*fmt == '%')
+		{
+			//说明有要读到的格式了
+			fmt++;
+			switch(*fmt)
+			{
+				case 'd':
+				//读数字
+			  		num = va_arg(ap, int);			  		
+						str_cnt = sprintf(mystr, "%d", num);
+						ret += str_cnt;
+						break;
+				case 's':
+						mystr = va_arg(ap, char*);
+						str_cnt = strlen(mystr);
+						ret += str_cnt;
+						break;
+				case 'c':
+						mystr = va_arg(ap, char);
+						str_cnt = 1;
+						ret += 1;
+						break;
+				default: ;
+			}
+			put_str(str_cnt, mystr);
+		}
+		else
+		{
+			putch(*fmt);
+		}
+		fmt++;
+	}
+  //panic("Not implemented");
+	va_end(ap);
+	return ret;
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
@@ -64,10 +113,9 @@ int sprintf(char *out, const char *fmt, ...) {
 					for(int i = len; i >= 1; i--)
 					{
 						*out = val[i] + '0';
-						//printf("out = %c\n", *out);
 						out++;
 					}
-					//自己写一个int转为char*的函数？
+					//int2string
 					ret += len;
 					break;
 				case 's':
@@ -76,6 +124,12 @@ int sprintf(char *out, const char *fmt, ...) {
 					memcpy(out, s, strlen(s));
 					out += strlen(s);
 					ret += strlen(s);
+					break;
+				case 'c':
+					s = va_arg(ap, char);
+					*out = s;
+					out++;
+					ret += 1;
 					break;
 			}
 		}
