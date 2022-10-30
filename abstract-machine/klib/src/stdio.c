@@ -2,7 +2,7 @@
 #include <klib.h>
 #include <klib-macros.h>
 #include <stdarg.h>
-#include <malloc.h>
+//#include <malloc.h>
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 #define MAX_STR_SIZE 1024 
@@ -26,8 +26,9 @@ int printf(const char *fmt, ...) {
 	int num;
 	int str_cnt = 0;
 	int ret = 0;
-	static char* mystr;
-	mystr = (char*)malloc(MAX_STR_SIZE);
+	static char mystr[1024];
+	static char* cp;
+//	mystr = (char*)malloc(MAX_STR_SIZE);
 	static char myc;
 	while(*fmt != '\0')
 	{
@@ -38,13 +39,14 @@ int printf(const char *fmt, ...) {
 			{
 				case 'd':
 				//读数字
-			  			num = va_arg(ap, int);			  		
-						str_cnt = sprintf(mystr, "%d", num);
+			  		num = va_arg(ap, int);			  		
+						str_cnt = sprintf(&mystr[0], "%d", num);
 						ret += str_cnt;
-						put_str(str_cnt, mystr);
+						put_str(str_cnt, &mystr[0]);
 						break;
 				case 's':
-						mystr = va_arg(ap, char*);//它会显示char*转到char数组不行
+						cp = va_arg(ap, char*);//它会显示char*转到char数组不行
+						strcpy(mystr, cp);
 						str_cnt = strlen(mystr);
 						ret += str_cnt;
 						put_str(str_cnt, mystr);
@@ -54,7 +56,6 @@ int printf(const char *fmt, ...) {
 						str_cnt = 1;
 						ret += 1;
 						putch(myc);
-						mystr = &myc;
 						break;
 				default: ;
 			}
@@ -67,7 +68,7 @@ int printf(const char *fmt, ...) {
 	}
   //panic("Not implemented");
 	va_end(ap);
-	free(mystr);
+//	free(mystr);
 	return ret;
 }
 
