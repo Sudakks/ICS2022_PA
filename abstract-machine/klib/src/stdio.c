@@ -4,7 +4,7 @@
 #include <stdarg.h>
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
-#define MAX_STR_SIZE 1024 
+#define MAX_STR_SIZE 100000
 
 void put_str(size_t cnt, const char* str)
 {
