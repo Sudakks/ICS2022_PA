@@ -26,7 +26,7 @@ int printf(const char *fmt, ...) {
 	int str_cnt = 0;
 	int ret = 0;
 	static char* mystr;
-	static char myc;
+	//static char myc;
 	while(*fmt != '\0')
 	{
 		if(*fmt == '%')
@@ -41,7 +41,7 @@ int printf(const char *fmt, ...) {
 						str_cnt = sprintf(mystr, "%d", num);
 						ret += str_cnt;
 						break;
-				case 's':
+				/*case 's':
 						mystr = va_arg(ap, char*);//它会显示char*转到char数组不行
 						str_cnt = strlen(mystr);
 						ret += str_cnt;
@@ -53,7 +53,7 @@ int printf(const char *fmt, ...) {
 						mystr = &myc;
 						break;
 				default: ;
-			}
+			*/}
 			put_str(str_cnt, mystr);
 		}
 		else
