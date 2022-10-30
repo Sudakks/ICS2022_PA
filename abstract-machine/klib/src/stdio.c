@@ -23,7 +23,7 @@ int printf(const char *fmt, ...) {
 	va_list ap;
 	va_start(ap, fmt);
 	int num;
-	int str_cnt;
+	int str_cnt = 0;
 	int ret = 0;
 	static char* mystr;
 	static char myc;
@@ -47,7 +47,7 @@ int printf(const char *fmt, ...) {
 						ret += str_cnt;
 						break;
 				case 'c':
-						myc = va_arg(ap, char);
+						myc = va_arg(ap, int);
 						str_cnt = 1;
 						ret += 1;
 						mystr = &myc;
@@ -129,7 +129,7 @@ int sprintf(char *out, const char *fmt, ...) {
 					ret += strlen(s);
 					break;
 				case 'c':
-					c = va_arg(ap, char);
+					c = va_arg(ap, int);
 					*out = c;
 					out++;
 					ret += 1;
