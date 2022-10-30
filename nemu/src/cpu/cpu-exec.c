@@ -93,6 +93,7 @@ void iringbuff_print()
 
 static void exec_once(Decode *s, vaddr_t pc) {
   s->pc = pc;
+	printf("%d%s\n", 123, "ju");
   s->snpc = pc;
   isa_exec_once(s);
   cpu.pc = s->dnpc;

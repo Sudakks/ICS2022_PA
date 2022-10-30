@@ -26,6 +26,7 @@ int printf(const char *fmt, ...) {
 	int str_cnt;
 	int ret = 0;
 	static char* mystr;
+	static char myc;
 	while(*fmt != '\0')
 	{
 		if(*fmt == '%')
@@ -41,14 +42,15 @@ int printf(const char *fmt, ...) {
 						ret += str_cnt;
 						break;
 				case 's':
-						mystr = va_arg(ap, char*);
+						mystr = va_arg(ap, char*);//它会显示char*转到char数组不行
 						str_cnt = strlen(mystr);
 						ret += str_cnt;
 						break;
 				case 'c':
-						mystr = va_arg(ap, char);
+						myc = va_arg(ap, char);
 						str_cnt = 1;
 						ret += 1;
+						mystr = &myc;
 						break;
 				default: ;
 			}
@@ -73,9 +75,10 @@ int sprintf(char *out, const char *fmt, ...) {
 	va_list ap;
 	va_start(ap, fmt);
 	char* s;
+	char c;
 	int num;
 	int ret = 0;
-	int val[20];
+	int val[67];
 	int len; 
 	bool neg = false; 
 	while(*fmt != '\0')
@@ -126,8 +129,8 @@ int sprintf(char *out, const char *fmt, ...) {
 					ret += strlen(s);
 					break;
 				case 'c':
-					s = va_arg(ap, char);
-					*out = s;
+					c = va_arg(ap, char);
+					*out = c;
 					out++;
 					ret += 1;
 					break;
