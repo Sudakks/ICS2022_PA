@@ -2,6 +2,7 @@
 #include <klib.h>
 #include <klib-macros.h>
 #include <stdarg.h>
+#include <malloc.h>
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 #define MAX_STR_SIZE 1024 
@@ -26,35 +27,37 @@ int printf(const char *fmt, ...) {
 	int str_cnt = 0;
 	int ret = 0;
 	static char* mystr;
-	//static char myc;
+	mystr = (char*)malloc(MAX_STR_SIZE);
+	static char myc;
 	while(*fmt != '\0')
 	{
 		if(*fmt == '%')
 		{
 			//说明有要读到的格式了
-			fmt++;
 			switch(*fmt)
 			{
 				case 'd':
 				//读数字
-			  		num = va_arg(ap, int);			  		
+			  			num = va_arg(ap, int);			  		
 						str_cnt = sprintf(mystr, "%d", num);
 						ret += str_cnt;
+						put_str(str_cnt, mystr);
 						break;
-				/*case 's':
+				case 's':
 						mystr = va_arg(ap, char*);//它会显示char*转到char数组不行
 						str_cnt = strlen(mystr);
 						ret += str_cnt;
+						put_str(str_cnt, mystr);
 						break;
 				case 'c':
 						myc = va_arg(ap, int);
 						str_cnt = 1;
 						ret += 1;
+						putch(myc);
 						mystr = &myc;
 						break;
 				default: ;
-			*/}
-			put_str(str_cnt, mystr);
+			}
 		}
 		else
 		{
@@ -64,6 +67,7 @@ int printf(const char *fmt, ...) {
 	}
   //panic("Not implemented");
 	va_end(ap);
+	free(mystr);
 	return ret;
 }
 
