@@ -28,7 +28,6 @@ int printf(const char *fmt, ...) {
 	int ret = 0;
 	static char mystr[1024];
 	static char* cp;
-//	mystr = (char*)malloc(MAX_STR_SIZE);
 	static char myc;
 	while(*fmt != '\0')
 	{
@@ -68,7 +67,6 @@ int printf(const char *fmt, ...) {
 	}
   //panic("Not implemented");
 	va_end(ap);
-//	free(mystr);
 	return ret;
 }
 
