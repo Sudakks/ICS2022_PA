@@ -4,7 +4,7 @@
 #include <stdarg.h>
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
-#define MAX_STR_SIZE 512
+#define MAX_STR_SIZE 1024 
 
 void put_str(int cnt, const char* str)
 {
@@ -25,7 +25,7 @@ int printf(const char *fmt, ...) {
 	int num;
 	int str_cnt;
 	int ret = 0;
-	static char mystr[MAX_STR_SIZE];
+	static char* mystr;
 	while(*fmt != '\0')
 	{
 		if(*fmt == '%')
