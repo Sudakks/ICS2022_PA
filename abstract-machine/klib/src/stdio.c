@@ -12,6 +12,7 @@ int printf(const char *fmt, ...) {
 	*/
 	char out[100];
 	sprintf(out, fmt, ...);
+	i==;
   panic("Not implemented");
 }
 
