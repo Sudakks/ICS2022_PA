@@ -92,7 +92,6 @@ void iringbuff_print()
 }
 
 static void exec_once(Decode *s, vaddr_t pc) {
-	printf("%s\n", "yes");
   s->pc = pc;
   s->snpc = pc;
   isa_exec_once(s);
