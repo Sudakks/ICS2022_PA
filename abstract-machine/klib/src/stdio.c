@@ -2,7 +2,6 @@
 #include <klib.h>
 #include <klib-macros.h>
 #include <stdarg.h>
-//#include <malloc.h>
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 #define MAX_STR_SIZE 1024 
@@ -26,7 +25,7 @@ int printf(const char *fmt, ...) {
 	int num;
 	int str_cnt = 0;
 	int ret = 0;
-	static char mystr[MAX_STR_SIZE;
+	static char mystr[MAX_STR_SIZE];
 	static char* cp;
 	static char myc;
 	while(*fmt != '\0')
