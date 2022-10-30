@@ -26,13 +26,14 @@ int printf(const char *fmt, ...) {
 	int num;
 	int str_cnt = 0;
 	int ret = 0;
-	static char mystr[1024];
+	static char mystr[MAX_STR_SIZE;
 	static char* cp;
 	static char myc;
 	while(*fmt != '\0')
 	{
 		if(*fmt == '%')
 		{
+			fmt++;
 			//说明有要读到的格式了
 			switch(*fmt)
 			{
