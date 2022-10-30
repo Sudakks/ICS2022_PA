@@ -103,24 +103,6 @@ void *memmove(void *dst, const void *src, size_t n) {
 		d[i] = temp[i];
 	free(temp);
 	return ret;
-	/*if(src >  dst)
-	{//这里说明不会重叠
-		while(n--)//遇到'\0'不会停下来
-		{
-			*d++ = *s++;
-		}
-	}
-	else
-	{//会重叠，从后往前进行交换
-		d = d + n;
-		s = s + n;
-		while(n--)
-		{
-			//这个要先强制转化成类型char，才能继续加值
-			*d-- = *s--;
-		}
-	}
-	return ret;*/
 }
 
 void *memcpy(void *out, const void *in, size_t n) {
