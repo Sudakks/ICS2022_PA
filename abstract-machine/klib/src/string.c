@@ -94,14 +94,23 @@ void *memmove(void *dst, const void *src, size_t n) {
 	void *ret = dst;
 	if(n == 0)
 		return ret;
-	char* d = (char*)dst;
-	char* s = (char*)src;
-	char* temp = (char*)malloc(n);
-	for(int i = 0; i < n; i++)
-		temp[i] = s[i];
-	for(int i = 0; i < n; i++)
-		d[i] = temp[i];
-	free(temp);
+	char *d = (char*) dst;;
+	char *s = (char*) src;
+	if(dst < src)
+	{
+		while(n--)
+		{
+			*d++ = *s++;
+		}
+	}
+	else
+	{
+		while(n > 0)
+		{
+			*(d + n - 1) = *(s + n - 1);
+			n--;
+		}
+	}
 	return ret;
 }
 
