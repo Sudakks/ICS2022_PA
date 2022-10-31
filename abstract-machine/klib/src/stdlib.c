@@ -4,7 +4,13 @@
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 static unsigned long int next = 1;
-
+static int init_malloc = 0;
+struct mal_block
+{
+	void* start;
+	void* end;
+	void* now;
+}my_block;
 int rand(void) {
   // RAND_MAX assumed to be 32767
   next = next * 1103515245 + 12345;
@@ -34,7 +40,26 @@ void *malloc(size_t size) {
   // Therefore do not call panic() here, else it will yield a dead recursion:
   //   panic() -> putchar() -> (glibc) -> malloc() -> panic()
 #if !(defined(__ISA_NATIVE__) && defined(__NATIVE_USE_KLIB__))
-  panic("Not implemented");
+  //panic("Not implemented");
+	void *ret = NULL;
+	if(size == 0)
+		return ret;
+	if(!init_malloc)
+	{
+		//init now
+		init_malloc = 1;
+		my_block.start = heap.start;
+		my_block.end = heap.end;
+		my_block.now = heap.start;
+	}
+	if(my_block.now - 1 > my_block.end)
+		return ret;
+	else
+	{
+		ret = my_block.now;
+		my_block.now = my_block.now + size;
+		return ret;
+	}
 #endif
   return NULL;
 }
