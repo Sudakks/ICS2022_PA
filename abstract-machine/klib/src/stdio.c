@@ -71,10 +71,11 @@ int printf(const char *fmt, ...) {
 		}
 		fmt++;
 	}
-  //panic("Not implemented");
 	va_end(ap);
 	return ret;*/
-	return 0;
+	//return 0;
+
+  panic("Not implemented");
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
