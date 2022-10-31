@@ -9,7 +9,7 @@ void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
 	uint32_t lo = inl(RTC_ADDR);
 	uint32_t hi = inl(RTC_ADDR + 4);
 	uptime->us = (((uint64_t)hi & 0xffffffff) << 32) & lo;
-
+	putch('w');
 }
 
 void __am_timer_rtc(AM_TIMER_RTC_T *rtc) {
