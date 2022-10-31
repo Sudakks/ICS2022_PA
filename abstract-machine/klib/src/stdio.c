@@ -26,11 +26,11 @@ int printf(const char *fmt, ...) {
 //	int str_cnt = 0;
 	int ret = 0;
 	//static char mystr[MAX_STR_SIZE];
-	static char* mystr;
+	/*static char* mystr;
 	//static char mynum[67];
-	//static char* cp;
+	//static char* cp;*/
 	static char myc;
-	int len = 0;
+	//int len = 0;
 	while(*fmt != '\0')
 	{ 
 		if(*fmt == '%')
@@ -46,7 +46,7 @@ int printf(const char *fmt, ...) {
 						ret += str_cnt;
 						put_str(str_cnt, mynum);
 						break;
-		*/		case 's':
+				case 's':
 						mystr = va_arg(ap, char*);//它会显示char*转到char数组不行
 						len = 0;
 						while(*(len + mystr) != '\0')
@@ -55,7 +55,7 @@ int printf(const char *fmt, ...) {
 							len++;
 						}
 						ret += len + 1;
-						break;
+*/						break;
 				case 'c':
 						myc = va_arg(ap, int);
 	//					str_cnt = 1;
