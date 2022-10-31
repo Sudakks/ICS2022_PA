@@ -131,6 +131,11 @@ config MTRACE
 	bool "Enable memory trace"
 	default y
 
+# set dtrace
+config DTRACE
+	bool "Enable device trace"
+	default y
+
 config TRACE
   bool "Enable tracer"
   default y
