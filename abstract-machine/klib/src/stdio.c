@@ -25,10 +25,8 @@ int printf(const char *fmt, ...) {
 	int num;
 	int str_cnt = 0;
 	int ret = 0;
-	//static char mystr[MAX_STR_SIZE];
 	static char* mystr;
 	static char mynum[67];
-	//static char* cp;
 	static char myc;
 	int len = 0;
 	while(*fmt != '\0')
@@ -62,7 +60,6 @@ int printf(const char *fmt, ...) {
 						ret += 1;
 						putch(myc);
 						break;
-				default: ;
 			}
 		}
 		else
@@ -73,8 +70,6 @@ int printf(const char *fmt, ...) {
 	}
 	va_end(ap);
 	return ret;
-	return 0;
-
   //panic("Not implemented");
 }
 
