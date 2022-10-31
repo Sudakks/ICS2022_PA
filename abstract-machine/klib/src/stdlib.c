@@ -4,7 +4,8 @@
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 static unsigned long int next = 1;
-static int init_malloc = 0;
+int init_mal = 0;
+static char* hbrk;
 struct mal_block
 {
 	void* start;
@@ -35,31 +36,24 @@ int atoi(const char* nptr) {
   return x;
 }
 
+
 void *malloc(size_t size) {
   // On native, malloc() will be called during initializaion of C runtime.
   // Therefore do not call panic() here, else it will yield a dead recursion:
   //   panic() -> putchar() -> (glibc) -> malloc() -> panic()
 #if !(defined(__ISA_NATIVE__) && defined(__NATIVE_USE_KLIB__))
-  //panic("Not implemented");
-	void *ret = NULL;
-	if(size == 0)
-		return ret;
-	if(!init_malloc)
+	if(!init_mal)
 	{
 		//init now
-		init_malloc = 1;
-		my_block.start = heap.start;
-		my_block.end = heap.end;
-		my_block.now = heap.start;
+		hbrk = (void*)ROUNDUP(heap.start, 8);
+		init_mal = 1;
 	}
-	if(my_block.now - 1 > my_block.end)
-		return ret;
-	else
-	{
-		ret = my_block.now;
-		my_block.now = my_block.now + size;
-		return ret;
-	}
+	size = (size_t)ROUNDUP(size, 8);
+	char* old = hbrk;
+	hbrk += size;
+	assert((uintptr_t)heap.start <= (uintptr_t)hbrk && (uintptr_t)hbrk < (uintptr_t)heap.end);
+//	assert((uintptr_t)hbrk - (uintptr_t)heap.start <= mlim);
+	return old;
 #endif
   return NULL;
 }
