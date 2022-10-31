@@ -29,9 +29,9 @@ int printf(const char *fmt, ...) {
 	/*static char* mystr;
 	//static char mynum[67];
 	//static char* cp;*/
-	static char myc;
+	//static char myc;
 	//int len = 0;
-	while(*fmt != '\0')
+/*	while(*fmt != '\0')
 	{ 
 		if(*fmt == '%')
 		{
@@ -39,7 +39,7 @@ int printf(const char *fmt, ...) {
 			//说明有要读到的格式了
 			switch(*fmt)
 			{
-	/*			case 'd':
+				case 'd':
 				//读数字
 			  		num = va_arg(ap, int);			  		
 						str_cnt = sprintf(mynum, "%d", num);
@@ -55,7 +55,7 @@ int printf(const char *fmt, ...) {
 							len++;
 						}
 						ret += len + 1;
-*/						break;
+						break;
 				case 'c':
 						myc = va_arg(ap, int);
 	//					str_cnt = 1;
@@ -70,7 +70,7 @@ int printf(const char *fmt, ...) {
 			putch(*fmt);
 		}
 		fmt++;
-	}
+	}*/
   //panic("Not implemented");
 	va_end(ap);
 	return ret;
