@@ -4,8 +4,8 @@
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 static unsigned long int next = 1;
-int init_mal = 0;
-static char* hbrk;
+char* hbrk;
+bool init_orn = false;
 struct mal_block
 {
 	void* start;
@@ -42,17 +42,18 @@ void *malloc(size_t size) {
   // Therefore do not call panic() here, else it will yield a dead recursion:
   //   panic() -> putchar() -> (glibc) -> malloc() -> panic()
 #if !(defined(__ISA_NATIVE__) && defined(__NATIVE_USE_KLIB__))
-	if(!init_mal)
+	if(init_orn == false)
 	{
-		//init now
-		hbrk = (void*)ROUNDUP(heap.start, 8);
-		init_mal = 1;
+		init_orn = true;
+		hbrk = (void*) ROUNDUP(heap.start, 8);
 	}
 	size = (size_t)ROUNDUP(size, 8);
 	char* old = hbrk;
 	hbrk += size;
 	assert((uintptr_t)heap.start <= (uintptr_t)hbrk && (uintptr_t)hbrk < (uintptr_t)heap.end);
 //	assert((uintptr_t)hbrk - (uintptr_t)heap.start <= mlim);
+	for(uint64_t *p = (uint64_t*)old; p != (uint64_t*)hbrk; p++)
+		*p = 0;
 	return old;
 #endif
   return NULL;
