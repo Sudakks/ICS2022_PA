@@ -20,18 +20,18 @@ int printf(const char *fmt, ...) {
 	实现：
 	利用sprintf将数据读到一个out里面，利用putch函数输出
 	*/
-	va_list ap;
+	/*va_list ap;
 	va_start(ap, fmt);
 	//int num;
 //	int str_cnt = 0;
 	int ret = 0;
 	//static char mystr[MAX_STR_SIZE];
-	/*static char* mystr;
+	static char* mystr;
 	//static char mynum[67];
-	//static char* cp;*/
+	//static char* cp;
 	//static char myc;
 	//int len = 0;
-/*	while(*fmt != '\0')
+	while(*fmt != '\0')
 	{ 
 		if(*fmt == '%')
 		{
@@ -70,10 +70,11 @@ int printf(const char *fmt, ...) {
 			putch(*fmt);
 		}
 		fmt++;
-	}*/
+	}
   //panic("Not implemented");
 	va_end(ap);
-	return ret;
+	return ret;*/
+	return 0;
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
