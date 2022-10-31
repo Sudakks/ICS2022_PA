@@ -51,7 +51,7 @@ int printf(const char *fmt, ...) {
 						len = 0;
 						while(*(len + mystr) != '\0')
 						{
-							putchar(*(len + mystr));
+							putch(*(len + mystr));
 							len++;
 						}
 						ret += len + 1;
