@@ -22,12 +22,12 @@ int printf(const char *fmt, ...) {
 	*/
 	va_list ap;
 	va_start(ap, fmt);
-	int num;
-	int str_cnt = 0;
+	//int num;
+//	int str_cnt = 0;
 	int ret = 0;
 	//static char mystr[MAX_STR_SIZE];
 	static char* mystr;
-	static char mynum[67];
+	//static char mynum[67];
 	//static char* cp;
 	static char myc;
 	int len = 0;
@@ -39,14 +39,14 @@ int printf(const char *fmt, ...) {
 			//说明有要读到的格式了
 			switch(*fmt)
 			{
-				case 'd':
+	/*			case 'd':
 				//读数字
 			  		num = va_arg(ap, int);			  		
 						str_cnt = sprintf(mynum, "%d", num);
 						ret += str_cnt;
 						put_str(str_cnt, mynum);
 						break;
-				case 's':
+		*/		case 's':
 						mystr = va_arg(ap, char*);//它会显示char*转到char数组不行
 						len = 0;
 						while(*(len + mystr) != '\0')
@@ -58,7 +58,7 @@ int printf(const char *fmt, ...) {
 						break;
 				case 'c':
 						myc = va_arg(ap, int);
-						str_cnt = 1;
+	//					str_cnt = 1;
 						ret += 1;
 						putch(myc);
 						break;
