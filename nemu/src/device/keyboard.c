@@ -74,11 +74,6 @@ void send_key(uint8_t scancode, bool is_keydown) {
 #define _KEY_NONE 0
 
 static uint32_t key_dequeue() {
-	AM_GPU_FBDRAW_T gf = io_read(AM_GPU_FBDRAW);
-	if(gf.sync == true)
-	{
-    io_write(AM_GPU_FBDRAW, 0, 0, vmem, screen_width(), screen_height(), false);
-	}
   AM_INPUT_KEYBRD_T ev = io_read(AM_INPUT_KEYBRD);
   uint32_t am_scancode = ev.keycode | (ev.keydown ? KEYDOWN_MASK : 0);
   return am_scancode;
