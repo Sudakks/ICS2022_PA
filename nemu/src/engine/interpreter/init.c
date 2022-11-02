@@ -23,5 +23,6 @@ void engine_start() {
 #else
   /* Receive commands from user. */
   sdb_mainloop();
+	//表示进入sdb模式，也可以直接cpu_exec(-1)，替换'-b'的写法
 #endif
 }

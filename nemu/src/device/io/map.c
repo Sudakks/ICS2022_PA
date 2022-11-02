@@ -39,6 +39,8 @@ static void check_bound(IOMap *map, paddr_t addr) {
 		/*address out of bound*/
     Assert(map != NULL, "address (" FMT_PADDR ") is out of bound at pc = " FMT_WORD, addr, cpu.pc);
   } else {
+		if(!(addr <= map->high) || !(addr >= map->low))
+			iringbuff_print();
     Assert(addr <= map->high && addr >= map->low,
         "address (" FMT_PADDR ") is out of bound {%s} [" FMT_PADDR ", " FMT_PADDR "] at pc = " FMT_WORD,
         addr, map->name, map->low, map->high, cpu.pc);
@@ -62,7 +64,7 @@ word_t map_read(paddr_t addr, int len, IOMap *map) {
   invoke_callback(map->callback, offset, len, false); // prepare data to read
   word_t ret = host_read(map->space + offset, len);
 #ifdef CONFIG_DTRACE
-	printf("Read %u from IO: %s\n", ret, map->name);
+	printf("DTRACE: read %u from IO: %s\n", ret, map->name);
 #endif
   return ret;
 }
@@ -73,7 +75,7 @@ void map_write(paddr_t addr, int len, word_t data, IOMap *map) {
   paddr_t offset = addr - map->low;
   host_write(map->space + offset, len, data);
 #ifdef CONFIG_DTRACE
-	printf("Write %u into IO: %s\n", data, map->name);
+	printf("DTRACE: write %u into IO: %s\n", data, map->name);
 #endif
   invoke_callback(map->callback, offset, len, true);
 }

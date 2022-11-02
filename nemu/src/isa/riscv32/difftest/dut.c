@@ -21,7 +21,8 @@
 bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
 	//compare reg value and PC
 	//if(ref_r -> pc != pc)
-	//	return false;
+	//	return false;似乎不行，无法比较
+	//PA2.3
 	int len = sizeof(cpu.gpr) / sizeof(cpu.gpr[0]);
 	for(int i = 0; i < len; i++)
 	{

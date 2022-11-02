@@ -29,16 +29,31 @@ const char *regs[] = {
   "s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6"
 };
 
+static int len = sizeof(regs) / sizeof(regs[0]);
+
 void isa_reg_display() {
-	int len = sizeof(regs) / sizeof(regs[0]);
-	//printf("len = %d\n", len);
 	for(int i = 0; i < len; i++)
 	{
 		printf("%s  %#x  %u\n", regs[i], cpu.gpr[i], cpu.gpr[i]);
 	}
+	//分别以16进制和无符号十进制数表示
 }
 
 word_t isa_reg_str2val(const char *s, bool *success) {
+	/*char* tmp;
+	for(int i = 0; i < len; i++)
+	{
+		if(i != 0)
+		{
+			tmp = strcat('$', regs[i]);
+			if(!strcmp(tmp, s))
+			{
+				return cpu.gpr[i];
+			}
+		}
+	}
+	*success = false;
+	return 0;*/
 	if(!strcmp(s, "$0"))
 		return cpu.gpr[$0];
 
