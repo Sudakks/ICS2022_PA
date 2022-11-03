@@ -38,7 +38,7 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
 		uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
 		uint32_t base = x + y * W;
 		uint32_t *p = (uint32_t*)pixels;
-		printf("x = %d, y = %d, w = %d, h = %d\n", x, y, w, h);
+		//printf("x = %d, y = %d, w = %d, h = %d\n", x, y, w, h);
 		for(int i = 0; i < h; i++)
 		{
 			for(int j = 0; j < w; j++)
