@@ -7,8 +7,8 @@
 void __am_gpu_init() {
 	int i;
 	uint32_t info = inl(VGACTL_ADDR);	
-  int w = (info >> 16) * N;  // TODO: get the correct width
-  int h = (info & 0xffff) * N;  // TODO: get the correct height
+  int w = (info >> 16) & 0x0000ffff;  // TODO: get the correct width
+  int h = (info & 0x0000ffff);  // TODO: get the correct height
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
   for (i = 0; i < w * h; i ++) fb[i] = i;
   outl(SYNC_ADDR, 1);
