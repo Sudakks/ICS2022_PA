@@ -43,7 +43,7 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
 			for(int j = 0; j < w; j++)
 			{
 				fb[base + j + i * W] = *p;
-				p++;
+				//p++;
 			}
 		}
   }
