@@ -16,23 +16,16 @@ void __am_gpu_init() {
 }
 
 void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
-/*	uint32_t info = inl(VGACTL_ADDR);
+	uint32_t info = inl(VGACTL_ADDR);
   *cfg = (AM_GPU_CONFIG_T) {
     .present = true, .has_accel = false,
     .width = (info >> 16) & 0x0000ffff, .height = info & 0x0000ffff,
     .vmemsz = inl(FB_ADDR)
-  };*/
-//	uint32_t info = inl(VGACTL_ADDR);
-  *cfg = (AM_GPU_CONFIG_T) {
-    .present = true, .has_accel = false,
-    .width = 0, .height = 0,
-    .vmemsz = 0
   };
-
 }
 
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
-	/*
+	
 		int x = ctl->x;
 		int y = ctl->y;
 		void *pixels = ctl->pixels;
@@ -54,8 +47,8 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
 				//p++;?neccessary
 			}
 		}
-  if (!ctl->sync) {
-  }*/
+  //if (!ctl->sync) {
+  //}
 }
 
 void __am_gpu_status(AM_GPU_STATUS_T *status) {
