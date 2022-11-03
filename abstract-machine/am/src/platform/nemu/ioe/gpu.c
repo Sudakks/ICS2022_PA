@@ -24,8 +24,6 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
 }
 
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
-	printf("sync = %d\n", ctl->sync);
-  if (ctl->sync) {
     //outl(SYNC_ADDR, 1);
 		int x = ctl->x;
 		int y = ctl->y;
@@ -49,6 +47,7 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
 				//p++;
 			}
 		}
+  if (!ctl->sync) {
   }
 }
 
