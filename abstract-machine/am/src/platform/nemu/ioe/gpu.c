@@ -13,6 +13,7 @@ void __am_gpu_init() {
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
   for (i = 0; i < w * h; i ++) fb[i] = i;
   outl(SYNC_ADDR, 1);
+	printf("w = %d, h = %d\n", w,h);
 }
 
 void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
@@ -22,7 +23,6 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
     .width = (info >> 16) & 0x0000ffff, .height = info & 0x0000ffff,
     .vmemsz = inl(FB_ADDR)
   };
-	printf("w = %d, h = %d\n", cfg->width, cfg->height);
 }
 
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
