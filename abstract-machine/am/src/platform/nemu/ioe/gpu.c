@@ -27,11 +27,25 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
     //outl(SYNC_ADDR, 1);
 		int x = ctl->x;
 		int y = ctl->y;
-/*		void *pixels = ctl->pixels;
+		void *pixels = ctl->pixels;
 		int w = ctl->w;
-		int h = ctl->h;*/
-		outl(FB_ADDR, x);
-		outl(FB_ADDR + 4, y);
+		int h = ctl->h;
+		if(w == 0 || h == 0)
+			return;//表示没有要写的东西
+
+		uint32_t info = inl(VGACTL_ADDR);
+		int W = (info >> 16) & 0x0000ffff;
+		uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
+		uint32_t base = x + y * W;
+		uint32_t *p = (uint32_t*)pixels;
+		for(int i = 0; i < h; i++)
+		{
+			for(int j = 0; j < w; j++)
+			{
+				fb[base + j + i * W] = *p;
+				p++;
+			}
+		}
   }
 }
 
