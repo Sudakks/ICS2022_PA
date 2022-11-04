@@ -20,20 +20,26 @@ void __am_audio_init() {
 
 void __am_audio_config(AM_AUDIO_CONFIG_T *cfg) {
 	//PA2.3
+	/*
 	cfg->bufsize = inl(AUDIO_SBUF_SIZE_ADDR);
   cfg->present = true;//change into true
+	*/
 }
 
 void __am_audio_ctrl(AM_AUDIO_CTRL_T *ctrl) {
 	//PA2.3
+	/*
 	ctrl->freq = inl(AUDIO_FREQ_ADDR);
 	ctrl->channels = inl(AUDIO_CHANNELS_ADDR);
 	ctrl->samples = inl(AUDIO_SAMPLES_ADDR);
+	*/
 }
 
 void __am_audio_status(AM_AUDIO_STATUS_T *stat) {
 	//PA2.3
+	/*
   stat->count = inl(AUDIO_COUNT_ADDR);
+	*/
 }
 
 void __am_audio_play(AM_AUDIO_PLAY_T *ctl) {
