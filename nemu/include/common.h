@@ -13,6 +13,7 @@
 * See the Mulan PSL v2 for more details.
 ***************************************************************************************/
 
+volatile static int dummy;
 #ifndef __COMMON_H__
 #define __COMMON_H__
 
@@ -24,7 +25,6 @@
 #include <generated/autoconf.h>
 #include <macro.h>
 //PA2.3 test
-volatile static int dummy;
 
 #ifdef CONFIG_TARGET_AM
 #include <klib.h>
