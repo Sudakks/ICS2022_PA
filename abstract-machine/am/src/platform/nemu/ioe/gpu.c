@@ -32,31 +32,34 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
 		void *pixels = ctl->pixels;
 		int w = ctl->w;
 		int h = ctl->h;
+		/*Mark：
+		记录错误，之前是w or h为0,就返回，但是！全为0,就是
+		刷新整个屏幕
+		*/
+		//！！！判断一下是否不为NULL
 		if (pixels != NULL)
 		{
-		uint32_t info = inl(VGACTL_ADDR);
-		int W = (info >> 16) & 0x0000ffff;
-		int H = info & 0x0000ffff;
-		uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
-		uint32_t base = x + y * W;
-		uint32_t *p = (uint32_t*)pixels;
-		int vw = (x + w <= W) ? w : (W - x);
-		int vh = (y + h <= H) ? h : (H - y);
-		uint32_t *stap = p;
-		for(int i = 0; i < vh; i++)
-		{
-			for(int j = 0; j < vw; j++)
+			uint32_t info = inl(VGACTL_ADDR);
+			int W = (info >> 16) & 0x0000ffff;
+			int H = info & 0x0000ffff;
+			uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
+			uint32_t base = x + y * W;
+			uint32_t *p = (uint32_t*)pixels;
+			int vw = (x + w <= W) ? w : (W - x);
+			int vh = (y + h <= H) ? h : (H - y);
+			uint32_t *stap = p;
+			for(int i = 0; i < vh; i++)
 			{
-				fb[base + j + i * W] = *p;
-				p++;//neccessary
+				for(int j = 0; j < vw; j++)
+				{
+					fb[base + j + i * W] = *p;
+					p++;//neccessary
+				}
+				stap += w;
+				p = stap;
 			}
-			stap += w;
-			p = stap;
 		}
-		}
-	//	printf("out sync %d\n", ctl->sync);
   if (ctl->sync) {
-		printf("sync = %d\n", ctl->sync);
 		outl(SYNC_ADDR, 1);
   }
 }
