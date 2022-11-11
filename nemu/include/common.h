@@ -23,6 +23,8 @@
 
 #include <generated/autoconf.h>
 #include <macro.h>
+//PA2.3 test
+volatile static int dummy;
 
 #ifdef CONFIG_TARGET_AM
 #include <klib.h>
