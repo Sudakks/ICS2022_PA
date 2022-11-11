@@ -32,9 +32,8 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
 		void *pixels = ctl->pixels;
 		int w = ctl->w;
 		int h = ctl->h;
-		if(w == 0 || h == 0)
-			return;//表示没有要写的东西
-
+		if (pixels != NULL)
+		{
 		uint32_t info = inl(VGACTL_ADDR);
 		int W = (info >> 16) & 0x0000ffff;
 		int H = info & 0x0000ffff;
@@ -53,6 +52,7 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
 			}
 			stap += w;
 			p = stap;
+		}
 		}
 	//	printf("out sync %d\n", ctl->sync);
   if (ctl->sync) {
