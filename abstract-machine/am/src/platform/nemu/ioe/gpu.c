@@ -55,7 +55,6 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
 			p = stap;
 		}
 		printf("out sync %d\n", ctl->sync);
-		outl(SYNC_ADDR, 1);
   if (ctl->sync) {
 		printf("sync = %d\n", ctl->sync);
 		outl(SYNC_ADDR, 1);
