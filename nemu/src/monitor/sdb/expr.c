@@ -247,13 +247,13 @@ word_t find_main_op(int sta, int end){
 				if(last_type != NUM_TYPE && last_type != ')' && last_type != HEX && last_type != REG)
 	 	 		{
 					valid_expr = false;
-					printf("He1\n");
+					//printf("He1\n");
 					break;
 		 		}
 				if(next_type != NUM_TYPE && next_type != '(' && next_type != SIN_MINUS && next_type != HEX && next_type != REG)
 		 		{
-					printf("next_type = %d\n", next_type);
-					printf("He2\n");
+					//printf("next_type = %d\n", next_type);
+					//printf("He2\n");
 					valid_expr = false;
 					break;
 	 	 		}
@@ -288,7 +288,7 @@ word_t find_main_op(int sta, int end){
 	} 
 	if(num == 0)
 	{
-		printf("wrong from %d to %d\n", sta, end);
+		//printf("wrong from %d to %d\n", sta, end);
 		return -1;//invalid
 	}     
 	//record the priority and location
