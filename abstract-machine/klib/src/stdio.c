@@ -6,14 +6,14 @@
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 #define MAX_STR_SIZE 100000
 
-void put_str(size_t cnt, const char* str)
+/*void put_str(size_t cnt, const char* str)
 {
 	//putch str
 	for(int i = 0; i < cnt; i++)
 	{
 		putch(*(i + str));
 	}
-}
+}*/
 
 int printf(const char *fmt, ...) {
 	/*
@@ -28,7 +28,6 @@ int printf(const char *fmt, ...) {
 	static char* mystr;
 	static char mynum[67];
 	static char myc;
-	int len = 0;
 	while(*fmt != '\0')
 	{ 
 		if(*fmt == '%')
@@ -41,18 +40,16 @@ int printf(const char *fmt, ...) {
 				//读数字
 			  		num = va_arg(ap, int);			  		
 						str_cnt = sprintf(mynum, "%d", num);
+						putstr(mynum);
 						ret += str_cnt;
-						put_str(str_cnt, mynum);
+						//put_str(str_cnt, mynum);
 						break;
 				case 's':
 						mystr = va_arg(ap, char*);//它会显示char*转到char数组不行
-						len = 0;
-						while(*(len + mystr) != '\0')
-						{
-							putch(*(len + mystr));
-							len++;
-						}
-						ret += len + 1;
+						str_cnt = strlen(mystr);
+						putstr(mystr);
+						//put_str(str_cnt, mystr);
+						ret += str_cnt;
 						break;
 				case 'c':
 						myc = va_arg(ap, int);

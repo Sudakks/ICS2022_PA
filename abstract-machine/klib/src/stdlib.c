@@ -26,6 +26,7 @@ int abs(int x) {
   return (x < 0 ? -x : x);
 }
 
+/*already exits atoi function*/
 int atoi(const char* nptr) {
   int x = 0;
   while (*nptr == ' ') { nptr ++; }

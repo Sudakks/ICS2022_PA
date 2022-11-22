@@ -10,6 +10,7 @@ extern "C" {
 #endif
 
 //#define __NATIVE_USE_KLIB__
+/*PA2.2 delete*/
 
 // string.h
 void   put_str(size_t cnt, const char* str);

@@ -8,10 +8,12 @@
 
 #if defined(__ISA_X86__)
 # define nemu_trap(code) asm volatile ("int3" : :"a"(code))
+//断点中断
 #elif defined(__ISA_MIPS32__)
 # define nemu_trap(code) asm volatile ("move $v0, %0; sdbbp" : :"r"(code))
 #elif defined(__ISA_RISCV32__) || defined(__ISA_RISCV64__)
 # define nemu_trap(code) asm volatile("mv a0, %0; ebreak" : :"r"(code))
+//trap for riscv32
 #elif
 # error unsupported ISA __ISA__
 #endif

@@ -3,6 +3,7 @@
 
 #ifndef __ISA_NATIVE__
 
+/*Can't understand!!!*/
 void __dso_handle() {
 }
 

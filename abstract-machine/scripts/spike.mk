@@ -9,11 +9,13 @@ AM_SRCS := riscv/spike/trm.c \
            platform/dummy/vme.c \
            platform/dummy/mpe.c \
 
+#Options for C compilation
 CFLAGS    += -fdata-sections -ffunction-sections
+#Assign path
 LDFLAGS   += -T $(AM_HOME)/am/src/riscv/spike/linker.ld
 LDFLAGS   += --gc-sections -e _start
 
 CFLAGS += -DMAINARGS=\"$(mainargs)\"
 .PHONY: $(AM_HOME)/am/src/riscv/spike/trm.c
-
+#phony means the target is not true, so it's just a command, not a existing file
 image: $(IMAGE).elf
