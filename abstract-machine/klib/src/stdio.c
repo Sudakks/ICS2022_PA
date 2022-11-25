@@ -67,15 +67,15 @@ int printf(const char *fmt, ...) {
 				//读数字
 			  		num = va_arg(ap, int);			  		
 						str_cnt = sprintf(mynum, "%d", num);
-						//putstr(mynum);
+						putstr(mynum);
 						ret += str_cnt;
-						put_str(str_cnt, mynum);
+						//put_str(str_cnt, mynum);
 						break;
 				case 's':
 						mystr = va_arg(ap, char*);//它会显示char*转到char数组不行
 						str_cnt = strlen(mystr);
-						//putstr(mystr);
-						put_str(str_cnt, mystr);
+						putstr(mystr);
+						//put_str(str_cnt, mystr);
 						ret += str_cnt;
 						break;
 				case 'c':
@@ -88,20 +88,17 @@ int printf(const char *fmt, ...) {
 						myp = va_arg(ap, unsigned int);
 						putch('0');
 						putch('x');
-						//putstr(aa);
 						str_cnt = sprintf(mynum, "%p", myp);
-						put_str(str_cnt, mynum);
-						//putstr(aa);
-						//putstr(mynum);
-						//putstr(aa);
+						putstr(mynum);
+						//put_str(str_cnt, mynum);
 						ret += str_cnt;
 						//相当于打印16进制地址
 						break;			
 				case 'u':
 						myu = va_arg(ap, unsigned int);
 						str_cnt = sprintf(mynum, "%u", myu);
-						//putstr(mynum);
-						put_str(str_cnt, mynum);
+						putstr(mynum);
+						//put_str(str_cnt, mynum);
 						ret += str_cnt;
 				default:
 						panic("Not implemented in printf");
