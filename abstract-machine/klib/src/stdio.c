@@ -14,7 +14,8 @@
 		putch(*(i + str));
 	}
 }*/
-int printNum(unsigned int num, int base, char* out)
+
+/*int printNum(unsigned int num, int base, char* out)
 {
 		int val[67];
 		int len = 0;
@@ -35,7 +36,7 @@ int printNum(unsigned int num, int base, char* out)
 				out++;
 		}
 		return len;
-}
+}*/
 
 int printf(const char *fmt, ...) {
 	/*
@@ -150,7 +151,6 @@ int sprintf(char *out, const char *fmt, ...) {
 							break;
 						len++;
 						val[len] = num % 10;
-						//printf("now = %d\n", val[len]);
 						num = num / 10;
 						if(neg == true)
 							val[len] = -val[len];						
