@@ -9,9 +9,12 @@
 void put_str(size_t cnt, const char* str)
 {
 	//putch str
+	char a[5] = "aaaa";
 	for(int i = 0; i < cnt; i++)
 	{
-		putch('\n');
+		//putch('\n');
+		if(*(i + str) == ':')
+			putstr(a);
 		putch(*(i + str));
 		
 	}
