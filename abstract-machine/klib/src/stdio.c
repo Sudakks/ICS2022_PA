@@ -53,6 +53,7 @@ int printf(const char *fmt, ...) {
 	static char myc;
 	unsigned int myp;
 	unsigned int myu;
+	char aa[5] = "---\n";
 	while(*fmt != '\0')
 	{ 
 		if(*fmt == '%')
@@ -86,8 +87,11 @@ int printf(const char *fmt, ...) {
 						myp = va_arg(ap, unsigned int);
 						putch('0');
 						putch('x');
+						putstr(aa);
 						str_cnt = sprintf(mynum, "%p", myp);
+						putstr(aa);
 						putstr(mynum);
+						putstr(aa);
 						ret += str_cnt;
 						//相当于打印16进制地址
 						break;			
@@ -126,7 +130,7 @@ int sprintf(char *out, const char *fmt, ...) {
 	int val[67];
 	int len; 
 	bool neg = false; 
-	unsigned unum;
+	unsigned int unum;
 	while(*fmt != '\0')
 	{
 		if(*fmt == '%')
