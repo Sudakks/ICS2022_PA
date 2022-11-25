@@ -181,13 +181,47 @@ int sprintf(char *out, const char *fmt, ...) {
 					break;
 				case 'u':
 					unum = va_arg(ap, unsigned int);
-					len = printNum(unum, 10, out);
+					//len = printNum(unum, 10, out);
+					//ret += len;
+					len = 0;
+					while(1)
+					{
+						if(unum == 0)
+							break;
+						len++;
+						val[len] = unum % 10;
+						unum = unum / 10;
+					}					
+					if(len == 0)
+						val[++len] = 0; //相当于特判了是0的情况 					
+					for(int i = len; i >= 1; i--)
+					{
+						*out = val[i] + '0';
+						out++;
+					}
 					ret += len;
 					break;
 				case 'p':
 				//地址是16进制显示
 					unum = va_arg(ap, unsigned int);
-					len = printNum(unum, 16, out);
+					//len = printNum(unum, 16, out);
+					//ret += len;
+					len = 0;
+					while(1)
+					{
+						if(unum == 0)
+							break;
+						len++;
+						val[len] = unum % 16;
+						unum = unum / 16;
+					}					
+					if(len == 0)
+						val[++len] = 0; //相当于特判了是0的情况 					
+					for(int i = len; i >= 1; i--)
+					{
+						*out = val[i] + '0';
+						out++;
+					}
 					ret += len;
 					break;
 				default:
