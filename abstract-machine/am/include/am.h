@@ -23,6 +23,7 @@ typedef struct Context Context;
 // An event of type @event, caused by @cause of pointer @ref
 typedef struct {
   enum {
+		//统一的事件编号
     EVENT_NULL = 0,
     EVENT_YIELD, EVENT_SYSCALL, EVENT_PAGEFAULT, EVENT_ERROR,
     EVENT_IRQ_TIMER, EVENT_IRQ_IODEV,
@@ -56,6 +57,7 @@ void     ioe_write   (int reg, void *buf);
 
 // ---------- CTE: Interrupt Handling and Context Switching ----------
 bool     cte_init    (Context *(*handler)(Event ev, Context *ctx));
+/*来自操作系统的事件处理回调函数的指针handler*/
 void     yield       (void);
 bool     ienabled    (void);
 void     iset        (bool enable);

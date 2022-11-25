@@ -14,6 +14,28 @@
 		putch(*(i + str));
 	}
 }*/
+int printNum(unsigned int num, int base, char* out)
+{
+		int val[67];
+		int len = 0;
+		while(1)
+		{
+				if(num == 0)
+					break;
+				len++;
+				val[len] = num % base;
+				num = num / base;
+		}					
+		if(len == 0)
+				val[++len] = 0; //相当于特判了是0的情况 
+									
+		for(int i = len; i >= 1; i--)
+		{
+				*out = val[i] + '0';
+				out++;
+		}
+		return len;
+}
 
 int printf(const char *fmt, ...) {
 	/*
@@ -28,6 +50,8 @@ int printf(const char *fmt, ...) {
 	static char* mystr;
 	static char mynum[67];
 	static char myc;
+	unsigned int myp;
+	unsigned int myu;
 	while(*fmt != '\0')
 	{ 
 		if(*fmt == '%')
@@ -57,6 +81,23 @@ int printf(const char *fmt, ...) {
 						ret += 1;
 						putch(myc);
 						break;
+				case 'p':
+						myp = va_arg(ap, unsigned int);
+						putch('0');
+						putch('x');
+						str_cnt = sprintf(mynum, "%p", myp);
+						putstr(mynum);
+						ret += str_cnt;
+						//相当于打印16进制地址
+						break;			
+				case 'u':
+						myu = va_arg(ap, unsigned int);
+						str_cnt = sprintf(mynum, "%u", myu);
+						putstr(mynum);
+						ret += str_cnt;
+				default:
+						panic("Not implemented in printf");
+						assert(0);
 			}
 		}
 		else
@@ -84,6 +125,7 @@ int sprintf(char *out, const char *fmt, ...) {
 	int val[67];
 	int len; 
 	bool neg = false; 
+	unsigned unum;
 	while(*fmt != '\0')
 	{
 		if(*fmt == '%')
@@ -94,7 +136,7 @@ int sprintf(char *out, const char *fmt, ...) {
 			{
 				case 'd':
 				//读数字
-			  		num = va_arg(ap, int);			  		
+			  	num = va_arg(ap, int);			  		
 					len = 0;
 					//似乎没有判断为负的情况 
 					if(num < 0)
@@ -137,6 +179,19 @@ int sprintf(char *out, const char *fmt, ...) {
 					out++;
 					ret += 1;
 					break;
+				case 'u':
+					unum = va_arg(ap, unsigned int);
+					len = printNum(unum, 10, out);
+					ret += len;
+					break;
+				case 'p':
+				//地址是16进制显示
+					unum = va_arg(ap, unsigned int);
+					len = printNum(unum, 16, out);
+					ret += len;
+					break;
+				default:
+					panic("Not implemented in printf");
 			}
 		}
 		else
