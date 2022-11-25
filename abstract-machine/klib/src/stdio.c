@@ -9,12 +9,8 @@
 void put_str(size_t cnt, const char* str)
 {
 	//putch str
-	char a[5] = "aaaa";
 	for(int i = 0; i < cnt; i++)
 	{
-		//putch('\n');
-		if(*(i + str) == ':')
-			putstr(a);
 		putch(*(i + str));
 		
 	}
@@ -230,8 +226,18 @@ int sprintf(char *out, const char *fmt, ...) {
 						val[++len] = 0; //相当于特判了是0的情况 					
 					for(int i = len; i >= 1; i--)
 					{
-						*out = val[i] + '0';
+						if(val[i] < 10)
+						{
+							*out = val[i] + '0';
+							putch(*out);
+						}
+						else
+						{
+							*out = 'a' + val[i] - 10;
+							putch(*out);
+						}					
 						out++;
+						
 					}
 					ret += len;
 					break;
