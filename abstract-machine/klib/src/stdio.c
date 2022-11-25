@@ -6,14 +6,14 @@
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 #define MAX_STR_SIZE 100000
 
-/*void put_str(size_t cnt, const char* str)
+void put_str(size_t cnt, const char* str)
 {
 	//putch str
 	for(int i = 0; i < cnt; i++)
 	{
 		putch(*(i + str));
 	}
-}*/
+}
 
 /*int printNum(unsigned int num, int base, char* out)
 {
@@ -53,7 +53,7 @@ int printf(const char *fmt, ...) {
 	static char myc;
 	unsigned int myp;
 	unsigned int myu;
-	char aa[5] = "---\n";
+	//char aa[5] = "---\n";
 	while(*fmt != '\0')
 	{ 
 		if(*fmt == '%')
@@ -66,15 +66,15 @@ int printf(const char *fmt, ...) {
 				//读数字
 			  		num = va_arg(ap, int);			  		
 						str_cnt = sprintf(mynum, "%d", num);
-						putstr(mynum);
+						//putstr(mynum);
 						ret += str_cnt;
-						//put_str(str_cnt, mynum);
+						put_str(str_cnt, mynum);
 						break;
 				case 's':
 						mystr = va_arg(ap, char*);//它会显示char*转到char数组不行
 						str_cnt = strlen(mystr);
-						putstr(mystr);
-						//put_str(str_cnt, mystr);
+						//putstr(mystr);
+						put_str(str_cnt, mystr);
 						ret += str_cnt;
 						break;
 				case 'c':
@@ -87,18 +87,20 @@ int printf(const char *fmt, ...) {
 						myp = va_arg(ap, unsigned int);
 						putch('0');
 						putch('x');
-						putstr(aa);
+						//putstr(aa);
 						str_cnt = sprintf(mynum, "%p", myp);
-						putstr(aa);
-						putstr(mynum);
-						putstr(aa);
+						put_str(str_cnt, mynum);
+						//putstr(aa);
+						//putstr(mynum);
+						//putstr(aa);
 						ret += str_cnt;
 						//相当于打印16进制地址
 						break;			
 				case 'u':
 						myu = va_arg(ap, unsigned int);
 						str_cnt = sprintf(mynum, "%u", myu);
-						putstr(mynum);
+						//putstr(mynum);
+						put_str(str_cnt, mynum);
 						ret += str_cnt;
 				default:
 						panic("Not implemented in printf");
