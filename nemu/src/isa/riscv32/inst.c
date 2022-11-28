@@ -66,9 +66,10 @@ word_t R_CSR(word_t idx)
 		case 0x300:
 			return cpu.mstatus;
 		default:
-			panic("No more accessible SRs can write!");
+			panic("No more accessible SRs can read!");
 	}
 }
+
 word_t W_CSR(word_t idx, word_t val)
 {
 	switch(idx)
@@ -82,7 +83,7 @@ word_t W_CSR(word_t idx, word_t val)
 		case 0x300:
 			cpu.mstatus = val;
 		default:
-			panic("No more accessible SRs can read!");
+			panic("No more accessible SRs can write!");
 	}
 }
 
