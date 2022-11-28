@@ -22,8 +22,15 @@
 typedef struct {
   word_t gpr[32];
   vaddr_t pc;
-	word_t csr[8];//状态寄存器
+	//word_t csr[8];//状态寄存器
+	struct{
+	word_t mepc;
+	word_t mcause;
+	word_t mtvec;
+	word_t mstatus;
+	};
 } riscv32_CPU_state;
+
 enum CSR_IDX
 {
 	mepc = 0,

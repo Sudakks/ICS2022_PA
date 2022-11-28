@@ -17,9 +17,10 @@
 #include <cpu/cpu.h>
 #include <cpu/ifetch.h>
 #include <cpu/decode.h>
+#include <isa.h>
 
 #define R(i) gpr(i)
-#define CSR(i) csr(i)
+//#define CSR(i) csr(i)
 #define Mr vaddr_read
 #define Mw vaddr_write
 /*
@@ -38,15 +39,6 @@ default:\
 panic("No more accessible SRs!");\
 }\
 }while(0)
-*/
-/*
-enum CSR_IDX
-{
-	mepc = 0,
-	mcause,
-	mtvec,
-	mstatus,
-};
 */
 word_t which_csr(word_t i)
 {
@@ -139,8 +131,9 @@ static int decode_exec(Decode *s) {
 	INSTPAT("??????? ????? ????? 000 ????? 00000 11", lb     , I, R(dest) = SEXT(Mr(src1 + imm, 1), 8));
 	INSTPAT("??????? ????? ????? 110 ????? 00100 11", ori    , I, R(dest) = src1 | imm);
 	//破手册，浪费我一下午的时间！！！但是好感动终于test能过了
-	INSTPAT("??????? ????? ????? 001 ????? 1110011", csrrw   , I, R(dest) = CSR(which_csr(imm)), CSR(which_csr(imm)) = src1);
-	INSTPAT("0000000 00000 00000 000 00000 1110011", ecall   , I, s->dnpc = isa_raise_intr(1, s->pc));
+	//INSTPAT("??????? ????? ????? 001 ????? 11100 11", csrrw   , I, R(dest) = /*CS*/R(which_csr(imm)), /*CS*/R(which_csr(imm)) = src1);
+	//INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall   , I, s->dnpc = isa_raise_intr(1, s->pc));
+	//INSTPAT("??????? ????? ????? 010 ????? 11100 11", csrrs   , I, word_t tmp = /*CS*/R(which_csr(imm)), /*CS*/R(which_csr(imm)) = tmp | src1, R(dest) = tmp);
 
 
 	//jump
@@ -204,7 +197,7 @@ static int decode_exec(Decode *s) {
 	INSTPAT("??????? ????? ????? 000 ????? 01000 11", sb     , S, Mw(src1 + imm, 1, src2));
   INSTPAT("??????? ????? ????? 010 ????? 01000 11", sw     , S, Mw(src1 + imm, 4, src2));
 
-	INSTPAT("0011000 00010 00000 000 00000 11100 11", mret   , N, s->dnpc = CSR(mepc));
+	INSTPAT("0011000 00010 00000 000 00000 11100 11", mret   , N, s->dnpc = /*CS*/R(mepc));
   INSTPAT("0000000 00001 00000 000 00000 11100 11", ebreak , N, NEMUTRAP(s->pc, R(10))); // R(10) is $a0
   INSTPAT("??????? ????? ????? ??? ????? ????? ??", inv    , N, INV(s->pc));
   INSTPAT_END();
