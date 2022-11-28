@@ -238,6 +238,8 @@ int sprintf(char *out, const char *fmt, ...) {
 						{
 							*out = 'a' + val[i] - 10;
 						}					
+						//omg我好傻，我之前写了两次输出。。。
+						//难怪觉得不对头的感觉
 						out++;
 						
 					}
