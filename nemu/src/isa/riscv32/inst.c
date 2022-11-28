@@ -70,19 +70,22 @@ word_t R_CSR(word_t idx)
 	}
 }
 
-word_t W_CSR(word_t idx, word_t val)
+void W_CSR(word_t idx, word_t val)
 {
-	printf("%x\n", idx);
 	switch(idx)
 	{
 		case 0x341:
 			cpu.mepc = val;
+			break;
 		case 0x342:
 			cpu.mcause = val;
+			break;
 		case 0x305:
 			cpu.mtvec = val;
+			break;
 		case 0x300:
 			cpu.mstatus = val;
+			break;
 		default:
 			panic("No more accessible SRs can write!");
 	}
