@@ -100,8 +100,8 @@ int printf(const char *fmt, ...) {
 						putstr(mynum);
 						//put_str(str_cnt, mynum);
 						ret += str_cnt;
+						break;
 				default:
-						printf("now is %c\n", *fmt);
 						panic("Not implemented in printf");
 						assert(0);
 			}
@@ -240,7 +240,7 @@ int sprintf(char *out, const char *fmt, ...) {
 					ret += len;
 					break;
 				default:
-					panic("Not implemented in printf");
+					panic("Not implemented in sprintf");
 			}
 		}
 		else
