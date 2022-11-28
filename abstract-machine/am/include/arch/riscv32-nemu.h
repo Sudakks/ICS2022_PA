@@ -2,9 +2,12 @@
 #define ARCH_H__
 
 struct Context {
+	/*不同架构之间上下文信息的差异过大，所以只能由不同的am自己来设定*/
   // TODO: fix the order of these members to match trap.S
-  uintptr_t mepc, mcause, gpr[32], mstatus;
-  void *pdir;
+  //uintptr_t mepc, mcause, gpr[32], mstatus;
+	//PA3.1
+	uintptr_t gpr[32], mcause, mstatus, mepc;
+  void *pdir;/*这个放在哪里？？*/
 };
 
 #define GPR1 gpr[17] // a7

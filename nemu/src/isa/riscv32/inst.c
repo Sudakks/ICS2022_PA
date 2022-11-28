@@ -39,18 +39,27 @@ panic("No more accessible SRs!");\
 }\
 }while(0)
 */
-int which_csr(int i)
+/*
+enum CSR_IDX
+{
+	mepc = 0,
+	mcause,
+	mtvec,
+	mstatus,
+};
+*/
+word_t which_csr(word_t i)
 {
 	switch(i)
 	{
 		case 0x341:
-			return 0;
+			return mepc;
 		case 0x342:
-			return 1;
+			return mcause;
 		case 0x305:
-			return 2;
+			return mtvec;
 		case 0x300:
-			return 3;
+			return mstatus;
 		default:
 			panic("No more accessible SRs!");
 			return 0;
@@ -131,6 +140,7 @@ static int decode_exec(Decode *s) {
 	INSTPAT("??????? ????? ????? 110 ????? 00100 11", ori    , I, R(dest) = src1 | imm);
 	//破手册，浪费我一下午的时间！！！但是好感动终于test能过了
 	INSTPAT("??????? ????? ????? 001 ????? 1110011", csrrw   , I, R(dest) = CSR(which_csr(imm)), CSR(which_csr(imm)) = src1);
+	INSTPAT("0000000 00000 00000 000 00000 1110011", ecall   , I, s->dnpc = isa_raise_intr(1, s->pc));
 
 
 	//jump
@@ -194,6 +204,7 @@ static int decode_exec(Decode *s) {
 	INSTPAT("??????? ????? ????? 000 ????? 01000 11", sb     , S, Mw(src1 + imm, 1, src2));
   INSTPAT("??????? ????? ????? 010 ????? 01000 11", sw     , S, Mw(src1 + imm, 4, src2));
 
+	INSTPAT("0011000 00010 00000 000 00000 11100 11", mret   , N, s->dnpc = CSR(mepc));
   INSTPAT("0000000 00001 00000 000 00000 11100 11", ebreak , N, NEMUTRAP(s->pc, R(10))); // R(10) is $a0
   INSTPAT("??????? ????? ????? ??? ????? ????? ??", inv    , N, INV(s->pc));
   INSTPAT_END();

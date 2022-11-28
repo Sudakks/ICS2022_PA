@@ -23,13 +23,6 @@ enum IDX
   s8, s9, s10, s11, t3, t4, t5, t6,
 };
 
-enum CSR_IDX
-{
-	mepc = 0,
-	mcause,
-	mtvec,
-	mstatus,
-};
 
 const char *regs[] = {
   "$0", "ra", "sp", "gp", "tp", "t0", "t1", "t2",
@@ -37,7 +30,6 @@ const char *regs[] = {
   "a6", "a7", "s2", "s3", "s4", "s5", "s6", "s7",
   "s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6"
 };
-
 static int len = sizeof(regs) / sizeof(regs[0]);
 
 void isa_reg_display() {
