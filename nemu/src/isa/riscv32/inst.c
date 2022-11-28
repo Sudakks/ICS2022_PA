@@ -20,7 +20,8 @@
 #include <isa.h>
 
 #define R(i) gpr(i)
-#define CSR(i) csr(i)
+//#define R_CSR Read_mycsr
+//#define W_CSR Write_mycsr
 #define Mr vaddr_read
 #define Mw vaddr_write
 /*
@@ -40,23 +41,51 @@ panic("No more accessible SRs!");\
 }\
 }while(0)
 */
-int which_csr(word_t i)
+/*
+word_t CSR(word_t idx)
 {
-	switch(i)
+	switch(idx)
 	{
 		case 0x341:
-			return mepc;
+			return cpu.mycsr[mepc];
 		case 0x342:
-			return mcause;
-		case 0x305:
-			return mtvec;
-		case 0x300:
-			return mstatus;
-		default:
-			panic("No more accessible SRs!");
-			return 0;
+			return cpu.mycsr[mcause];
 	}
 }
+*/
+word_t R_CSR(word_t idx)
+{
+	switch(idx)
+	{
+		case 0x341:
+			return cpu.mepc;
+		case 0x342:
+			return cpu.mcause;
+		case 0x305:
+			return cpu.mtvec;
+		case 0x300:
+			return cpu.mstatus;
+		default:
+			panic("No more accessible SRs can write!");
+	}
+}
+word_t W_CSR(word_t idx, word_t val)
+{
+	switch(idx)
+	{
+		case 0x341:
+			cpu.mepc = val;
+		case 0x342:
+			cpu.mcause = val;
+		case 0x305:
+			cpu.mtvec = val;
+		case 0x300:
+			cpu.mstatus = val;
+		default:
+			panic("No more accessible SRs can read!");
+	}
+}
+
 
 enum {
   TYPE_I, TYPE_U, TYPE_S,
@@ -131,7 +160,7 @@ static int decode_exec(Decode *s) {
 	INSTPAT("??????? ????? ????? 000 ????? 00000 11", lb     , I, R(dest) = SEXT(Mr(src1 + imm, 1), 8));
 	INSTPAT("??????? ????? ????? 110 ????? 00100 11", ori    , I, R(dest) = src1 | imm);
 	//破手册，浪费我一下午的时间！！！但是好感动终于test能过了
-	INSTPAT("??????? ????? ????? 001 ????? 11100 11", csrrw   , I, /*int idx = which_csr(imm),*/ R(dest) = CSR(0), CSR(0) = src1);
+	INSTPAT("??????? ????? ????? 001 ????? 11100 11", csrrw   , I, /*int idx = which_csr(imm),*/ R(dest) = R_CSR(imm), W_CSR(imm, src1));
 	//INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall   , I, s->dnpc = isa_raise_intr(1, s->pc));
 	//INSTPAT("??????? ????? ????? 010 ????? 11100 11", csrrs   , I, word_t tmp = /*CS*/R(which_csr(imm)), /*CS*/R(which_csr(imm)) = tmp | src1, R(dest) = tmp);
 
@@ -197,7 +226,7 @@ static int decode_exec(Decode *s) {
 	INSTPAT("??????? ????? ????? 000 ????? 01000 11", sb     , S, Mw(src1 + imm, 1, src2));
   INSTPAT("??????? ????? ????? 010 ????? 01000 11", sw     , S, Mw(src1 + imm, 4, src2));
 
-	INSTPAT("0011000 00010 00000 000 00000 11100 11", mret   , N, s->dnpc = /*CS*/R(mepc));
+	INSTPAT("0011000 00010 00000 000 00000 11100 11", mret   , N, s->dnpc = R_CSR(0x341));
   INSTPAT("0000000 00001 00000 000 00000 11100 11", ebreak , N, NEMUTRAP(s->pc, R(10))); // R(10) is $a0
   INSTPAT("??????? ????? ????? ??? ????? ????? ??", inv    , N, INV(s->pc));
   INSTPAT_END();
