@@ -22,8 +22,14 @@ static inline int check_reg_idx(int idx) {
   IFDEF(CONFIG_RT_CHECK, assert(idx >= 0 && idx < 32));
   return idx;
 }
+static inline int check_sr_idx(int idx)
+{
+	IFDEF(CONFIG_RT_CHECK, assert(idx >= 0 && idx < 4));
+	return idx;
+}
 
 #define gpr(idx) cpu.gpr[check_reg_idx(idx)]
+#define csr(idx) cpu.csr[check_sr_idx(idx)]//Pa3.1，目前只用了4个寄存器，后续可能更改
 
 static inline const char* reg_name(int idx, int width) {
   extern const char* regs[];

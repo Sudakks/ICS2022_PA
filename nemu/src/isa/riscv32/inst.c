@@ -19,8 +19,43 @@
 #include <cpu/decode.h>
 
 #define R(i) gpr(i)
+#define CSR(i) csr(i)
 #define Mr vaddr_read
 #define Mw vaddr_write
+/*
+#define which_csr(i) do{\
+switch(i)\
+{\
+case 0x341:\
+return 0;\
+case 0x342:\
+return 1;\
+case 0x305:\
+return 2;\
+case 0x300:\
+return 3;\
+default:\
+panic("No more accessible SRs!");\
+}\
+}while(0)
+*/
+int which_csr(int i)
+{
+	switch(i)
+	{
+		case 0x341:
+			return 0;
+		case 0x342:
+			return 1;
+		case 0x305:
+			return 2;
+		case 0x300:
+			return 3;
+		default:
+			panic("No more accessible SRs!");
+			return 0;
+	}
+}
 
 enum {
   TYPE_I, TYPE_U, TYPE_S,
@@ -95,7 +130,7 @@ static int decode_exec(Decode *s) {
 	INSTPAT("??????? ????? ????? 000 ????? 00000 11", lb     , I, R(dest) = SEXT(Mr(src1 + imm, 1), 8));
 	INSTPAT("??????? ????? ????? 110 ????? 00100 11", ori    , I, R(dest) = src1 | imm);
 	//破手册，浪费我一下午的时间！！！但是好感动终于test能过了
-	INSTPAT("??????? ????? ????? 001 ????? 1110011", csrrw   , I, /*R(dest) = R(imm), R(imm) = src1 TODO*/);
+	INSTPAT("??????? ????? ????? 001 ????? 1110011", csrrw   , I, R(dest) = CSR(which_csr(imm)), CSR(which_csr(imm)) = src1);
 
 
 	//jump
