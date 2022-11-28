@@ -101,6 +101,7 @@ int printf(const char *fmt, ...) {
 						//put_str(str_cnt, mynum);
 						ret += str_cnt;
 				default:
+						printf("now is %c\n", *fmt);
 						panic("Not implemented in printf");
 						assert(0);
 			}
