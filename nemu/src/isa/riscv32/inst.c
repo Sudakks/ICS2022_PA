@@ -20,39 +20,8 @@
 #include <isa.h>
 
 #define R(i) gpr(i)
-//#define R_CSR Read_mycsr
-//#define W_CSR Write_mycsr
 #define Mr vaddr_read
 #define Mw vaddr_write
-/*
-#define which_csr(i) do{\
-switch(i)\
-{\
-case 0x341:\
-return 0;\
-case 0x342:\
-return 1;\
-case 0x305:\
-return 2;\
-case 0x300:\
-return 3;\
-default:\
-panic("No more accessible SRs!");\
-}\
-}while(0)
-*/
-/*
-word_t CSR(word_t idx)
-{
-	switch(idx)
-	{
-		case 0x341:
-			return cpu.mycsr[mepc];
-		case 0x342:
-			return cpu.mycsr[mcause];
-	}
-}
-*/
 word_t R_CSR(word_t idx)
 {
 	printf("%x\n", idx);
@@ -166,7 +135,7 @@ static int decode_exec(Decode *s) {
 	INSTPAT("??????? ????? ????? 000 ????? 00000 11", lb     , I, R(dest) = SEXT(Mr(src1 + imm, 1), 8));
 	INSTPAT("??????? ????? ????? 110 ????? 00100 11", ori    , I, R(dest) = src1 | imm);
 	//破手册，浪费我一下午的时间！！！但是好感动终于test能过了
-	INSTPAT("??????? ????? ????? 001 ????? 11100 11", csrrw   , I, /*int idx = which_csr(imm),*/ R(dest) = R_CSR(imm), W_CSR(imm, src1));
+	INSTPAT("??????? ????? ????? 001 ????? 11100 11", csrrw   , I, R(dest) = R_CSR(imm), W_CSR(imm, src1));
 	INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall   , I, s->dnpc = isa_raise_intr(1, s->pc));
 	INSTPAT("??????? ????? ????? 010 ????? 11100 11", csrrs   , I, R(dest) = R_CSR(imm), W_CSR(imm, R_CSR(imm) | src1));
 
