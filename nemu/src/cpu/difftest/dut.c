@@ -63,6 +63,7 @@ void init_difftest(char *ref_so_file, long img_size, int port) {
   assert(ref_so_file != NULL);
 
 	cpu.mstatus = 0x1800;
+	/*PA3.1*/
   void *handle;
   handle = dlopen(ref_so_file, RTLD_LAZY);
   assert(handle);
