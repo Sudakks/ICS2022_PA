@@ -24,12 +24,12 @@
 #define Mw vaddr_write
 word_t R_CSR(word_t idx)
 {
-	printf("%x\n", idx);
 	switch(idx)
 	{
 		case 0x341:
 			return cpu.mepc;
 		case 0x342:
+		printf("mcause = %u\n", cpu.mcause);
 			return cpu.mcause;
 		case 0x305:
 			return cpu.mtvec;
