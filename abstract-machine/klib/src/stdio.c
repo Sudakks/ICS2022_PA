@@ -101,6 +101,12 @@ int printf(const char *fmt, ...) {
 						//put_str(str_cnt, mynum);
 						ret += str_cnt;
 						break;
+				case 'x':
+						myu = va_arg(ap, unsigned int);
+						str_cnt = sprintf(mynum, "%p", myu);
+						putstr(mynum);
+						ret += str_cnt;
+						break;
 				default:
 						panic("Not implemented in printf");
 						assert(0);
