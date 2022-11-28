@@ -22,22 +22,29 @@
 typedef struct {
   word_t gpr[32];
   vaddr_t pc;
-	//word_t csr[8];//状态寄存器
-	struct{
+	
+	word_t mycsr[8];//状态寄存器
+	//变量名不能重！！！
+	/*
 	word_t mepc;
 	word_t mcause;
 	word_t mtvec;
 	word_t mstatus;
-	};
+	*/
 } riscv32_CPU_state;
 
+#define mepc 0
+#define mcause 1
+#define mtvec 2
+#define mstatus 3
+/*
 enum CSR_IDX
 {
 	mepc = 0,
 	mcause,
 	mtvec,
 	mstatus,
-};
+};*/
 
 // decode
 typedef struct {

@@ -20,7 +20,7 @@
 #include <isa.h>
 
 #define R(i) gpr(i)
-//#define CSR(i) csr(i)
+#define CSR(i) csr(i)
 #define Mr vaddr_read
 #define Mw vaddr_write
 /*
@@ -40,7 +40,7 @@ panic("No more accessible SRs!");\
 }\
 }while(0)
 */
-word_t which_csr(word_t i)
+int which_csr(word_t i)
 {
 	switch(i)
 	{
@@ -131,7 +131,7 @@ static int decode_exec(Decode *s) {
 	INSTPAT("??????? ????? ????? 000 ????? 00000 11", lb     , I, R(dest) = SEXT(Mr(src1 + imm, 1), 8));
 	INSTPAT("??????? ????? ????? 110 ????? 00100 11", ori    , I, R(dest) = src1 | imm);
 	//破手册，浪费我一下午的时间！！！但是好感动终于test能过了
-	//INSTPAT("??????? ????? ????? 001 ????? 11100 11", csrrw   , I, R(dest) = /*CS*/R(which_csr(imm)), /*CS*/R(which_csr(imm)) = src1);
+	INSTPAT("??????? ????? ????? 001 ????? 11100 11", csrrw   , I, /*int idx = which_csr(imm),*/ R(dest) = CSR(0), CSR(0) = src1);
 	//INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall   , I, s->dnpc = isa_raise_intr(1, s->pc));
 	//INSTPAT("??????? ????? ????? 010 ????? 11100 11", csrrs   , I, word_t tmp = /*CS*/R(which_csr(imm)), /*CS*/R(which_csr(imm)) = tmp | src1, R(dest) = tmp);
 
