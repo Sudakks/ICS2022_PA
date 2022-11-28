@@ -72,7 +72,7 @@ word_t R_CSR(word_t idx)
 
 word_t W_CSR(word_t idx, word_t val)
 {
-	printf("%u\n", idx);
+	printf("%x\n", idx);
 	switch(idx)
 	{
 		case 0x341:
