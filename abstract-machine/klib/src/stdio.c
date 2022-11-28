@@ -233,12 +233,10 @@ int sprintf(char *out, const char *fmt, ...) {
 						if(val[i] < 10)
 						{
 							*out = val[i] + '0';
-							putch(*out);
 						}
 						else
 						{
 							*out = 'a' + val[i] - 10;
-							putch(*out);
 						}					
 						out++;
 						
