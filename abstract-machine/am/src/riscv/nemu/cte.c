@@ -14,8 +14,8 @@ Context* __am_irq_handle(Context *c) {
       default: ev.event = EVENT_ERROR; break;
     }
 		printf("mcause = %x, mepc = %x, mstatus = %x\n", c->mcause, c->mepc, c->mstatus);
-		//if(ev.event == EVENT_YIELD)
-			//c->mepc += 4;
+		if(ev.event == EVENT_YIELD)
+			c->mepc += 4;
 		//这里因为最后要将下一条指令的地址赋给pc，所以提前
 		//将mepc+4
     c = user_handler(ev, c);
