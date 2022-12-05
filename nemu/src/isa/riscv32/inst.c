@@ -137,6 +137,7 @@ static int decode_exec(Decode *s) {
 	//破手册，浪费我一下午的时间！！！但是好感动终于test能过了
 	INSTPAT("??????? ????? ????? 001 ????? 11100 11", csrrw   , I, R(dest) = R_CSR(imm), W_CSR(imm, src1));
 	INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall   , I, s->dnpc = isa_raise_intr(0xb, s->pc));
+	
 	/*这个异常号是啥ya？？？*/
 	INSTPAT("??????? ????? ????? 010 ????? 11100 11", csrrs   , I, R(dest) = R_CSR(imm), W_CSR(imm, R_CSR(imm) | src1));
 

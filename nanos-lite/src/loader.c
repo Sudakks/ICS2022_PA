@@ -38,12 +38,11 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 		if (phdr[i].p_type == PT_LOAD)
 		{
 			//judge whether it should be loaded
-			ramdisk_read((void*)phdr[i].p_vaddr, phdr[i].p_offset, phdr[i].p_memsz);
+			ramdisk_read((void*)phdr[i].p_vaddr, phdr[i].p_offset, phdr[i].p_filesz);
 			//clear[VirtAddr + FileSize, VirtAddr + MemSiz), as .bss part
-			memset((void*)(phdr[i].p_vaddr + phdr[i].p_filesz), 0, phdr[i].p_memsz - phdr[i].p_filesz);
+			memset((uint8_t*)(phdr[i].p_vaddr + phdr[i].p_filesz), 0, phdr[i].p_memsz - phdr[i].p_filesz);
 		}
 	}
-	printf("the address = %d\n", ehdr.e_entry);
 	return ehdr.e_entry;//Entry point virtual address
 }
 
