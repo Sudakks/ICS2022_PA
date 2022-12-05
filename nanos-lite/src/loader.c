@@ -43,7 +43,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 			memset((void*)(phdr[i].p_vaddr + phdr[i].p_filesz), 0, phdr[i].p_memsz - phdr[i].p_filesz);
 		}
 	}
-	printf("the address = %p\n", ehdr.e_entry);
+	printf("the address = %d\n", ehdr.e_entry);
 	return ehdr.e_entry;//Entry point virtual address
 }
 
