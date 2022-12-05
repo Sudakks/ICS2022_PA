@@ -32,7 +32,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 	assert(ehdr.e_machine == EXPECT_TYPE);
 
 	Elf_Phdr phdr[ehdr.e_phnum];
-	ramdisk_read(phdr, ehdr.e_ehsize, sizeof(Elf_Phdr) * ehdr.e_phnum);
+	ramdisk_read(phdr, ehdr.e_phoff, sizeof(Elf_Phdr) * ehdr.e_phnum);
 	for (size_t i = 0; i < ehdr.e_phnum; i++)
 	{
 		if (phdr[i].p_type == PT_LOAD)
