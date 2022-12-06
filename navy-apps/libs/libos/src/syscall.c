@@ -62,13 +62,20 @@ int _open(const char *path, int flags, mode_t mode) {
 }
 
 int _write(int fd, void *buf, size_t count) {
-	_syscall_(SYS_write, fd, (intptr_t) buf, count);
+	return _syscall_(SYS_write, fd, (intptr_t) buf, count);
   //_exit(SYS_write);
-  return 0;
+  //return 0;
 }
 
+extern char _end;
+char* now_loc = &_end;
 void *_sbrk(intptr_t increment) {
-  return (void *)-1;
+	void* ret = now_loc
+	_syscall(SYS_brk, now_loc + increment, now_loc, 0);
+	if(GPRx == 0)//success
+		return ret;
+	return -1;
+  //return (void *)-1;
 }
 
 int _read(int fd, void *buf, size_t count) {

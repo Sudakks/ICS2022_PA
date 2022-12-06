@@ -35,6 +35,14 @@ void sys_write(Context *c)
 	}
 }
 
+void sys_brk(Context* c)
+{
+	intptr_t addr = c->GPR2;//stand for the new program break address
+	c->GPR3 = addr;
+	c->GPRx = 0;
+	//PA3.2, sys_brk always return 0
+}
+
 void do_syscall(Context *c) {
   uintptr_t a[4];
   a[0] = c->GPR1;
@@ -47,7 +55,9 @@ void do_syscall(Context *c) {
 	case SYS_write:
 		sys_write(c);
 		break;
-	case SYS_
+	case SYS_brk:
+		sys_brk(c);
+		break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
 }
