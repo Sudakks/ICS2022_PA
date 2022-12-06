@@ -23,4 +23,5 @@ void do_syscall(Context *c) {
 		break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
+	printf("--- strace: system call number = %s, return value = %d\n", a[0], c->GPRx);
 }
