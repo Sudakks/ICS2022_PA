@@ -120,6 +120,10 @@ config CC_ASAN
 endmenu
 
 menu "Testing and Debugging"
+#set strace option
+config STARCE
+	bool "Enable starce"
+	default n
 
 # set watchpoint option
 config WATCHPOINT

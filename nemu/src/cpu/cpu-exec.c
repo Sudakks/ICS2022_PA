@@ -130,8 +130,6 @@ static void execute(uint64_t n) {
     trace_and_difftest(&s, cpu.pc);
     if (nemu_state.state != NEMU_RUNNING) 
 		{
-			Log("ETRACE: NEMU is not in the state of RUNNING");
-			Log("Now is %d", nemu_state.state);
 			break;
 		}
     IFDEF(CONFIG_DEVICE, device_update());
