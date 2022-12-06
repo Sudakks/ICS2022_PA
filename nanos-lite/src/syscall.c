@@ -9,7 +9,7 @@ void sys_yield(Context *c)
 
 void sys_exit(Context *c)
 {
-	printf("strace: system call number = %d, return value = %d", c->GPR1, c->GPRx);
+	printf("strace: system call number = %s, return value = %d", c->GPR1, c->GPRx);
 	halt(0);
 }
 
