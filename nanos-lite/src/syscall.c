@@ -9,9 +9,6 @@ void sys_yield(Context *c)
 
 void sys_exit(Context *c)
 {
-#ifdef CONFIG_STRACE_COND
-	printf("--- strace: system call number = %d, return value = %d\n", c->GPR1, c->GPRx);
-#endif
 	halt(0);
 }
 
@@ -60,4 +57,8 @@ void do_syscall(Context *c) {
 		break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
+	#ifdef CONFIG_STRACE_COND
+	printf("STRACE: system call number = %d, return value = %d\n", c->GPR1, c->GPRx);
+	#endif
+
 }
