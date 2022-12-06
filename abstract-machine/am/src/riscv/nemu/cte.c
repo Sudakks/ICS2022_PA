@@ -9,7 +9,7 @@ Context* __am_irq_handle(Context *c) {
     Event ev = {0};
     switch (c->mcause) {
 			case 0xb:
-			printf("GPR1 = %d\n", c->GPR1);
+			//printf("GPR1 = %d\n", c->GPR1);
 				if(c->GPR1 == -1)//GPR1用来存放异常号，通过其来判断YIELD和SYSCALL
 					ev.event = EVENT_YIELD;
 				else
@@ -17,7 +17,7 @@ Context* __am_irq_handle(Context *c) {
 				break;
       default: ev.event = EVENT_ERROR; break;
     }
-		printf("mcause = %x, mepc = %x, mstatus = %x\n", c->mcause, c->mepc, c->mstatus);
+		//printf("mcause = %x, mepc = %x, mstatus = %x\n", c->mcause, c->mepc, c->mstatus);
 			c->mepc += 4;
 		//这里因为最后要将下一条指令的地址赋给pc，所以提前
 		//将mepc+4
