@@ -24,7 +24,7 @@ void sys_write(Context *c)
 	if(fd == 1 || fd == 2)
 	{
 		//stand for stdout, stderr
-		printf("count = %d\n", count);
+		//printf("count = %d\n", count);
 		for(size_t i = 0; i < count ; i++)
 		 {
 			putch(*buf);
@@ -47,6 +47,7 @@ void do_syscall(Context *c) {
 	case SYS_write:
 		sys_write(c);
 		break;
+	case SYS_
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
 }
