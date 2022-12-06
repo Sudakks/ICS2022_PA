@@ -8,7 +8,8 @@ static Context* do_event(Event e, Context* c) {
 			break;
 		case EVENT_SYSCALL:
 			do_syscall(c);
-		printf("--- strace: system call number = %s, return value = %d\n", c->GPR1, c->GPRx);
+			assert(0);
+			printf("--- strace: system call number = %s, return value = %d\n", c->GPR1, c->GPRx);
 			break;
     default: panic("Unhandled event ID = %d", e.event);
   }
