@@ -10,10 +10,10 @@ Context* __am_irq_handle(Context *c) {
     switch (c->mcause) {
 			case 0xb:
 			printf("GPR1 = %d\n", c->GPR1);
-				if(c->GPR1 == -1)
+				if(c->GPR1 == -1)//GPR1用来存放异常号，通过其来判断YIELD和SYSCALL
 					ev.event = EVENT_YIELD;
 				else
-					ev.event = EVENT_ERROR;
+					ev.event = EVENT_SYSCALL;
 				break;
       default: ev.event = EVENT_ERROR; break;
     }
