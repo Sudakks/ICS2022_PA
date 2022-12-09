@@ -28,7 +28,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 //magic number 7f 45 4c 46
 	//检查魔数和ISA类型
 
-
+/*
 	Elf_Ehdr ehdr;//elf headr table
 	size_t off = ramdisk_read(&ehdr, 0, sizeof(Elf_Ehdr));
 	assert(off != 0);
@@ -50,12 +50,12 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 		}
 	}
 	return ehdr.e_entry;//Entry point virtual address
-
+*/
 //above we use ramdisk_read directly, now we use another API to loader the file
 
 
 ///////////////////////////////////////////
-/*
+
 	Elf_Ehdr ehdr;//elf headr table
 //	size_t off = ramdisk_read(&ehdr, 0, sizeof(Elf_Ehdr));
 	int fd = fs_open(filename, 0, 0);
@@ -68,7 +68,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 	assert(ehdr.e_machine == EXPECT_TYPE);
 
 	Elf_Phdr phdr[ehdr.e_phnum];
-	fs_lseek(fd, ehdr.e_phoff, seek_set);
+	fs_lseek(fd, ehdr.e_phoff, 0);
 	fs_read(fd, phdr, sizeof(Elf_Phdr) * ehdr.e_phnum);
 	//ramdisk_read(phdr, ehdr.e_phoff, sizeof(Elf_Phdr) * ehdr.e_phnum);
 	for (size_t i = 0; i < ehdr.e_phnum; i++)
@@ -77,7 +77,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 		 {
 			//judge whether it should be loaded
 			//ramdisk_read((void*)phdr[i].p_vaddr, phdr[i].p_offset, phdr[i].p_filesz);
-			fs_lseek(fd, phdr[i].p_offset, seek_set);
+			fs_lseek(fd, phdr[i].p_offset, 0);
 			fs_read(fd, (void*)phdr[i].p_vaddr, phdr[i].p_filesz);
 			//clear[VirtAddr + FileSize, VirtAddr + MemSiz), as .bss part
 			memset((uint8_t*)(phdr[i].p_vaddr + phdr[i].p_filesz), 0, phdr[i].p_memsz - phdr[i].p_filesz);
@@ -85,7 +85,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 		//需要及时调整open_offset的位置，因为有的内容没有读，需要跳过
 	}
 	return ehdr.e_entry;//Entry point virtual address
-	*/
+	
 }
 
 void naive_uload(PCB *pcb, const char *filename) {
