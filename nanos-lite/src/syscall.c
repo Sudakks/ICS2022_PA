@@ -21,7 +21,6 @@ void sys_write(Context *c)
 	if(fd == 1 || fd == 2)
 	{
 		//stand for stdout, stderr
-		//printf("count = %d\n", count);
 		for(size_t i = 0; i < count ; i++)
 		 {
 			putch(*buf);
@@ -30,6 +29,19 @@ void sys_write(Context *c)
 		//set return value
 		c->GPRx = count;
 	}
+	else
+	{
+		//这是文件的写
+		c->GPRx = fs_write(fd, buf, count);
+	}
+}
+
+void sys_read(Context *c)
+{
+	int fd = c->GPR2;
+	char* buf = (char*)c->GPR3;
+	size_t len = c->GPR4;
+	c->GPRx = fs_write(fd, buf, len);
 }
 
 void sys_brk(Context* c)
@@ -38,6 +50,28 @@ void sys_brk(Context* c)
 	c->GPR3 = addr;
 	c->GPRx = 0;
 	//PA3.2, sys_brk always return 0
+}
+
+void sys_open(Context *c)
+{
+	char* path = (char*)c->GPR2;
+	int flags = c->GPR3;
+	int mode = c->GPR4;
+	c->GPRx = fs_open(path, flags, mode);
+}
+
+void sys_lseek(Context *c)
+{
+	int fd = c->GPR2;
+	size_t offset = c->GPR3;
+	int whence = c->GPR4;
+	c->GPRx = fs_lseek(fd, offset, whence);
+}
+
+void sys_close(Context *c)
+{
+	int fd = c->GPR2;
+	c->GPRx = fs_close(fd);
 }
 
 void do_syscall(Context *c) {
@@ -54,6 +88,18 @@ void do_syscall(Context *c) {
 		break;
 	case SYS_brk:
 		sys_brk(c);
+		break;
+	case SYS_open:
+		sys_open(c);
+		break;
+	case SYS_read:
+		sys_read(c);
+		break;
+	case SYS_lseek:
+		sys_lseek(c);
+		break;
+	case SYS_close:
+		sys_close(c);
 		break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
