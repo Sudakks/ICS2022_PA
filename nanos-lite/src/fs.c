@@ -36,7 +36,7 @@ static Finfo file_table[] __attribute__((used)) = {
 
 //indicate the number of file_table
 #define MAX_FILE_SZ 25
-size_t open_offset[MAX_FILE_SZ];
+size_t open_offset[50];
 //advanced every time the file is read
 
 void init_fs() {
@@ -54,7 +54,7 @@ int fs_open(const char *pathname, int flags, int mode)
 		if(strcmp(tmp, pathname) == 0)
 		{
 			//equal and find
-			open_offset[i] =  0;
+			open_offset[i] = 0;
 			return i;
 		}
 	}
@@ -105,14 +105,12 @@ size_t fs_lseek(int fd, size_t offset, int whence)
 		case SEEK_SET:
 			offset = (offset > sz) ? sz : offset;
 			open_offset[fd] = offset;
-			printf("now open_offset = %d\n", open_offset[fd]);
 			break;
 		case SEEK_CUR:
 			open_offset[fd] = (open_offset[fd] + offset > sz) ? sz : open_offset[fd] + offset;
 			break;
 		case SEEK_END:
 			open_offset[fd] = (sz + offset < 0) ? 0 : sz + offset;
-			printf("end: open_offset = %d\n", open_offset[fd]);
 			break;
 		default:
 			assert(0);
