@@ -105,6 +105,7 @@ size_t fs_lseek(int fd, size_t offset, int whence)
 		case SEEK_SET:
 			offset = (offset > sz) ? sz : offset;
 			open_offset[fd] = offset;
+			printf("now open_offset = %d\n", open_offset[fd]);
 			break;
 		case SEEK_CUR:
 			open_offset[fd] = (open_offset[fd] + offset > sz) ? sz : open_offset[fd] + offset;
