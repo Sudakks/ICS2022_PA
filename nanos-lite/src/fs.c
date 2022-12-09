@@ -54,7 +54,7 @@ int fs_open(const char *pathname, int flags, int mode)
 		if(strcmp(tmp, pathname) == 0)
 		{
 			//equal and find
-			open_offset[i] = file_table[i].disk_offset;
+			open_offset[i] =  0;
 			return i;
 		}
 	}
@@ -71,16 +71,13 @@ size_t fs_read(int fd, void *buf, size_t len)
 	size_t sz = info.size;
 	size_t disoff = info.disk_offset;
 	//read from this fd's open_offset
-	if(len + open_offset[fd] > disoff + sz)
-	{
-		//out of range
-		len = disoff + sz - open_offset[fd];
-	}
+	len = (len + open_offset[fd] > sz) ? sz - open_offset[fd] : len;
 
 	if(len <= 0)
 		return 0;
-	size_t read_sz = ramdisk_read(buf, open_offset[fd], len);
-	open_offset[fd] += read_sz;
+	size_t read_sz = ramdisk_read(buf, disoff + open_offset[fd], len);
+	open_offset[fd] += len;
+	//这个是相对于这个文件头的偏移量
 	//advanced
 
 	return read_sz;
@@ -103,19 +100,18 @@ size_t fs_lseek(int fd, size_t offset, int whence)
 	assert(fd < file_table_sz);
 	Finfo info = file_table[fd];	
 	size_t sz = info.size;
-	size_t disoff = info.disk_offset;
 
 	switch(whence)
 	{
 		case SEEK_SET:
 			offset = (offset > sz) ? sz : offset;
-			open_offset[fd] = disoff + offset;
+			open_offset[fd] = offset;
 			break;
 		case SEEK_CUR:
-			open_offset[fd] = (open_offset[fd] + offset > sz + disoff) ? sz + disoff : open_offset[fd] + offset;
+			open_offset[fd] = (open_offset[fd] + offset > sz) ? sz : open_offset[fd] + offset;
 			break;
 		case SEEK_END:
-			open_offset[fd] = (open_offset[fd] + offset < disoff) ? disoff : open_offset[fd] + offset;
+			open_offset[fd] = (sz + offset < 0) ? 0 : sz + offset;
 			break;
 		default:
 			assert(0);
@@ -123,7 +119,6 @@ size_t fs_lseek(int fd, size_t offset, int whence)
 	return open_offset[fd];
 }
 
-//extern size_t ramdisk_write(const void *buf, size_t offset, size_t len);
 size_t fs_write(int fd, const void *buf, size_t len)
 {
 	int file_table_sz = sizeof(file_table) / sizeof(Finfo);
@@ -132,12 +127,10 @@ size_t fs_write(int fd, const void *buf, size_t len)
 	size_t sz = info.size;
 	size_t disoff = info.disk_offset;
 
-	if(open_offset[fd] + len > sz + disoff)
-	{
-		len = sz + disoff - open_offset[fd];
-	}
+	len = (open_offset[fd] + len > sz) ? (sz - open_offset[fd]) : len;
+
 	if(len <= 0)
 		return 0;
-	size_t ret = ramdisk_write(buf, open_offset[fd], len);
+	size_t ret = ramdisk_write(buf, disoff + open_offset[fd], len);
 	return ret;
 }
