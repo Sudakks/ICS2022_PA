@@ -41,7 +41,7 @@ void sys_read(Context *c)
 	int fd = c->GPR2;
 	char* buf = (char*)c->GPR3;
 	size_t len = c->GPR4;
-	c->GPRx = fs_write(fd, buf, len);
+	c->GPRx = fs_read(fd, buf, len);
 }
 
 void sys_brk(Context* c)
