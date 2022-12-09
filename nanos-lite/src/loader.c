@@ -61,7 +61,6 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 	int fd = fs_open(filename, 0, 0);
 	//ignore flags and mode
 	size_t off = fs_read(fd, &ehdr, sizeof(Elf_Ehdr)); 
-	printf("off = %d\n", off);
 	assert(off != 0);
 
 	//check magic number
@@ -69,7 +68,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 	assert(ehdr.e_machine == EXPECT_TYPE);
 
 	Elf_Phdr phdr[ehdr.e_phnum];
-	fs_lseek(fd, ehdr.e_phoff, 0);
+	fs_lseek(fd, ehdr.e_phoff, 3);
 	fs_read(fd, phdr, sizeof(Elf_Phdr) * ehdr.e_phnum);
 	//ramdisk_read(phdr, ehdr.e_phoff, sizeof(Elf_Phdr) * ehdr.e_phnum);
 	for (size_t i = 0; i < ehdr.e_phnum; i++)
@@ -78,7 +77,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 		 {
 			//judge whether it should be loaded
 			//ramdisk_read((void*)phdr[i].p_vaddr, phdr[i].p_offset, phdr[i].p_filesz);
-			fs_lseek(fd, phdr[i].p_offset, 0);
+			fs_lseek(fd, phdr[i].p_offset, 3);
 			fs_read(fd, (void*)phdr[i].p_vaddr, phdr[i].p_filesz);
 			//clear[VirtAddr + FileSize, VirtAddr + MemSiz), as .bss part
 			memset((uint8_t*)(phdr[i].p_vaddr + phdr[i].p_filesz), 0, phdr[i].p_memsz - phdr[i].p_filesz);

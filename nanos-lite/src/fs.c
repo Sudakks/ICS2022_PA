@@ -125,6 +125,9 @@ size_t fs_lseek(int fd, size_t offset, int whence)
 		case 2:
 			open_offset[fd] = sz + disoff - 1;
 			break;
+		case 3:
+			open_offset[fd] = disoff + offset;
+			break;
 		default:
 			assert(0);
 	}
