@@ -28,7 +28,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 //magic number 7f 45 4c 46
 	//检查魔数和ISA类型
 
-/*
+
 	Elf_Ehdr ehdr;//elf headr table
 	size_t off = ramdisk_read(&ehdr, 0, sizeof(Elf_Ehdr));
 	assert(off != 0);
@@ -50,11 +50,12 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 		}
 	}
 	return ehdr.e_entry;//Entry point virtual address
-*/
+
 //above we use ramdisk_read directly, now we use another API to loader the file
 
 
 ///////////////////////////////////////////
+/*
 	Elf_Ehdr ehdr;//elf headr table
 //	size_t off = ramdisk_read(&ehdr, 0, sizeof(Elf_Ehdr));
 	int fd = fs_open(filename, 0, 0);
@@ -84,6 +85,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 		//需要及时调整open_offset的位置，因为有的内容没有读，需要跳过
 	}
 	return ehdr.e_entry;//Entry point virtual address
+	*/
 }
 
 void naive_uload(PCB *pcb, const char *filename) {
