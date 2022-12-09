@@ -80,6 +80,7 @@ size_t fs_read(int fd, void *buf, size_t len)
 	if(len <= 0)
 		return 0;*/
 	printf("now len = %d\n", len);
+	printf("open_offset = %d\n", open_offset[fd]);
 	size_t read_sz = ramdisk_read(buf, open_offset[fd], len);
 	open_offset[fd] += read_sz;
 	//advanced
