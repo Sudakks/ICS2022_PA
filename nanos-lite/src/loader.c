@@ -60,6 +60,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 //	size_t off = ramdisk_read(&ehdr, 0, sizeof(Elf_Ehdr));
 	int fd = fs_open(filename, 0, 0);
 	//ignore flags and mode
+	printf("fd = %d\n", fd);
 	size_t off = fs_read(fd, &ehdr, sizeof(Elf_Ehdr)); 
 	printf("off = %d\n", off);
 	assert(off != 0);
