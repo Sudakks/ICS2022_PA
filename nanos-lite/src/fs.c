@@ -112,6 +112,7 @@ size_t fs_lseek(int fd, size_t offset, int whence)
 			break;
 		case SEEK_END:
 			open_offset[fd] = (sz + offset < 0) ? 0 : sz + offset;
+			printf("end: open_offset = %d\n", open_offset[fd]);
 			break;
 		default:
 			assert(0);
