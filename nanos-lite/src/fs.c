@@ -119,7 +119,7 @@ size_t fs_lseek(int fd, size_t offset, int whence)
 
 size_t fs_write(int fd, const void *buf, size_t len)
 {
-	int file_table_sz = sizeof(file_table) / sizeof(Finfo);
+	/*int file_table_sz = sizeof(file_table) / sizeof(Finfo);
 	assert(fd < file_table_sz);
 	Finfo info = file_table[fd];	
 	size_t sz = info.size;
@@ -130,5 +130,20 @@ size_t fs_write(int fd, const void *buf, size_t len)
 	if(len <= 0)
 		return 0;
 	size_t ret = ramdisk_write(buf, disoff + open_offset[fd], len);
-	return ret;
+	return ret;*/
+int file_table_sz = sizeof(file_table) / sizeof(Finfo);
+	assert(fd < file_table_sz);
+	Finfo info = file_table[fd];	
+	size_t sz = info.size;
+	size_t disoff = info.disk_offset;
+	//read from this fd's open_offset
+	len = (len + open_offset[fd] > sz) ? sz - open_offset[fd] : len;
+	if(len < 0)
+		return -1;
+	size_t write_sz = ramdisk_write(buf, disoff + open_offset[fd], len);
+	open_offset[fd] += len;
+	//这个是相对于这个文件头的偏移量
+	//advanced
+	return write_sz;
+
 }
