@@ -61,6 +61,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 	int fd = fs_open(filename, 0, 0);
 	//ignore flags and mode
 	size_t off = fs_read(fd, &ehdr, sizeof(Elf_Ehdr)); 
+	printf("off = %d\n", off);
 	assert(off != 0);
 
 	//check magic number
