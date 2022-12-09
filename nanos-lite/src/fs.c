@@ -107,24 +107,15 @@ size_t fs_lseek(int fd, size_t offset, int whence)
 
 	switch(whence)
 	{
-		case seek_set:
-			open_offset[fd] = offset;
-			break;
-		case seek_cur:
-			if(offset + open_offset[fd] >= sz + disoff)
-			{
-				open_offset[fd] = sz + disoff - 1;
-			}
-			else
-			{
-				open_offset[fd] += offset;
-			}
-			break;
-		case seek_end:
-			open_offset[fd] = sz + disoff - 1;
-			break;
-		case seek_add:
+		case SEEK_SET:
+			offset = (offset > sz) ? sz : offset;
 			open_offset[fd] = disoff + offset;
+			break;
+		case SEEK_CUR:
+			open_offset[fd] = (open_offset[fd] + offset > sz + disoff) ? sz + disoff : open_offset[fd] + offset;
+			break;
+		case SEEK_END:
+			open_offset[fd] = (open_offset[fd] + offset < disoff) ? disoff : open_offset[fd] + offset;
 			break;
 		default:
 			assert(0);
