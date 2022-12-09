@@ -34,7 +34,6 @@ static Finfo file_table[] __attribute__((used)) = {
 #include "files.h"
 };
 
-int file_table_sz = sizeof(file_table) / sizeof(Finfo);
 //indicate the number of file_table
 #define MAX_FILE_SZ 25
 size_t open_offset[MAX_FILE_SZ];
@@ -47,6 +46,7 @@ void init_fs() {
 
 int fs_open(const char *pathname, int flags, int mode)
 {
+	int file_table_sz = sizeof(file_table) / sizeof(Finfo);
 	//find the same filename in file_table
 	for(int i = 0; i < file_table_sz; i++)
 	{
@@ -62,23 +62,23 @@ int fs_open(const char *pathname, int flags, int mode)
 	//if can't find the file, assert
 }
 
-//extern size_t ramdisk_read(void *buf, size_t offset, size_t len);
 
 size_t fs_read(int fd, void *buf, size_t len)
 {
+	int file_table_sz = sizeof(file_table) / sizeof(Finfo);
 	assert(fd < file_table_sz);
-	Finfo info = file_table[fd];	
-	size_t sz = info.size;
-	size_t disoff = info.disk_offset;
+	//Finfo info = file_table[fd];	
+	//size_t sz = info.size;
+	//size_t disoff = info.disk_offset;
 	//read from this fd's open_offset
-	if(len + open_offset[fd] > disoff + sz)
+	/*if(len + open_offset[fd] > disoff + sz)
 	{
 		//out of range
 		len = disoff + sz - open_offset[fd];
 	}
 
 	if(len <= 0)
-		return 0;
+		return 0;*/
 	size_t read_sz = ramdisk_read(buf, open_offset[fd], len);
 	open_offset[fd] += read_sz;
 	//advanced
@@ -89,6 +89,7 @@ size_t fs_read(int fd, void *buf, size_t len)
 
 int fs_close(int fd)
 {
+	int file_table_sz = sizeof(file_table) / sizeof(Finfo);
 	assert(fd < file_table_sz);
 	//indicate the number of file_table
 	//the sfs doesn't maintain the status of openning file, return 0 indicate always close successfully
@@ -97,6 +98,7 @@ int fs_close(int fd)
 
 size_t fs_lseek(int fd, size_t offset, int whence)
 {
+	int file_table_sz = sizeof(file_table) / sizeof(Finfo);
 	//adjust fd's open_offset 
 	assert(fd < file_table_sz);
 	Finfo info = file_table[fd];	
@@ -130,6 +132,7 @@ size_t fs_lseek(int fd, size_t offset, int whence)
 //extern size_t ramdisk_write(const void *buf, size_t offset, size_t len);
 size_t fs_write(int fd, const void *buf, size_t len)
 {
+	int file_table_sz = sizeof(file_table) / sizeof(Finfo);
 	assert(fd < file_table_sz);
 	Finfo info = file_table[fd];	
 	size_t sz = info.size;
