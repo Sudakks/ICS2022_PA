@@ -55,6 +55,7 @@ int fs_open(const char *pathname, int flags, int mode)
 		{
 			//equal and find
 			open_offset[i] = 0;
+			printf("i = %d\n", i);
 			return i;
 		}
 	}
