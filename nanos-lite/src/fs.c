@@ -67,20 +67,18 @@ size_t fs_read(int fd, void *buf, size_t len)
 {
 	int file_table_sz = sizeof(file_table) / sizeof(Finfo);
 	assert(fd < file_table_sz);
-	//Finfo info = file_table[fd];	
-	//size_t sz = info.size;
-	//size_t disoff = info.disk_offset;
+	Finfo info = file_table[fd];	
+	size_t sz = info.size;
+	size_t disoff = info.disk_offset;
 	//read from this fd's open_offset
-	/*if(len + open_offset[fd] > disoff + sz)
+	if(len + open_offset[fd] > disoff + sz)
 	{
 		//out of range
 		len = disoff + sz - open_offset[fd];
 	}
 
 	if(len <= 0)
-		return 0;*/
-	printf("now len = %d\n", len);
-	printf("open_offset = %d\n", open_offset[fd]);
+		return 0;
 	size_t read_sz = ramdisk_read(buf, open_offset[fd], len);
 	open_offset[fd] += read_sz;
 	//advanced
@@ -109,10 +107,10 @@ size_t fs_lseek(int fd, size_t offset, int whence)
 
 	switch(whence)
 	{
-		case 0:
+		case seek_set:
 			open_offset[fd] = offset;
 			break;
-		case 1:
+		case seek_cur:
 			if(offset + open_offset[fd] >= sz + disoff)
 			{
 				open_offset[fd] = sz + disoff - 1;
@@ -122,10 +120,10 @@ size_t fs_lseek(int fd, size_t offset, int whence)
 				open_offset[fd] += offset;
 			}
 			break;
-		case 2:
+		case seek_end:
 			open_offset[fd] = sz + disoff - 1;
 			break;
-		case 3:
+		case seek_add:
 			open_offset[fd] = disoff + offset;
 			break;
 		default:

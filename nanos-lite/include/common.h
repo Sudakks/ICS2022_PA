@@ -13,7 +13,8 @@
 #include <debug.h>
 
 enum my_lseek{
-	seek_set = 0, seek_cur, seek_end
+	seek_set = 0, seek_cur, seek_end, seek_add
+	//seek_add是我自己加的，即在这个文件的最初偏移量上加一个值
 };
 int fs_open(const char *pathname, int flags, int mode);
 size_t fs_read(int fd, void *buf, size_t len);
