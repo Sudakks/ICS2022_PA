@@ -15,7 +15,14 @@ static const char *keyname[256] __attribute__((used)) = {
 };
 
 size_t serial_write(const void *buf, size_t offset, size_t len) {
-  return 0;
+	//串口的写入
+	char *tmp = (char*)buf;
+	for(size_t i = 0; i < len; i++)
+	{
+		putch(*tmp);
+		tmp++;
+	} 
+	return len;
 }
 
 size_t events_read(void *buf, size_t offset, size_t len) {

@@ -18,7 +18,9 @@ void sys_write(Context *c)
 	char *buf = (char*)(c->GPR3);
 	size_t count = c->GPR4;
 
-	if(fd == 1 || fd == 2)
+	c->GPRx = fs_write(fd, buf, count);
+//利用VFS，不需要让系统调用处理函数关心这些特殊文件的情况了
+	/*if(fd == 1 || fd == 2)
 	{
 		//stand for stdout, stderr
 		for(size_t i = 0; i < count ; i++)
@@ -32,8 +34,7 @@ void sys_write(Context *c)
 	else
 	{
 		//这是文件的写
-		c->GPRx = fs_write(fd, buf, count);
-	}
+	}*/
 }
 
 void sys_read(Context *c)

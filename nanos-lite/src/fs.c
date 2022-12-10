@@ -21,6 +21,7 @@ size_t invalid_read(void *buf, size_t offset, size_t len) {
   return 0;
 }
 
+//相应报错函数
 size_t invalid_write(const void *buf, size_t offset, size_t len) {
   panic("should not reach here");
   return 0;
@@ -29,8 +30,8 @@ size_t invalid_write(const void *buf, size_t offset, size_t len) {
 /* This is the information about all files in disk. */
 static Finfo file_table[] __attribute__((used)) = {
   [FD_STDIN]  = {"stdin", 0, 0, invalid_read, invalid_write},
-  [FD_STDOUT] = {"stdout", 0, 0, invalid_read, invalid_write},
-  [FD_STDERR] = {"stderr", 0, 0, invalid_read, invalid_write},
+  [FD_STDOUT] = {"stdout", 0, 0, invalid_read, /*invalid_write*/serial_write},
+  [FD_STDERR] = {"stderr", 0, 0, invalid_read, /*invalid_write*/serial_write},
 #include "files.h"
 };
 
@@ -121,6 +122,12 @@ size_t fs_write(int fd, const void *buf, size_t len)
 {
 	int file_table_sz = sizeof(file_table) / sizeof(Finfo);
 	assert(fd < file_table_sz);
+
+	//special file write
+	if(file_table[fd].write != NULL)
+		return file_table[fd].write(buf, 0, len);
+
+	//normal file write
 	Finfo info = file_table[fd];	
 	size_t sz = info.size;
 	size_t disoff = info.disk_offset;
