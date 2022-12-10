@@ -75,6 +75,12 @@ void sys_close(Context *c)
 	c->GPRx = fs_close(fd);
 }
 
+void sys_gettimeofday(Context *c)
+{
+	struct timeval *tv = (struct timeval*)c->GPR2;
+	c->GPRx = (intptr_t)tv;
+}
+
 void do_syscall(Context *c) {
   uintptr_t a[4];
   a[0] = c->GPR1;
@@ -101,6 +107,9 @@ void do_syscall(Context *c) {
 		break;
 	case SYS_close:
 		sys_close(c);
+		break;
+	case SYS_gettimeofday:
+		sys_gettimeofday(c);
 		break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
