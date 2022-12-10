@@ -2,6 +2,7 @@
 #include <stdio.h>
 int main()
 {
+	printf("here in\n");
 	struct timeval now_time;
 	int before = 0;
 	while(1)
