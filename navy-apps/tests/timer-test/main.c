@@ -4,18 +4,18 @@
 #include <sys/time.h>
 int main()
 {
-	printf("here in\n");
+	//printf("here in\n");
 	struct timeval now_time;
-	int before = 0;
+	//long before = 0;
 	while(1)
 	{
 		gettimeofday(&now_time, NULL);
-		printf("%ld\n", now_time.tv_sec);
-		if(now_time.tv_sec - before == 0.5)
+		printf("%ld\n", now_time.tv_usec);
+		/*if(now_time.tv_usec - before == 500)
 		{
 			before = now_time.tv_sec;
 			printf("Time: %lds\n", now_time.tv_sec);
-		}
+		}*/
 	}
 	return 0;
 }

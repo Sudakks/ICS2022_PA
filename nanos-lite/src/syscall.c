@@ -110,9 +110,12 @@ void sys_close(Context *c)
 
 void sys_gettimeofday(Context *c)
 {
-	struct timeval *tv = (struct timeval*)c->GPR2;
-	c->GPRx = (intptr_t)tv;
+	//struct timeval *tv = (struct timeval*)c->GPR2;
+	c->GPRx = 0;
+
+	#ifdef CONFIG_STRACE_COND
 	printf("STRACE: sys_gettimeofday\n");
+	#endif
 }
 
 void do_syscall(Context *c) {
