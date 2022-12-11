@@ -110,7 +110,7 @@ void sys_close(Context *c)
 
 void sys_gettimeofday(Context *c)
 {
-	c->GPRx = 0;
+	c->GPRx = 3;
 
 	#ifdef CONFIG_STRACE_COND
 	printf("STRACE: sys_gettimeofday\n");
