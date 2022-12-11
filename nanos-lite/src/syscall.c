@@ -3,12 +3,21 @@
 
 void sys_yield(Context *c)
 {
+	
 	yield();
 	c->GPRx = 0;
+	#ifdef CONFIG_STRACE_COND
+	printf("STRACE: sys_yield\n");
+	#endif
+
 }
 
 void sys_exit(Context *c)
 {
+	#ifdef CONFIG_STRACE_COND
+	printf("STRACE: sys_exit\n");
+	#endif
+
 	halt(0);
 }
 
@@ -19,6 +28,10 @@ void sys_write(Context *c)
 	size_t count = c->GPR4;
 
 	c->GPRx = fs_write(fd, buf, count);
+	#ifdef CONFIG_STRACE_COND
+	printf("STRACE: sys_write\n");
+	#endif
+
 //利用VFS，不需要让系统调用处理函数关心这些特殊文件的情况了
 	/*if(fd == 1 || fd == 2)
 	{
@@ -43,6 +56,10 @@ void sys_read(Context *c)
 	char* buf = (char*)c->GPR3;
 	size_t len = c->GPR4;
 	c->GPRx = fs_read(fd, buf, len);
+	#ifdef CONFIG_STRACE_COND
+	printf("STRACE: sys_read\n");
+	#endif
+
 }
 
 void sys_brk(Context* c)
@@ -51,6 +68,10 @@ void sys_brk(Context* c)
 	c->GPR3 = addr;
 	c->GPRx = 0;
 	//PA3.2, sys_brk always return 0
+	#ifdef CONFIG_STRACE_COND
+	printf("STRACE: sys_brk\n");
+	#endif
+
 }
 
 void sys_open(Context *c)
@@ -59,6 +80,10 @@ void sys_open(Context *c)
 	int flags = c->GPR3;
 	int mode = c->GPR4;
 	c->GPRx = fs_open(path, flags, mode);
+	#ifdef CONFIG_STRACE_COND
+	printf("STRACE: sys_open\n");
+	#endif
+
 }
 
 void sys_lseek(Context *c)
@@ -67,18 +92,27 @@ void sys_lseek(Context *c)
 	size_t offset = c->GPR3;
 	int whence = c->GPR4;
 	c->GPRx = fs_lseek(fd, offset, whence);
+	#ifdef CONFIG_STRACE_COND
+	printf("STRACE: sys_lseek\n");
+	#endif
+
 }
 
 void sys_close(Context *c)
 {
 	int fd = c->GPR2;
 	c->GPRx = fs_close(fd);
+	#ifdef CONFIG_STRACE_COND
+	printf("STRACE: sys_close\n");
+	#endif
+
 }
 
 void sys_gettimeofday(Context *c)
 {
 	struct timeval *tv = (struct timeval*)c->GPR2;
 	c->GPRx = (intptr_t)tv;
+	printf("STRACE: sys_gettimeofday\n");
 }
 
 void do_syscall(Context *c) {
@@ -113,8 +147,5 @@ void do_syscall(Context *c) {
 		break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
-	#ifdef CONFIG_STRACE_COND
-	printf("STRACE: system call number = %d, return value = %d\n", c->GPR1, c->GPRx);
-	#endif
 
 }

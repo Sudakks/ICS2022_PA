@@ -1,5 +1,7 @@
 #include <assert.h>
 #include <stdio.h>
+#include <stdint.h>
+#include <sys/time.h>
 int main()
 {
 	printf("here in\n");
@@ -7,7 +9,8 @@ int main()
 	int before = 0;
 	while(1)
 	{
-		gettimeofday(now_time, NULL);
+		gettimeofday(&now_time, NULL);
+		printf("%ld\n", now_time.tv_sec);
 		if(now_time.tv_sec - before == 0.5)
 		{
 			before = now_time.tv_sec;

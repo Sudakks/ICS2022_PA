@@ -70,7 +70,6 @@ int _write(int fd, void *buf, size_t count) {
 
 extern char _end;
 char* now_loc = &_end;
-/*TODO*/
 void *_sbrk(intptr_t increment) {
 	void* ret = now_loc;
 	int void_ret;
@@ -96,8 +95,6 @@ off_t _lseek(int fd, off_t offset, int whence) {
 }
 
 int _gettimeofday(struct timeval *tv, struct timezone *tz) {
-  //_exit(SYS_gettimeofday);
-  //return 0;
 	return _syscall_(SYS_gettimeofday, (intptr_t)tv, (intptr_t)tz, 0);
 }
 
