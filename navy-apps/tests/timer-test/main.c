@@ -16,7 +16,7 @@ int main()
 			printf("Time: %lds\n", now_time.tv_sec);
 		}
 	}*/
-	NDL_Init(0);
+	NDL_Init(1);
 	uint32_t sec = 0;
 	while (1) {
     		while(NDL_GetTicks() / 1000000 < sec) ;
