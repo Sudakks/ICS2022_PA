@@ -1,5 +1,6 @@
 #include <common.h>
 #include "syscall.h"
+#include <sys/time.h>
 
 void sys_yield(Context *c)
 {
@@ -110,9 +111,11 @@ void sys_close(Context *c)
 
 void sys_gettimeofday(Context *c)
 {
-	c->GPRx = 3;
-	c->GPR2 = 2;
-	c->GPR3 = 4;
+	struct timeval* tmp = (struct timeval*)c->GPR2;
+
+	tmp->tv_usec = io_read(AM_TIMER_UPTIME).us;
+	tmp->tv_sec = tmp->tv_usec / 1000000; 
+	c->GPRx = 0;
 
 	#ifdef CONFIG_STRACE_COND
 	printf("STRACE: sys_gettimeofday\n");
