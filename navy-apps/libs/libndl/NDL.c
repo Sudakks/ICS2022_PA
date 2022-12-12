@@ -13,7 +13,7 @@ struct timeval now_time;
 uint32_t NDL_GetTicks() {
 // 以毫秒为单位返回系统时间
 	gettimeofday(&now_time, NULL);
-	//printf("%ld\n", now_time.tv_usec);
+	printf("%ld\n", now_time.tv_usec);
 	return now_time.tv_usec / 1000;
 }
 
