@@ -10,9 +10,10 @@ int main()
 	{
 		gettimeofday(&now_time, NULL);
 		//printf("usec = %ld\n", now_time.tv_usec);
-		printf("sec = %ld\n", now_time.tv_sec);
+		//printf("sec = %ld\n", now_time.tv_sec);
 		if(now_time.tv_sec - before == 1)
 		{
+			printf("gere\n");
 			before = now_time.tv_sec;
 			printf("Time: %lds\n", now_time.tv_sec);
 		}
