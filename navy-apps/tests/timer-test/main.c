@@ -17,7 +17,7 @@ int main()
 		}
 	}*/
 	NDL_Init(1);
-	uint32_t sec = 0;
+	uint32_t sec = 1;
 	while (1) {
     		while(NDL_GetTicks() / 1000 < sec);
     		if (sec == 1) {
