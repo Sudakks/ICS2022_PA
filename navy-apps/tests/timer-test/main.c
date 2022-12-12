@@ -19,7 +19,10 @@ int main()
 	NDL_Init(1);
 	uint32_t sec = 0;
 	while (1) {
-    		while(NDL_GetTicks() / 1000000 < sec) ;
+    		while(NDL_GetTicks() / 1000000 < sec) 
+    		{
+    			printf("%u - %u\n", NDL_GetTicks(), NDL_GetTicks() / 1000000);
+    		}
     		if (sec == 1) {
       		printf("%d second).\n", sec);
     		} else {
