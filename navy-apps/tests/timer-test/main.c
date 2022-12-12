@@ -5,14 +5,11 @@
 int main()
 {
 	struct timeval now_time;
-	long before = 0;
 	while(1)
 	{
 		gettimeofday(&now_time, NULL);
-		printf("%ld  ", now_time.tv_usec);
-		if(now_time.tv_usec - before == 500000)
+		if(now_time.tv_usec % 500000 == 0)
 		{
-			before = now_time.tv_usec;
 			printf("Time: %lds\n", now_time.tv_sec);
 		}
 	}
