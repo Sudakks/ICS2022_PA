@@ -8,6 +8,7 @@ int main()
 	while(1)
 	{
 		gettimeofday(&now_time, NULL);
+		printf("%ld  ", now_time.tv_usec % 500000);
 		if(now_time.tv_usec % 500000 == 0)
 		{
 			printf("Time: %lds\n", now_time.tv_sec);
