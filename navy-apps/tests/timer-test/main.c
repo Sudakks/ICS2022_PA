@@ -17,16 +17,16 @@ int main()
 		}
 	}*/
 	NDL_Init(0);
-	uint32_t before = 0;
-	while(1)
-	{
-		uint32_t tmp = NDL_GetTicks();
-		if(tmp - before == 1)
-		{
-			before = tmp;
-			printf("Time: %us\n", tmp);
-		}
-	}
+	uint32_t sec = 0;
+	while (1) {
+    		while(NDL_GetTicks() / 1000000 < sec) ;
+    		if (sec == 1) {
+      		printf("%d second).\n", sec);
+    		} else {
+      		printf("%d seconds).\n", sec);
+    		}
+    		sec ++;
+  	}
 	NDL_Quit();
 	return 0;
 }
