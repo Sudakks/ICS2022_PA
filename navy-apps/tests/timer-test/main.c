@@ -2,9 +2,11 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <sys/time.h>
+#include <NDL.h>
+
 int main()
 {
-	struct timeval now_time;
+	/*struct timeval now_time;
 	while(1)
 	{
 		gettimeofday(&now_time, NULL);
@@ -13,6 +15,18 @@ int main()
 		{
 			printf("Time: %lds\n", now_time.tv_sec);
 		}
+	}*/
+	NDL_Init(0);
+	uint32_t before = 0;
+	while(1)
+	{
+		uint32_t tmp = NDL_GetTicks();
+		if(tmp - before == 1)
+		{
+			before = tmp;
+			printf("Time: %us\n", tmp);
+		}
 	}
+	NDL_Quit();
 	return 0;
 }
