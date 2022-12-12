@@ -9,8 +9,8 @@ int main()
 	while(1)
 	{
 		gettimeofday(&now_time, NULL);
-		printf("usec = %ld\n", now_time.tv_usec);
-		if(now_time.tv_usec - before == 500)
+		//printf("usec = %ld\n", now_time.tv_usec);
+		if(now_time.tv_usec - before == 500000)
 		{
 			before = now_time.tv_sec;
 			printf("Time: %lds\n", now_time.tv_sec);
