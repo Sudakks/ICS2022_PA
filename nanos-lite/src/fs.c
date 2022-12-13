@@ -96,7 +96,6 @@ size_t fs_read(int fd, void *buf, size_t len)
 	open_offset[fd] += len;
 	//这个是相对于这个文件头的偏移量
 	//advanced
-	printf("read_sz = %d\n", read_sz);
 	return read_sz;
 }
 

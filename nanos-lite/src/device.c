@@ -49,11 +49,20 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 }
 
 size_t dispinfo_read(void *buf, size_t offset, size_t len) {
-	printf("here\n");
 	int w = io_read(AM_GPU_CONFIG).width;
   int h = io_read(AM_GPU_CONFIG).height;
 	printf("w = %d, h = %d\n", w, h);
-  return 0;
+	char* W = "\0";
+	char* H = "\0";
+  snprintf(W, 100, "%d", w);
+	snprintf(H, 100, "%d", h);
+  char* tmp = "\n";
+  strcpy(buf, "WEIGHT: ");
+  strcat(buf, W);
+  strcat(buf, tmp);
+  strcat(buf, "HEIGHT: ");
+  strcat(buf, H);
+  return (strlen(buf) < len) ? strlen(buf) : len;
 }
 
 size_t fb_write(const void *buf, size_t offset, size_t len) {
