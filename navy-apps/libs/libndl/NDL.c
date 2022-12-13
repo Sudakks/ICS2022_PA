@@ -77,6 +77,7 @@ int NDL_Init(uint32_t flags) {
     evtdev = 3;
   }
 	//should set screen_w and screen_h
+	printf("i am here\n");
   return 0;
 }
 
