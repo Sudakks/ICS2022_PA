@@ -62,8 +62,6 @@ int fs_open(const char *pathname, int flags, int mode)
 		if(strcmp(tmp, pathname) == 0)
 		{
 			//equal and find
-			printf("i = %d\n", i);
-			printf("name = %s\n", pathname);
 			open_offset[i] = 0;
 			return i;
 		}
