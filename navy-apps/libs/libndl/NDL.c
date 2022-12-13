@@ -26,6 +26,7 @@ int NDL_PollEvent(char *buf, int len) {
 }
 
 void NDL_OpenCanvas(int *w, int *h) {
+	printf("i am here\n");
 	printf("here w = %d, h = %d\n", *w, *h);
 	if(*w == 0 && *h == 0)
 	{
@@ -33,9 +34,7 @@ void NDL_OpenCanvas(int *w, int *h) {
 		*h = screen_h;
 	}
 	else if(*w > screen_w || *h > screen_h)
-	{
 		printf("Set size is bigger than screen size\n");
-	}
 
   if (getenv("NWM_APP")) {
     int fbctl = 4;
@@ -77,6 +76,7 @@ int NDL_Init(uint32_t flags) {
   if (getenv("NWM_APP")) {
     evtdev = 3;
   }
+	//should set screen_w and screen_h
   return 0;
 }
 
