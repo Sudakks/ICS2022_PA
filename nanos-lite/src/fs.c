@@ -131,6 +131,7 @@ size_t fs_lseek(int fd, size_t offset, int whence)
 		default:
 			assert(0);
 	}
+	printf("now offset = %d\n", open_offset[fd]);
 	return open_offset[fd];
 }
 
