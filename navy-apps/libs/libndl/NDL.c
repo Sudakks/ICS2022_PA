@@ -87,7 +87,7 @@ int get_sz(char* ch)
 	}
 	tmp[++i] = '\0';
 	int val;
-	sscanf(tmp, "%d", val);
+	sscanf(tmp, "%d", &val);
 	return val;
 }
 
