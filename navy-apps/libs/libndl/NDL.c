@@ -72,6 +72,7 @@ int NDL_QueryAudio() {
 
 int get_sz(char* ch)
 {
+	char* tmp_ch;
 	int i = 0;
 	char tmp[64];
 	while(1)
@@ -95,15 +96,19 @@ int NDL_Init(uint32_t flags) {
     evtdev = 3;
   }
 	//should set screen_w and screen_h
+	/*
 	int fd = open("/proc/dispinfo", O_RDONLY);
 	char buf[64];
 	read(fd, buf, 64);
 
-	char* tmp = strtok(buf, "WEIGHT: ");
+	char* tmp = strtok(buf, "WEIGHT");
 	screen_w = get_sz(tmp);
-	tmp = strtok(buf, "HEIGHT: ");
+	tmp = strtok(buf, "HEIGHT");
 	screen_h = get_sz(tmp);
 	printf("screen: w = %d, h = %d\n", screen_w, screen_h);
+	*/
+	screen_w = 400;
+	screen_h = 300;
   return 0;
 }
 
