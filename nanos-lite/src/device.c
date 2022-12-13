@@ -35,8 +35,8 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 	
 	char* kc = (char*)keyname[ev.keycode];
 	char* status = (ev.keydown == 1) ? "kd " : "ku ";
-	char* info = "\n";
-	strcpy(info, status);
+	char* info = status;
+	//strcpy(info, status);
 	strcat(info, kc);
 	strcpy(buf, info);
 
