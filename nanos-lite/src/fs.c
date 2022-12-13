@@ -81,7 +81,9 @@ size_t fs_read(int fd, void *buf, size_t len)
 	
 	if(file_table[fd].read != NULL)
 	{
-		return file_table[fd].read(buf, 0, len);
+		size_t ret = file_table[fd].read(buf, open_offset[fd], len);
+		open_offset[fd] += ret;
+		return ret;
 	}
 
 	Finfo info = file_table[fd];	
@@ -92,7 +94,7 @@ size_t fs_read(int fd, void *buf, size_t len)
 	if(len < 0)
 		return -1;
 	size_t read_sz = ramdisk_read(buf, disoff + open_offset[fd], len);
-	open_offset[fd] += len;
+	open_offset[fd] += read_sz;
 	//这个是相对于这个文件头的偏移量
 	//advanced
 	return read_sz;
@@ -103,6 +105,7 @@ int fs_close(int fd)
 {
 	int file_table_sz = sizeof(file_table) / sizeof(Finfo);
 	assert(fd < file_table_sz);
+	open_offset[fd] = 0;
 	//indicate the number of file_table
 	//the sfs doesn't maintain the status of openning file, return 0 indicate always close successfully
 	return 0;
@@ -119,7 +122,7 @@ size_t fs_lseek(int fd, size_t offset, int whence)
 	switch(whence)
 	{
 		case SEEK_SET:
-//			offset = (offset > sz) ? sz : offset;
+			offset = (offset > sz) ? sz : offset;
 			open_offset[fd] = offset;
 			break;
 		case SEEK_CUR:
@@ -131,12 +134,36 @@ size_t fs_lseek(int fd, size_t offset, int whence)
 		default:
 			assert(0);
 	}
-	printf("now offset = %d\n", open_offset[fd]);
 	return open_offset[fd];
 }
 
 size_t fs_write(int fd, const void *buf, size_t len)
 {
+	int file_table_sz = sizeof(file_table) / sizeof(Finfo);
+	assert(fd < file_table_sz);
+
+	
+	if(file_table[fd].write != NULL)
+	{
+		size_t ret = file_table[fd].write(buf, open_offset[fd], len);
+		open_offset[fd] += ret;
+		return ret;
+	}
+
+	Finfo info = file_table[fd];	
+	size_t sz = info.size;
+	size_t disoff = info.disk_offset;
+	//read from this fd's open_offset
+	len = (len + open_offset[fd] > sz) ? sz - open_offset[fd] : len;
+	if(len < 0)
+		return -1;
+	size_t write_sz = ramdisk_write(buf, disoff + open_offset[fd], len);
+	open_offset[fd] += write_sz;
+	//这个是相对于这个文件头的偏移量
+	//advanced
+	return write_sz;
+
+/*
 	int file_table_sz = sizeof(file_table) / sizeof(Finfo);
 	assert(fd < file_table_sz);
 
@@ -155,4 +182,5 @@ size_t fs_write(int fd, const void *buf, size_t len)
 	open_offset[fd] += len;
 	return write_sz;
 	//I still don't know why the last one is wrong
+	*/
 }
