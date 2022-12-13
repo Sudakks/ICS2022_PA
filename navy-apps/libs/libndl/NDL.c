@@ -4,20 +4,25 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/time.h>
+#include <fcntl.h>
 
 static int evtdev = -1;
 static int fbdev = -1;
 static int screen_w = 0, screen_h = 0;
 
-struct timeval now_time;
 uint32_t NDL_GetTicks() {
 // 以毫秒为单位返回系统时间
+	struct timeval now_time;
 	gettimeofday(&now_time, NULL);
 	return now_time.tv_usec / 1000;
 }
 
 int NDL_PollEvent(char *buf, int len) {
-  return 0;
+	//read events from /dev/events to buf
+	//only read one event each time
+	int fd = open("/dev/events", O_RDONLY);
+	int ret = read(fd, buf, len);
+	return (ret == 0) ? 0 : 1;
 }
 
 void NDL_OpenCanvas(int *w, int *h) {
@@ -58,7 +63,6 @@ int NDL_QueryAudio() {
 }
 
 int NDL_Init(uint32_t flags) {
-	printf("ingere\n");
   if (getenv("NWM_APP")) {
     evtdev = 3;
   }
