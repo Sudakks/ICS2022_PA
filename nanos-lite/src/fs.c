@@ -54,6 +54,10 @@ int fs_open(const char *pathname, int flags, int mode)
 	for(int i = 0; i < file_table_sz; i++)
 	{
 		char* tmp = file_table[i].name;
+		if(tmp == NULL)
+			printf("i = %d\n", i);
+		if(pathname == NULL)
+			printf("pathname !\n");
 		if(strcmp(tmp, pathname) == 0)
 		{
 			//equal and find
