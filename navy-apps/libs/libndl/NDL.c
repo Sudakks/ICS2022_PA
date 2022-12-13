@@ -72,12 +72,39 @@ int NDL_QueryAudio() {
   return 0;
 }
 
+int get_sz(char* ch)
+{
+	int i = 0;
+	char tmp[64];
+	while(1)
+	{
+		if(ch[i] >= 48 && ch[i] <= 57)
+		{
+			tmp[i] = ch[i];
+		}
+		else
+			break;
+	}
+	tmp[++i] = '\0';
+	int val;
+	sscanf(tmp, "%d", val);
+	return val;
+}
+
 int NDL_Init(uint32_t flags) {
   if (getenv("NWM_APP")) {
     evtdev = 3;
   }
 	//should set screen_w and screen_h
-	printf("i am here\n");
+	int fd = open("/proc/dispinfo", O_RDONLY);
+	char buf[64];
+	read(fd, buf, 64);
+
+	char* tmp = strtok(buf, "WEIGHT ");
+	int W = get_sz(tmp);
+	tmp = strtok(buf, "HEIGHT ");
+	int H = get_sz(tmp);
+	printf("w = %d, h = %d\n", W, H);
   return 0;
 }
 
