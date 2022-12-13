@@ -31,8 +31,10 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 	AM_INPUT_KEYBRD_T ev = io_read(AM_INPUT_KEYBRD);
 	if(ev.keycode == AM_KEY_NONE)
 		return 0;
+	return 0;
 	//get events and status
 	//already define 2 events
+	/*
 	char* kc = (char*)keyname[ev.keycode];
 	char* info = (ev.keydown == 1) ? "kd " : "ku ";
 	strcat(info, kc);
@@ -40,6 +42,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 	size_t ret = (len < tmp) ? len : tmp;
 	strcpy(buf, info);
 	return ret;
+	*/
 }
 
 size_t dispinfo_read(void *buf, size_t offset, size_t len) {
