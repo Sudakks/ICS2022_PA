@@ -79,11 +79,12 @@ int get_sz(char* ch)
 		if(ch[i] >= 48 && ch[i] <= 57)
 		{
 			tmp[i] = ch[i];
+			i++;
 		}
-		else
-			break;
+		//else
+			//break;
 	}
-	tmp[++i] = '\0';
+	tmp[i] = '\0';
 	int val;
 	sscanf(tmp, "%d", &val);
 	return val;
@@ -98,9 +99,9 @@ int NDL_Init(uint32_t flags) {
 	char buf[64];
 	read(fd, buf, 64);
 
-	char* tmp = strtok(buf, "WEIGHT ");
+	char* tmp = strtok(buf, "WEIGHT: ");
 	int W = get_sz(tmp);
-	tmp = strtok(buf, "HEIGHT ");
+	tmp = strtok(buf, "HEIGHT: ");
 	int H = get_sz(tmp);
 	printf("qq w = %d, h = %d\n", W, H);
   return 0;
