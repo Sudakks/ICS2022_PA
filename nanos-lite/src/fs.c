@@ -32,6 +32,10 @@ static Finfo file_table[] __attribute__((used)) = {
   [FD_STDIN]  = {"stdin", 0, 0, invalid_read, invalid_write},
   [FD_STDOUT] = {"stdout", 0, 0, invalid_read, serial_write},
   [FD_STDERR] = {"stderr", 0, 0, invalid_read, serial_write},
+	/*
+		这里好像不能枚举一个新的量
+		在strcmp时会为NULL
+	*/
 	/*[FD_KBD]*/     {"/dev/events", 0, 0, events_read, invalid_write},
 	
 #include "files.h"
@@ -54,10 +58,6 @@ int fs_open(const char *pathname, int flags, int mode)
 	for(int i = 0; i < file_table_sz; i++)
 	{
 		char* tmp = file_table[i].name;
-		if(tmp == NULL)
-			printf("i = %d\n", i);
-		if(pathname == NULL)
-			printf("pathname !\n");
 		if(strcmp(tmp, pathname) == 0)
 		{
 			//equal and find
