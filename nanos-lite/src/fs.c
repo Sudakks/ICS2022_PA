@@ -37,7 +37,7 @@ static Finfo file_table[] __attribute__((used)) = {
 		在strcmp时会为NULL
 	*/
 	/*[FD_KBD]*/     {"/dev/events", 0, 0, events_read, invalid_write},
-	{"proc/dispinfo", 0, 0, dispinfo_read, invalid_write},
+	{"/proc/dispinfo", 0, 0, dispinfo_read, invalid_write},
 	
 #include "files.h"
 };
