@@ -100,10 +100,10 @@ int NDL_Init(uint32_t flags) {
 	read(fd, buf, 64);
 
 	char* tmp = strtok(buf, "WEIGHT: ");
-	int W = get_sz(tmp);
+	screen_w = get_sz(tmp);
 	tmp = strtok(buf, "HEIGHT: ");
-	int H = get_sz(tmp);
-	printf("qq w = %d, h = %d\n", W, H);
+	screen_h = get_sz(tmp);
+	printf("screen: w = %d, h = %d\n", screen_w, screen_h);
   return 0;
 }
 
