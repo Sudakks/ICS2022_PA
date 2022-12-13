@@ -53,7 +53,6 @@ void init_fs() {
 
 int fs_open(const char *pathname, int flags, int mode)
 {
-	printf("pathname = %s\n", pathname);
 	int file_table_sz = sizeof(file_table) / sizeof(Finfo);
 	//find the same filename in file_table
 	for(int i = 0; i < file_table_sz; i++)
@@ -62,7 +61,6 @@ int fs_open(const char *pathname, int flags, int mode)
 		if(strcmp(tmp, pathname) == 0)
 		{
 			//equal and find
-			printf("i = %d\n", i);
 			open_offset[i] = 0;
 			return i;
 		}
@@ -76,6 +74,11 @@ size_t fs_read(int fd, void *buf, size_t len)
 {
 	int file_table_sz = sizeof(file_table) / sizeof(Finfo);
 	assert(fd < file_table_sz);
+
+	if(file_table[fd].read != NULL)
+		return file_table[fd].read(buf, 0, len);
+
+
 	Finfo info = file_table[fd];	
 	size_t sz = info.size;
 	size_t disoff = info.disk_offset;
