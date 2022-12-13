@@ -26,7 +26,6 @@ int NDL_PollEvent(char *buf, int len) {
 }
 
 void NDL_OpenCanvas(int *w, int *h) {
-	//printf("here w = %d, h = %d\n", *w, *h);
 	if(*w == 0 && *h == 0)
 	{
 		*w = screen_w;
@@ -103,7 +102,7 @@ int NDL_Init(uint32_t flags) {
 	int W = get_sz(tmp);
 	tmp = strtok(buf, "HEIGHT ");
 	int H = get_sz(tmp);
-	printf("w = %d, h = %d\n", W, H);
+	printf("qq w = %d, h = %d\n", W, H);
   return 0;
 }
 
