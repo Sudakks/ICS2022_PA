@@ -78,8 +78,14 @@ size_t fs_read(int fd, void *buf, size_t len)
 	int file_table_sz = sizeof(file_table) / sizeof(Finfo);
 	assert(fd < file_table_sz);
 
+	
 	if(file_table[fd].read != NULL)
+	{
+		printf("has read\n");
 		return file_table[fd].read(buf, 0, len);
+	}
+	else
+		printf("no read\n");
 
 
 	Finfo info = file_table[fd];	
