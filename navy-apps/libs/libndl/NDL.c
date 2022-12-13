@@ -33,7 +33,6 @@ void NDL_OpenCanvas(int *w, int *h) {
 	}
 	else if(*w > screen_w || *h > screen_h)
 		printf("Set size is bigger than screen size\n");
-	printf("*w = %d, *h = %d\n", *w, *h);
 
   if (getenv("NWM_APP")) {
     int fbctl = 4;
