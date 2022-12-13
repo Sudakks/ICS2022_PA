@@ -81,8 +81,8 @@ int get_sz(char* ch)
 			tmp[i] = ch[i];
 			i++;
 		}
-		//else
-			//break;
+		else
+			break;
 	}
 	tmp[i] = '\0';
 	int val;
