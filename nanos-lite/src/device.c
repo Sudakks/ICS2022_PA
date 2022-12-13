@@ -35,7 +35,6 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 	
 	char* kc = (char*)keyname[ev.keycode];
 	char* info = (ev.keydown == 1) ? "kd " : "ku ";
-	printf("%s - %s\n", info, kc);
 	strcat(info, kc);
 	size_t tmp = strlen(info);
 	size_t ret = (len < tmp) ? len : tmp;
