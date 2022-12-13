@@ -38,6 +38,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 	strcat(info, kc);
 	size_t tmp = strlen(info);
 	size_t ret = (len < tmp) ? len : tmp;
+	printf("strlen = %d\n", tmp);
 	strcpy(buf, info);
 	return ret;
 	
