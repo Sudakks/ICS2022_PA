@@ -63,6 +63,7 @@ int fs_open(const char *pathname, int flags, int mode)
 		{
 			//equal and find
 			open_offset[i] = 0;
+			printf("name = %s\n", pathname);
 			return i;
 		}
 	}
@@ -73,6 +74,7 @@ int fs_open(const char *pathname, int flags, int mode)
 
 size_t fs_read(int fd, void *buf, size_t len)
 {
+	printf("fd = %d\n", fd);
 	int file_table_sz = sizeof(file_table) / sizeof(Finfo);
 	assert(fd < file_table_sz);
 
