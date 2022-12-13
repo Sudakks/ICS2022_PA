@@ -81,11 +81,8 @@ size_t fs_read(int fd, void *buf, size_t len)
 	
 	if(file_table[fd].read != NULL)
 	{
-		printf("has read\n");
 		return file_table[fd].read(buf, 0, len);
 	}
-	else
-		printf("no read\n");
 
 
 	Finfo info = file_table[fd];	
@@ -99,6 +96,7 @@ size_t fs_read(int fd, void *buf, size_t len)
 	open_offset[fd] += len;
 	//这个是相对于这个文件头的偏移量
 	//advanced
+	printf("read_sz = %d\n", read_sz);
 	return read_sz;
 }
 
