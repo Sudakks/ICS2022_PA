@@ -8,7 +8,7 @@ int main() {
   NDL_Init(0);
   int w, h;
   printf("AAAAAAAAAAAAA\n");
-  void *bmp = BMP_Load("/share/pictures/projectn.bmp", &w, &h);
+  /*void *bmp = BMP_Load("/share/pictures/projectn.bmp", &w, &h);
   printf("BBBBBBBBBBBBB\n");
   assert(bmp);
   NDL_OpenCanvas(&w, &h);
@@ -16,6 +16,6 @@ int main() {
   free(bmp);
   NDL_Quit();
   printf("Test ends! Spinning...\n");
-  while (1);
+  while (1);*/
   return 0;
 }
