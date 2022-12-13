@@ -34,13 +34,14 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 	//already define 2 events
 	
 	char* kc = (char*)keyname[ev.keycode];
-	printf("down = %d\n", ev.keydown);
 	char* info = (ev.keydown == 1) ? "kd " : "ku ";
-	strcat(info, kc);
+	strcpy(buf, info);
+	strcat(buf, kc);
+	//strcat(info, kc);
 	size_t tmp = strlen(info);
 	size_t ret = (len < tmp) ? len : tmp;
-	printf("strlen = %d\n", tmp);
-	strcpy(buf, info);
+	//printf("strlen = %d\n", tmp);
+	//strcpy(buf, info);
 	return ret;
 	
 }
