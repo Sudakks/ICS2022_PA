@@ -24,7 +24,7 @@ size_t ramdisk_read(void *buf, size_t offset, size_t len) {
 		if(len == 383)
 		{
 			printf("n = %d\n", n);
-			assert(tmp);
+			printf("p = %p\n", tmp);
 			*tmp++ = 'a';
 		}
 		else
