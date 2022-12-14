@@ -74,7 +74,11 @@ int get_sz(char* ch)
 {
 	char* tmp_ch = ch;
 	while(*tmp_ch < 48 || *tmp_ch > 57)
+	{
+		printf("%c", *tmp_ch);
 		tmp_ch++;
+	}
+	printf("\n");
 	int i = 0;
 	char tmp[64];
 	while(1)
