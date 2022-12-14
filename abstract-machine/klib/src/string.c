@@ -116,18 +116,18 @@ void *memmove(void *dst, const void *src, size_t n) {
 
 void *memcpy(void *out, const void *in, size_t n) {
 	//不会拷贝最后的'\0'，所以在使用时拷贝的长度为strlen(in) + 1 
-	printf("aaa-\n");
 	if(n <= 0 || out == NULL || in == NULL)
 		return out;
-	printf("bbb-\n");
 	char* tmp_o = (char*)out;
 	char* tmp_i = (char*)in;
-	printf("ccc-\n");
 	for(int i = 0; i < n; i++)
 	{
+		if((tmp_o + i) == NULL)
+			printf("tmpo!!!\n");
+		if(tmp_i + i ==NULL)
+			printf("tmpi!!!\n");
 		tmp_o[i] = tmp_i[i];
 	}
-	printf("dd-\n");
 	//当区间出现重叠时有UB行为产生
 	return out;
 }
