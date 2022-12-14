@@ -77,6 +77,7 @@ int get_sz(char* ch)
 		tmp_ch++;
 	int i = 0;
 	char tmp[64];
+	printf("111\n");
 	while(1)
 	{
 		if(tmp_ch[i] >= 48 && tmp_ch[i] <= 57)
@@ -87,6 +88,7 @@ int get_sz(char* ch)
 		else
 			break;
 	}
+	printf("222\n");
 	tmp[i] = '\0';
 	int val;
 	sscanf(tmp, "%d", &val);
