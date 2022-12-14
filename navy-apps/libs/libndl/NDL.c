@@ -115,7 +115,9 @@ int NDL_Init(uint32_t flags) {
 	printf("\n--------------\n");
 	//！！！得到的是截断前面那一串的内容
 	char* tmp = buf;
+	printf("A tmp = %p\n", tmp);
 	screen_w = get_sz(tmp);
+	printf("B tmp = %p\n", tmp);
 	screen_h = get_sz(tmp);
 		printf("screen: w = %d, h = %d\n", screen_w, screen_h);
   return 0;
