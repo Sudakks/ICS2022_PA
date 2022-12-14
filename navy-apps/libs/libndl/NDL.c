@@ -79,19 +79,22 @@ int get_sz(char* ch)
 		tmp_ch++;
 	}
 	printf("\n");
-	int i = 0;
 	char tmp[64];
+	int i = 0;
 	while(1)
 	{
-		if(tmp_ch[i] >= 48 && tmp_ch[i] <= 57)
+		if(*tmp_ch >= 48 && *tmp_ch <= 57)
 		{
-			tmp[i] = tmp_ch[i];
+			tmp[i] = *tmp_ch;
 			i++;
+			tmp_ch++;
 		}
 		else
 			break;
 	}
+	//printf("before ch = %p\n", ch);
 	ch = tmp_ch;
+	//printf("after ch = %p\n", ch);
 	tmp[i] = '\0';
 	int val;
 	sscanf(tmp, "%d", &val);
@@ -108,16 +111,17 @@ int NDL_Init(uint32_t flags) {
 	char buf[256];
 	read(fd, buf, 256);
 	close(fd);
-	printf("---------------\n");
+	/*printf("---------------\n");
 	for(int i = 0; i < 64; i++)
 		printf("%c", buf[i]);
 
 	printf("\n--------------\n");
+	*/
 	//！！！得到的是截断前面那一串的内容
 	char* tmp = buf;
-	printf("A tmp = %p\n", tmp);
+	//printf("A tmp = %p\n", tmp);
 	screen_w = get_sz(tmp);
-	printf("B tmp = %p\n", tmp);
+	//printf("B tmp = %p\n", tmp);
 	screen_h = get_sz(tmp);
 		printf("screen: w = %d, h = %d\n", screen_w, screen_h);
   return 0;
