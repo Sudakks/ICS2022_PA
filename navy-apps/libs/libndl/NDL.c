@@ -70,7 +70,7 @@ int NDL_QueryAudio() {
   return 0;
 }
 
-void get_sz(char* ch, int* val)
+int get_sz(char* ch, int* val)
 {
 	while(*ch < 48 || *ch > 57)
 	{
@@ -95,6 +95,7 @@ void get_sz(char* ch, int* val)
 	//printf("after ch = %p\n", ch);
 	tmp[i] = '\0';
 	sscanf(tmp, "%d", val);
+	return i;
 	//return val;
 }
 
@@ -110,7 +111,8 @@ int NDL_Init(uint32_t flags) {
 	close(fd);
 
 	char* tmp = buf;
-	get_sz(tmp, &screen_h);
+	tmp += get_sz(tmp, &screen_h);
+	
 	get_sz(tmp, &screen_w);
 		//screen_h = get_sz(tmp);
 		printf("screen: w = %d, h = %d\n", screen_w, screen_h);
