@@ -75,11 +75,9 @@ int get_sz(char* ch, int* val)
 	int ret = 0;
 	while(*ch < 48 || *ch > 57)
 	{
-		//printf("%c", *ch);
 		ret++;
 		ch++;
 	}
-	//printf("\n");
 	char tmp[64];
 	int i = 0;
 	while(1)
@@ -93,13 +91,10 @@ int get_sz(char* ch, int* val)
 		else
 			break;
 	}
-	//printf("before ch = %p\n", ch);
-	//printf("after ch = %p\n", ch);
 	tmp[i] = '\0';
 	sscanf(tmp, "%d", val);
 	ret += i;
 	return ret;
-	//return val;
 }
 
 int NDL_Init(uint32_t flags) {

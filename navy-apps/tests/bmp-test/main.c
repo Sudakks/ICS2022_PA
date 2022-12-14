@@ -6,9 +6,7 @@
 
 int main() {
   NDL_Init(0);
-  printf("A----\n");
   int w, h;
-  printf("reach here\n");
   void *bmp = BMP_Load("/share/pictures/projectn.bmp", &w, &h);
   printf("not here\n");
   assert(bmp);
