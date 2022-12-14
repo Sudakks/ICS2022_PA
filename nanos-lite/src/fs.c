@@ -85,6 +85,7 @@ size_t fs_read(int fd, void *buf, size_t len)
 		return ret;
 	}
 
+printf("has no read\n");
 	Finfo info = file_table[fd];	
 	size_t sz = info.size;
 	size_t disoff = info.disk_offset;
