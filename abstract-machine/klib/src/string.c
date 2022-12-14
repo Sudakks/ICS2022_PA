@@ -116,6 +116,7 @@ void *memmove(void *dst, const void *src, size_t n) {
 
 void *memcpy(void *out, const void *in, size_t n) {
 	//不会拷贝最后的'\0'，所以在使用时拷贝的长度为strlen(in) + 1 
+	printf("usemymemcpy\n");
 	if(n <= 0 || out == NULL || in == NULL)
 		return out;
 	void *ret = out;
