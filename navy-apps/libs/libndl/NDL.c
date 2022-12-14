@@ -72,14 +72,16 @@ int NDL_QueryAudio() {
 
 int get_sz(char* ch)
 {
-	char* tmp_ch;
+	char* tmp_ch = ch;
+	while(*tmp_ch < 48 || *tmp_ch > 57)
+		tmp_ch++;
 	int i = 0;
 	char tmp[64];
 	while(1)
 	{
-		if(ch[i] >= 48 && ch[i] <= 57)
+		if(tmp_ch[i] >= 48 && tmp_ch[i] <= 57)
 		{
-			tmp[i] = ch[i];
+			tmp[i] = tmp_ch[i];
 			i++;
 		}
 		else
@@ -104,6 +106,7 @@ int NDL_Init(uint32_t flags) {
 	char* tmp = strtok(buf, "WEIGHT");
 	printf("aaaaaaaaaa\n");
 	screen_w = get_sz(tmp);
+	printf("bbbbbbbb\n");
 	tmp = strtok(NULL, "HEIGHT");
 	screen_h = get_sz(tmp);
 	printf("screen: w = %d, h = %d\n", screen_w, screen_h);
