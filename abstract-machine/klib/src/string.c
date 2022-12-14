@@ -118,6 +118,7 @@ void *memcpy(void *out, const void *in, size_t n) {
 	//不会拷贝最后的'\0'，所以在使用时拷贝的长度为strlen(in) + 1 
 	//if(n <= 0 || out == NULL || in == NULL)
 		//return out;
+		/*
 	printf("memcpy: n = %d\n", n);
 	char* tmp_o = (char*)out;
 	char* tmp_i = (char*)in;
@@ -126,6 +127,14 @@ void *memcpy(void *out, const void *in, size_t n) {
 		tmp_o[i] = tmp_i[i];
 	}
 	//当区间出现重叠时有UB行为产生
+	return out;
+	*/
+	char* tmp = (char*) out;
+	const char *s = (const char*) in;
+	while(n--)
+	{
+		*tmp++ = *s++;
+	}
 	return out;
 }
 
