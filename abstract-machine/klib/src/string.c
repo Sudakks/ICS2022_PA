@@ -125,9 +125,9 @@ void *memcpy(void *out, const void *in, size_t n) {
 	printf("ccc-\n");
 	for(int i = 0; i < n; i++)
 	{
-		printf("i = %d\n", i);
 		tmp_o[i] = tmp_i[i];
 	}
+	printf("dd-\n");
 	//当区间出现重叠时有UB行为产生
 	return out;
 }
