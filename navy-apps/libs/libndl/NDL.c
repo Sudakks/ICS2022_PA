@@ -108,7 +108,10 @@ int NDL_Init(uint32_t flags) {
 	char buf[256];
 	read(fd, buf, 256);
 	close(fd);
+	for(int i = 0; i < 64; i++)
+		printf("%c", buf[i]);
 
+printf("\n");
 	//！！！得到的是截断前面那一串的内容
 	char* tmp = buf;
 	screen_w = get_sz(tmp);
