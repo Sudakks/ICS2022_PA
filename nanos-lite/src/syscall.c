@@ -135,6 +135,7 @@ void do_syscall(Context *c) {
 		sys_write(c);
 		break;
 	case SYS_brk:
+	printf("in BRK------\n");
 		sys_brk(c);
 		break;
 	case SYS_open:
