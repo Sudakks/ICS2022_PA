@@ -17,11 +17,14 @@ size_t ramdisk_read(void *buf, size_t offset, size_t len) {
 	printf("ramdisk2\n");
   //memcpy(buf, &ramdisk_start + offset, len);
 	char* tmp = (char*) buf;
-  //const char *s = (const char*)(&ramdisk_start + offset);
+  const char *s = (const char*)(&ramdisk_start + offset);
 	size_t n = len;
 	while(n--)
 	{
-		*tmp++ = 'a';                          
+		if(len == 383)
+			*tmp++ = 'a';
+		else
+			*tmp++ = *s++;                          
 	}
 	printf("ramdisk3\n");
 	return len;
