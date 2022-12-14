@@ -50,6 +50,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 
 size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 	
+	printf("max_len = %d\n", len);
 	int w = io_read(AM_GPU_CONFIG).width;
   int h = io_read(AM_GPU_CONFIG).height;
 	printf("io_read: w = %d, h = %d\n", w, h);
@@ -68,9 +69,6 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 	//strcat(info, tmp);
 	strcpy(buf, info);
 
-printf("aaaa\n");
-printf("strlen = %d\n", strlen(buf));
-printf("bbbb\n");
   return (strlen(buf) < len) ? strlen(buf) : len;
 }
 
