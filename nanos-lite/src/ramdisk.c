@@ -11,6 +11,7 @@ extern uint8_t ramdisk_end;
 
 /* read `len' bytes starting from `offset' of ramdisk into `buf' */
 size_t ramdisk_read(void *buf, size_t offset, size_t len) {
+	printf("ramdisk_read: len = %d\n", len);
 	printf("ramdisk1\n");
   assert(offset + len <= RAMDISK_SIZE);
 	printf("ramdisk2\n");

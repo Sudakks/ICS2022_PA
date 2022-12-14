@@ -72,13 +72,10 @@ int fs_open(const char *pathname, int flags, int mode)
 
 size_t fs_read(int fd, void *buf, size_t len)
 {
-	printf("fd = %d, len = %d\n", fd, len);
-	//printf("fd = %d\n", fd);
 	int file_table_sz = sizeof(file_table) / sizeof(Finfo);
 	assert(fd < file_table_sz);
 
 
-	printf("fs_read\n");
 	if(file_table[fd].read != NULL)
 	{
 		size_t ret = file_table[fd].read(buf, file_table[fd].open_offset, len);
@@ -94,14 +91,12 @@ size_t fs_read(int fd, void *buf, size_t len)
 	size_t ret = (len + off > sz) ? sz - off : len;
 	if(ret < 0)
 		return -1;
-	printf("here\n");
+	printf("fs_read: len = %d, ret = %d\n", len, ret);
 	size_t read_sz = ramdisk_read(buf, disoff + off, ret);
-	printf("now reach here\n");
 	file_table[fd].open_offset += read_sz;
 	assert(read_sz == ret);
 	//这个是相对于这个文件头的偏移量
 	//advanced
-	printf("read_zs == %d\n", read_sz);
 	return read_sz;
 }
 
