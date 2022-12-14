@@ -105,7 +105,9 @@ int NDL_Init(uint32_t flags) {
 	char buf[256];
 	read(fd, buf, 256);
 
+printf("1- buf = %p\n", buf);
 	char* tmp = strtok(buf, "WEIGHT");
+	printf("2 - buf = %p\n", buf);
 	printf("aaaaaaaaaa\n");
 	printf("tmp = %p\n", tmp);
 	screen_w = get_sz(tmp);
