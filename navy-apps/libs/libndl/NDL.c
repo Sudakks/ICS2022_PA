@@ -100,9 +100,11 @@ int NDL_Init(uint32_t flags) {
 	int fd = open("/proc/dispinfo", O_RDONLY);
 	char buf[256];
 	read(fd, buf, 256);
+	printf("aaaaaaaa\n");
 
 	char* tmp = strtok(buf, "WEIGHT");
 	screen_w = get_sz(tmp);
+	printf("bbbbbbbbbb\n");
 	tmp = strtok(NULL, "HEIGHT");
 	screen_h = get_sz(tmp);
 	printf("screen: w = %d, h = %d\n", screen_w, screen_h);
