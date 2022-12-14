@@ -33,7 +33,7 @@ static Finfo file_table[] __attribute__((used)) = {
   [FD_STDIN]  = {"stdin", 0, 0, invalid_read, invalid_write},
   [FD_STDOUT] = {"stdout", 0, 0, invalid_read, serial_write},
   [FD_STDERR] = {"stderr", 0, 0, invalid_read, serial_write},
-	[FD_FB]     = {" ", 0, 0},
+	[FD_FB]     = {"/dev/fb", 0, 0},
 	[FD_KBD]    = {"/dev/events", 0, 0, events_read, invalid_write},
 	[FD_DISPINFO] = {"/proc/dispinfo", 0, 0, dispinfo_read, invalid_write},
 	
@@ -43,6 +43,10 @@ static Finfo file_table[] __attribute__((used)) = {
 
 void init_fs() {
   // TODO: initialize the size of /dev/fb
+	// /dev/fb 表示显存
+	int w = io_read(AM_GPU_CONFIG).width;  
+	int h = io_read(AM_GPU_CONFIG).height;
+	file_table[FD_FB].size = w * h * sizeof(uint32_t);
 }
 
 

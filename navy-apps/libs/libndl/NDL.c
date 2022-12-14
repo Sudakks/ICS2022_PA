@@ -9,6 +9,7 @@
 static int evtdev = -1;
 static int fbdev = -1;
 static int screen_w = 0, screen_h = 0;
+static int final_w, final_h;
 
 uint32_t NDL_GetTicks() {
 // 以毫秒为单位返回系统时间
@@ -22,6 +23,7 @@ int NDL_PollEvent(char *buf, int len) {
 	//only read one event each time
 	int fd = open("/dev/events", O_RDONLY);
 	int ret = read(fd, buf, len);
+	close(fd);
 	return (ret == 0) ? 0 : 1;
 }
 
@@ -33,6 +35,9 @@ void NDL_OpenCanvas(int *w, int *h) {
 	}
 	else if(*w > screen_w || *h > screen_h)
 		printf("Set size is bigger than screen size\n");
+	final_w = *w;
+	final_h = *h;
+	//记录最后的画布大小
 
   if (getenv("NWM_APP")) {
     int fbctl = 4;
@@ -54,6 +59,30 @@ void NDL_OpenCanvas(int *w, int *h) {
 }
 
 void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
+	int fd = open("/dev/fb", O_WRONLY);
+	size_t one_pixel = sizeof(uint32_t);
+
+	for(int i = 0; i < w; i++)
+	{
+		for(int j = 0; j < h; j++)
+		{
+			lseek(fd, one_pixel * ((y + j) * screen_w + (x + i)), SEEK_SET);
+			write(fd, pixels + (y + j) * final_w + (x + i), one_pixel);
+		}
+	}
+	close(fd);
+
+/*
+	for (int i = 0; i < h; i ++) {
+    fseek(fd, (final_x + x) * one_pixel + (final_y + (h - 1 - i) * y) * one_pixel, SEEK_SET);
+    for (int j = w - 1; j >= 0; j --) {
+      uint8_t b = *(((uint8_t*)&pixels[w * i]) + 3 * j);
+      uint8_t g = *(((uint8_t*)&pixels[w * i]) + 3 * j + 1);
+      uint8_t r = *(((uint8_t*)&pixels[w * i]) + 3 * j + 2);
+			write(fd, (r << 16) | (g << 8) | b, one_pixel);
+    }
+  }
+	*/
 }
 
 void NDL_OpenAudio(int freq, int channels, int samples) {
