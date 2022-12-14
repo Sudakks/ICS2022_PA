@@ -118,7 +118,6 @@ void *memcpy(void *out, const void *in, size_t n) {
 	//不会拷贝最后的'\0'，所以在使用时拷贝的长度为strlen(in) + 1 
 	if(n <= 0 || out == NULL || in == NULL)
 		return out;
-	printf("memcpy\n");
 	char* tmp_o = (char*)out;
 	char* tmp_i = (char*)in;
 	for(int i = 0; i < n; i++)
