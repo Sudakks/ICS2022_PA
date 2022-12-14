@@ -77,7 +77,6 @@ int get_sz(char* ch)
 		tmp_ch++;
 	int i = 0;
 	char tmp[64];
-	printf("111\n");
 	while(1)
 	{
 		if(tmp_ch[i] >= 48 && tmp_ch[i] <= 57)
@@ -88,7 +87,6 @@ int get_sz(char* ch)
 		else
 			break;
 	}
-	printf("222\n");
 	tmp[i] = '\0';
 	int val;
 	sscanf(tmp, "%d", &val);
@@ -105,14 +103,10 @@ int NDL_Init(uint32_t flags) {
 	char buf[256];
 	read(fd, buf, 256);
 
-printf("1- buf = %p\n", buf);
-	char* tmp = strtok(buf, "WEIGHT");
-	printf("2 - buf = %p\n", buf);
-	printf("aaaaaaaaaa\n");
-	printf("tmp = %p\n", tmp);
+//！！！得到的是截断前面那一串的内容
+	char* tmp = strtok(buf, "\n");
 	screen_w = get_sz(tmp);
-	printf("bbbbbbbb\n");
-	tmp = strtok(NULL, "HEIGHT");
+	tmp = strtok(NULL, "\n");
 	screen_h = get_sz(tmp);
 	printf("screen: w = %d, h = %d\n", screen_w, screen_h);
   return 0;
