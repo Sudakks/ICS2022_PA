@@ -85,7 +85,6 @@ size_t fs_read(int fd, void *buf, size_t len)
 		return ret;
 	}
 
-printf("has no read\n");
 	Finfo info = file_table[fd];	
 	size_t sz = info.size;
 	size_t disoff = info.disk_offset;
@@ -99,6 +98,7 @@ printf("has no read\n");
 	assert(read_sz == ret);
 	//这个是相对于这个文件头的偏移量
 	//advanced
+	printf("read_zs == %d\n", read_sz);
 	return read_sz;
 }
 
