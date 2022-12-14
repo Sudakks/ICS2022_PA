@@ -39,6 +39,7 @@ void* BMP_Load(const char *filename, int *width, int *height) {
     int nread = fread(&pixels[w * i], 3, w, fp);//wrong here
     printf("D\n");
     for (int j = w - 1; j >= 0; j --) {
+			printf("S\n");
       uint8_t b = *(((uint8_t*)&pixels[w * i]) + 3 * j);
       uint8_t g = *(((uint8_t*)&pixels[w * i]) + 3 * j + 1);
 			printf("F\n");
