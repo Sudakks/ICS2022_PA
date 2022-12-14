@@ -22,7 +22,10 @@ size_t ramdisk_read(void *buf, size_t offset, size_t len) {
 	while(n--)
 	{
 		if(len == 383)
+		{
+			printf("n = %d\n", n);
 			*tmp++ = 'a';
+		}
 		else
 			*tmp++ = *s++;                          
 	}
