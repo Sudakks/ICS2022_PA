@@ -76,6 +76,7 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
 	//write len bytes from buf to the offset of screen
 	int w = io_read(AM_GPU_CONFIG).width;
   //int h = io_read(AM_GPU_CONFIG).height;
+	/*
 	for(int i = 0; i < len; i++)
 	{
 		int x = (offset + i) % w;
@@ -83,7 +84,12 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
 		void* tmp = (void*)buf;
 		io_write(AM_GPU_FBDRAW, x, y, tmp + i, 1, 1, false); 
 	}
-	io_write(AM_GPU_FBDRAW, 0, 0, NULL, 0, 0, true);
+
+*/
+		int x = (offset) % w;
+		int y = (offset) / w;
+	io_write(AM_GPU_FBDRAW, x, y, (void*)buf, len, 1, true); 
+	//io_write(AM_GPU_FBDRAW, 0, 0, NULL, 0, 0, true);
 	/*update the whole screen*/
   return len;
 }
