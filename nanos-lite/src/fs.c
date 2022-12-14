@@ -72,6 +72,7 @@ int fs_open(const char *pathname, int flags, int mode)
 
 size_t fs_read(int fd, void *buf, size_t len)
 {
+	printf("fd = %d, len = %d\n", fd, len);
 	//printf("fd = %d\n", fd);
 	int file_table_sz = sizeof(file_table) / sizeof(Finfo);
 	assert(fd < file_table_sz);
