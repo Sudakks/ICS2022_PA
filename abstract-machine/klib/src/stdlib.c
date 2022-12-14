@@ -39,6 +39,7 @@ int atoi(const char* nptr) {
 
 
 void *malloc(size_t size) {
+	printf("in malloc\n");
   // On native, malloc() will be called during initializaion of C runtime.
   // Therefore do not call panic() here, else it will yield a dead recursion:
   //   panic() -> putchar() -> (glibc) -> malloc() -> panic()
