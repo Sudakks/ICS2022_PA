@@ -62,27 +62,23 @@ void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
 	int fd = open("/dev/fb", O_WRONLY);
 	size_t one_pixel = sizeof(uint32_t);
 
+/*
 	for(int i = 0; i < w; i++)
 	{
 		for(int j = 0; j < h; j++)
 		{
-			lseek(fd, ((y + j) * screen_w + (x + i)), SEEK_SET);
+			lseek(fd, one_pixel * ((y + j) * screen_w + (x + i)), SEEK_SET);
 			write(fd, pixels + (y + j) * final_w + (x + i), 1);
 		}
 	}
-	close(fd);
-
-/*
-	for (int i = 0; i < h; i ++) {
-    fseek(fd, (final_x + x) * one_pixel + (final_y + (h - 1 - i) * y) * one_pixel, SEEK_SET);
-    for (int j = w - 1; j >= 0; j --) {
-      uint8_t b = *(((uint8_t*)&pixels[w * i]) + 3 * j);
-      uint8_t g = *(((uint8_t*)&pixels[w * i]) + 3 * j + 1);
-      uint8_t r = *(((uint8_t*)&pixels[w * i]) + 3 * j + 2);
-			write(fd, (r << 16) | (g << 8) | b, one_pixel);
-    }
-  }
 	*/
+	//一行一行写入
+	for(int i = 0; i < h; i++)
+	{
+		lseek(fd, one_pixel * ((y + i) * screen_w + x), SEEK_SET);
+		write(fd, pixels + (y + i) * final_w + x, w);
+	}
+	close(fd);
 }
 
 void NDL_OpenAudio(int freq, int channels, int samples) {

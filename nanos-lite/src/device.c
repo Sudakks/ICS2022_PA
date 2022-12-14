@@ -63,10 +63,8 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 
   strcpy(info, "WEIGHT: ");
   strcat(info, W);
-  //strcat(info, tmp);
   strcat(info, "HEIGHT: ");
   strcat(info, H);
-	//strcat(info, tmp);
 	strcpy(buf, info);
 	assert(ret < len);
 	return ret;
@@ -75,22 +73,9 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 size_t fb_write(const void *buf, size_t offset, size_t len) {
 	//write len bytes from buf to the offset of screen
 	int w = io_read(AM_GPU_CONFIG).width;
-  //int h = io_read(AM_GPU_CONFIG).height;
-	/*
-	for(int i = 0; i < len; i++)
-	{
-		int x = (offset + i) % w;
-		int y = (offset + i) / w;
-		void* tmp = (void*)buf;
-		io_write(AM_GPU_FBDRAW, x, y, tmp + i, 1, 1, false); 
-	}
-
-*/
-		int x = (offset) % w;
-		int y = (offset) / w;
+	int x = (offset) % w;
+	int y = (offset) / w;
 	io_write(AM_GPU_FBDRAW, x, y, (void*)buf, len, 1, true); 
-	//io_write(AM_GPU_FBDRAW, 0, 0, NULL, 0, 0, true);
-	/*update the whole screen*/
   return len;
 }
 
