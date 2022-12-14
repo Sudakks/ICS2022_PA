@@ -72,6 +72,11 @@ extern char _end;
 //一开始program_break在_end的位置
 char* program_break = &_end;
 
+/*
+我真的暴哭，原来一直是这里错了
+没想到这个malloc会用到我的堆区管理
+所以说其实之前应该是可以printf的
+*/
 void *_sbrk(intptr_t increment) {
 	void* ret = program_break;
 	int void_ret = _syscall_(SYS_brk, (intptr_t)(program_break + increment), 0, 0);
