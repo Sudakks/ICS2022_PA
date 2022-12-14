@@ -122,13 +122,10 @@ void *memcpy(void *out, const void *in, size_t n) {
 	char* tmp_i = (char*)in;
 	for(int i = 0; i < n; i++)
 	{
-		if((tmp_o + i) == NULL)
-			printf("tmpo!!!\n");
-		if(tmp_i + i ==NULL)
-			printf("tmpi!!!\n");
 		tmp_o[i] = tmp_i[i];
 	}
 	//当区间出现重叠时有UB行为产生
+	printf("out = %p\n", out);
 	return out;
 }
 
