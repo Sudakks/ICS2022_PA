@@ -111,11 +111,13 @@ int NDL_Init(uint32_t flags) {
 	close(fd);
 
 	char* tmp = buf;
+	printf("before: tmp = %p\n", tmp);
 	tmp += get_sz(tmp, &screen_h);
+	printf("after: tmp = %p\n", tmp);
 	
 	get_sz(tmp, &screen_w);
 		//screen_h = get_sz(tmp);
-		printf("screen: w = %d, h = %d\n", screen_w, screen_h);
+	printf("screen: w = %d, h = %d\n", screen_w, screen_h);
   return 0;
 }
 
