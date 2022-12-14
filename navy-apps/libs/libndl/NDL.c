@@ -37,6 +37,7 @@ void NDL_OpenCanvas(int *w, int *h) {
 		printf("Set size is bigger than screen size\n");
 	final_w = *w;
 	final_h = *h;
+	printf("huabu = %d %d\n", final_w, final_h);
 	//记录最后的画布大小
 
   if (getenv("NWM_APP")) {
