@@ -123,6 +123,7 @@ void *memcpy(void *out, const void *in, size_t n) {
 	for(int i = 0; i < n; i++)
 		tmp_o[i] = tmp_i[i];
 	//当区间出现重叠时有UB行为产生
+	printf("my memcpy?\n");
 	return out;
 }
 
