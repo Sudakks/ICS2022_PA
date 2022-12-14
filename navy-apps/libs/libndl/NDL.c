@@ -97,7 +97,8 @@ int get_sz(char* ch, int* val)
 	//printf("after ch = %p\n", ch);
 	tmp[i] = '\0';
 	sscanf(tmp, "%d", val);
-	return i + ret;
+	ret += i;
+	return ret;
 	//return val;
 }
 
@@ -113,12 +114,8 @@ int NDL_Init(uint32_t flags) {
 	close(fd);
 
 	char* tmp = buf;
-	printf("before: tmp = %p\n", tmp);
-	tmp += get_sz(tmp, &screen_h);
-	printf("after: tmp = %p\n", tmp);
-	
-	get_sz(tmp, &screen_w);
-		//screen_h = get_sz(tmp);
+	tmp += get_sz(tmp, &screen_w);
+	get_sz(tmp, &screen_h);
 	printf("screen: w = %d, h = %d\n", screen_w, screen_h);
   return 0;
 }
