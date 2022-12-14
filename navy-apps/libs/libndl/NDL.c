@@ -107,6 +107,7 @@ int NDL_Init(uint32_t flags) {
 
 	char* tmp = strtok(buf, "WEIGHT");
 	printf("aaaaaaaaaa\n");
+	printf("tmp = %p\n", tmp);
 	screen_w = get_sz(tmp);
 	printf("bbbbbbbb\n");
 	tmp = strtok(NULL, "HEIGHT");
