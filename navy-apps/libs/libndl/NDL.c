@@ -87,6 +87,7 @@ int get_sz(char* ch)
 		else
 			break;
 	}
+	ch = tmp_ch;
 	tmp[i] = '\0';
 	int val;
 	sscanf(tmp, "%d", &val);
@@ -102,14 +103,18 @@ int NDL_Init(uint32_t flags) {
 	int fd = open("/proc/dispinfo", O_RDONLY);
 	char buf[256];
 	read(fd, buf, 256);
+	close(fd);
 
-//！！！得到的是截断前面那一串的内容
-printf("init: buf = %p\n", buf);
+	//！！！得到的是截断前面那一串的内容
+	char* tmp = buf;
+	screen_w = get_sz(tmp);
+	screen_h = get_sz(tmp);
+	/*
 	char* tmp = strtok(buf, "\n");
-	printf("tmp = %p\n", tmp);
 	screen_w = get_sz(tmp);
 	tmp = strtok(NULL, "\n");
 	screen_h = get_sz(tmp);
+	*/
 	printf("screen: w = %d, h = %d\n", screen_w, screen_h);
   return 0;
 }
