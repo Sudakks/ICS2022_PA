@@ -40,10 +40,6 @@ static Finfo file_table[] __attribute__((used)) = {
 #include "files.h"
 };
 
-//indicate the number of file_table
-//#define MAX_FILE_SZ 50
-//size_t open_offset[MAX_FILE_SZ];
-//advanced every time the file is read
 
 void init_fs() {
   // TODO: initialize the size of /dev/fb
