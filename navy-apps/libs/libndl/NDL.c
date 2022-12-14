@@ -117,13 +117,7 @@ int NDL_Init(uint32_t flags) {
 	char* tmp = buf;
 	screen_w = get_sz(tmp);
 	screen_h = get_sz(tmp);
-	/*
-	char* tmp = strtok(buf, "\n");
-	screen_w = get_sz(tmp);
-	tmp = strtok(NULL, "\n");
-	screen_h = get_sz(tmp);
-	*/
-	printf("screen: w = %d, h = %d\n", screen_w, screen_h);
+		printf("screen: w = %d, h = %d\n", screen_w, screen_h);
   return 0;
 }
 
