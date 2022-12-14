@@ -110,18 +110,59 @@ int NDL_Init(uint32_t flags) {
 	char buf[256];
 	read(fd, buf, 256);
 	close(fd);
-	/*printf("---------------\n");
-	for(int i = 0; i < 64; i++)
-		printf("%c", buf[i]);
-
-	printf("\n--------------\n");
-	*/
-	//！！！得到的是截断前面那一串的内容
 	char* tmp = buf;
-	printf("A tmp = %p\n", tmp);
-	screen_w = get_sz(tmp);
-	printf("B tmp = %p\n", tmp);
-	screen_h = get_sz(tmp);
+	
+	while(*tmp < 48 || *tmp > 57)
+	{
+		printf("%c", *tmp);
+		tmp++;
+	}
+	printf("\n");
+	char val[64];
+	int i = 0;
+	while(1)
+	{
+		if(*tmp >= 48 && *tmp <= 57)
+		{
+			val[i] = *tmp;
+			i++;
+			tmp++;
+		}
+		else
+			break;
+	}
+	//printf("before ch = %p\n", ch);
+	//printf("after ch = %p\n", ch);
+	val[i] = '\0';
+	sscanf(tmp, "%d", &screen_w);
+
+	//printf("A tmp = %p\n", tmp);
+	//screen_w = get_sz(tmp);
+	//printf("B tmp = %p\n", tmp);
+	while(*tmp < 48 || *tmp > 57)
+	{
+		printf("%c", *tmp);
+		tmp++;
+	}
+	printf("\n");
+	i = 0;
+	while(1)
+	{
+		if(*tmp >= 48 && *tmp <= 57)
+		{
+			val[i] = *tmp;
+			i++;
+			tmp++;
+		}
+		else
+			break;
+	}
+	//printf("before ch = %p\n", ch);
+	//printf("after ch = %p\n", ch);
+	val[i] = '\0';
+	sscanf(tmp, "%d", &screen_h);
+
+	//screen_h = get_sz(tmp);
 		printf("screen: w = %d, h = %d\n", screen_w, screen_h);
   return 0;
 }
