@@ -72,9 +72,11 @@ int NDL_QueryAudio() {
 
 int get_sz(char* ch, int* val)
 {
+	int ret = 0;
 	while(*ch < 48 || *ch > 57)
 	{
 		//printf("%c", *ch);
+		ret++;
 		ch++;
 	}
 	//printf("\n");
@@ -95,7 +97,7 @@ int get_sz(char* ch, int* val)
 	//printf("after ch = %p\n", ch);
 	tmp[i] = '\0';
 	sscanf(tmp, "%d", val);
-	return i;
+	return i + ret;
 	//return val;
 }
 
