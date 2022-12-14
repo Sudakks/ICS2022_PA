@@ -72,28 +72,27 @@ int NDL_QueryAudio() {
 
 int get_sz(char* ch)
 {
-	char* tmp_ch = ch;
-	while(*tmp_ch < 48 || *tmp_ch > 57)
+	//char* tmp_ch = ch;
+	while(*ch < 48 || *ch > 57)
 	{
-		printf("%c", *tmp_ch);
-		tmp_ch++;
+		printf("%c", *ch);
+		ch++;
 	}
 	printf("\n");
 	char tmp[64];
 	int i = 0;
 	while(1)
 	{
-		if(*tmp_ch >= 48 && *tmp_ch <= 57)
+		if(*ch >= 48 && *ch <= 57)
 		{
-			tmp[i] = *tmp_ch;
+			tmp[i] = *ch;
 			i++;
-			tmp_ch++;
+			ch++;
 		}
 		else
 			break;
 	}
 	//printf("before ch = %p\n", ch);
-	ch = tmp_ch;
 	//printf("after ch = %p\n", ch);
 	tmp[i] = '\0';
 	int val;
@@ -119,9 +118,9 @@ int NDL_Init(uint32_t flags) {
 	*/
 	//！！！得到的是截断前面那一串的内容
 	char* tmp = buf;
-	//printf("A tmp = %p\n", tmp);
+	printf("A tmp = %p\n", tmp);
 	screen_w = get_sz(tmp);
-	//printf("B tmp = %p\n", tmp);
+	printf("B tmp = %p\n", tmp);
 	screen_h = get_sz(tmp);
 		printf("screen: w = %d, h = %d\n", screen_w, screen_h);
   return 0;
