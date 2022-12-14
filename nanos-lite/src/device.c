@@ -68,7 +68,9 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 	//strcat(info, tmp);
 	strcpy(buf, info);
 
+printf("aaaa\n");
 printf("strlen = %d\n", strlen(buf));
+printf("bbbb\n");
   return (strlen(buf) < len) ? strlen(buf) : len;
 }
 
