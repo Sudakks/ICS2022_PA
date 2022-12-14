@@ -65,8 +65,8 @@ void sys_read(Context *c)
 
 void sys_brk(Context* c)
 {
-	intptr_t addr = c->GPR2;//stand for the new program break address
-	c->GPR3 = addr;
+	//intptr_t addr = c->GPR2;//stand for the new program break address
+	//c->GPR3 = addr;
 	c->GPRx = 0;
 	//PA3.2, sys_brk always return 0
 	#ifdef CONFIG_STRACE_COND
@@ -135,7 +135,6 @@ void do_syscall(Context *c) {
 		sys_write(c);
 		break;
 	case SYS_brk:
-	printf("in BRK------\n");
 		sys_brk(c);
 		break;
 	case SYS_open:

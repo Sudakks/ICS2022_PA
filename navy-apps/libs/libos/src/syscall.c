@@ -69,13 +69,18 @@ int _write(int fd, void *buf, size_t count) {
 }
 
 extern char _end;
-char* now_loc = &_end;
+//一开始program_break在_end的位置
+char* program_break = &_end;
+
 void *_sbrk(intptr_t increment) {
-	void* ret = now_loc;
-	int void_ret;
-	void_ret = _syscall_(SYS_brk, (intptr_t)(now_loc + increment), (intptr_t)(now_loc), 0);
+	void* ret = program_break;
+	int void_ret = _syscall_(SYS_brk, (intptr_t)(program_break + increment), 0, 0);
 	if(void_ret == 0)//success
+	{
+		//if success, update program_break
+		program_break += increment;
 		return ret;
+	}
   return (void *)-1;
 }
 
