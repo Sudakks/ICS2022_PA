@@ -104,7 +104,9 @@ int NDL_Init(uint32_t flags) {
 	read(fd, buf, 256);
 
 //！！！得到的是截断前面那一串的内容
+printf("init: buf = %p\n", buf);
 	char* tmp = strtok(buf, "\n");
+	printf("tmp = %p\n", tmp);
 	screen_w = get_sz(tmp);
 	tmp = strtok(NULL, "\n");
 	screen_h = get_sz(tmp);
