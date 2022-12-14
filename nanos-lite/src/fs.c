@@ -92,7 +92,6 @@ size_t fs_read(int fd, void *buf, size_t len)
 	size_t ret = (len + off > sz) ? sz - off : len;
 	if(ret < 0)
 		return -1;
-	printf("fs_read: len = %d, ret = %d\n", len, ret);
 	size_t read_sz = ramdisk_read(buf, disoff + off, ret);
 	file_table[fd].open_offset += read_sz;
 	assert(read_sz == ret);
