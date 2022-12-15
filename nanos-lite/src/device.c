@@ -54,23 +54,26 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
   int h = io_read(AM_GPU_CONFIG).height;
 	printf("io_read: w = %d, h = %d\n", w, h);
 
+/*
 	size_t ret = snprintf(buf, len, "WIDTH: %d\nHEIGHT: %d\n", w, h);
 	return ret;
-	/*
+	
+	*/
+	size_t ret = 15;
 	char W[32];
 	char H[32];
 	ret += sprintf(W, "%d\n", w);
 	ret += sprintf(H, "%d\n", h);
 	char* info = "\n";
 
-  strcpy(info, "WEIGHT: ");
+  strcpy(info, "WIDTH: ");
   strcat(info, W);
   strcat(info, "HEIGHT: ");
   strcat(info, H);
 	strcpy(buf, info);
 	assert(ret < len);
 	return ret;
-	*/
+	
 }
 
 size_t fb_write(const void *buf, size_t offset, size_t len) {
