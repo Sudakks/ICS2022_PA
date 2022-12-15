@@ -59,7 +59,6 @@ int fs_open(const char *pathname, int flags, int mode)
 	for(int i = 0; i < file_table_sz; i++)
 	{
 		//printf("ii= %d\n", i);
-		printf("i = %d\n", i);
 		printf("uuu\n");
 		if(strcmp(file_table[i].name, pathname) == 0)
 		{
