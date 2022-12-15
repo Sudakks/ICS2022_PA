@@ -47,7 +47,6 @@ void init_fs() {
 	int w = io_read(AM_GPU_CONFIG).width;  
 	int h = io_read(AM_GPU_CONFIG).height;
 	file_table[FD_FB].size = w * h * sizeof(uint32_t);
-	printf("still ok in init_fs\n");
 }
 
 
