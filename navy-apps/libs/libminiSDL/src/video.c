@@ -80,20 +80,16 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 	{
 		memset(dst->pixels + (y + i) * dst->w + x, color, w);
 	}
-	
-
 }
 
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 	//s->pixels是void*类型
 	if(x == 0 && y == 0 && w == 0 && h == 0)
 	{
-		printf("0-0\n");
 		NDL_DrawRect((uint32_t*)s->pixels, 0, 0, s->w, s->h);
 		return;
 	}
 
-printf("1-1\n");
 	uint32_t* pix = malloc(w * h * sizeof(uint32_t));
 	for(int i = 0; i < h; i++)
 		memcpy(pix + i * w, s->pixels + (y + i) * s->w + x, w);
