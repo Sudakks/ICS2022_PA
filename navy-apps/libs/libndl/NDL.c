@@ -10,7 +10,7 @@ static int evtdev = -1;
 static int fbdev = -1;
 static int screen_w = 0, screen_h = 0;
 static int final_w, final_h;
-static int off_w, off_h;//这个表示画布距离屏幕的偏移量，即可使得画布在屏幕的正中心
+static int off_x, off_y;//这个表示画布距离屏幕的偏移量，即可使得画布在屏幕的正中心
 
 uint32_t NDL_GetTicks() {
 // 以毫秒为单位返回系统时间
@@ -40,8 +40,8 @@ void NDL_OpenCanvas(int *w, int *h) {
 	final_h = *h;
 	//记录最后的画布大小
 
-	off_w = (screen_w - final_w) / 2;
-	off_h = (screen_h - final_h) / 2;
+	off_x = (screen_w - final_w) / 2;
+	off_y = (screen_h - final_h) / 2;
 
   if (getenv("NWM_APP")) {
     int fbctl = 4;
@@ -67,8 +67,8 @@ void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
 	//一行一行写入
 	for(int i = 0; i < h; i++)
 	{
-		lseek(fd, (y + i + off_h) * screen_w + x + off_w, SEEK_SET);
-		write(fd, pixels + w * i, w);
+		lseek(fd, sizeof(uint32_t)*((y + i + off_y) * screen_w + x + off_x), SEEK_SET);
+		write(fd, pixels + w * i, w * sizeof(uint32_t));
 		//write(fd, pixels + (y + i) * final_w + x, w);
 	}
 	close(fd);
