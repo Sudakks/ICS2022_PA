@@ -66,20 +66,20 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 	}
 	//advance pixels
 	
-
-/*
+uint32_t* pix = (uint32_t*)dst->pixels;
 	for(int i = 0; i < h; i++)
 	{
 		for(int j = 0; j < w; j++)
 		{
-			dst->pixels[(y + i) * dst->w + x + j] = color;
+			pix[(y + i) * w + x + j] = color;
 		}
 	}
-	*/
+	/*
 	for(int i = 0; i < h; i++)
 	{
 		memset(dst->pixels + (y + i) * dst->w + x, color, w);
 	}
+	*/
 }
 
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
@@ -89,7 +89,6 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 		NDL_DrawRect((uint32_t*)s->pixels, 0, 0, s->w, s->h);
 		return;
 	}
-
 	uint32_t* pix = malloc(w * h * sizeof(uint32_t));
 	for(int i = 0; i < h; i++)
 		memcpy(pix + i * w, s->pixels + (y + i) * s->w + x, w);
