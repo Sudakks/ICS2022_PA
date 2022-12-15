@@ -86,15 +86,15 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 	//s->pixels是void*类型
 	if(x == 0 && y == 0 && w == 0 && h == 0)
 	{
-//		NDL_DrawRect((uint32_t*)s->pixels, 0, 0, s->w, s->h);
+		NDL_DrawRect((uint32_t*)s->pixels, x, y, s->w, s->h);
 
-		uint32_t* tmp = malloc(w * h * sizeof(uint32_t));
-		uint32_t* t = tmp;
-		printf("pppp = %x\n", t);
-		NDL_DrawRect(t, 0, 0, s->w, s->h);
+		//uint32_t* tmp = malloc(w * h * sizeof(uint32_t));
+		//uint32_t* t = tmp;
+		//NDL_DrawRect(t, 0, 0, s->w, s->h);
 		return;
 	}
 
+printf("ssss\n");
 	uint32_t* pix = malloc(w * h * sizeof(uint32_t));
 	for(int i = 0; i < h; i++)
 		memcpy(pix + i * w, s->pixels + (y + i) * s->w + x, w);
