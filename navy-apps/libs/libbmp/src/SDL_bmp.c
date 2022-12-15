@@ -9,7 +9,6 @@ SDL_Surface* SDL_LoadBMP(const char *filename) {
   assert(pixels);
   SDL_Surface *s = SDL_CreateRGBSurfaceFrom(pixels, w, h, 32, w * sizeof(uint32_t),
       DEFAULT_RMASK, DEFAULT_GMASK, DEFAULT_BMASK, DEFAULT_AMASK);
-      printf("wwww\n");
   s->flags &= ~SDL_PREALLOC;
   return s;
 }
