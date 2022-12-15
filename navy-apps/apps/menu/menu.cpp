@@ -73,13 +73,11 @@ int main(int argc, char *argv[], char *envp[]) {
 
   font = new BDF_Font(font_fname);
   logo_sf = SDL_LoadBMP("/share/pictures/projectn.bmp");
-  printf("load over\n");
-   SDL_UpdateRect(logo_sf, 0, 0, 0, 0);
   assert(logo_sf);
-  //set_i_max();
+  set_i_max();
 
   while (1) {
-    /*display_menu(i_max);
+    display_menu(i_max);
 
     SDL_Event e;
     do {
@@ -115,7 +113,7 @@ int main(int argc, char *argv[], char *envp[]) {
       fprintf(stderr, "\033[31m[ERROR]\033[0m Exec %s failed.\n\n", exec_argv[0]);
     } else {
       fprintf(stderr, "Choose a number between %d and %d\n\n", 0, i_max);
-    }*/
+    }
   }
   return -1;
 }
