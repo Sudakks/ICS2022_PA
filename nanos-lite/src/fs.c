@@ -55,6 +55,7 @@ int fs_open(const char *pathname, int flags, int mode)
 {
 	printf("in open %s\n", pathname);
 	int file_table_sz = sizeof(file_table) / sizeof(Finfo);
+	printf("eeee\n");
 	//find the same filename in file_table
 	for(int i = 0; i < file_table_sz; i++)
 	{
