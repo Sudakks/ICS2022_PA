@@ -53,25 +53,19 @@ void init_fs() {
 
 int fs_open(const char *pathname, int flags, int mode)
 {
-	printf("in open %s\n", pathname);
 	int file_table_sz = sizeof(file_table) / sizeof(Finfo);
 	//find the same filename in file_table
-	//printf("eeeeee\n");
 	for(int i = 0; i < file_table_sz; i++)
 	{
-		//printf("ii= %d\n", i);
-		//printf("uuu\n");
 		if(strcmp(file_table[i].name, pathname) == 0)
 		{
 			//equal and find
-			
 			file_table[i].open_offset = 0;
 			printf("name = %s\n", pathname);
 			return i;
 		}
 	}
-	printf("not fond\n");
-	assert(0);
+	panic("Not Found!");
 	//if can't find the file, assert
 }
 
@@ -101,7 +95,6 @@ size_t fs_read(int fd, void *buf, size_t len)
 	assert(read_sz == ret);
 	//这个是相对于这个文件头的偏移量
 	//advanced
-	printf("finish open\n");
 	return read_sz;
 }
 
