@@ -23,15 +23,11 @@ void render() {
   if (slide) {
     SDL_FreeSurface(slide);
   }
-  printf("AAAAAAA\n");
   char fname[256];
   sprintf(fname, path, cur);
-  printf("BBBBBBBBBB\n");
   slide = SDL_LoadBMP(fname);
-  printf("CCCCCCCCC\n");
   assert(slide);
   SDL_UpdateRect(slide, 0, 0, 0, 0);
-  printf("DDDDDDD\n");
 }
 
 void prev(int rep) {
