@@ -116,7 +116,6 @@ void *memmove(void *dst, const void *src, size_t n) {
 
 void *memcpy(void *out, const void *in, size_t n) {
 	//当区间出现重叠时有UB行为产生
-	printf("ww\n");
 	char* tmp = (char*) out;
 	const char *s = (const char*) in;
 	while(n--)

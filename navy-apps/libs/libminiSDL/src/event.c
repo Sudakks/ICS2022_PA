@@ -62,7 +62,7 @@ int SDL_WaitEvent(SDL_Event *event) {
 		}
 	}
 	event->type = type;
-	printf("type = %d\n, sym = %d\n", type, sym);
+	//printf("type = %d, sym = %d\n", type, sym);
 	event->key.keysym.sym = sym;
 	//这个应该对应着什么按键
 }
