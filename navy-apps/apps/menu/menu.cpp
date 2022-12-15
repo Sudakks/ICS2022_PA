@@ -74,6 +74,7 @@ int main(int argc, char *argv[], char *envp[]) {
   font = new BDF_Font(font_fname);
   logo_sf = SDL_LoadBMP("/share/pictures/projectn.bmp");
   assert(logo_sf);
+	/*
   set_i_max();
 
   while (1) {
@@ -115,6 +116,7 @@ int main(int argc, char *argv[], char *envp[]) {
       fprintf(stderr, "Choose a number between %d and %d\n\n", 0, i_max);
     }
   }
+	*/
   return -1;
 }
 
