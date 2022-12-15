@@ -33,18 +33,21 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 		w = srcrect->w, h = srcrect->h;	
 	}
 
+/*
 	for(int i = 0; i < h; i++)
 	{
 		for(int j = 0; j < w; j++)
 		{
 			dst->pixels[(dst_y + i) * dst->w + dst_x + j] = src->pixels[(src_y + i) * src->w + src_x + j];
+			printf("")
 		}
 	}
-	/*
+	*/
 	for(int i = 0; i < h; i++)
 	{
 		memcpy(dst->pixels + (dst_y + i) * dst->w + dst_x, src->pixels + (src_y + i) * src->w + src_x, w);
-	}*/
+		printf("%d - %d - %d\n", (dst_y + i) * dst->w + dst_x, (src_y + i) * src->w + src_x, w);
+	}
 }
 
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
@@ -86,13 +89,10 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 	if(x == 0 && y == 0 && w == 0 && h == 0)
 	{
 		NDL_DrawRect((uint32_t*)s->pixels, x, y, s->w, s->h);
-
-		//uint32_t* tmp = malloc(w * h * sizeof(uint32_t));
-		//uint32_t* t = tmp;
-		//NDL_DrawRect(t, 0, 0, s->w, s->h);
 		return;
 	}
 
+printf("TODO wrong\n");
 	uint32_t* pix = malloc(w * h * sizeof(uint32_t));
 	for(int i = 0; i < h; i++)
 		memcpy(pix + i * w, s->pixels + (y + i) * s->w + x, w);
