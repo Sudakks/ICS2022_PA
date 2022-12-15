@@ -33,6 +33,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 		w = srcrect->w, h = srcrect->h;	
 	}
 
+/*
 	for(int i = 0; i < h; i++)
 	{
 		for(int j = 0; j < w; j++)
@@ -40,12 +41,11 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 			dst->pixels[(dst_y + i) * dst->w + dst_x + j] = src->pixels[(src_y + i) * src->w + src_x + j];
 		}
 	}
-/*
+	*/
 	for(int i = 0; i < h; i++)
 	{
 		memcpy(dst->pixels + (dst_y + i) * dst->w + dst_x, src->pixels + (src_y + i) * src->w + src_x, w);
 	}
-	*/
 }
 
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
@@ -67,6 +67,7 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 	//advance pixels
 	
 uint32_t* pix = (uint32_t*)dst->pixels;
+/*
 	for(int i = 0; i < h; i++)
 	{
 		for(int j = 0; j < w; j++)
@@ -74,12 +75,11 @@ uint32_t* pix = (uint32_t*)dst->pixels;
 			pix[(y + i) * w + x + j] = color;
 		}
 	}
-	/*
+	*/
 	for(int i = 0; i < h; i++)
 	{
-		memset(dst->pixels + (y + i) * w + x, color, w);
+		memset(pix + (y + i) * w + x, color, w);
 	}
-	*/
 }
 
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
@@ -90,7 +90,6 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 		return;
 	}
 
-printf("not here\n");
 	uint32_t* pix = malloc(w * h * sizeof(uint32_t));
 	for(int i = 0; i < h; i++)
 		memcpy(pix + i * w, s->pixels + (y + i) * s->w + x, w);
