@@ -60,9 +60,11 @@ int fs_open(const char *pathname, int flags, int mode)
 	{
 		//printf("ii= %d\n", i);
 		//printf("i = %d\n", i);
+		printf("uuu\n");
 		if(strcmp(file_table[i].name, pathname) == 0)
 		{
 			//equal and find
+			
 			file_table[i].open_offset = 0;
 			//printf("name = %s\n", pathname);
 			return i;
