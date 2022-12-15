@@ -43,10 +43,11 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 		}
 	}
 	*/
+	uint32_t width = dst->format->palette ? 1 : 4;
 	for(int i = 0; i < h; i++)
 	{
-		memcpy(dst->pixels + (dst_y + i) * dst->w + dst_x, src->pixels + (src_y + i) * src->w + src_x, w);
-		printf("%d - %d - %d\n", (dst_y + i) * dst->w + dst_x, (src_y + i) * src->w + src_x, w);
+		memcpy(dst->pixels + ((dst_y + i) * dst->w + dst_x) * width, src->pixels + ((src_y + i) * src->w + src_x) * width, w * width);
+		//printf("%d - %d - %d\n", (dst_y + i) * dst->w + dst_x, (src_y + i) * src->w + src_x, w);
 	}
 }
 
