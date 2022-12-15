@@ -16,7 +16,6 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 	//s->pixels是void*类型
 	if(x == 0 && y == 0 && w == 0 && h == 0)
 	{
-		printf("allll\n");
 		NDL_DrawRect((uint32_t*)s->pixels, 0, 0, s->w, s->h);
 		return;
 	}
