@@ -50,9 +50,7 @@ int main() {
 
   int rep = 0, g = 0;
 
-printf("before render\n");
   render();
-  printf("after render\n");
 
   while (1) {
     SDL_Event e;

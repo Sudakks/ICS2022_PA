@@ -52,7 +52,6 @@ char *strcat(char *dst, const char *src) {
 }
 
 int strcmp(const char *s1, const char *s2) {
-	printf("yyyy\n");
 	assert(s1 != NULL && s2 != NULL);
 	while(*(unsigned char*)s1 == *((unsigned char*)s2))
 	{
@@ -61,8 +60,6 @@ int strcmp(const char *s1, const char *s2) {
 		s1++;
 		s2++;
 	}
-	if(*s1 - *s2 == 0)
-		printf("strcmp yes\n");
 	return *s1 - *s2;
 }
 
