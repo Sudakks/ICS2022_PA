@@ -60,7 +60,6 @@ int fs_open(const char *pathname, int flags, int mode)
 		{
 			//equal and find
 			file_table[i].open_offset = 0;
-			printf("name = %s\n", pathname);
 			return i;
 		}
 	}
