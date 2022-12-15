@@ -33,7 +33,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 		w = srcrect->w, h = srcrect->h;	
 	}
 
-
+/*
 	for(int i = 0; i < h; i++)
 	{
 		for(int j = 0; j < w; j++)
@@ -41,13 +41,11 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 			dst->pixels[(dst_y + i) * dst->w + dst_x + j] = src->pixels[(src_y + i) * src->w + src_x + j];
 		}
 	}
-
-/*
+*/
 	for(int i = 0; i < h; i++)
 	{
 		memcpy(dst->pixels + (dst_y + i) * dst->w + dst_x, src->pixels + (src_y + i) * src->w + src_x, w);
 	}
-	*/
 }
 
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
@@ -93,7 +91,11 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 		NDL_DrawRect((uint32_t*)s->pixels, 0, 0, s->w, s->h);
 		return;
 	}
-	NDL_DrawRect((uint32_t*)s->pixels, x, y, w, h);
+
+	uint32_t* pix = malloc(w * h * sizeof(uint32_t));
+	for(int i = 0; i < h; i++)
+		memcpy(pix + i * w, s->pixels + (y + i) * s->w + x, w);
+	NDL_DrawRect(pix, x, y, w, h);
 	//将画布中的指定矩形区域同步到屏幕上
 	//要更新的区域不能超过屏幕
 	//如果xywh都为0,那么更新整个屏幕
