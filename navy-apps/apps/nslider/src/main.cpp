@@ -27,9 +27,7 @@ void render() {
   sprintf(fname, path, cur);
   slide = SDL_LoadBMP(fname);
   assert(slide);
-  printf("1111\n");
   SDL_UpdateRect(slide, 0, 0, 0, 0);
-  printf("2222\n");
 }
 
 void prev(int rep) {
