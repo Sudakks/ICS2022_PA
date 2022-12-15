@@ -67,6 +67,7 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 	}
 	//advance pixels
 	
+	/*
 	for(int i = 0; i < h; i++)
 	{
 		for(int j = 0; j < w; j++)
@@ -74,7 +75,7 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 			dst->pixels[(y + i) * dst->w + x + j] = color;
 		}
 	}
-	
+	*/
 	/*
 	for(int i = 0; i < h; i++)
 	{
