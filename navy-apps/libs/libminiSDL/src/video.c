@@ -13,6 +13,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 		The width and height in srcrect determine the size of the copied rectangle
 		Only the position is used in the dstrect
 	*/
+	/*
 	int w, h;
 	int src_x, src_y;
 	int dst_x, dst_y;
@@ -31,7 +32,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 		src_x = srcrect->x, src_y = srcrect->y;
 		w = srcrect->w, h = srcrect->h;	
 	}
-
+*/
 /*
 	for(int i = 0; i < h; i++)
 	{
@@ -53,6 +54,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 	//往画布的指定矩形区域中填充指定的颜色
 	//即改变pixels里面的内容
+	/*
 	int x, y, w, h;
 	if(dstrect == NULL)
 	{
@@ -66,7 +68,7 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 		w = dstrect->w, h = dstrect->h;
 	}
 	//advance pixels
-	
+	*/
 	/*
 	for(int i = 0; i < h; i++)
 	{
