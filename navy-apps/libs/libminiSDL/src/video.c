@@ -90,6 +90,7 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 
 		uint32_t* tmp = malloc(w * h * sizeof(uint32_t));
 		uint32_t* t = tmp;
+		printf("pppp = %x\n", t);
 		NDL_DrawRect(t, 0, 0, s->w, s->h);
 		return;
 	}
