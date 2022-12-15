@@ -52,6 +52,7 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 	//往画布的指定矩形区域中填充指定的颜色
 	//即改变pixels里面的内容
 	
+	/*
 	int x, y, w, h;
 	if(dstrect == NULL)
 	{
@@ -74,6 +75,7 @@ uint32_t* pix = (uint32_t*)dst->pixels;
 			pix[(y + i) * w + x + j] = color;
 		}
 	}
+	*/
 	/*
 	for(int i = 0; i < h; i++)
 	{
