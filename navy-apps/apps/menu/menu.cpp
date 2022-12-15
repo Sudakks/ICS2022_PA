@@ -84,6 +84,7 @@ int main(int argc, char *argv[], char *envp[]) {
       SDL_WaitEvent(&e);
     } while (e.type != SDL_KEYDOWN);
 
+printf("receive keyboard\n");
     int i = -1;
     switch (e.key.keysym.sym) {
       case SDLK_0: i = 0; break;
@@ -142,7 +143,7 @@ static void draw_text_row(char *s, int r) {
 static void display_menu(int n) {
   clear_display();
   SDL_Rect rect = { .x = screen->w - logo_sf->w, .y = 0 };
-  SDL_BlitSurface(logo_sf, NULL, screen, &rect);
+  //SDL_BlitSurface(logo_sf, NULL, screen, &rect);
   printf("Available applications:\n");
   char buf[80];
   int i;
