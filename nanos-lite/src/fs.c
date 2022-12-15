@@ -71,6 +71,7 @@ int fs_open(const char *pathname, int flags, int mode)
 			return i;
 		}
 	}
+	printf("not fond\n");
 	assert(0);
 	//if can't find the file, assert
 }
