@@ -17,6 +17,7 @@ int SDL_PollEvent(SDL_Event *ev) {
 }
 
 int SDL_WaitEvent(SDL_Event *event) {
+	//success return 1, otherwise return 0
   return 1;
 }
 

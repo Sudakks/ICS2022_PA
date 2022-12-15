@@ -103,6 +103,7 @@ typedef	__uint128_t fixedptud;
 #define FIXEDPT_VCSID "$Id$"
 
 #define FIXEDPT_FBITS	(FIXEDPT_BITS - FIXEDPT_WBITS)
+//这个应该是定义了小数位
 #define FIXEDPT_FMASK	(((fixedpt)1 << FIXEDPT_FBITS) - 1)
 
 #define fixedpt_rconst(R) ((fixedpt)((R) * FIXEDPT_ONE + ((R) >= 0 ? 0.5 : -0.5)))
@@ -127,35 +128,44 @@ typedef	__uint128_t fixedptud;
 
 /* Multiplies a fixedpt number with an integer, returns the result. */
 static inline fixedpt fixedpt_muli(fixedpt A, int B) {
-	return 0;
+	return (fixedpt)(A * B);
+	//应该可以直接乘除，然后转化为fixedpt类型的数即可
 }
 
 /* Divides a fixedpt number with an integer, returns the result. */
 static inline fixedpt fixedpt_divi(fixedpt A, int B) {
-	return 0;
+	return (fixedpt)(A / B);
 }
 
 /* Multiplies two fixedpt numbers, returns the result. */
 static inline fixedpt fixedpt_mul(fixedpt A, fixedpt B) {
-	return 0;
+	//attention: 乘法应该类似于整数，先拓展，再乘，再移位
+	return (fixedpt)(((fixedptd)A * (fixedptd)B) >> FIXEDPT_FBITS);
 }
 
 
 /* Divides two fixedpt numbers, returns the result. */
 static inline fixedpt fixedpt_div(fixedpt A, fixedpt B) {
-	return 0;
+	return (fixedpt)(((fixedptd)A / B) << FIXEDPT_FBITS);
 }
 
 static inline fixedpt fixedpt_abs(fixedpt A) {
-	return 0;
+	//在计算机里面，是通过补码表示，所以fixedpt类型是负数，则原数也是负数
+	if(A < 0)
+		return -A;
+	return A;
 }
 
 static inline fixedpt fixedpt_floor(fixedpt A) {
-	return 0;
+	return (~FIXEDPT_FMASK) & A;
+	//相当于把小数部分给码掉了
 }
 
 static inline fixedpt fixedpt_ceil(fixedpt A) {
-	return 0;
+	if(A & FIXEDPT_FMASK == 0)
+		return A;//即没有小数部分
+	else
+		return A & (~FIXEDPT_FMASK) + FIXEDPT_ONE;
 }
 
 /*
