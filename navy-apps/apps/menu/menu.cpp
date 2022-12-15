@@ -74,17 +74,16 @@ int main(int argc, char *argv[], char *envp[]) {
   font = new BDF_Font(font_fname);
   logo_sf = SDL_LoadBMP("/share/pictures/projectn.bmp");
   assert(logo_sf);
-  set_i_max();
+  //set_i_max();
 
   while (1) {
-    display_menu(i_max);
+    /*display_menu(i_max);
 
     SDL_Event e;
     do {
       SDL_WaitEvent(&e);
     } while (e.type != SDL_KEYDOWN);
 
-printf("receive keyboard\n");
     int i = -1;
     switch (e.key.keysym.sym) {
       case SDLK_0: i = 0; break;
@@ -114,7 +113,7 @@ printf("receive keyboard\n");
       fprintf(stderr, "\033[31m[ERROR]\033[0m Exec %s failed.\n\n", exec_argv[0]);
     } else {
       fprintf(stderr, "Choose a number between %d and %d\n\n", 0, i_max);
-    }
+    }*/
   }
   return -1;
 }
@@ -143,7 +142,7 @@ static void draw_text_row(char *s, int r) {
 static void display_menu(int n) {
   clear_display();
   SDL_Rect rect = { .x = screen->w - logo_sf->w, .y = 0 };
-  //SDL_BlitSurface(logo_sf, NULL, screen, &rect);
+  SDL_BlitSurface(logo_sf, NULL, screen, &rect);
   printf("Available applications:\n");
   char buf[80];
   int i;
