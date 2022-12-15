@@ -42,7 +42,6 @@ void NDL_OpenCanvas(int *w, int *h) {
 
 	off_x = (screen_w - final_w) / 2;
 	off_y = (screen_h - final_h) / 2;
-	printf("canvas = %d, %d\n", final_w, final_h);
 
   if (getenv("NWM_APP")) {
     int fbctl = 4;
