@@ -66,6 +66,10 @@ int printf(const char *fmt, ...) {
 				//读数字
 			  		num = va_arg(ap, int);			  		
 						putstr("before sprintf\n");
+						if(num == 0)
+							putstr("num == 0");
+						else if(num == 1)
+							putstr("num == 1");
 						str_cnt = sprintf(mynum, "%d", num);
 						printf("end sprintf\n");
 						putstr(mynum);
