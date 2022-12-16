@@ -156,7 +156,6 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 			w = s->w;
 			h = s->h;
 		}
-		printf("hhhh\n");
 		uint32_t* pixels = malloc(w * h * sizeof(uint32_t));
 		assert(pixels);
 		for(int i = 0; i < h; i++)
@@ -175,7 +174,6 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 		}
 		NDL_DrawRect(pixels, x, y, w, h);
 		free(pixels);
-		printf("wwwwww\n");
 		return;
 	}
 	else
