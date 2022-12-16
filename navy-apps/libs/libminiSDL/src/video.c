@@ -33,15 +33,6 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 		w = srcrect->w, h = srcrect->h;	
 	}
 
-/*
-	for(int i = 0; i < h; i++)
-	{
-		for(int j = 0; j < w; j++)
-		{
-			dst->pixels[(dst_y + i) * dst->w + dst_x + j] = src->pixels[(src_y + i) * src->w + src_x + j];
-		}
-	}
-	*/
 	uint32_t width = (dst->format->BytesPerPixel == 4) ? 4 : 1;
 	for(int i = 0; i < h; i++)
 	{
@@ -80,12 +71,6 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 		}
 	}
 	//不知道为啥，但这里不能一行一行赋值
-	/*
-	for(int i = 0; i < h; i++)
-	{
-		memset(pix + (y + i) * w + x, color, w);
-	}
-	*/
 }
 
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
@@ -98,6 +83,8 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 			return;
 		}
 		uint32_t* pix = malloc(w * h * sizeof(uint32_t));
+		assert(pix);
+
 		for(int i = 0; i < h; i++)
 			memcpy(pix + i * w, (uint32_t*)s->pixels + (y + i) * s->w + x, w * sizeof(uint32_t));
 		NDL_DrawRect(pix, x, y, w, h);
@@ -106,22 +93,37 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 	else if(s->format->BytesPerPixel == 1)
 	{
 		//实现8位像素下的内容
+		/*
+		Each pixel in an 8-bit surface is an index into the colors field
+		*/
 		//SDL_Palette* pal = s->format->palette;   
 		if(x == 0 && y == 0 && w == 0 && h == 0)
 			w = s->w, h = s->h;
 
 		uint32_t *pixels = malloc(w * h * sizeof(uint32_t)); 
+		assert(pixels);
+
 		for (int i = 0; i < h; i ++)
 		{
 			 for (int j = w - 1; j >= 0; j --) 
 			{                                                                                   
+				/*
 					uint8_t b = *(((uint8_t*)&pixels[w * i]) + 3 * j);
 					uint8_t g = *(((uint8_t*)&pixels[w * i]) + 3 * j + 1);
 					uint8_t r = *(((uint8_t*)&pixels[w * i]) + 3 * j + 2);
-					pixels[w * i + j] = (r << 16) | (g << 8) | b;
+				*/
+				/*
+				uint8_t r = s->format->palette->colors->r;
+				uint8_t g = s->format->palette->colors->g;
+				uint8_t b = s->format->palette->colors->b;
+				*/
+				//uint32_t color_xy = s->format->palette[s->pixels[x + j][y + i]];
+				//pixels[w * i + j] = color_xy;
+				//pixels[w * i + j] = (r << 16) | (g << 8) | b;
 			}
 		}
 			NDL_DrawRect(pixels, x, y, w, h);
+			free(pixels);
 	}
 	else
 		assert(0);
