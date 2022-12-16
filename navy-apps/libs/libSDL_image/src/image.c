@@ -20,10 +20,10 @@ SDL_Surface* IMG_Load(const char *filename) {
       return NULL;
 	}
 
-printf("successfully open\n");
 	//size
   fseek(fp, 0, SEEK_END);//定位文件指针到文件尾。
   size_t len = ftell(fp);//获取文件指针偏移量，即文件大小。
+	printf("get len\n");
 
 	//copy
 	char* buf = malloc(len * sizeof(char));
