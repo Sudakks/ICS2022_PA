@@ -119,6 +119,7 @@ int printf(const char *fmt, ...) {
 		}
 		fmt++;
 	}
+	putstr("out now\n");
 	va_end(ap);
 	return ret;
   //panic("Not implemented");
