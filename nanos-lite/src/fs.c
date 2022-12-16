@@ -62,11 +62,12 @@ int fs_open(const char *pathname, int flags, int mode)
 			
 			printf("Open %s\n", pathname);
 			file_table[i].open_offset = 0;
+			
+	for(int j = 0; j < 2; j++)
+		printf("j = %d\n", j);
 			return i;
 		}
 	}
-	for(int i = 0; i < 2; i++)
-		printf("i = %d\n", i);
 	panic("Not Found!");
 	//if can't find the file, assert
 }
