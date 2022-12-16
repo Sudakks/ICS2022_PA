@@ -149,7 +149,6 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 	}
 	else if(s->format->BytesPerPixel == 1)
 	{
-		printf("eeeeee\n");
 		if(x == 0 && y == 0 && w == 0 && h == 0)
 		{
 			w = s->w;
@@ -157,18 +156,20 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 		}
 		uint32_t* pixels = malloc(w * h * sizeof(uint32_t));
 		assert(pixels);
+		uint8_t* pix = (uint8_t*)s->pixels;
+
 		for(int i = 0; i < h; i++)
 		{
 			for(int j = 0; j < w; j++)
 			{
 				uint32_t pos = (y + i) * s->w + x + j;
-				uint8_t* tmp = (uint8_t*)s->pixels;
-				SDL_Color* col = s->format->palette->colors;
+				uint8_t ptr = pix[pos];
+				SDL_Color col = s->format->palette->colors[ptr];
 //s->format->palette->colors[pixels[坐标索引]]
-				uint8_t r = (col + *(tmp + pos))->r;
-				uint8_t g = (col + *(tmp + pos))->g;
-				uint8_t b = (col + *(tmp + pos))->b;
-					pixels[w * i + j] = (r << 16) | (g << 8) | b;
+				uint8_t r = col.r;
+				uint8_t g = col.g;
+				uint8_t b = col.b;
+				pixels[w * i + j] = (r << 16) | (g << 8) | b;
 			}
 		}
 		NDL_DrawRect(pixels, x, y, w, h);
