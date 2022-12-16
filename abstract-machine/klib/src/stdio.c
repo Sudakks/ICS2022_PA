@@ -61,6 +61,9 @@ int printf(const char *fmt, ...) {
 		{
 			putstr("read %\n");
 			fmt++;
+			putstr("fmt is ");
+			if(*fmt == 'd')
+				putstr("it's d\n");
 			//说明有要读到的格式了
 			switch(*fmt)
 			{
