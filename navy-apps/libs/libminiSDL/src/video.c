@@ -33,16 +33,39 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 		w = srcrect->w, h = srcrect->h;	
 	}
 
+	if(src->format->BytesPerPixel == 4)
+	{
+		for(int i = 0; i < h; i++)
+		{
+			memcpy((uint32_t*)dst->pixels + ((dst_y + i) * dst->w + dst_x), (uint32_t*)src->pixels + ((src_y + i) * src->w + src_x), w * sizeof(uint32_t));
+		}
+	}
+	else if(src->format->BytesPerPixel == 1)
+	{
+		for(int i = 0; i < h; i++)
+		{
+			memcpy((uint8_t*)dst->pixels + ((dst_y + i) * dst->w + dst_x), (uint8_t*)src->pixels + ((src_y + i) * src->w + src_x), w * sizeof(uint8_t));
+		}
+	}
+	else
+	{
+		printf("Wrong BytesPerPixel!\n");
+		assert(0);
+	}
+
+
+/*
 	uint32_t width = (dst->format->BytesPerPixel == 4) ? 4 : 1;
 	for(int i = 0; i < h; i++)
 	{
 		memcpy(dst->pixels + ((dst_y + i) * dst->w + dst_x) * width, src->pixels + ((src_y + i) * src->w + src_x) * width, w * width);
 		//printf("%d - %d - %d\n", (dst_y + i) * dst->w + dst_x, (src_y + i) * src->w + src_x, w);
+*/
 		/*
 		Mark错误:
 		是因为没有区分他的bytes数，所以导致这里无法正确绘图
 		*/
-	}
+//	}
 }
 
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
@@ -61,7 +84,33 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 		w = dstrect->w, h = dstrect->h;
 	}
 	//advance pixels
+	if(dst->format->BytesPerPixel == 4)
+	{
+		for(int i = 0; i < h; i++)
+		{
+			for(int j = 0; j < w; j++)
+			{
+				*((uint32_t*)dst->pixels + ((y + i) * w + x + j)) = color;
+			}
+		}
+	}
+	else if(dst->format->BytesPerPixel == 1)
+	{
+		for(int i = 0; i < h; i++)
+		{
+			for(int j = 0; j < w; j++)
+			{
+				*((uint8_t*)dst->pixels + ((y + i) * w + x + j)) = color; 
+			}
+		}
+	}
+	else
+	{
+		printf("Wrong BytesPerPixels!\n");
+		assert(0);
+	}
 	
+	/*
 	uint32_t* pix = (uint32_t*)dst->pixels;
 	for(int i = 0; i < h; i++)
 	{
@@ -71,13 +120,66 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 		}
 	}
 	//不知道为啥，但这里不能一行一行赋值
+	*/
 }
 
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 	//s->pixels是void*类型
+	if(w == 0 && h == 0)
+	{
+		w = s->w;
+		h = s->h;
+	}
+
+	uint32_t* pixels = malloc(w * h * sizeof(uint32_t));
+	assert(pixels);
+
 	if(s->format->BytesPerPixel == 4)
 	{
-		if(x == 0 && y == 0 && w == 0 && h == 0)
+		if(w == 0 && h == 0)
+		{
+			NDL_DrawRect((uint32_t*)s->pixels, x, y, s->w, s->h);
+			free(pixels);
+			return;
+		}
+		for(int i = 0; i < h; i++)
+			memcpy(pixels + i * w, (uint32_t*)s->pixels + (y + i) * s->w + x, w * sizeof(uint32_t));
+		NDL_DrawRect(pixels, x, y, w, h);
+		free(pixels);
+		return;
+	}
+	else if(s->format->BytesPerPixel == 1)
+	{
+		if(w == 0 && h == 0)
+		{
+			w = s->w;
+			h = s->h;
+		}
+		for(int i = 0; i < h; i++)
+		{
+			for(int j = 0; j < w; j++)
+			{
+				uint32_t pos = (y + i) * s->w + x + j;
+				uint8_t* tmp = (uint8_t*)s->pixels;
+				SDL_Color* col = s->format->palette->colors;
+//s->format->palette->colors[pixels[坐标索引]]
+				uint8_t r = (col + *(tmp + pos))->r;
+				uint8_t g = (col + *(tmp + pos))->g;
+				uint8_t b = (col + *(tmp + pos))->b;
+					pixels[w * i + j] = (r << 16) | (g << 8) | b;
+			}
+		}
+		NDL_DrawRect(pixels, x, y, w, h);
+		free(pixels);
+		return;
+	}
+	else
+	{
+		printf("Wrong BytesPerPixels!\n");
+		assert(0);
+	}
+	/*
+if(x == 0 && y == 0 && w == 0 && h == 0)
 		{
 			NDL_DrawRect((uint32_t*)s->pixels, x, y, s->w, s->h);
 			return;
@@ -89,43 +191,7 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 			memcpy(pix + i * w, (uint32_t*)s->pixels + (y + i) * s->w + x, w * sizeof(uint32_t));
 		NDL_DrawRect(pix, x, y, w, h);
 		free(pix);
-	}
-	else if(s->format->BytesPerPixel == 1)
-	{
-		//实现8位像素下的内容
-		/*
-		Each pixel in an 8-bit surface is an index into the colors field
-		*/
-		//SDL_Palette* pal = s->format->palette;   
-		if(x == 0 && y == 0 && w == 0 && h == 0)
-			w = s->w, h = s->h;
-
-		uint32_t *pixels = malloc(w * h * sizeof(uint32_t)); 
-		assert(pixels);
-
-		for (int i = 0; i < h; i ++)
-		{
-			 for (int j = w - 1; j >= 0; j --) 
-			{                                                                                   
-					uint8_t b = *(((uint8_t*)&pixels[w * i]) + 3 * j);
-					uint8_t g = *(((uint8_t*)&pixels[w * i]) + 3 * j + 1);
-					uint8_t r = *(((uint8_t*)&pixels[w * i]) + 3 * j + 2);
-				/*
-				uint8_t r = s->format->palette->colors->r;
-				uint8_t g = s->format->palette->colors->g;
-				uint8_t b = s->format->palette->colors->b;
-				*/
-				//uint32_t color_xy = s->format->palette[s->pixels[x + j][y + i]];
-				//pixels[w * i + j] = color_xy;
-				pixels[w * i + j] = (r << 16) | (g << 8) | b;
-			}
-		}
-			NDL_DrawRect(pixels, x, y, w, h);
-			free(pixels);
-	}
-	else
-		assert(0);
-		//panic("Invalid bytesperpixel");
+*/
 		//将画布中的指定矩形区域同步到屏幕上
 	//要更新的区域不能超过屏幕
 	//如果xywh都为0,那么更新整个屏幕
