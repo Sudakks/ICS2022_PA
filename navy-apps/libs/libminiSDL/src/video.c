@@ -151,6 +151,7 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 	}
 	else if(s->format->BytesPerPixel == 1)
 	{
+		/*
 		printf("CCCCCCCCC\n");
 		if(w == 0 && h == 0)
 		{
@@ -174,6 +175,7 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 		NDL_DrawRect(pixels, x, y, w, h);
 		free(pixels);
 		return;
+		*/
 	}
 	else
 	{
