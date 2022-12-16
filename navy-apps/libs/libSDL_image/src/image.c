@@ -14,13 +14,14 @@ SDL_Surface* IMG_Load_RW(SDL_RWops *src, int freesrc) {
 SDL_Surface* IMG_Load(const char *filename) {
 	//open
 	printf("start open\n");
-	FILE *fp = fopen(filename, "rb");//打开文件。
+	FILE *fp = fopen(filename, "r");
+	printf("fail\n");
   if(fp == NULL) // 打开文件失败
       return NULL;
 
 	//size
   fseek(fp, 0, SEEK_END);//定位文件指针到文件尾。
-  int len = ftell(fp);//获取文件指针偏移量，即文件大小。
+  size_t len = ftell(fp);//获取文件指针偏移量，即文件大小。
 
 	//copy
 	char* buf = malloc(len * sizeof(char));
