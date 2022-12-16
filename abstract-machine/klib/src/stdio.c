@@ -255,7 +255,6 @@ int sprintf(char *out, const char *fmt, ...) {
 		}
 		fmt++;
 	}
-	printf("end snprintf\n");
 	va_end(ap);
 	*out = '\0';
 	return ret;
