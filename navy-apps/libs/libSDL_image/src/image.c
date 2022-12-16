@@ -17,10 +17,10 @@ SDL_Surface* IMG_Load(const char *filename) {
 	FILE *fp = fopen(filename, "r");
   if(fp == NULL) // 打开文件失败
 	{
-			printf("fail\n");
       return NULL;
 	}
 
+printf("successfully open\n");
 	//size
   fseek(fp, 0, SEEK_END);//定位文件指针到文件尾。
   size_t len = ftell(fp);//获取文件指针偏移量，即文件大小。
