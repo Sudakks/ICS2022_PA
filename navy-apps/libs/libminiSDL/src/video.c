@@ -6,6 +6,7 @@
 #include <stdio.h>
 
 void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect) {
+	printf("BlitSurface\n");
   assert(dst && src);
   assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
 	/*
@@ -54,7 +55,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 	//往画布的指定矩形区域中填充指定的颜色
 	//即改变pixels里面的内容
-	
+printf("FillRect\n");	
 	int x, y, w, h;
 	if(dstrect == NULL)
 	{
@@ -88,6 +89,7 @@ uint32_t* pix = (uint32_t*)dst->pixels;
 
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 	//s->pixels是void*类型
+	printf("UpdateRect\n");
 	if(x == 0 && y == 0 && w == 0 && h == 0)
 	{
 		NDL_DrawRect((uint32_t*)s->pixels, x, y, s->w, s->h);
