@@ -87,6 +87,7 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 	//advance pixels
 	if(dst->format->BytesPerPixel == 4)
 	{
+		printf("DDDDDDD\n");
 		for(int i = 0; i < h; i++)
 		{
 			for(int j = 0; j < w; j++)
