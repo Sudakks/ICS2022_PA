@@ -132,17 +132,17 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 		h = s->h;
 	}
 
-	uint32_t* pixels = malloc(w * h * sizeof(uint32_t));
-	assert(pixels);
 
 	if(s->format->BytesPerPixel == 4)
 	{
 		if(w == 0 && h == 0)
 		{
 			NDL_DrawRect((uint32_t*)s->pixels, x, y, s->w, s->h);
-			free(pixels);
 			return;
 		}
+
+		uint32_t* pixels = malloc(w * h * sizeof(uint32_t));
+		assert(pixels);
 		for(int i = 0; i < h; i++)
 			memcpy(pixels + i * w, (uint32_t*)s->pixels + (y + i) * s->w + x, w * sizeof(uint32_t));
 		NDL_DrawRect(pixels, x, y, w, h);
@@ -151,13 +151,14 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 	}
 	else if(s->format->BytesPerPixel == 1)
 	{
-		/*
-		printf("CCCCCCCCC\n");
-		if(w == 0 && h == 0)
+		if(x == 0 && y == 0 && w == 0 && h == 0)
 		{
 			w = s->w;
 			h = s->h;
 		}
+
+		uint32_t* pixels = malloc(w * h * sizeof(uint32_t));
+		assert(pixels);
 		for(int i = 0; i < h; i++)
 		{
 			for(int j = 0; j < w; j++)
@@ -175,7 +176,6 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 		NDL_DrawRect(pixels, x, y, w, h);
 		free(pixels);
 		return;
-		*/
 	}
 	else
 	{
