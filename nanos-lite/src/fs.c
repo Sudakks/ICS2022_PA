@@ -59,7 +59,7 @@ int fs_open(const char *pathname, int flags, int mode)
 		if(strcmp(file_table[i].name, pathname) == 0)
 		{
 			//equal and find
-			printf("Open %s\n", pathname);
+			printf("Open %s, i = %d\n", pathname, i);
 			file_table[i].open_offset = 0;
 			return i;
 		}
@@ -71,6 +71,7 @@ int fs_open(const char *pathname, int flags, int mode)
 
 size_t fs_read(int fd, void *buf, size_t len)
 {
+	printf("read = %d\n", fd);
 	int file_table_sz = sizeof(file_table) / sizeof(Finfo);
 	assert(fd < file_table_sz);
 
