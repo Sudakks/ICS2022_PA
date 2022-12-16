@@ -40,7 +40,6 @@ void put_str(size_t cnt, const char* str)
 }*/
 
 int printf(const char *fmt, ...) {
-	putstr("in printf\n");
 	/*
 	实现：
 	利用sprintf将数据读到一个out里面，利用putch函数输出
@@ -59,11 +58,7 @@ int printf(const char *fmt, ...) {
 	{ 
 		if(*fmt == '%')
 		{
-			putstr("read %\n");
 			fmt++;
-			putstr("fmt is ");
-			if(*fmt == 'd')
-				putstr("it's d\n");
 			//说明有要读到的格式了
 			switch(*fmt)
 			{
@@ -132,7 +127,6 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
 }
 
 int sprintf(char *out, const char *fmt, ...) {
-	putstr("start sprintf\n");
 	va_list ap;
 	va_start(ap, fmt);
 	char* s;
@@ -153,7 +147,6 @@ int sprintf(char *out, const char *fmt, ...) {
 			{
 				case 'd':
 				//读数字
-				putstr("in read d\n");
 			  	num = va_arg(ap, int);			  		
 					len = 0;
 					//似乎没有判断为负的情况 
