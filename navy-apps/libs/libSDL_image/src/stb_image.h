@@ -868,6 +868,7 @@ static unsigned char *stbi__load_and_postprocess_8bit(stbi__context *s, int *x, 
 {
    stbi__result_info ri;
    void *result = stbi__load_main(s, x, y, comp, req_comp, &ri, 8);
+	 printf("huhuhu\n");
 
    if (result == NULL)
       return NULL;
@@ -930,7 +931,6 @@ STBIDEF stbi_uc *stbi_load_from_memory(stbi_uc const *buffer, int len, int *x, i
 {
    stbi__context s;
    stbi__start_mem(&s,buffer,len);
-	 printf("right len = %d\n", len);
    return stbi__load_and_postprocess_8bit(&s,x,y,comp,req_comp);
 }
 
