@@ -145,7 +145,6 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 			memcpy(pixels + i * w, (uint32_t*)s->pixels + (y + i) * s->w + x, w * sizeof(uint32_t));
 		NDL_DrawRect(pixels, x, y, w, h);
 		free(pixels);
-		return;
 	}
 	else if(s->format->BytesPerPixel == 1)
 	{
@@ -166,15 +165,15 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 				uint8_t ptr = pix[pos];
 				SDL_Color col = s->format->palette->colors[ptr];
 //s->format->palette->colors[pixels[坐标索引]]
+uint8_t a = col.a;
 				uint8_t r = col.r;
 				uint8_t g = col.g;
 				uint8_t b = col.b;
-				pixels[w * i + j] = (r << 16) | (g << 8) | b;
+				pixels[w * i + j] = (a << 24) | (r << 16) | (g << 8) | b;
 			}
 		}
 		NDL_DrawRect(pixels, x, y, w, h);
 		free(pixels);
-		return;
 	}
 	else
 	{
