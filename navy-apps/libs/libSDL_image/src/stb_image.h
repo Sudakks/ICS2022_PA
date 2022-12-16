@@ -3884,8 +3884,8 @@ static void *stbi__do_png(stbi__png *p, int *x, int *y, int *n, int req_comp, st
 {
    void *result=NULL;
    if (req_comp < 0 || req_comp > 4) return stbi__errpuc("bad req_comp", "Internal error");
-	 printf("reach here\n");
    if (stbi__parse_png_file(p, STBI__SCAN_load, req_comp)) {
+		 printf("in here\n");
       if (p->depth <= 8)
          ri->bits_per_channel = 8;
       else if (p->depth == 16)
