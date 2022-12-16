@@ -65,12 +65,9 @@ int printf(const char *fmt, ...) {
 				case 'd':
 				//读数字
 			  		num = va_arg(ap, int);			  		
-						//putstr("before sprintf\n");
 						str_cnt = sprintf(mynum, "%d", num);
-						//printf("end sprintf\n");
 						putstr(mynum);
 						ret += str_cnt;
-						//put_str(str_cnt, mynum);
 						break;
 				case 's':
 						mystr = va_arg(ap, char*);//它会显示char*转到char数组不行
@@ -129,7 +126,6 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
 }
 
 int sprintf(char *out, const char *fmt, ...) {
-	putstr("in sprintf\n");
 	va_list ap;
 	va_start(ap, fmt);
 	char* s;

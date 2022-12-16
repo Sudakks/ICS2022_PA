@@ -52,6 +52,7 @@ void init_fs() {
 
 int fs_open(const char *pathname, int flags, int mode)
 {
+	printf("djdhdjj = %d\n", 2);
 	int file_table_sz = sizeof(file_table) / sizeof(Finfo);
 	//find the same filename in file_table
 	for(int i = 0; i < file_table_sz; i++)
@@ -62,9 +63,6 @@ int fs_open(const char *pathname, int flags, int mode)
 			
 			printf("Open %s\n", pathname);
 			file_table[i].open_offset = 0;
-			printf("--------------\n");
-			for(int j = 0; j < 2; j++)
-				printf("j = %d------\n", j);
 			return i;
 		}
 	}
