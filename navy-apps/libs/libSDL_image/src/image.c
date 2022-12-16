@@ -13,6 +13,7 @@ SDL_Surface* IMG_Load_RW(SDL_RWops *src, int freesrc) {
 
 SDL_Surface* IMG_Load(const char *filename) {
 	//open
+	printf("start open\n");
 	FILE *fp = fopen(filename, "rb");//打开文件。
   if(fp == NULL) // 打开文件失败
       return NULL;
@@ -31,6 +32,7 @@ SDL_Surface* IMG_Load(const char *filename) {
 	//close
   fclose(fp);
 	free(buf);
+	printf("end opren\n");
 	return ret; 
 }
 
