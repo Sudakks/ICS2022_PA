@@ -866,9 +866,7 @@ static void stbi__vertical_flip_slices(void *image, int w, int h, int z, int byt
 static unsigned char *stbi__load_and_postprocess_8bit(stbi__context *s, int *x, int *y, int *comp, int req_comp)
 {
    stbi__result_info ri;
-	 printf("huhuhuhuhuhu\n");
    void *result = stbi__load_main(s, x, y, comp, req_comp, &ri, 8);
-	 printf("huhuhu\n");
 
    if (result == NULL)
       return NULL;
@@ -3916,11 +3914,6 @@ static void *stbi__png_load(stbi__context *s, int *x, int *y, int *comp, int req
 {
    stbi__png p;
    p.s = s;
-	 printf("www\n");
-	 void* ret= stbi__do_png(&p, x,y,comp,req_comp, ri);
-	 printf("finifh\n");
-	 return ret;
-
    return stbi__do_png(&p, x,y,comp,req_comp, ri);
 }
 
