@@ -32,7 +32,7 @@ SDL_Surface* IMG_Load(const char *filename) {
 	//close
   fclose(fp);
 	free(buf);
-	printf("end opren\n");
+	printf("end open\n");
 	return ret; 
 }
 
