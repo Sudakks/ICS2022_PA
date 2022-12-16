@@ -66,10 +66,6 @@ int printf(const char *fmt, ...) {
 				//读数字
 			  		num = va_arg(ap, int);			  		
 						putstr("before sprintf\n");
-						if(num == 0)
-							putstr("num == 0");
-						else if(num == 1)
-							putstr("num == 1");
 						str_cnt = sprintf(mynum, "%d", num);
 						printf("end sprintf\n");
 						putstr(mynum);
@@ -154,6 +150,10 @@ int sprintf(char *out, const char *fmt, ...) {
 				case 'd':
 				//读数字
 			  	num = va_arg(ap, int);			  		
+					if(num == 0)
+						putstr("num = 0");
+					else if(num == 1)
+						putstr("num = 1");
 					len = 0;
 					//似乎没有判断为负的情况 
 					if(num < 0)
