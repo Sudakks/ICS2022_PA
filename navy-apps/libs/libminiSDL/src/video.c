@@ -105,8 +105,23 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 	}
 	else if(s->format->BytesPerPixel == 1)
 	{
-		printf("BytesPerPixel not implemented!\n");	
-		assert(0);
+		//实现8位像素下的内容
+		//SDL_Palette* pal = s->format->palette;   
+		if(x == 0 && y == 0 && w == 0 && h == 0)
+			w = s->w, h = s->h;
+
+		uint32_t *pixels = malloc(w * h * sizeof(uint32_t)); 
+		for (int i = 0; i < h; i ++)
+		{
+			 for (int j = w - 1; j >= 0; j --) 
+			{                                                                                   
+					uint8_t b = *(((uint8_t*)&pixels[w * i]) + 3 * j);
+					uint8_t g = *(((uint8_t*)&pixels[w * i]) + 3 * j + 1);
+					uint8_t r = *(((uint8_t*)&pixels[w * i]) + 3 * j + 2);
+					pixels[w * i + j] = (r << 16) | (g << 8) | b;
+			}
+		}
+			NDL_DrawRect(pixels, x, y, w, h);
 	}
 	else
 		assert(0);
