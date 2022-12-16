@@ -65,9 +65,7 @@ int printf(const char *fmt, ...) {
 				case 'd':
 				//读数字
 			  		num = va_arg(ap, int);			  		
-						putstr("bofre\n");
 						str_cnt = sprintf(mynum, "%d", num);
-						putstr("after\n");
 						putstr(mynum);
 						ret += str_cnt;
 						//put_str(str_cnt, mynum);
@@ -119,7 +117,6 @@ int printf(const char *fmt, ...) {
 		}
 		fmt++;
 	}
-	putstr("out now\n");
 	va_end(ap);
 	return ret;
   //panic("Not implemented");
@@ -150,6 +147,7 @@ int sprintf(char *out, const char *fmt, ...) {
 			{
 				case 'd':
 				//读数字
+				putstr("in read d\n");
 			  	num = va_arg(ap, int);			  		
 					len = 0;
 					//似乎没有判断为负的情况 
@@ -258,6 +256,7 @@ int sprintf(char *out, const char *fmt, ...) {
 		}
 		fmt++;
 	}
+	printf("end snprintf\n");
 	va_end(ap);
 	*out = '\0';
 	return ret;
