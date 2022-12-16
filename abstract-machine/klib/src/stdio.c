@@ -65,9 +65,9 @@ int printf(const char *fmt, ...) {
 				case 'd':
 				//读数字
 			  		num = va_arg(ap, int);			  		
-						putstr("before sprintf\n");
+						//putstr("before sprintf\n");
 						str_cnt = sprintf(mynum, "%d", num);
-						printf("end sprintf\n");
+						//printf("end sprintf\n");
 						putstr(mynum);
 						ret += str_cnt;
 						//put_str(str_cnt, mynum);
@@ -129,6 +129,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
 }
 
 int sprintf(char *out, const char *fmt, ...) {
+	putstr("in sprintf\n");
 	va_list ap;
 	va_start(ap, fmt);
 	char* s;
