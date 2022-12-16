@@ -13,7 +13,6 @@ SDL_Surface* IMG_Load_RW(SDL_RWops *src, int freesrc) {
 
 SDL_Surface* IMG_Load(const char *filename) {
 	//open
-	printf("start open\n");
 	FILE *fp = fopen(filename, "r");
 	assert(fp != NULL);
 
@@ -26,14 +25,11 @@ SDL_Surface* IMG_Load(const char *filename) {
 	fseek(fp, 0, SEEK_SET);
 	fread(buf, sizeof(char), len, fp);
 
-	printf("before Load\n");
 	SDL_Surface* ret = STBIMG_LoadFromMemory(buf, len);
-	printf("end Load\n");
 
 	//close
   fclose(fp);
 	free(buf);
-	printf("end open\n");
 	return ret; 
 }
 

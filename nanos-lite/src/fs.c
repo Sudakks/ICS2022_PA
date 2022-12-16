@@ -60,7 +60,8 @@ int fs_open(const char *pathname, int flags, int mode)
 		{
 			//equal and find
 			
-			printf("Open %s\n", pathname);
+			if(i != 3 && i != 4)
+				printf("Open %s\n", pathname);
 			file_table[i].open_offset = 0;
 			return i;
 		}
