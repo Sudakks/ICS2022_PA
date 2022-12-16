@@ -39,7 +39,6 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 		for(int j = 0; j < w; j++)
 		{
 			dst->pixels[(dst_y + i) * dst->w + dst_x + j] = src->pixels[(src_y + i) * src->w + src_x + j];
-			printf("")
 		}
 	}
 	*/
@@ -48,6 +47,10 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 	{
 		memcpy(dst->pixels + ((dst_y + i) * dst->w + dst_x) * width, src->pixels + ((src_y + i) * src->w + src_x) * width, w * width);
 		//printf("%d - %d - %d\n", (dst_y + i) * dst->w + dst_x, (src_y + i) * src->w + src_x, w);
+		/*
+		Mark错误:
+		是因为没有区分他的bytes数，所以导致这里无法正确绘图
+		*/
 	}
 }
 
@@ -68,7 +71,7 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 	}
 	//advance pixels
 	
-uint32_t* pix = (uint32_t*)dst->pixels;
+	uint32_t* pix = (uint32_t*)dst->pixels;
 	for(int i = 0; i < h; i++)
 	{
 		for(int j = 0; j < w; j++)
@@ -87,18 +90,28 @@ uint32_t* pix = (uint32_t*)dst->pixels;
 
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 	//s->pixels是void*类型
-	if(x == 0 && y == 0 && w == 0 && h == 0)
+	if(s->format->BytesPerPixel == 4)
 	{
-		NDL_DrawRect((uint32_t*)s->pixels, x, y, s->w, s->h);
-		return;
+		if(x == 0 && y == 0 && w == 0 && h == 0)
+		{
+			NDL_DrawRect((uint32_t*)s->pixels, x, y, s->w, s->h);
+			return;
+		}
+		uint32_t* pix = malloc(w * h * sizeof(uint32_t));
+		for(int i = 0; i < h; i++)
+			memcpy(pix + i * w, (uint32_t*)s->pixels + (y + i) * s->w + x, w * sizeof(uint32_t));
+		NDL_DrawRect(pix, x, y, w, h);
+		free(pix);
 	}
-
-printf("TODO wrong\n");
-	uint32_t* pix = malloc(w * h * sizeof(uint32_t));
-	for(int i = 0; i < h; i++)
-		memcpy(pix + i * w, s->pixels + (y + i) * s->w + x, w);
-	NDL_DrawRect(pix, x, y, w, h);
-	//将画布中的指定矩形区域同步到屏幕上
+	else if(s->format->BytesPerPixel == 1)
+	{
+		printf("BytesPerPixel not implemented!\n");	
+		assert(0);
+	}
+	else
+		assert(0);
+		//panic("Invalid bytesperpixel");
+		//将画布中的指定矩形区域同步到屏幕上
 	//要更新的区域不能超过屏幕
 	//如果xywh都为0,那么更新整个屏幕
 	//w和h都是以像素记录的
