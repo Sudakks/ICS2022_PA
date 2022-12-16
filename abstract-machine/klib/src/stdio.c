@@ -59,6 +59,7 @@ int printf(const char *fmt, ...) {
 	{ 
 		if(*fmt == '%')
 		{
+			putstr("read %\n");
 			fmt++;
 			//说明有要读到的格式了
 			switch(*fmt)
@@ -66,7 +67,6 @@ int printf(const char *fmt, ...) {
 				case 'd':
 				//读数字
 			  		num = va_arg(ap, int);			  		
-						putstr("It's d\n");
 						str_cnt = sprintf(mynum, "%d", num);
 						putstr(mynum);
 						ret += str_cnt;
