@@ -40,6 +40,7 @@ void put_str(size_t cnt, const char* str)
 }*/
 
 int printf(const char *fmt, ...) {
+	putstr("in printf\n");
 	/*
 	实现：
 	利用sprintf将数据读到一个out里面，利用putch函数输出
@@ -65,7 +66,6 @@ int printf(const char *fmt, ...) {
 				case 'd':
 				//读数字
 			  		num = va_arg(ap, int);			  		
-						putstr("sssss sprintf\n");
 						str_cnt = sprintf(mynum, "%d", num);
 						putstr(mynum);
 						ret += str_cnt;
