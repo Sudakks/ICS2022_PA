@@ -40,6 +40,7 @@ void put_str(size_t cnt, const char* str)
 }*/
 
 int printf(const char *fmt, ...) {
+	putstr("before printf\n");
 	/*
 	实现：
 	利用sprintf将数据读到一个out里面，利用putch函数输出
@@ -118,6 +119,7 @@ int printf(const char *fmt, ...) {
 		fmt++;
 	}
 	va_end(ap);
+	putstr("end printf\n");
 	return ret;
   //panic("Not implemented");
 }
