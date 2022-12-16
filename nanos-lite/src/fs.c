@@ -62,6 +62,7 @@ int fs_open(const char *pathname, int flags, int mode)
 			
 			printf("Open %s\n", pathname);
 			file_table[i].open_offset = 0;
+			printf("--------------\n");
 			for(int j = 0; j < 2; j++)
 				printf("j = %d\n", j);
 			return i;
