@@ -70,19 +70,18 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 	//advance pixels
 	
 uint32_t* pix = (uint32_t*)dst->pixels;
+/*
 	for(int i = 0; i < h; i++)
 	{
 		for(int j = 0; j < w; j++)
 		{
 			pix[(y + i) * w + x + j] = color;
 		}
-	}
-	/*
+	}*/
 	for(int i = 0; i < h; i++)
 	{
 		memset(pix + (y + i) * w + x, color, w);
 	}
-	*/
 }
 
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
