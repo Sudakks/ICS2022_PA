@@ -767,23 +767,29 @@ static void *stbi__load_main(stbi__context *s, int *x, int *y, int *comp, int re
    ri->channel_order = STBI_ORDER_RGB; // all current input & output are this, but this is here so we can add BGR order
    ri->num_channels = 0;
 
+printf("iiiiiiiiiiiiiiii\n");
    #ifndef STBI_NO_JPEG
+	 printf("1\n");
    if (stbi__jpeg_test(s)) return stbi__jpeg_load(s,x,y,comp,req_comp, ri);
    #endif
    #ifndef STBI_NO_PNG
+	 printf("2\n");
    if (stbi__png_test(s))  return stbi__png_load(s,x,y,comp,req_comp, ri);
    #endif
    #ifndef STBI_NO_BMP
+	 printf("3\n");
    if (stbi__bmp_test(s))  return stbi__bmp_load(s,x,y,comp,req_comp, ri);
    #endif
    #ifndef STBI_NO_GIF
+	 printf("4\n");
    if (stbi__gif_test(s))  return stbi__gif_load(s,x,y,comp,req_comp, ri);
    #endif
    STBI_NOTUSED(bpc);
    #ifndef STBI_NO_PNM
+	 printf("5\n");
    if (stbi__pnm_test(s))  return stbi__pnm_load(s,x,y,comp,req_comp, ri);
    #endif
-
+printf("reach here\n");
 
    #ifndef STBI_NO_TGA
    // test tga last because it's a crappy test!
