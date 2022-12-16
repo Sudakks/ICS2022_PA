@@ -44,8 +44,6 @@ int printf(const char *fmt, ...) {
 	实现：
 	利用sprintf将数据读到一个out里面，利用putch函数输出
 	*/
-	char ss[] = "my printf";
-	putstr(ss);
 	va_list ap;
 	va_start(ap, fmt);
 	int num;
@@ -56,7 +54,6 @@ int printf(const char *fmt, ...) {
 	static char myc;
 	unsigned int myp;
 	unsigned int myu;
-	//char aa[5] = "---\n";
 	while(*fmt != '\0')
 	{ 
 		if(*fmt == '%')
@@ -68,7 +65,9 @@ int printf(const char *fmt, ...) {
 				case 'd':
 				//读数字
 			  		num = va_arg(ap, int);			  		
+						putstr("bofre\n");
 						str_cnt = sprintf(mynum, "%d", num);
+						putstr("after\n");
 						putstr(mynum);
 						ret += str_cnt;
 						//put_str(str_cnt, mynum);
