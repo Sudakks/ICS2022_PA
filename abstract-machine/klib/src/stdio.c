@@ -44,7 +44,8 @@ int printf(const char *fmt, ...) {
 	实现：
 	利用sprintf将数据读到一个out里面，利用putch函数输出
 	*/
-	printf("my printf\n");
+	char ss[] = "my printf";
+	putstr(ss);
 	va_list ap;
 	va_start(ap, fmt);
 	int num;
