@@ -3930,7 +3930,6 @@ static int stbi__png_test(stbi__context *s)
 
 static int stbi__png_info_raw(stbi__png *p, int *x, int *y, int *comp)
 {
-	printf("ruinn\n");
    if (!stbi__parse_png_file(p, STBI__SCAN_header, 0)) {
       stbi__rewind( p->s );
       return 0;
