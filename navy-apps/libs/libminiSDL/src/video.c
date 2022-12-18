@@ -157,7 +157,6 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 	//uint32_t idx = 0;
 	if(s->format->BitsPerPixel == 32)
 	{
-		printf("update 4\n");
 		if(x == 0 && y == 0 && w == 0 && h == 0)
 		{
 			w = s->w;
@@ -177,7 +176,6 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 		{
 			w = s->w, h = s->h;
 		}
-		printf("w = %d, h = %d, x = %d, y = %d\n", w, h, x, y);
 		//printf("update 1\n");
 		uint32_t* pix = malloc(w * h * sizeof(uint32_t));
 		assert(pix);
