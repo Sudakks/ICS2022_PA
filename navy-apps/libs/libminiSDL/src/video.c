@@ -56,6 +56,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 */
 
 	uint32_t width = (dst->format->BytesPerPixel == 4) ? 4 : 1;
+	printf("width = %d\n", width);
 	for(int i = 0; i < h; i++)
 	{
 		memcpy(dst->pixels + ((dst_y + i) * dst->w + dst_x) * width, src->pixels + ((src_y + i) * src->w + src_x) * width, w * width);
@@ -85,6 +86,7 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 	//advance pixels
 	if(dst->format->BytesPerPixel == 4)
 	{
+		printf("Fill 4\n");
 		/*
 		for(int i = 0; i < h; i++)
 		{
@@ -101,6 +103,7 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 	}
 	else if(dst->format->BytesPerPixel == 1)
 	{
+		printf("Fill 1\n");
 		/*
 		for(int i = 0; i < h; i++)
 		{
@@ -136,7 +139,7 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 	//s->pixels是void*类型
-	if(w == 0 && h == 0)
+	if(x == 0 && y == 0 && w == 0 && h == 0)
 	{
 		w = s->w;
 		h = s->h;
@@ -147,19 +150,7 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 
 	uint32_t* pix = malloc(w * h * sizeof(uint32_t));
 	assert(pix);
-	uint32_t idx = 0;
-	uint32_t sta = y * s->w + x;
-	/*
-	uint32_t idx = 0;
-	uint32_t sta = x + y * s->w;
-	for(int i = 0; i < h; i++)
-	{
-		for(int j = 0; j < w; j++)
-		{
-
-		}
-	}
-*/
+	//uint32_t idx = 0;
 	if(s->format->BytesPerPixel == 4)
 	{
 		for(int i = 0; i < h; i++)
@@ -168,24 +159,15 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 	else if(s->format->BytesPerPixel == 1)
 	{
 		//wrong here
-		/*
+		uint8_t* now_pix = (uint8_t*)s->pixels;
 		for(int i = 0; i < h; i++)
 		{
 			for(int j = 0; j < w; j++)
 			{
 				uint32_t pos = (y + i) * s->w + x + j;
-				SDL_Color col = s->format->palette->colors[s->pixels[pos]];
+				SDL_Color col = s->format->palette->colors[now_pix[pos]];
 //s->format->palette->colors[pixels[坐标索引]]
-				pixels[w * i + j] = (col.a << 24) | (col.b << 16) | (col.g << 8) | col.b;
-			}
-		}*/
-		for(int i = 0; i < h; i++)
-		{
-			for(int j = 0; j < w; j++)
-			{
-				uint32_t off = j + i * s->w;
-				SDL_Color col = s->format->palette->colors[s->pixels[sta + off]];
-				pix[idx++] = col.a << 24 | col.r << 16 | col.g << 8 | col.b;
+				pix[w * i + j] = (col.a << 24) | (col.b << 16) | (col.g << 8) | col.b;
 			}
 		}
 	}
