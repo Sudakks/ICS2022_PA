@@ -155,13 +155,6 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 	*/
 
 	//uint32_t idx = 0;
-	for(int i = 0; i < s->w; i++)
-	{
-		for(int j = 0; j < s->h; j++)
-		{
-			printf("pix = %d\n", *(s->pixels + (s->w * (i + y) + x) * s->format->BytesPerPixel));
-		}
-	}
 	if(s->format->BitsPerPixel == 32)
 	{
 		printf("update 4\n");
