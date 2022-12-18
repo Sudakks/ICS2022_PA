@@ -138,11 +138,13 @@ size_t fs_lseek(int fd, size_t offset, int whence)
 	*/
 	size_t curpos = file_table[fd].open_offset;
 	size_t filesize = file_table[fd].size;
-	switch (whence) {                                
-		case SEEK_END: curpos = filesize; break;
+
+	switch (whence) 
+	{                                
+		case SEEK_END: curpos = filesize + offset; break;
 		case SEEK_SET: curpos = offset; break;
 		case SEEK_CUR: curpos += offset; break;
-		}
+	}
 		if (curpos < 0) curpos = 0;
 		else if (curpos > filesize) curpos = filesize;
 		file_table[fd].open_offset = curpos;

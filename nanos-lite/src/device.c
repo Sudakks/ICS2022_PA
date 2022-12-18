@@ -35,17 +35,19 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 	
 	char* kc = (char*)keyname[ev.keycode];
 	char* status = (ev.keydown == 1) ? "kd " : "ku ";
-	char* info = "\n";
+	//char* info = "\n";
 	
+	int ret = snprintf(buf, len, "%s %s\n", status, kc);
+	return ret;
+	/*
 	strcpy(info, status);
 	strcat(info, kc);
 	strcpy(buf, info);
-	
 
 	size_t tmp = strlen(info);
 	size_t ret = (len < tmp) ? len : tmp;
 	return ret;
-	
+*/	
 }
 
 size_t dispinfo_read(void *buf, size_t offset, size_t len) {
@@ -58,11 +60,12 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 	printf("%s", buf);
 	//是<，因为最后一位是'\0'，但是不计入长度
 	assert(ret < len);
-	return ret;
+	return ret + 1;
 }
 
 size_t fb_write(const void *buf, size_t offset, size_t len) {
 	//write len bytes from buf to the offset of screen
+	printf("fb_write: len = %d\n", len);
 	int w = io_read(AM_GPU_CONFIG).width;
 	int x = (offset) % w;
 	int y = (offset) / w;
