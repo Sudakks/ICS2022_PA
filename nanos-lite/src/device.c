@@ -59,27 +59,11 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 	//是<，因为最后一位是'\0'，但是不计入长度
 	assert(ret < len);
 	return ret;
-	
-	/*
-	size_t ret = 15;
-	char W[32];
-	char H[32];
-	ret += sprintf(W, "%d\n", w);
-	ret += sprintf(H, "%d\n", h);
-	char* info = "\n";
-
-  strcpy(info, "WIDTH: ");
-  strcat(info, W);
-  strcat(info, "HEIGHT: ");
-  strcat(info, H);
-	strcpy(buf, info);
-	assert(ret < len);
-	return ret;*/
-	
 }
 
 size_t fb_write(const void *buf, size_t offset, size_t len) {
 	//write len bytes from buf to the offset of screen
+	printf("yes\n");
 	int w = io_read(AM_GPU_CONFIG).width;
 	int x = (offset) % w;
 	int y = (offset) / w;
