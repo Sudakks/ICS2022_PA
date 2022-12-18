@@ -33,39 +33,49 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 		w = srcrect->w, h = srcrect->h;	
 	}
 
-/*
 	if(src->format->BytesPerPixel == 4)
 	{
+		int width = 4;
 		for(int i = 0; i < h; i++)
 		{
-			memcpy((uint32_t*)dst->pixels + ((dst_y + i) * dst->w + dst_x), (uint32_t*)src->pixels + ((src_y + i) * src->w + src_x), w * sizeof(uint32_t));
+			memcpy(dst->pixels + ((dst_y + i) * dst->w + dst_x) * width, src->pixels + ((src_y + i) * src->w + src_x) * width, w * width);
 		}
 	}
 	else if(src->format->BytesPerPixel == 1)
 	{
+		uint8_t* sp = (uint8_t*) src->pixels;
+		uint8_t* dp = (uint8_t*) dst->pixels;
+		for(int i = 0; i < h; i++)
+		{
+			for(int j = 0; j < w; j++)
+			{
+				dp[(dst_y + i) * dst->w + dst_x + j] = sp[(src_y + i) * src->w + src_x + j];
+			}
+		}
+		/*
 		for(int i = 0; i < h; i++)
 		{
 			memcpy((uint8_t*)dst->pixels + ((dst_y + i) * dst->w + dst_x), (uint8_t*)src->pixels + ((src_y + i) * src->w + src_x), w * sizeof(uint8_t));
 		}
+		*/
 	}
 	else
 	{
 		printf("Wrong BytesPerPixel!\n");
 		assert(0);
 	}
-*/
 
+/*
 	uint32_t width = (dst->format->BytesPerPixel == 4) ? 4 : 1;
-	printf("width = %d\n", width);
 	for(int i = 0; i < h; i++)
 	{
 		memcpy(dst->pixels + ((dst_y + i) * dst->w + dst_x) * width, src->pixels + ((src_y + i) * src->w + src_x) * width, w * width);
 		//printf("%d - %d - %d\n", (dst_y + i) * dst->w + dst_x, (src_y + i) * src->w + src_x, w);
+*/
 		/*
 		Mark错误:
 		是因为没有区分他的bytes数，所以导致这里无法正确绘图
 		*/
-	}
 }
 
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
