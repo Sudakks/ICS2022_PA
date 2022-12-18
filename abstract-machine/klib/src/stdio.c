@@ -6,39 +6,6 @@
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 #define MAX_STR_SIZE 100000
 
-void put_str(size_t cnt, const char* str)
-{
-	//putch str
-	for(int i = 0; i < cnt; i++)
-	{
-		putch(*(i + str));
-		
-	}
-}
-
-/*int printNum(unsigned int num, int base, char* out)
-{
-		int val[67];
-		int len = 0;
-		while(1)
-		{
-				if(num == 0)
-					break;
-				len++;
-				val[len] = num % base;
-				num = num / base;
-		}					
-		if(len == 0)
-				val[++len] = 0; //相当于特判了是0的情况 
-									
-		for(int i = len; i >= 1; i--)
-		{
-				*out = val[i] + '0';
-				out++;
-		}
-		return len;
-}*/
-
 int printf(const char *fmt, ...) {
 	/*
 	实现：
@@ -46,6 +13,13 @@ int printf(const char *fmt, ...) {
 	*/
 	va_list ap;
 	va_start(ap, fmt);
+	char out[2048];
+
+	int ret = vsprintf(out, fmt, ap);
+	putstr(out);
+	va_end(ap);
+	return ret;	
+	/*
 	int num;
 	int str_cnt = 0;
 	int ret = 0;
@@ -117,16 +91,23 @@ int printf(const char *fmt, ...) {
 		fmt++;
 	}
 	va_end(ap);
-	return ret;
+	return ret;*/
   //panic("Not implemented");
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
-  panic("Not implemented");
+	return vsnprintf(out, -1, fmt, ap);
+  //panic("Not implemented");
 }
 
 int sprintf(char *out, const char *fmt, ...) {
 	va_list ap;
+	va_start(ap, fmt);
+	
+	int ret = vsprintf(out, fmt, ap);
+	va_end(ap);
+	return ret;
+	/*va_list ap;
 	va_start(ap, fmt);
 	char* s;
 	char c;
@@ -256,16 +237,143 @@ int sprintf(char *out, const char *fmt, ...) {
 	}
 	va_end(ap);
 	*out = '\0';
-	return ret;
+	return ret;*/
 }
 
 
 int snprintf(char *out, size_t n, const char *fmt, ...) {
-  panic("Not implemented");
+  //panic("Not implemented");
+	va_list ap;
+	va_start(ap, fmt);
+
+	int ret = vsnprintf(out, n, fmt, ap);
+	va_end(ap);
+	return ret;
 }
 
 int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
-  panic("Not implemented");
+	char c;
+	char* s;
+	int num;
+	int len;
+	int check = 0;
+	char* tmp = (char*)fmt;
+	unsigned int unum;
+	uint32_t ptr;
+	int val[67];
+	while(*tmp != '\0' && check < n)
+	{
+		if(*tmp == '%')
+		{
+			//说明有要读到的格式了
+			tmp++;
+			switch(*tmp)
+			{
+				case 'd':
+				//读数字
+			  	num = va_arg(ap, int);			  		
+					len = 0;
+					//似乎没有判断为负的情况 
+					if(num == 0)
+					{
+						out[check++] = '0';
+						break;
+					}
+					if(num < 0)
+					{
+						out[check++] = '-';					
+						if(check >= n)
+							break;
+						num = -num;
+					}							
+					while(1)
+					{
+						if(num == 0)
+							break;
+						len++;
+						val[len] = num % 10;
+						num = num / 10;
+					}					
+					for(int i = len; i >= 1; i--)
+					{
+						out[check++] = val[i] + '0';
+						if(check >= n)
+							break;
+					}
+					//int2string
+					break;
+				case 's':
+					s = va_arg(ap, char*);
+					for(len = 0; s[len] != '\0'; len++)
+					{
+						out[check++] = s[len];
+						if(check >= n)
+							break;
+					}
+					break;
+				case 'c':
+					c = va_arg(ap, int);
+					out[check++] = c;
+					break;
+				case 'p':
+				//地址是16进制显示
+					ptr = va_arg(ap, uint32_t);
+					len = 0;
+					while(1)
+					{
+						if(ptr == 0)
+							break;
+						len++;
+						val[len] = ptr % 16;
+						ptr = ptr / 16;
+					}					
+					if(len == 0)
+						val[++len] = 0; //相当于特判了是0的情况 					
+					for(int i = len; i >= 1; i--)
+					{
+						if(val[i] < 10)
+							out[check++] = val[i] + '0';
+						else
+							out[check++] = 'a' + val[i] - 10;
+						if(check >= n)
+							break;	
+					}
+					break;
+				case 'x':
+					unum = va_arg(ap, unsigned int);
+					len = 0;
+					while(1)
+					{
+						if(unum == 0)
+							break;
+						len++;
+						val[len] = unum % 16;
+					  	unum = unum / 16;
+					}					
+					if(len == 0)
+						val[++len] = 0; //相当于特判了是0的情况 					
+					for(int i = len; i >= 1; i--)
+					{
+						if(val[i] < 10)
+							out[check++] = val[i] + '0';
+						else
+							out[check++] = 'a' + val[i] - 10;
+						if(check >= n)
+							break;	
+					}
+					break;
+				default:
+					panic("Not implemented in vsnprintf");
+			}
+		}
+		else
+		{
+			out[check++] = *tmp;
+		}
+		tmp++;
+	}
+	out[check] = '\0';
+	//最后要自行添加'\0'
+	return check;
 }
-
 #endif
