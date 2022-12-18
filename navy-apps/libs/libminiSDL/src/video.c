@@ -85,6 +85,7 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 	//advance pixels
 	if(dst->format->BytesPerPixel == 4)
 	{
+		/*
 		for(int i = 0; i < h; i++)
 		{
 			for(int j = 0; j < w; j++)
@@ -92,15 +93,26 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 				*((uint32_t*)dst->pixels + ((y + i) * w + x + j)) = color;
 			}
 		}
+		*/
+		for(int i = 0; i < h; i++)
+		{
+			memset((uint32_t*)dst->pixels + (y + i) * dst->w + x, color, sizeof(uint32_t) * w);
+		}
 	}
 	else if(dst->format->BytesPerPixel == 1)
 	{
+		/*
 		for(int i = 0; i < h; i++)
 		{
 			for(int j = 0; j < w; j++)
 			{
 				*((uint8_t*)dst->pixels + ((y + i) * w + x + j)) = color; 
 			}
+		}
+		*/
+		for(int i = 0; i < h; i++)
+		{
+			memset((uint8_t*)dst->pixels + (y + i) * dst->w + x, color, sizeof(uint8_t) * w);
 		}
 	}
 	else
@@ -169,7 +181,7 @@ uint8_t a = col.a;
 				uint8_t r = col.r;
 				uint8_t g = col.g;
 				uint8_t b = col.b;
-				pixels[w * i + j] = (a << 24) | (r << 16) | (g << 8) | b;
+				pixels[w * i + j] = (r << 16) | (g << 8) | b;
 			}
 		}
 		NDL_DrawRect(pixels, x, y, w, h);
