@@ -141,7 +141,9 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 		w = s->w;
 		h = s->h;
 	}
-
+	/*NDL_DrawRect receive pixels is uint32_t*
+	so, we should set the pixles also as 32 bits
+	*/
 
 	if(s->format->BytesPerPixel == 4)
 	{
@@ -149,7 +151,7 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 		{
 			NDL_DrawRect((uint32_t*)s->pixels, x, y, s->w, s->h);
 			return;
-		}
+	}
 
 		uint32_t* pixels = malloc(w * h * sizeof(uint32_t));
 		assert(pixels);
