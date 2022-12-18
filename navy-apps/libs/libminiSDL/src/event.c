@@ -10,6 +10,9 @@ static const char *keyname[] = {
   _KEYS(keyname)
 };
 
+const int keyname_sz = sizeof(keyname) / sizeof(keyname[0]);
+//uint8_t keysnap[keyname_sz];
+
 int SDL_PushEvent(SDL_Event *ev) {
   return 0;
 }
@@ -55,6 +58,13 @@ bool get_event(SDL_Event *event)
 		{
 			//find sym
 			sym = i;
+			//attention:注意更新snap的值
+			/*
+			if(type == SDL_KEYUP)
+				keysnap[i] = 0;
+			else if(type == SDL_KEYDOWN)
+				keysnap[i] = 1;
+				*/
 			break;
 		}
 	}
@@ -135,7 +145,16 @@ int SDL_PeepEvents(SDL_Event *ev, int numevents, int action, uint32_t mask) {
 }
 
 uint8_t* SDL_GetKeyState(int *numkeys) {
+	/*
+	自己建立一个数组，然后存放快照
+	*/
+	/*
+	if(numkeys)
+		*numkeys = keyname_sz;
+	return keysnap;
 	assert(0);
 	printf("reach here\n");
   return NULL;
+	*/
+	assert(0);
 }
