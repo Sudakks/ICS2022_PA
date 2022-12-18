@@ -79,6 +79,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 }
 
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
+	printf("FillRect\n");
 	//往画布的指定矩形区域中填充指定的颜色
 	//即改变pixels里面的内容
 	int x, y, w, h;
