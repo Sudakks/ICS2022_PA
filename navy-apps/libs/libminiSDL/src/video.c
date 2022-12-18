@@ -177,7 +177,7 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 			w = s->w, h = s->h;
 		}
 		printf("w = %d, h = %d, x = %d, y = %d\n", w, h, x, y);
-		printf("update 1\n");
+		//printf("update 1\n");
 		uint32_t* pix = malloc(w * h * sizeof(uint32_t));
 		assert(pix);
 		uint8_t* now_pix = (uint8_t*)s->pixels;
@@ -188,6 +188,7 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 				uint32_t pos = (y + i) * s->w + x + j;
 				SDL_Color col = s->format->palette->colors[now_pix[pos]];
 //s->format->palette->colors[pixels[坐标索引]]
+				printf("pos = %d, r = %d, g = %d, b = %d\n", w *i + j, col.r, col.g, col.b);
 				pix[w * i + j] = (col.a << 24) | (col.b << 16) | (col.g << 8) | col.b;
 			}
 		}
