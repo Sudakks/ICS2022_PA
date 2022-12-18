@@ -149,12 +149,7 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 	//s->pixels是void*类型
-	if(x == 0 && y == 0 && w == 0 && h == 0)
-	{
-		w = s->w;
-		h = s->h;
-	}
-	/*NDL_DrawRect receive pixels is uint32_t*
+		/*NDL_DrawRect receive pixels is uint32_t*
 	so, we should set the pixles also as 32 bits
 	*/
 
@@ -162,6 +157,11 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 	if(s->format->BitsPerPixel == 32)
 	{
 		printf("update 4\n");
+		if(x == 0 && y == 0 && w == 0 && h == 0)
+		{
+			w = s->w;
+			h = s->h;
+		}
 		uint32_t* pix = malloc(w * h * sizeof(uint32_t));
 		assert(pix);
 		for(int i = 0; i < h; i++)
@@ -172,6 +172,11 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 	else if(s->format->BitsPerPixel == 8)
 	{
 		//wrong here
+		if(w == 0 && h == 0 && x == 0 && y == 0)
+		{
+			w = s->w, h = s->h;
+		}
+		printf("w = %d, h = %d, x = %d, y = %d\n", w, h, x, y);
 		printf("update 1\n");
 		uint32_t* pix = malloc(w * h * sizeof(uint32_t));
 		assert(pix);
@@ -182,7 +187,7 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 			for(int j = 0; j < w; j++)
 			{
 				SDL_Color* col = &s->format->palette->colors[now_pix[(y + i) * s->w + x + j]]; 
-				pix[i*w + j] = col->a << 24 | col->r << 16 | col->g << 8 | col->b;
+				pix[i * w + j] = col->a << 24 | col->r << 16 | col->g << 8 | col->b;
 			}
 		}
 		NDL_DrawRect(pix, x, y, w, h);
