@@ -43,6 +43,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 	}
 	else if(dst->format->BitsPerPixel == 8)
 	{
+		/*
 		uint8_t* sp = (uint8_t*) src->pixels;
 		uint8_t* dp = (uint8_t*) dst->pixels;
 		for(int i = 0; i < h; i++)
@@ -52,12 +53,11 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 				dp[(dst_y + i) * dst->w + dst_x + j] = sp[(src_y + i) * src->w + src_x + j];
 			}
 		}
-		/*
+		*/
 		for(int i = 0; i < h; i++)
 		{
 			memcpy((uint8_t*)dst->pixels + ((dst_y + i) * dst->w + dst_x), (uint8_t*)src->pixels + ((src_y + i) * src->w + src_x), w * sizeof(uint8_t));
 		}
-		*/
 	}
 	else
 	{
@@ -79,7 +79,6 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 }
 
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
-	printf("FillRect\n");
 	//往画布的指定矩形区域中填充指定的颜色
 	//即改变pixels里面的内容
 	int x, y, w, h;
@@ -97,7 +96,6 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 	//advance pixels
 	if(dst->format->BitsPerPixel == 32)
 	{
-		printf("Fill 4\n");
 		/*
 		for(int i = 0; i < h; i++)
 		{
@@ -114,7 +112,6 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 	}
 	else if(dst->format->BitsPerPixel == 8)
 	{
-		printf("Fill 1\n");
 		/*
 		for(int i = 0; i < h; i++)
 		{
@@ -154,7 +151,6 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 	so, we should set the pixles also as 32 bits
 	*/
 
-	//uint32_t idx = 0;
 	if(s->format->BitsPerPixel == 32)
 	{
 		if(x == 0 && y == 0 && w == 0 && h == 0)
@@ -176,21 +172,16 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 		{
 			w = s->w, h = s->h;
 		}
-		//printf("update 1\n");
 		uint32_t* pix = malloc(w * h * sizeof(uint32_t));
 		assert(pix);
-		//uint8_t* now_pix = (uint8_t*)s->pixels;
+		uint8_t* now_pix = (uint8_t*)s->pixels;
 		for(int i = 0; i < h; i++)
 		{
-			uint8_t* test = s->pixels + (s->w * (i + y) + x) * s->format->BytesPerPixel;
 			for(int j = 0; j < w; j++)
 			{
 				uint32_t pos = (y + i) * s->w + x + j;
-				SDL_Color *col = &s->format->palette->colors[*test++];
-				//printf("pos = %d, pix = %d\n", (s->w * (i + y) + x + j), *test);
-//s->format->palette->colors[pixels[坐标索引]]
-	//			if(col.r != 0 && col.g != 0)
-//					printf("pos = %d, r = %d, g = %d, b = %d\n", w *i + j, col.r, col.g, col.b);
+				SDL_Color *col = &s->format->palette->colors[now_pix[pos]];
+				//s->format->palette->colors[pixels[坐标索引]]
 				pix[w * i + j] = (col->r << 16) | (col->g << 8) | col->b;
 			}
 		}
