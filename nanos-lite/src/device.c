@@ -63,7 +63,6 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 
 size_t fb_write(const void *buf, size_t offset, size_t len) {
 	//write len bytes from buf to the offset of screen
-	printf("yes\n");
 	int w = io_read(AM_GPU_CONFIG).width;
 	int x = (offset) % w;
 	int y = (offset) / w;
