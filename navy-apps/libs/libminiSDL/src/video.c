@@ -158,19 +158,36 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 	so, we should set the pixles also as 32 bits
 	*/
 
-	uint32_t* pix = malloc(w * h * sizeof(uint32_t));
-	assert(pix);
 	//uint32_t idx = 0;
 	if(s->format->BitsPerPixel == 32)
 	{
 		printf("update 4\n");
+		uint32_t* pix = malloc(w * h * sizeof(uint32_t));
+		assert(pix);
 		for(int i = 0; i < h; i++)
 			memcpy(pix + i * w, (uint32_t*)s->pixels + (y + i) * s->w + x, w * sizeof(uint32_t));
+		NDL_DrawRect(pix, x, y, w, h);
+		free(pix);
 	}
 	else if(s->format->BitsPerPixel == 8)
 	{
 		//wrong here
 		printf("update 1\n");
+		uint32_t* pix = malloc(w * h * sizeof(uint32_t));
+		assert(pix);
+		uint8_t* now_pix = (uint8_t *)s->pixels;
+
+		for(int i = 0; i < h; i++)
+		{
+			for(int j = 0; j < w; j++)
+			{
+				SDL_Color* col = &s->format->palette->colors[now_pix[(y + i) * s->w + x + j]]; 
+				pix[i*w + j] = col->a << 24 | col->r << 16 | col->g << 8 | col->b;
+			}
+		}
+		NDL_DrawRect(pix, x, y, w, h);
+		free(pix);
+		/*
 		uint8_t* now_pix = (uint8_t*)s->pixels;
 		for(int i = 0; i < h; i++)
 		{
@@ -182,14 +199,13 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 				pix[w * i + j] = (col.a << 24) | (col.b << 16) | (col.g << 8) | col.b;
 			}
 		}
+		*/
 	}
 	else
 	{
 		printf("Wrong BytesPerPixels!\n");
 		assert(0);
 	}
-	NDL_DrawRect(pix, x, y, w, h);
-	free(pix);
 	/*
 if(x == 0 && y == 0 && w == 0 && h == 0)
 		{
