@@ -180,14 +180,15 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 		//printf("update 1\n");
 		uint32_t* pix = malloc(w * h * sizeof(uint32_t));
 		assert(pix);
-		uint8_t* now_pix = (uint8_t*)s->pixels;
+		//uint8_t* now_pix = (uint8_t*)s->pixels;
 		for(int i = 0; i < h; i++)
 		{
+			uint8_t* test = s->pixels + (s->w * (i + y) + x) * s->format->BytesPerPixel;
 			for(int j = 0; j < w; j++)
 			{
 				uint32_t pos = (y + i) * s->w + x + j;
-				SDL_Color col = s->format->palette->colors[now_pix[pos]];
-				printf("pos = %d, pix = %d\n", pos, now_pix[pos]);
+				SDL_Color col = s->format->palette->colors[*test++];
+				printf("pos = %d, pix = %d\n", pos, *test);
 //s->format->palette->colors[pixels[坐标索引]]
 	//			if(col.r != 0 && col.g != 0)
 //					printf("pos = %d, r = %d, g = %d, b = %d\n", w *i + j, col.r, col.g, col.b);
