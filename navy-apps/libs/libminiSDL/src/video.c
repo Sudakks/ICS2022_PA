@@ -189,7 +189,7 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 			{
 				uint32_t pos = (y + i) * s->w + x + j;
 				SDL_Color *col = &s->format->palette->colors[*test++];
-				printf("pos = %d, pix = %d\n", (s->w * (i + y) + x + j), *test);
+				//printf("pos = %d, pix = %d\n", (s->w * (i + y) + x + j), *test);
 //s->format->palette->colors[pixels[坐标索引]]
 	//			if(col.r != 0 && col.g != 0)
 //					printf("pos = %d, r = %d, g = %d, b = %d\n", w *i + j, col.r, col.g, col.b);
