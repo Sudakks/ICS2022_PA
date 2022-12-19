@@ -1,6 +1,10 @@
 #include <common.h>
 #include "syscall.h"
 #include <sys/time.h>
+#include <proc.h>
+
+void sys_execve(Context *c);
+void naive_uload(PCB *pcb, const char *filename);
 
 void sys_yield(Context *c)
 {
@@ -18,8 +22,9 @@ void sys_exit(Context *c)
 	#ifdef CONFIG_STRACE_COND
 	printf("STRACE: sys_exit\n");
 	#endif
-
-	halt(0);
+	c->GPR2 = (uintptr_t)"/bin/menu";
+	sys_execve(c);
+	//halt(0);
 }
 
 void sys_write(Context *c)
@@ -122,6 +127,15 @@ void sys_gettimeofday(Context *c)
 	#endif
 }
 
+
+void sys_execve(Context *c)
+{
+	char* filename = (char*)c->GPR2;
+	//暂时忽略后面两个参数
+	//execve无返回值
+	naive_uload(NULL, filename);
+}
+
 void do_syscall(Context *c) {
   uintptr_t a[4];
   a[0] = c->GPR1;
@@ -152,6 +166,8 @@ void do_syscall(Context *c) {
 	case SYS_gettimeofday:
 		sys_gettimeofday(c);
 		break;
+	case SYS_execve:
+		sys_execve(c);
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
 
