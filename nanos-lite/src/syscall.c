@@ -23,6 +23,7 @@ void sys_exit(Context *c)
 	printf("STRACE: sys_exit\n");
 	#endif
 	c->GPR2 = (uintptr_t)"/bin/menu";
+	//c->GPR2 = (uintptr_t)"bin/nterm"
 	sys_execve(c);
 	//halt(0);
 }
