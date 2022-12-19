@@ -78,12 +78,12 @@ int main(int argc, char *argv[], char *envp[]) {
 
   while (1) {
     display_menu(i_max);
-
+	printf("qqq\n");
     SDL_Event e;
     do {
       SDL_WaitEvent(&e);
     } while (e.type != SDL_KEYDOWN);
-
+printf("2222\n");
     int i = -1;
     printf("sym = %d\n", e.key.keysym.sym);
     switch (e.key.keysym.sym) {
