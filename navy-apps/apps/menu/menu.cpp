@@ -85,6 +85,7 @@ int main(int argc, char *argv[], char *envp[]) {
     } while (e.type != SDL_KEYDOWN);
 
     int i = -1;
+    printf("sym = %d\n", e.key.keysym.sym);
     switch (e.key.keysym.sym) {
       case SDLK_0: i = 0; break;
       case SDLK_1: i = 1; break;
