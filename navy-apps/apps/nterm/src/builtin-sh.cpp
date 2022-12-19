@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <SDL.h>
 #include <stdlib.h>
+#include <string.h>
 
 char handle_key(SDL_Event *ev);
 
@@ -26,6 +27,8 @@ static void sh_prompt() {
 static void sh_handle_cmd(const char *cmd) {
 	//这个是读到的路径，调用这个文件
 	//set PATH=/bin
+	//先要把'\n'去掉
+	printf("len = %d\n", strlen(cmd));
 	printf("cmd = %s\n", cmd);
 	//overwrite is set to 0
 	setenv("PATH", "/bin", 0);
