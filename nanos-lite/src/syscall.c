@@ -133,6 +133,7 @@ void sys_execve(Context *c)
 	char* filename = (char*)c->GPR2;
 	//暂时忽略后面两个参数
 	//execve无返回值
+	printf("execve = %s\n", filename);
 	naive_uload(NULL, filename);
 }
 
