@@ -2,6 +2,7 @@
 #include <stdarg.h>
 #include <unistd.h>
 #include <SDL.h>
+#include <stdlib.h>
 
 char handle_key(SDL_Event *ev);
 
@@ -23,6 +24,12 @@ static void sh_prompt() {
 }
 
 static void sh_handle_cmd(const char *cmd) {
+	//这个是读到的路径，调用这个文件
+	//set PATH=/bin
+	printf("cmd = %s\n", cmd);
+	//overwrite is set to 0
+	setenv("PATH", "/bin", 0);
+	execvp(cmd, NULL);
 }
 
 void builtin_sh_run() {
