@@ -68,26 +68,20 @@ static void clear_display(void) {
 }
 
 int main(int argc, char *argv[], char *envp[]) {
-printf("in here\n");
   SDL_Init(0);
   screen = SDL_SetVideoMode(0, 0, 32, SDL_HWSURFACE);
 
   font = new BDF_Font(font_fname);
   logo_sf = SDL_LoadBMP("/share/pictures/projectn.bmp");
-  printf("uiuiiu\n");
   assert(logo_sf);
   set_i_max();
-printf("sssss\n");
   while (1) {
     display_menu(i_max);
-	printf("qqq\n");
     SDL_Event e;
     do {
       SDL_WaitEvent(&e);
     } while (e.type != SDL_KEYDOWN);
-printf("2222\n");
     int i = -1;
-    printf("sym = %d\n", e.key.keysym.sym);
     switch (e.key.keysym.sym) {
       case SDLK_0: i = 0; break;
       case SDLK_1: i = 1; break;
@@ -143,7 +137,6 @@ static void draw_text_row(char *s, int r) {
 }
 
 static void display_menu(int n) {
-printf("iojnjbj\n");
   clear_display();
   SDL_Rect rect = { .x = screen->w - logo_sf->w, .y = 0 };
   SDL_BlitSurface(logo_sf, NULL, screen, &rect);
