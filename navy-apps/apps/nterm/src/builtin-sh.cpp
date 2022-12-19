@@ -28,7 +28,8 @@ static void sh_handle_cmd(const char *cmd) {
 	//这个是读到的路径，调用这个文件
 	//set PATH=/bin
 	//先要把'\n'去掉
-	printf("len = %d\n", strlen(cmd));
+	char* tmp = (char*) cmd;
+	tmp[strlen(cmd) - 1] = '\0';
 	printf("cmd = %s\n", cmd);
 	//overwrite is set to 0
 	setenv("PATH", "/bin", 0);
