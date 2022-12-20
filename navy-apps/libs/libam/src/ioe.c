@@ -1,6 +1,7 @@
 #include <am.h>
 
 bool ioe_init() {
+printf("reach here\n");
   return true;
 }
 
