@@ -179,6 +179,47 @@ static int cmd_d(char *args)
 	return 0;
 }
 
+extern riscv32_CPU_state cpu;
+extern uint8_t *pmem;
+static int cmd_save(char *args)
+{
+	char *arg = strtok(args, " ");
+	if(arg == NULL)
+	{
+		printf("Lack enough arguments!\n");
+		return 0;
+	}
+	FILE* fp = fopen(arg, "w");
+	//使用绝对路径
+	//save memory pmem
+	int ret;
+	ret = fwrite(pmem, sizeof(char), sizeof(pmem), fp);
+	ret = ret & fwrite(&cpu, sizeof(char), sizeof(cpu), fp);
+	//存的是cpu里面的寄存器
+	if(ret == 0)
+		printf("Unable to save snapshot of NEMU!\n");
+	return 0;
+}
+
+static int cmd_load(char *args)
+{
+	char *arg = strtok(args, " ");
+	if(arg == NULL)
+	{
+		printf("Lack enough arguments!\n");
+		return 0;
+	}
+	FILE* fp = fopen(arg, "r");
+	//使用绝对路径
+	//save memory pmem
+	int ret;
+	ret = fread(pmem, sizeof(char), sizeof(pmem), fp);
+	ret = ret & fread(&cpu, sizeof(char), sizeof(cpu), fp);
+	if(ret == 0)
+		printf("Unable to load snapshot of NEMU!\n");
+	return 0;
+}
+
 static struct {
   const char *name;
   const char *description;
@@ -193,6 +234,10 @@ static struct {
 	{ "p", "Calculate the given expression", cmd_p},
 	{ "w", "Set watchpoints", cmd_w},
 	{ "d", "Delete a certain watchpoint", cmd_d},
+//	{ "detach", "Exit difftest", cmd_detach},
+//	{ "attach", "Start difftest", cmd_attach}, 
+	{ "save", "Save the snapshot of NEMU", cmd_save},
+	{ "load", "Load the snapshot of NEMU", cmd_load},
   /* TODO: Add more commands */
 
 };

@@ -32,20 +32,6 @@ typedef struct {
 	word_t mstatus;
 	
 } riscv32_CPU_state;
-/*
-#define mepc 0
-#define mcause 1
-#define mtvec 2
-#define mstatus 3
-*/
-/*
-enum CSR_IDX
-{
-	mepc = 0,
-	mcause,
-	mtvec,
-	mstatus,
-};*/
 
 // decode
 typedef struct {

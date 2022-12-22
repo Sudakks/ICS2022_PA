@@ -31,30 +31,42 @@ const char *regs[] = {
   "s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6"
 };
 static int len = sizeof(regs) / sizeof(regs[0]);
-
 void isa_reg_display() {
 	for(int i = 0; i < len; i++)
 	{
 		printf("%s  %#x  %u\n", regs[i], cpu.gpr[i], cpu.gpr[i]);
 	}
+	printf("%s  %#x  %u\n", "pc", cpu.pc, cpu.pc);
+	printf("%s  %#x  %u\n", "mepc", cpu.mepc, cpu.mepc);
+	printf("%s  %#x  %u\n", "mtvec", cpu.mtvec, cpu.mtvec);
+	printf("%s  %#x  %u\n", "mstatus", cpu.mstatus, cpu.mstatus);
+	printf("%s  %#x  %u\n", "mcause", cpu.mcause, cpu.mcause);
+	
 	//分别以16进制和无符号十进制数表示
 }
 
 word_t isa_reg_str2val(const char *s, bool *success) {
-	/*char* tmp;
+	*success = true;
 	for(int i = 0; i < len; i++)
 	{
-		if(i != 0)
-		{
-			tmp = strcat('$', regs[i]);
-			if(!strcmp(tmp, s))
-			{
-				return cpu.gpr[i];
-			}
-		}
+		if(i == 0 && !strcmp(regs[i], s))
+			return cpu.gpr[i];
+		else if(!strcmp(regs[i], s + 1))
+			return cpu.gpr[i];
 	}
+	if(!strcmp(s, "pc"))
+		return cpu.pc;
+	if(!strcmp(s, "mtvec"))
+		return cpu.mtvec;
+	if(!strcmp(s, "mepc"))
+		return cpu.mepc;
+	if(!strcmp(s, "mcause"))
+		return cpu.mcause;
+	if(!strcmp(s, "status"))
+		return cpu.mstatus;
 	*success = false;
-	return 0;*/
+	return 0;
+
 	if(!strcmp(s, "$0"))
 		return cpu.gpr[$0];
 
