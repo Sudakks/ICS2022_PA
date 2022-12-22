@@ -179,8 +179,11 @@ static int cmd_d(char *args)
 	return 0;
 }
 
-extern riscv32_CPU_state cpu;
-extern uint8_t *pmem;
+
+int save_pmem(FILE* fp);
+int load_pmem(FILE* fp);
+int save_cpu(FILE* fp);
+int load_cpu(FILE* fp);
 static int cmd_save(char *args)
 {
 	char *arg = strtok(args, " ");
@@ -193,11 +196,12 @@ static int cmd_save(char *args)
 	//使用绝对路径
 	//save memory pmem
 	int ret;
-	ret = fwrite(pmem, sizeof(char), sizeof(pmem), fp);
-	ret = ret & fwrite(&cpu, sizeof(char), sizeof(cpu), fp);
+	ret = save_pmem(fp);
+	ret = ret & save_cpu(fp);
 	//存的是cpu里面的寄存器
 	if(ret == 0)
 		printf("Unable to save snapshot of NEMU!\n");
+	fclose(fp);
 	return 0;
 }
 
@@ -213,10 +217,11 @@ static int cmd_load(char *args)
 	//使用绝对路径
 	//save memory pmem
 	int ret;
-	ret = fread(pmem, sizeof(char), sizeof(pmem), fp);
-	ret = ret & fread(&cpu, sizeof(char), sizeof(cpu), fp);
+	ret = load_pmem(fp);
+	ret = ret & load_cpu(fp);
 	if(ret == 0)
 		printf("Unable to load snapshot of NEMU!\n");
+	fclose(fp);
 	return 0;
 }
 

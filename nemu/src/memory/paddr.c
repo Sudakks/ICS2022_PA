@@ -85,3 +85,13 @@ void paddr_write(paddr_t addr, int len, word_t data) {
   IFDEF(CONFIG_DEVICE, mmio_write(addr, len, data); return);
   out_of_bound(addr);
 }
+
+int save_pmem(FILE* fp)
+{
+	return fwrite(pmem, sizeof(char), sizeof(pmem), fp); 
+}
+
+int load_pmem(FILE* fp)
+{
+	return fread(pmem, sizeof(char), sizeof(pmem), fp);
+}

@@ -30,6 +30,17 @@ const char *regs[] = {
   "a6", "a7", "s2", "s3", "s4", "s5", "s6", "s7",
   "s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6"
 };
+
+int save_cpu(FILE* fp)
+{
+	return fwrite(&cpu, sizeof(char), sizeof(cpu), fp);
+}
+
+int load_cpu(FILE* fp)
+{
+	return fread(&cpu, sizeof(char), sizeof(cpu), fp);
+}
+
 static int len = sizeof(regs) / sizeof(regs[0]);
 void isa_reg_display() {
 	for(int i = 0; i < len; i++)
