@@ -187,6 +187,7 @@ int load_cpu(FILE* fp);
 static int cmd_save(char *args)
 {
 	char *arg = strtok(args, " ");
+	printf("path = %s\n", arg);
 	if(arg == NULL)
 	{
 		printf("Lack enough arguments!\n");
