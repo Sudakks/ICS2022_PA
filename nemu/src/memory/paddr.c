@@ -88,8 +88,7 @@ void paddr_write(paddr_t addr, int len, word_t data) {
 
 int save_pmem(FILE* fp)
 {
-	int ret = fwrite(pmem, sizeof(char), sizeof(pmem), fp); 
-	return ret;
+	return fwrite(pmem, sizeof(char), sizeof(pmem), fp); 
 }
 
 int load_pmem(FILE* fp)

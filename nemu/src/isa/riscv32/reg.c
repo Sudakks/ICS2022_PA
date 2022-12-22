@@ -33,8 +33,7 @@ const char *regs[] = {
 
 int save_cpu(FILE* fp)
 {
-	int ret = fwrite(&cpu, sizeof(char), sizeof(cpu), fp);
-	return ret;
+	return fwrite(&cpu, sizeof(char), sizeof(cpu), fp);
 }
 
 int load_cpu(FILE* fp)
