@@ -89,8 +89,6 @@ void paddr_write(paddr_t addr, int len, word_t data) {
 int save_pmem(FILE* fp)
 {
 	int ret = fwrite(pmem, sizeof(char), sizeof(pmem), fp); 
-	printf("sz pmem = %ld\n", sizeof(pmem));
-	printf("ret = %d\n", ret);
 	return ret;
 }
 
