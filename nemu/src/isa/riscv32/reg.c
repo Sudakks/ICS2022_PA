@@ -34,7 +34,6 @@ const char *regs[] = {
 int save_cpu(FILE* fp)
 {
 	int ret = fwrite(&cpu, sizeof(char), sizeof(cpu), fp);
-	printf("ret = %d\n", ret);
 	return ret;
 }
 

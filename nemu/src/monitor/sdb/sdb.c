@@ -195,12 +195,11 @@ static int cmd_save(char *args)
 	FILE* fp = fopen(arg, "w");
 	//使用绝对路径
 	//save memory pmem
-	int ret;
-	ret = save_pmem(fp);
-	ret = ret & save_cpu(fp);
+	if(save_pmem(fp) == 0)
+		printf("Unable to save snapshot of pmem in NEMU!\n");
+	if(save_cpu(fp) == 0)
+		printf("Unable to save snapshot of cpu in NEMU!\n");
 	//存的是cpu里面的寄存器
-	if(ret == 0)
-		printf("Unable to save snapshot of NEMU!\n");
 	fclose(fp);
 	return 0;
 }
@@ -216,11 +215,11 @@ static int cmd_load(char *args)
 	FILE* fp = fopen(arg, "r");
 	//使用绝对路径
 	//save memory pmem
-	int ret;
-	ret = load_pmem(fp);
-	ret = ret & load_cpu(fp);
-	if(ret == 0)
-		printf("Unable to load snapshot of NEMU!\n");
+	if(load_pmem(fp) == 0)
+		printf("Unable to load snapshot of pmem in NEMU!\n");
+	if(load_cpu(fp) == 0)
+		printf("Unable to load snapshot of cpu in NEMU!\n");
+	//存的是cpu里面的寄存器
 	fclose(fp);
 	return 0;
 }
