@@ -47,9 +47,9 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
 	Context* con = (Context*)(kstack.end - sizeof(Context));
 	con->mepc = (uintptr_t)entry;
 	//将arg保存在函数参数寄存器里面
-	//printf("lcontext : arg=%c\n", *(char*)arg);
 	//参数传进来是正确的
-	con->GPRx = (uintptr_t)arg;
+	con->gpr[10] = (uintptr_t)arg;
+	printf("gpr[10] = %c\n", *(char*)arg);
 	//printf("kcontext = %p\n", entry);
 	/*刚好指的就是一个函数的入口地址*/
 	/*should add other things?*/
