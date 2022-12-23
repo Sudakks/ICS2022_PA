@@ -102,4 +102,5 @@ void context_kload(PCB* pcb, void (*entry)(void*), void* arg)
 	//并且里面的变量是union，所以只用分配一个变量的空间
 	Area area = RANGE(pcb, (uint8_t*)pcb + STACK_SIZE);
 	pcb->cp = kcontext(area, entry, arg);
+	printf("kload: pcb->cp = %p", pcb->cp);
 }
