@@ -32,7 +32,8 @@ void init_proc() {
   // load program here
 	*/
 	context_kload(&pcb[0], hello_fun, NULL);
-	printf("kload %p\n", hello_fun);
+	printf("proc: %p\n", hello_fun);
+	printf("now pcb[0] = %p\n", &pcb[0]);
   switch_boot_pcb();
 }
 
