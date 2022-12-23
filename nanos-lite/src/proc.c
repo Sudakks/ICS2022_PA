@@ -40,7 +40,6 @@ void init_proc() {
 Context* schedule(Context *prev) {
 	// save the context pointer
 	current->cp = prev;
-	printf("prev = %p\n", prev);
 
 // always select pcb[0] as the new process
 	current = &pcb[0];
