@@ -13,7 +13,8 @@ void switch_boot_pcb() {
 void hello_fun(void *arg) {
   int j = 1;
   while (1) {
-    Log("Hello World from Nanos-lite with arg '%p' for the %dth time!", (uintptr_t)arg, j);
+    //Log("Hello World from Nanos-lite with arg '%p' for the %dth time!", (uintptr_t)arg, j);
+    Log("Hello World from Nanos-lite with arg '%c' for the %dth time!", *(char*)arg, j);
     j ++;
     yield();
   }
@@ -31,7 +32,10 @@ void init_proc() {
 	naive_uload(NULL, "/bin/nterm");
   // load program here
 	*/
-	context_kload(&pcb[0], hello_fun, NULL);
+	char arg1 = 'a';
+	char arg2 = 'b';
+	context_kload(&pcb[0], hello_fun, &arg1);
+	context_kload(&pcb[1], hello_fun, &arg2);
 	//printf("proc: %p\n", hello_fun);
 	//printf("now pcb[0] = %p\n", &pcb[0]);
   switch_boot_pcb();
@@ -42,7 +46,8 @@ Context* schedule(Context *prev) {
 	current->cp = prev;
 
 // always select pcb[0] as the new process
-	current = &pcb[0];
+//在两个内核线程之间来回切换
+	current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
 	//printf("current->cp = %p\n", current->cp);
 
 // then return the new context
