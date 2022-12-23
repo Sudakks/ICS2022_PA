@@ -6,6 +6,7 @@ static Context* do_event(Event e, Context* c) {
   switch (e.event) {
 		case EVENT_YIELD:
 			//Log("Run into EVENT_YIELD");
+			printf("reach here\n");
 			c = schedule(c);
 			break;
 		case EVENT_SYSCALL:
