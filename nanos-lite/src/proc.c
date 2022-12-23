@@ -11,13 +11,10 @@ void switch_boot_pcb() {
 }
 
 void hello_fun(void *arg) {
-	printf("arg = %c\n", *(char*)arg);
-	printf("yyy\n");
-	assert(0);
   int j = 1;
   while (1) {
     //Log("Hello World from Nanos-lite with arg '%p' for the %dth time!", (uintptr_t)arg, j);
-    Log("Hello World from Nanos-lite with arg '%c' for the %dth time!", *(char*)arg, j);
+    Log("Hello World from Nanos-lite with arg '%s' for the %dth time!", (char*)arg, j);
     j ++;
     yield();
   }
@@ -35,10 +32,10 @@ void init_proc() {
 	naive_uload(NULL, "/bin/nterm");
   // load program here
 	*/
-	char arg1 = 'a';
-	char arg2 = 'b';
-	context_kload(&pcb[0], hello_fun, &arg1);
-	context_kload(&pcb[1], hello_fun, &arg2);
+	char* arg1 = "aaa";
+	char* arg2 = "bbb";
+	context_kload(&pcb[0], hello_fun, arg1);
+	context_kload(&pcb[1], hello_fun, arg2);
 	//printf("proc: %p\n", hello_fun);
 	//printf("now pcb[0] = %p\n", &pcb[0]);
   switch_boot_pcb();
