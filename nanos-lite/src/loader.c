@@ -95,3 +95,11 @@ void naive_uload(PCB *pcb, const char *filename) {
   ((void(*)())entry) ();
 }
 
+void context_kload(PCB* pcb, void (*entry)(void*), void* arg)
+{
+	//先给其分配Area空间
+	//仿照其他地方，先分配一段空间
+	//并且里面的变量是union，所以只用分配一个变量的空间
+	Area area = RANGE(pcb, (uint8_t*)pcb + STACK_SIZE);
+	pcb->cp = kcontext(area, entry, arg);
+}

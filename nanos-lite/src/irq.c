@@ -1,10 +1,12 @@
 #include <common.h>
 
 extern void do_syscall(Context* c);
+extern Context* schedule(Context *prev);
 static Context* do_event(Event e, Context* c) {
   switch (e.event) {
 		case EVENT_YIELD:
-			Log("Run into EVENT_YIELD");
+			//Log("Run into EVENT_YIELD");
+			c = schedule(c);
 			break;
 		case EVENT_SYSCALL:
 			do_syscall(c);
