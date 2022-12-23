@@ -45,7 +45,6 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
 	/*创建内核线程的上下文*/
 	/*ignore arg temporarily*/
 	Context* con = (Context*)(kstack.end - sizeof(Context));
-	printf("entry = %p\n", entry);
 	con->mepc = (uintptr_t)entry;
 	/*刚好指的就是一个函数的入口地址*/
 	/*should add other things?*/
