@@ -51,6 +51,7 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
 	//参数传进来是正确的
 	printf("aaa\n");
 	char* now = (char*)con->gpr[10];
+	printf("kkkk\n");
 	printf("gpr[10] = %s\n", now);
 	//con->gpr[11] = (uintptr_t)arg;
 	//printf("kcontext = %p\n", entry);
