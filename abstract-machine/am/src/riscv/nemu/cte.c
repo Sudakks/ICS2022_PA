@@ -47,6 +47,7 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
 	Context* con = (Context*)(kstack.end - sizeof(Context));
 	con->mepc = (uintptr_t)entry;
 	printf("kcontext = %p\n", entry);
+	printf("con->mepc = %p\n", con->mepc);
 	/*刚好指的就是一个函数的入口地址*/
 	/*should add other things?*/
 	/*应该是PCB中的cp指针*/
