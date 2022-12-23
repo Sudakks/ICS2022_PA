@@ -12,6 +12,7 @@ void switch_boot_pcb() {
 
 void hello_fun(void *arg) {
 	printf("arg = %c\n", *(char*)arg);
+	printf("yyy\n");
 	assert(0);
   int j = 1;
   while (1) {
