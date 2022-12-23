@@ -12,6 +12,9 @@ void switch_boot_pcb() {
 
 void hello_fun(void *arg) {
   int j = 1;
+	/*
+	一开始参数传不进来，是传参类型的原因？
+	*/
   while (1) {
     //Log("Hello World from Nanos-lite with arg '%p' for the %dth time!", (uintptr_t)arg, j);
     Log("Hello World from Nanos-lite with arg '%s' for the %dth time!", (char*)arg, j);
@@ -32,8 +35,9 @@ void init_proc() {
 	naive_uload(NULL, "/bin/nterm");
   // load program here
 	*/
-	char* arg1 = "aaa";
-	char* arg2 = "bbb";
+	
+	char* arg1 = "arg1";
+	char* arg2 = "arg2";
 	context_kload(&pcb[0], hello_fun, arg1);
 	context_kload(&pcb[1], hello_fun, arg2);
 	//printf("proc: %p\n", hello_fun);
