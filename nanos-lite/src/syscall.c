@@ -8,7 +8,6 @@ void naive_uload(PCB *pcb, const char *filename);
 
 void sys_yield(Context *c)
 {
-	
 	yield();
 	c->GPRx = 0;
 	#ifdef CONFIG_STRACE_COND
@@ -22,10 +21,11 @@ void sys_exit(Context *c)
 	#ifdef CONFIG_STRACE_COND
 	printf("STRACE: sys_exit\n");
 	#endif
-	c->GPR2 = (uintptr_t)"/bin/nterm";
+	//c->GPR2 = (uintptr_t)"/bin/nterm";
 	//c->GPR2 = (uintptr_t)"bin/nterm"
-	sys_execve(c);
+	//sys_execve(c);
 	//halt(0);
+	halt(0);
 }
 
 void sys_write(Context *c)

@@ -55,7 +55,6 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
 
 ///////////////////////////////////////////
-	printf("run into loader\n");
 	Elf_Ehdr ehdr;//elf headr table
 //	size_t off = ramdisk_read(&ehdr, 0, sizeof(Elf_Ehdr));
 	int fd = fs_open(filename, 0, 0);
@@ -89,7 +88,6 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 }
 
 void naive_uload(PCB *pcb, const char *filename) {
-	printf("here?\n");
 	printf("Start to loader file \"%s\"\n", filename);
   uintptr_t entry = loader(pcb, filename);
   Log("Jump to entry = %p", entry);
