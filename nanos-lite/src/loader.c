@@ -104,7 +104,7 @@ void context_kload(PCB* pcb, void (*entry)(void*), void* arg)
 	//printf("kload: pcb->cp = %p\n", pcb->cp);
 }
 
-void context_uload(PCB* pcb, char *filename)
+void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[])
 {
 	/*
 	把heap.end作为用户进程的栈顶, 然后把这个栈顶赋给用户进程的栈指针寄存器
@@ -112,5 +112,5 @@ void context_uload(PCB* pcb, char *filename)
 	Area area = RANGE(pcb, (uint8_t*)pcb + STACK_SIZE);
 	void* entry = (void*)loader(pcb, filename);
 	pcb->cp = ucontext(NULL, area, entry);
-	pcb->cp->GPRx = (uintptr_t)heap.end;
+	//pcb->cp->GPRx = (uintptr_t)heap.end;
 }
