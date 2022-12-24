@@ -36,13 +36,10 @@ void init_proc() {
   // load program here
 	*/
 	
-	//char* arg1 = "arg1";
-	//context_kload(&pcb[0], hello_fun, arg1);
-	///context_kload(&pcb[1], hello_fun, arg2);
-	context_uload(&pcb[0], "/bin/hello");
+	char* arg1 = "arg1";
+	context_kload(&pcb[0], hello_fun, arg1);
+	//context_kload(&pcb[1], hello_fun, arg2);
 	context_uload(&pcb[1], "/bin/pal");
-	//printf("proc: %p\n", hello_fun);
-	//printf("now pcb[0] = %p\n", &pcb[0]);
   switch_boot_pcb();
 }
 
