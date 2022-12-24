@@ -17,6 +17,7 @@ static const char *keyname[256] __attribute__((used)) = {
 
 size_t serial_write(const void *buf, size_t offset, size_t len) {
 	//串口的写入
+	yield();
 	char *tmp = (char*)buf;
 	for(size_t i = 0; i < len; i++)
 	{
@@ -27,6 +28,7 @@ size_t serial_write(const void *buf, size_t offset, size_t len) {
 }
 
 size_t events_read(void *buf, size_t offset, size_t len) {
+	yield();
 	AM_INPUT_KEYBRD_T ev = io_read(AM_INPUT_KEYBRD);
 	if(ev.keycode == AM_KEY_NONE)
 		return 0;
@@ -65,6 +67,7 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 
 size_t fb_write(const void *buf, size_t offset, size_t len) {
 	//write len bytes from buf to the offset of screen
+	yield();
 	int w = io_read(AM_GPU_CONFIG).width;
 	int h = io_read(AM_GPU_CONFIG).height;
 	int x = (offset) % w;

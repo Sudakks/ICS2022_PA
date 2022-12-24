@@ -25,6 +25,7 @@ void hello_fun(void *arg) {
 
 extern void naive_uload(PCB *pcb, const char *filename);
 extern void context_kload(PCB* pcb, void (*entry)(void*), void* arg);
+extern void context_uload(PCB* pcb, char *filename);
 
 void init_proc() {
 	/*
@@ -37,9 +38,9 @@ void init_proc() {
 	*/
 	
 	char* arg1 = "arg1";
-	char* arg2 = "arg2";
 	context_kload(&pcb[0], hello_fun, arg1);
-	context_kload(&pcb[1], hello_fun, arg2);
+	//context_kload(&pcb[1], hello_fun, arg2);
+	context_uload(&pcb[1], "/bin/pal");
 	//printf("proc: %p\n", hello_fun);
 	//printf("now pcb[0] = %p\n", &pcb[0]);
   switch_boot_pcb();
