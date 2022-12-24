@@ -111,6 +111,6 @@ void context_uload(PCB* pcb, char *filename)
 	*/
 	Area area = RANGE(pcb, (uint8_t*)pcb + STACK_SIZE);
 	void* entry = (void*)loader(pcb, filename);
-	pcb->cp = ucontext(NULL, area,entry);
+	pcb->cp = ucontext(NULL, area, entry);
 	pcb->cp->GPRx = (uintptr_t)heap.end;
 }

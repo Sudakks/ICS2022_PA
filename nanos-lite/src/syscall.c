@@ -21,11 +21,10 @@ void sys_exit(Context *c)
 	#ifdef CONFIG_STRACE_COND
 	printf("STRACE: sys_exit\n");
 	#endif
-	//c->GPR2 = (uintptr_t)"/bin/nterm";
-	//c->GPR2 = (uintptr_t)"bin/nterm"
-	//sys_execve(c);
-	//halt(0);
 	halt(0);
+	c->GPR2 = (uintptr_t)"/bin/nterm";
+	sys_execve(c);
+	//halt(0);
 }
 
 void sys_write(Context *c)
@@ -131,7 +130,7 @@ void sys_gettimeofday(Context *c)
 
 void sys_execve(Context *c)
 {
-	char* filename = (char*)c->GPR2;
+	const char* filename = (const char*)c->GPR2;
 	//暂时忽略后面两个参数
 	//execve无返回值
 	//printf("execve = %s\n", filename);
