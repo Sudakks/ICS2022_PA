@@ -21,7 +21,6 @@ void sys_exit(Context *c)
 	#ifdef CONFIG_STRACE_COND
 	printf("STRACE: sys_exit\n");
 	#endif
-	halt(0);
 	c->GPR2 = (uintptr_t)"/bin/nterm";
 	sys_execve(c);
 	//halt(0);
