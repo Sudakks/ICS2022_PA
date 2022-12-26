@@ -119,7 +119,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	{
 		while(argv[argc])
 		{
-			printf("argv[%d] = %p\n", argc, argv[argc]);
+			//printf("argv[%d] = %p\n", argc, argv[argc]);
 			argc++;
 		}
 	}
@@ -139,9 +139,11 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	char* str = (char*)now - 4;
 	for(int i = 0; i < argc; i++)
 	{
+		printf("yes\n");
 		str = str - (strlen(argv[i]) + 1);
 		strcpy(str, argv[i]);
 		ar[i] = str;
+		printf("not reach\n");
 	}
 	for(int i = 0; i < envc; i++)
 	{
