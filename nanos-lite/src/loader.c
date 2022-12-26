@@ -126,16 +126,24 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	Area area = RANGE(pcb, (uint8_t*)pcb + STACK_SIZE);
 
 	void* now = area.end;
-	char* args[argc];
-	//char* envp[envc];
+	char* ar[argc];
+	char* en[envc];
 	char* str = (char*)now - 1;
 	for(int i = 0; i < argc; i++)
 	{
 		str = str - (strlen(argv[i]) + 1);
 		strcpy(str, argv[i]);
-		args[i] = str;
-		if(args[i])
-			printf("yes at %d\n", i);
+		ar[i] = str;
+		if(!ar[i])
+			printf("no\n");
+	}
+	for(int i = 0; i < envc; i++)
+	{
+		str = str - (strlen(envp[i]) + 1);
+		strcpy(str, envp[i]);
+		en[i] = str;
+		if(!en[i])
+			printf("nno\n");
 	}
 	/*
 	for(int i = 0; i < envc; i++)
