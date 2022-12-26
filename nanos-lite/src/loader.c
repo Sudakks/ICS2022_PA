@@ -153,27 +153,22 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	char** ptr = (char**)str;
 	ptr--;
 	*ptr = NULL;
-	printf("reach?\n");
 	/////begin
+	ptr--;
 	for(int i = envc - 1; i >= 0; i--)
 	{
 		*ptr = en[i];
 		ptr--;
 	}
-	//*ptr = NULL;
+	*ptr = NULL;
 	//不知道为啥，他不能赋值为NULL
 	ptr--;
-	printf("iiiiii\n");
 	for(int i = argc - 1; i >= 0; i--)
 	{
-		printf("ar[%d] = %p\n", i, ar[i]);
 		*ptr = ar[i];
-		printf("after *ptr = %p\n", *ptr);
 		ptr--;
 	}
-	printf("iii\n");
 	*(int*)ptr = argc;
-	printf("qqq\n");
 	void* entry = (void*)loader(pcb, filename);
 	pcb->cp = ucontext(NULL, area, entry);
 	//pcb->cp->GPRx = (uintptr_t)heap.end;
