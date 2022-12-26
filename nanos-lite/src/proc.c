@@ -39,7 +39,7 @@ void init_proc() {
 	char* arg1 = "arg1";
 	context_kload(&pcb[0], hello_fun, arg1);
 	//context_kload(&pcb[1], hello_fun, arg2);
-	char *const argv[] = {"--skip"};
+	char *const argv[] = {"--skip", NULL};
 	int argc = 0;
   while(argv[argc] != NULL)
 	{
