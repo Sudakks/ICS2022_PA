@@ -130,8 +130,8 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	printf("in uload:\nargc = %d\n", argc);
 	printf("in uload:\nenvc = %d\n", envc);
 
-	//char* now = (char*)new_page(nr_page) + nr_page * nr_page_sz;
-	char* now = (char*)heap.end;
+	char* now = (char*)new_page(nr_page) + nr_page * nr_page_sz;
+	//char* now = (char*)heap.end;
 	char* ar[argc];
 	char* en[envc];
 	char* str = (char*)now - 4;

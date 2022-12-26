@@ -126,14 +126,18 @@ void sys_gettimeofday(Context *c)
 	#endif
 }
 
-
+extern void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]);
 void sys_execve(Context *c)
 {
+	printf("run into this\n");
 	const char* filename = (const char*)c->GPR2;
+	char**const argv = (char**const)c->GPR3;
+	char**const envp = (char**const)c->GPR4;
 	//暂时忽略后面两个参数
 	//execve无返回值
 	//printf("execve = %s\n", filename);
-	naive_uload(NULL, filename);
+	//naive_uload(NULL, filename);
+	context_uload(NULL, filename, argv, envp);
 }
 
 void do_syscall(Context *c) {
