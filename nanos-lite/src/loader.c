@@ -109,8 +109,10 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	/*
 	把heap.end作为用户进程的栈顶, 然后把这个栈顶赋给用户进程的栈指针寄存器
 	*/
+	
 	Area area = RANGE(pcb, (uint8_t*)pcb + STACK_SIZE);
 	void* entry = (void*)loader(pcb, filename);
 	pcb->cp = ucontext(NULL, area, entry);
 	//pcb->cp->GPRx = (uintptr_t)heap.end;
+	pcb->cp->GPRx = (uintptr_t)(argv - 1);
 }
