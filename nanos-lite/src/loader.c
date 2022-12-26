@@ -165,11 +165,13 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 		*ptr = ar[i];
 		ptr--;
 	}
-	*(int*)ptr = argc;
 
 	Area area = RANGE(pcb, (uint8_t*)pcb + STACK_SIZE);
 	void* entry = (void*)loader(pcb, filename);
 	pcb->cp = ucontext(NULL, area, entry);
 	//pcb->cp->GPRx = (uintptr_t)heap.end;
-	pcb->cp->GPRx = (uintptr_t)(*ptr);
+
+	int* tmp = (int*)(*ptr);
+	*tmp = argc;
+	pcb->cp->GPRx = (uintptr_t)(tmp);
 }
