@@ -104,6 +104,8 @@ void context_kload(PCB* pcb, void (*entry)(void*), void* arg)
 	//printf("kload: pcb->cp = %p\n", pcb->cp);
 }
 
+
+const int nr_page = 8;
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[])
 {
 	/*
@@ -130,16 +132,14 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	char* ar[argc];
 	char* en[envc];
 	char* str = (char*)now - 1;
-	for(int i = 0; i < argc - 1; i++)
+	for(int i = 0; i < argc; i++)
 	{
 		str = str - (strlen(argv[i]) + 1);
 		strcpy(str, argv[i]);
 		ar[i] = str;
 	}
-	printf("opopo\n");
 	for(int i = 0; i < envc; i++)
 	{
-		printf("ji\n");
 		str = str - (strlen(envp[i]) + 1);
 		strcpy(str, envp[i]);
 		en[i] = str;
