@@ -106,12 +106,14 @@ void context_kload(PCB* pcb, void (*entry)(void*), void* arg)
 
 
 const int nr_page = 8;
+const int nr_page_sz = 4096;
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[])
 {
 	/*
 	把heap.end作为用户进程的栈顶, 然后把这个栈顶赋给用户进程的栈指针寄存器
 	*/
 	//先得出argc的值
+	/*nr_page = 8, nr_page_sz = 4096*/
 	int argc = 0, envc = 0;
 	if(argv)
 	{
@@ -127,20 +129,16 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	printf("in uload:\nenvc = %d\n", envc);
 
 	Area area = RANGE(pcb, (uint8_t*)pcb + STACK_SIZE);
-
-	void* now = new_page(nr_page);
+	char* now = (char*)new_page(nr_page) + nr_page * nr_page_sz;
 	char* ar[argc];
 	char* en[envc];
-	char* str = (char*)now - 1;
-	/*
+	char* str = (char*)now - 4;
 	for(int i = 0; i < argc; i++)
 	{
 		str = str - (strlen(argv[i]) + 1);
 		strcpy(str, argv[i]);
 		ar[i] = str;
 	}
-	*/
-	printf("yes\n");
 	for(int i = 0; i < envc; i++)
 	{
 		str = str - (strlen(envp[i]) + 1);
@@ -150,14 +148,12 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	str--;//开始分配下面的指针区域
 	str = NULL;
 	str--;
-	printf("now\n");
 	char** ptr = (char**)str;
 	for(int i = envc - 1; i >= 0; i--)
 	{
 		*ptr = en[i];
 		ptr--;
 	}
-printf("ooo\n");
 	*ptr = NULL;
 	ptr--;
 	for(int i = argc - 1; i >= 0; i--)
@@ -166,7 +162,6 @@ printf("ooo\n");
 		ptr--;
 	}
 	*(int*)ptr = argc;
-printf("haha\n");	
 	void* entry = (void*)loader(pcb, filename);
 	pcb->cp = ucontext(NULL, area, entry);
 	//pcb->cp->GPRx = (uintptr_t)heap.end;
