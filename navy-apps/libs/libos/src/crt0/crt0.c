@@ -12,6 +12,7 @@ void call_main(uintptr_t *args) {
   exit(main(0, empty, empty));
   assert(0);
 	*/
+	printf("call----  %p\n", args);
 	int argc = *(int*)args;
 	printf("in call_main:\nargc = %d\n", argc);
 	//现在有argc个参数
