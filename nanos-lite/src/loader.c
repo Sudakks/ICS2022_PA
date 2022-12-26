@@ -125,14 +125,18 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	Area area = RANGE(pcb, (uint8_t*)pcb + STACK_SIZE);
 
 	void* now = area.end;
+	char* args[argc];
+	//char* envp[envc];
 	char* str = (char*)now - 1;
 	for(int i = 0; i < argc; i++)
 	{
-		printf("i = %d\n", i);
+		str = str - strlen(argv[i]) + 1;
 		strcpy(str, argv[i]);
-		str--;
-		printf("ii = %d\n", i);
+		args[i] = str;
+		if(args[i])
+			printf("yes at %d\n", i);
 	}
+	/*
 	for(int i = 0; i < envc; i++)
 	{
 		strcpy(str, envp[i]);
@@ -140,6 +144,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	}
 	now = (void*)str;
 	*(int*)now = argc;
+	*/
 
 	void* entry = (void*)loader(pcb, filename);
 	pcb->cp = ucontext(NULL, area, entry);
