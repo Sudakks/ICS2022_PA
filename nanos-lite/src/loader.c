@@ -180,5 +180,4 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	printf("tmp = %p, num = %d\n", tmp, *tmp);
 	pcb->cp->GPRx = (uintptr_t)(tmp);
 	printf("GPRx = %p\n", pcb->cp->GPRx);
-	printf("sp = %p\n", pcb->cp->gpr[2]);
 }
