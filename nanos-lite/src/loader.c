@@ -128,7 +128,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 
 	Area area = RANGE(pcb, (uint8_t*)pcb + STACK_SIZE);
 
-	void* now = heap.end;
+	void* now = new_page(nr_page);
 	char* ar[argc];
 	char* en[envc];
 	char* str = (char*)now - 1;
