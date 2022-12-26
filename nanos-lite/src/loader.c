@@ -131,6 +131,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 		printf("i = %d\n", i);
 		strcpy(str, argv[i]);
 		str--;
+		printf("ii = %d\n", i);
 	}
 	for(int i = 0; i < envc; i++)
 	{
