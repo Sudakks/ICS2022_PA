@@ -160,7 +160,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 		ptr--;
 	}
 	printf("aaa\n");
-	*ptr = NULL;
+	//*ptr = NULL;
 	printf("not hree\n");
 	ptr--;
 	printf("uiui\n");
