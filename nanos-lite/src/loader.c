@@ -159,6 +159,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 		*ptr = en[i];
 		ptr--;
 	}
+	printf("aaa\n");
 	*ptr = NULL;
 	printf("not hree\n");
 	ptr--;
