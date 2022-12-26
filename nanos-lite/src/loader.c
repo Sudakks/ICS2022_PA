@@ -132,7 +132,8 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	printf("in uload:\nenvc = %d\n", envc);
 
 	Area area = RANGE(pcb, (uint8_t*)pcb + STACK_SIZE);
-	char* now = (char*)new_page(nr_page) + nr_page * nr_page_sz;
+	//char* now = (char*)new_page(nr_page) + nr_page * nr_page_sz;
+	char* now = (char*)heap.end;
 	char* ar[argc];
 	char* en[envc];
 	char* str = (char*)now - 4;
