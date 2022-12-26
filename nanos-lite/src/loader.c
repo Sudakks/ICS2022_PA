@@ -149,10 +149,11 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 		strcpy(str, envp[i]);
 		en[i] = str;
 	}
-	str--;//开始分配下面的指针区域
-	str = NULL;
-	str--;
+	//开始分配下面的指针区域
 	char** ptr = (char**)str;
+	ptr--;
+	*ptr = NULL;
+	printf("reach?\n");
 	/////begin
 	for(int i = envc - 1; i >= 0; i--)
 	{
@@ -165,7 +166,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	printf("iiiiii\n");
 	for(int i = argc - 1; i >= 0; i--)
 	{
-		printf("before ptr = %p\n", *ptr);
 		printf("ar[%d] = %p\n", i, ar[i]);
 		*ptr = ar[i];
 		printf("after *ptr = %p\n", *ptr);
