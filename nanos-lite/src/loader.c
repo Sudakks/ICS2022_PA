@@ -111,17 +111,10 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	*/
 	//先得出argc的值
 	int argc = 0, envc = 0;
-	/*
-	while(argv + argc != NULL)
-			argc++;	
-		*/
 	if(argv)
 	{
 		while(argv[argc])
-		{
-			printf("argv[%d] = %s\n", argc, *(argv[argc]));
 			argc++;
-		}
 	}
 	if(envp)
 	{
@@ -130,7 +123,24 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	}
 	printf("in uload:\nargc = %d\n", argc);
 	Area area = RANGE(pcb, (uint8_t*)pcb + STACK_SIZE);
+
+	void* now = area.end;
+	char* str = (char*)now - 1;
+	for(int i = 0; i < argc; i++)
+	{
+		str = argv[i];
+		str--;
+	}
+	for(int i = 0; i < envc; i++)
+	{
+		str = envp[i];
+		str--;
+	}
+	now = (void*)str;
+	*(int*)now = argc;
+
 	void* entry = (void*)loader(pcb, filename);
 	pcb->cp = ucontext(NULL, area, entry);
 	//pcb->cp->GPRx = (uintptr_t)heap.end;
+	pcb->cp->GPRx = (uintptr_t)now;
 }
