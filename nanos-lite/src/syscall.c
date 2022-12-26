@@ -135,7 +135,7 @@ void sys_execve(Context *c)
 	char**const envp = (char**const)c->GPR4;
 	//暂时忽略后面两个参数
 	//execve无返回值
-	//printf("execve = %s\n", filename);
+	printf("execve = %s\n", filename);
 	//naive_uload(NULL, filename);
 	context_uload(NULL, filename, argv, envp);
 }
