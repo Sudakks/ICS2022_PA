@@ -134,6 +134,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 		str = str - (strlen(argv[i]) + 1);
 		strcpy(str, argv[i]);
 		ar[i] = str;
+		printf("i = %d\n", i);
 		if(!ar[i])
 			printf("no\n");
 	}
