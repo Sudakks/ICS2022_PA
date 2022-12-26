@@ -154,6 +154,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	str--;
 	printf("haha\n");
 	char** ptr = (char**)str;
+	printf("ooooo\n");
 	for(int i = envc - 1; i >= 0; i--)
 	{
 		*ptr = en[i];
