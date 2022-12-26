@@ -149,11 +149,13 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	}
 	//开始分配下面的指针区域
 	char** ptr = (char**)str;
+	printf("ar start = %p\n", ptr);
 	ptr--;
 	*ptr = NULL;
 	ptr--;
 	for(int i = envc - 1; i >= 0; i--)
 	{
+		printf("%p\n", ptr);
 		*ptr = en[i];
 		ptr--;
 	}
@@ -162,6 +164,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	ptr--;
 	for(int i = argc - 1; i >= 0; i--)
 	{
+		printf("%p\n", ptr);
 		*ptr = ar[i];
 		ptr--;
 	}
@@ -171,6 +174,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	pcb->cp = ucontext(NULL, area, entry);
 	//pcb->cp->GPRx = (uintptr_t)heap.end;
 
+		printf("%p\n", ptr);
 	int* tmp = (int*)(ptr);
 	*tmp = argc;
 	pcb->cp->GPRx = (uintptr_t)(tmp);
