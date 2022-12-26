@@ -36,8 +36,8 @@ void init_proc() {
   // load program here
 	*/
 	
-	char* arg1 = "arg1";
-	context_kload(&pcb[0], hello_fun, arg1);
+	//char* arg1 = "arg1";
+	//context_kload(&pcb[0], hello_fun, arg1);
 
 /*
 	char *const argv[] = {"--skip", NULL};
@@ -45,7 +45,7 @@ void init_proc() {
 	*/
 
 	char *const argv[] = {"aaa", "bbb", NULL};
-	context_uload(&pcb[1], "/bin/exec-test", argv, NULL);
+	context_uload(&pcb[0], "/bin/exec-test", argv, NULL);
   switch_boot_pcb();
 }
 
