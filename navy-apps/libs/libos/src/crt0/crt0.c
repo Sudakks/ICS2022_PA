@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
 
@@ -12,6 +13,7 @@ void call_main(uintptr_t *args) {
   assert(0);
 	*/
 	int argc = *(int*)args;
+	printf("in call_main:\nargc = %d\n", argc);
 	//现在有argc个参数
 	char** tmp = (char**)(args + 1);
 	char** argv = tmp;
