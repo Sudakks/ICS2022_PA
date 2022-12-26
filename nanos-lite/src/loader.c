@@ -171,7 +171,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	pcb->cp = ucontext(NULL, area, entry);
 	//pcb->cp->GPRx = (uintptr_t)heap.end;
 
-	int* tmp = (int*)(*ptr);
+	int* tmp = (int*)(ptr);
 	*tmp = argc;
 	pcb->cp->GPRx = (uintptr_t)(tmp);
 }
