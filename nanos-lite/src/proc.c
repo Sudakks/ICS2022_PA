@@ -58,6 +58,7 @@ int my_execve(const char*filename, char *const argv[], char *const envp[])
 		fs_close(filename);
 	*/
 	printf("in my_execve\n");
+	printf("filename = %s\n", filename);
 	context_uload(current, filename, argv, envp);
 	switch_boot_pcb();
 	yield();
