@@ -152,15 +152,15 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	str--;//开始分配下面的指针区域
 	str = NULL;
 	str--;
-	printf("haha\n");
 	char** ptr = (char**)str;
-	printf("ooooo\n");
+	/////begin
 	for(int i = envc - 1; i >= 0; i--)
 	{
 		*ptr = en[i];
 		ptr--;
 	}
 	*ptr = NULL;
+	printf("not hree\n");
 	ptr--;
 	printf("uiui\n");
 	for(int i = argc - 1; i >= 0; i--)
