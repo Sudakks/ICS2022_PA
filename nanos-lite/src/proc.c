@@ -39,7 +39,7 @@ void init_proc() {
 	char* arg1 = "arg1";
 	context_kload(&pcb[0], hello_fun, arg1);
 
-	char *const argv[] = {"--no skip", NULL};
+	char *const argv[] = {"--skip", NULL};
 	context_uload(&pcb[1], "/bin/pal", argv, NULL);
   switch_boot_pcb();
 }
