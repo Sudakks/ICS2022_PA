@@ -167,6 +167,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	{
 		printf("ar[%d] = %p\n", i, ar[i]);
 		*ptr = ar[i];
+		printf("after *ptr = %p\n", *ptr);
 		ptr--;
 	}
 	printf("iii\n");
