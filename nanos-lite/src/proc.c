@@ -43,6 +43,7 @@ void init_proc() {
 	int argc = 0;
   while(argv[argc] != NULL)
 	{
+		printf("yesyes\n");
 		printf("argv[%d] = %p\n", argc, argv[argc]);
 	  argc++;
 	}
