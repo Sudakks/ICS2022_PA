@@ -139,11 +139,9 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	char* str = (char*)now - 4;
 	for(int i = 0; i < argc; i++)
 	{
-		printf("yes\n");
 		str = str - (strlen(argv[i]) + 1);
 		strcpy(str, argv[i]);
 		ar[i] = str;
-		printf("not reach\n");
 	}
 	for(int i = 0; i < envc; i++)
 	{
@@ -154,6 +152,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	str--;//开始分配下面的指针区域
 	str = NULL;
 	str--;
+	printf("haha\n");
 	char** ptr = (char**)str;
 	for(int i = envc - 1; i >= 0; i--)
 	{
@@ -162,11 +161,13 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	}
 	*ptr = NULL;
 	ptr--;
+	printf("uiui\n");
 	for(int i = argc - 1; i >= 0; i--)
 	{
 		*ptr = ar[i];
 		ptr--;
 	}
+	printf("iioioioio\n");
 	*(int*)ptr = argc;
 	void* entry = (void*)loader(pcb, filename);
 	pcb->cp = ucontext(NULL, area, entry);
