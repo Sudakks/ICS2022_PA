@@ -149,7 +149,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	}
 	//开始分配下面的指针区域
 	char** ptr = (char**)str;
-	printf("ar start = %p\n", ptr);
+	printf("at start = %p\n", ptr);
 	ptr--;
 	*ptr = NULL;
 	ptr--;
@@ -176,6 +176,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 
 		printf("%p\n", ptr);
 	int* tmp = (int*)(ptr);
+	printf("tmp = %p\n", tmp);
 	*tmp = argc;
 	pcb->cp->GPRx = (uintptr_t)(tmp);
 }
