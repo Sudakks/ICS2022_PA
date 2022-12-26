@@ -40,10 +40,9 @@ void init_proc() {
 	context_kload(&pcb[0], hello_fun, arg1);
 	//context_kload(&pcb[1], hello_fun, arg2);
 	char *const argv[] = {"--skip"};
-	int argc = 0;
-  while(argv + argc != NULL)
-	  argc++;
-  printf("in proc:\nargc = %d\n", argc);
+	//int argc = 0;
+  //while(argv + argc != NULL)
+	  //argc++;
 	context_uload(&pcb[1], "/bin/pal", argv, NULL);
 	//context_uload(&pcb[1], "/bin/pal");
   switch_boot_pcb();
