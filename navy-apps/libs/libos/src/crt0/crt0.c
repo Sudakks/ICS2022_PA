@@ -18,7 +18,7 @@ void call_main(uintptr_t *args) {
 	*/
 	//printf("call----  %p\n", args);
 	int argc = *(int*)args;
-	printf("in call_main:\nargc = %d\n", argc);
+	//printf("in call_main:\nargc = %d\n", argc);
 	//现在有argc个参数
 	char** tmp = (char**)(args + 1);
 	char** argv = tmp;
