@@ -118,7 +118,10 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	if(argv)
 	{
 		while(argv[argc])
+		{
+			printf("argv[%d] = %s\n", argc, *argv[argc]);
 			argc++;
+		}
 	}
 	printf("in uload:\nargc = %d\n", argc);
 	Area area = RANGE(pcb, (uint8_t*)pcb + STACK_SIZE);
