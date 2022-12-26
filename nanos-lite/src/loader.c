@@ -131,7 +131,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	char* str = (char*)now - 1;
 	for(int i = 0; i < argc; i++)
 	{
-		str = str - strlen(argv[i]) + 1;
+		str = str - (strlen(argv[i]) + 1);
 		strcpy(str, argv[i]);
 		args[i] = str;
 		if(args[i])
