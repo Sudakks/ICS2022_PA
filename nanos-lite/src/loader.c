@@ -139,6 +139,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	printf("opopo\n");
 	for(int i = 0; i < envc; i++)
 	{
+		printf("ji\n");
 		str = str - (strlen(envp[i]) + 1);
 		strcpy(str, envp[i]);
 		en[i] = str;
