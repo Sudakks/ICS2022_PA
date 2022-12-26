@@ -162,6 +162,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	//*ptr = NULL;
 	//不知道为啥，他不能赋值为NULL
 	ptr--;
+	printf("iiiiii\n");
 	for(int i = argc - 1; i >= 0; i--)
 	{
 		*ptr = ar[i];
