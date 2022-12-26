@@ -119,7 +119,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	{
 		while(argv[argc])
 		{
-			//printf("argv[%d] = %p\n", argc, argv[argc]);
 			argc++;
 		}
 	}
@@ -131,7 +130,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	printf("in uload:\nargc = %d\n", argc);
 	printf("in uload:\nenvc = %d\n", envc);
 
-	Area area = RANGE(pcb, (uint8_t*)pcb + STACK_SIZE);
 	//char* now = (char*)new_page(nr_page) + nr_page * nr_page_sz;
 	char* now = (char*)heap.end;
 	char* ar[argc];
@@ -153,7 +151,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	char** ptr = (char**)str;
 	ptr--;
 	*ptr = NULL;
-	/////begin
 	ptr--;
 	for(int i = envc - 1; i >= 0; i--)
 	{
@@ -169,9 +166,10 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 		ptr--;
 	}
 	*(int*)ptr = argc;
+
+	Area area = RANGE(pcb, (uint8_t*)pcb + STACK_SIZE);
 	void* entry = (void*)loader(pcb, filename);
 	pcb->cp = ucontext(NULL, area, entry);
 	//pcb->cp->GPRx = (uintptr_t)heap.end;
-	pcb->cp->GPRx = (uintptr_t)argc;
-	printf("here argc = %d\n", argc);
+	pcb->cp->GPRx = (uintptr_t)&argc;
 }
