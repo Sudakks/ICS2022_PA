@@ -151,25 +151,24 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	}
 	str--;//开始分配下面的指针区域
 	str = NULL;
+	printf("iii\n");
 	str--;
 	char** ptr = (char**)str;
+	printf("ooo\n");
 	/////begin
 	for(int i = envc - 1; i >= 0; i--)
 	{
 		*ptr = en[i];
 		ptr--;
 	}
-	printf("aaa\n");
 	//*ptr = NULL;
-	printf("not hree\n");
+	//不知道为啥，他不能赋值为NULL
 	ptr--;
-	printf("uiui\n");
 	for(int i = argc - 1; i >= 0; i--)
 	{
 		*ptr = ar[i];
 		ptr--;
 	}
-	printf("iioioioio\n");
 	*(int*)ptr = argc;
 	void* entry = (void*)loader(pcb, filename);
 	pcb->cp = ucontext(NULL, area, entry);
