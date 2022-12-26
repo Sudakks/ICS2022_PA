@@ -123,45 +123,47 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	}
 	printf("in uload:\nargc = %d\n", argc);
 	printf("in uload:\nenvc = %d\n", envc);
+
 	Area area = RANGE(pcb, (uint8_t*)pcb + STACK_SIZE);
 
-	void* now = area.end;
+	void* now = heap.end;
 	char* ar[argc];
 	char* en[envc];
 	char* str = (char*)now - 1;
 	for(int i = 0; i < argc; i++)
 	{
-
 		str = str - (strlen(argv[i]) + 1);
-		
-		printf("ii = %d\n", i);
 		strcpy(str, argv[i]);
-
 		ar[i] = str;
-		printf("i = %d\n", i);
-		if(!ar[i])
-			printf("no\n");
 	}
 	for(int i = 0; i < envc; i++)
 	{
 		str = str - (strlen(envp[i]) + 1);
 		strcpy(str, envp[i]);
 		en[i] = str;
-		if(!en[i])
-			printf("nno\n");
 	}
-	/*
-	for(int i = 0; i < envc; i++)
-	{
-		strcpy(str, envp[i]);
-		str--;
-	}
-	now = (void*)str;
-	*(int*)now = argc;
-	*/
+	str--;//开始分配下面的指针区域
+	str = NULL;
+	str--;
 
+	char** ptr = (char**)str;
+	for(int i = envc - 1; i >= 0; i--)
+	{
+		*ptr = en[i];
+		ptr--;
+	}
+
+	*ptr = NULL;
+	ptr--;
+	for(int i = argc - 1; i >= 0; i--)
+	{
+		*ptr = ar[i];
+		ptr--;
+	}
+	*(int*)ptr = argc;
+	
 	void* entry = (void*)loader(pcb, filename);
 	pcb->cp = ucontext(NULL, area, entry);
 	//pcb->cp->GPRx = (uintptr_t)heap.end;
-	pcb->cp->GPRx = (uintptr_t)now;
+	pcb->cp->GPRx = (uintptr_t)str;
 }
