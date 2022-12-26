@@ -157,7 +157,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 		*ptr = en[i];
 		ptr--;
 	}
-
+printf("ooo\n");
 	*ptr = NULL;
 	ptr--;
 	for(int i = argc - 1; i >= 0; i--)
@@ -166,7 +166,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 		ptr--;
 	}
 	*(int*)ptr = argc;
-	
+printf("haha\n");	
 	void* entry = (void*)loader(pcb, filename);
 	pcb->cp = ucontext(NULL, area, entry);
 	//pcb->cp->GPRx = (uintptr_t)heap.end;
