@@ -116,9 +116,10 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 			argc++;	
 		*/
 	if(argv)
-		printf("yess\n");
-	else
-		printf("nono\n");
+	{
+		while(argv[argc])
+			argc++;
+	}
 	printf("in uload:\nargc = %d\n", argc);
 	Area area = RANGE(pcb, (uint8_t*)pcb + STACK_SIZE);
 	void* entry = (void*)loader(pcb, filename);
