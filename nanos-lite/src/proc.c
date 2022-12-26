@@ -49,6 +49,20 @@ void init_proc() {
   switch_boot_pcb();
 }
 
+int my_execve(const char*filename, char *const argv[], char *const envp[])
+{
+	/*
+	if(!fs_open(filename, 0, 0))
+		return -1;
+	else
+		fs_close(filename);
+	*/
+	context_uload(current, filename, argv, envp);
+	switch_boot_pcb();
+	yield();
+	return 0;
+}
+
 Context* schedule(Context *prev) {
 	// save the context pointer
 	current->cp = prev;
@@ -56,7 +70,6 @@ Context* schedule(Context *prev) {
 // always select pcb[0] as the new process
 //在两个内核线程之间来回切换
 	current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
-	//printf("current->cp = %p\n", current->cp);
 
 // then return the new context
 	return current->cp;
