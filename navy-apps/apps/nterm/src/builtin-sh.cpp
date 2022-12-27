@@ -31,10 +31,8 @@ static void sh_handle_cmd(const char *cmd) {
 	//现在要解析参数
 	char str[128];
 	strcpy(str, (char*)cmd);
-	printf("strlen = %d\n", strlen(cmd));
-	printf("last = %c\n", str[strlen(cmd) - 1]);
 	str[strlen(cmd) - 1] = '\0';
-	printf("cmd = %s\n", str);
+	//printf("cmd = %s\n", str);
 	//overwrite is set to 0
 
 	char* argv[8];
@@ -49,6 +47,7 @@ static void sh_handle_cmd(const char *cmd) {
     token = strtok(NULL, str);
   }
 	argv[i] = NULL;
+	printf("i=%d\n", i);
 		
 	setenv("PATH", "/bin", 0);
 	execvp(argv[0], argv);
