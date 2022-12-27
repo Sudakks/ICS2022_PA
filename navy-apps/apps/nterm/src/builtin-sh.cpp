@@ -44,7 +44,7 @@ static void sh_handle_cmd(const char *cmd) {
 	while(token != NULL ) 
 	{
 		argv[argc++] = token;
-    //printf("%s\n", argv[argc-1]);
+    printf("%s\n", argv[argc-1]);
     token = strtok(NULL, str);
   }
 	argv[argc] = NULL;
