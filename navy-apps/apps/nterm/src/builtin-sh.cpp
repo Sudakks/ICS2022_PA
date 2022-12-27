@@ -33,25 +33,31 @@ static void sh_handle_cmd(const char *cmd) {
 	tmp[strlen(cmd) - 1] = '\0';
 	printf("cmd = %s\n", cmd);
 	//overwrite is set to 0
-	char* my_cmd;
-	char str[64];
-	char* argv;
+	char str[128];
+	char* argv[8];
 	//char** envp;
 	strcpy(str, tmp);
 	const char del[2] = " ";
-	my_cmd = strtok(tmp, del);
-	printf("my_cmd = %s\n", my_cmd);
+	int i = 0;
+	char* token = strtok(str, del);
+	while(token != NULL ) 
+	{
+		argv[++i] = token;
+    printf("%s\n", token);
+    token = strtok(NULL, str);
+   }
 	//if(my_cmd != NULL)
 		//argv = (char**)strtok(NULL, del);
-	argv = tmp;
-	printf("argv = %s\n", argv);
 	//if(argv != NULL)
 		//envp = (char**)strtok(NULL, del);
 		
 	setenv("PATH", "/bin", 0);
 	//execvpe(my_cmd, (char**const)argv, (char**const)envp);
-	//execvp(my_cmd, (char**const) argv);
-	execvp(cmd, NULL);
+	execvp(argv[0], argv);
+	//execvp(cmd, NULL);
+	/*
+	注意传给execvp的argv参数列表，也包括cmd命令！
+	*/
 }
 
 void builtin_sh_run() {
