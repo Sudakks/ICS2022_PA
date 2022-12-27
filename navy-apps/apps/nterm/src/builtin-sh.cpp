@@ -42,6 +42,7 @@ static void sh_handle_cmd(const char *cmd) {
 	const char del[2] = " ";
 
 
+/*
 	int argc = 0;
 	char* token = strtok(str, del);
 	while(token != NULL ) 
@@ -50,7 +51,7 @@ static void sh_handle_cmd(const char *cmd) {
     token = strtok(NULL, str);
   }
 	printf("argc = %d\n", argc);
-/*
+	*/
 	int i = 0;
 	char* token = strtok(str, del);
 	while(token != NULL ) 
@@ -60,7 +61,7 @@ static void sh_handle_cmd(const char *cmd) {
     token = strtok(NULL, str);
   }
 	argv[i] = NULL;
-*/		
+
 	setenv("PATH", "/bin", 0);
 	execvp(argv[0], argv);
 	/*
