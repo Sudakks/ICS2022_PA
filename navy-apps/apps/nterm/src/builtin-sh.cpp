@@ -31,7 +31,7 @@ static void sh_handle_cmd(const char *cmd) {
 	//现在要解析参数
 	char str[128];
 	strcpy(str, (char*)cmd);
-	str[strlen(cmd) - 1] = ' ';
+	str[strlen(cmd) - 1] = '\0';
 	//printf("cmd = %s\n", str);
 	//overwrite is set to 0
 
