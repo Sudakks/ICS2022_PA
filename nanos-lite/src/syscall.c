@@ -171,7 +171,8 @@ void do_syscall(Context *c) {
 		break;
 	case SYS_execve:
 		sys_execve(c);
-    default: panic("Unhandled syscall ID = %d", a[0]);
+		break;
+  default: panic("Unhandled syscall ID = %d", a[0]);
   }
 
 }
