@@ -32,7 +32,7 @@ static void sh_handle_cmd(const char *cmd) {
 	char str[128];
 	strcpy(str, (char*)cmd);
 	str[strlen(cmd) - 1] = '\0';
-	//printf("cmd = %s\n", str);
+	printf("cmd = %s\n", str);
 	//overwrite is set to 0
 
 	char* argv[16];
@@ -61,6 +61,7 @@ static void sh_handle_cmd(const char *cmd) {
 	argv[argc] = NULL;
 	//我不理解为啥，他就是解析不了p这个字符
 
+printf("+++++++++\n");
 	setenv("PATH", "/bin:/usr/bin", 0);
 	execvp(argv[0], argv);
 	/*
