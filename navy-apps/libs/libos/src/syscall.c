@@ -114,6 +114,7 @@ int _gettimeofday(struct timeval *tv, struct timezone *tz) {
 extern int errno;
 int _execve(const char *fname, char * const argv[], char *const envp[]) {
   int ret = _syscall_(SYS_execve, (uintptr_t)fname, (uintptr_t)argv, (uintptr_t)envp);
+	return 0;
 	if(ret < 0)//表示系统调用失败
 	{
 		errno = -ret;
