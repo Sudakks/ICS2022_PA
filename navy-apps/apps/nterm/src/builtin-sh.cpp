@@ -31,7 +31,7 @@ static void sh_handle_cmd(const char *cmd) {
 	//现在要解析参数
 	char* tmp = (char*) cmd;
 	tmp[strlen(cmd) - 1] = '\0';
-	//printf("cmd = %s\n", cmd);
+	printf("cmd = %s\n", cmd);
 	//overwrite is set to 0
 	char* my_cmd;
 	char str[64];
@@ -40,6 +40,7 @@ static void sh_handle_cmd(const char *cmd) {
 	strcpy(str, tmp);
 	const char del[2] = " ";
 	my_cmd = strtok(tmp, del);
+	printf("my_cmd = %s\n", my_cmd);
 	if(my_cmd != NULL)
 		argv = (char**)strtok(NULL, del);
 	//if(argv != NULL)
