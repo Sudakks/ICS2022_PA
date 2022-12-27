@@ -44,6 +44,15 @@ static void sh_handle_cmd(const char *cmd) {
 	while(token != NULL ) 
 	{
 		argv[argc++] = token;
+		int i = 0;
+		while(token[i] != '\0')
+		{
+			if(token[i] == '\n')
+				printf("find gang n\n");
+			if(token[i] == 'p')
+				printf("yes\n");
+			i++;
+		}
     printf("%s\n", argv[argc-1]);
     token = strtok(NULL, str);
   }
