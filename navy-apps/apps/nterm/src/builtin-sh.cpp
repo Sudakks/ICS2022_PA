@@ -47,7 +47,8 @@ static void sh_handle_cmd(const char *cmd) {
     token = strtok(NULL, str);
   }
 	argv[i] = NULL;
-	printf("i=%d\n", i);
+	for(int j = 0; j <= i; j++)
+		printf("argv[%d] = %s\n", j, argv[j]);
 		
 	setenv("PATH", "/bin", 0);
 	execvp(argv[0], argv);
