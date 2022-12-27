@@ -30,24 +30,37 @@ static void sh_handle_cmd(const char *cmd) {
 	//先要把'\n'去掉
 	//现在要解析参数
 	char str[128];
+	char tmp[128];
 	strcpy(str, (char*)cmd);
 	str[strlen(cmd) - 1] = '\0';
+	str[strlen(tmp) - 1] = '\0';
 	//printf("cmd = %s\n", str);
 	//overwrite is set to 0
 
 	char* argv[8];
 	//char** envp;
 	const char del[2] = " ";
+
+
+	int argc = 0;
+	char* token = strtok(str, del);
+	while(token != NULL ) 
+	{
+		argc += 1;
+    token = strtok(NULL, str);
+  }
+	printf("argc = %d\n", argc);
+/*
 	int i = 0;
 	char* token = strtok(str, del);
 	while(token != NULL ) 
 	{
 		argv[i++] = token;
-    sh_printf("%s\n", token);
+    printf("%s\n", token);
     token = strtok(NULL, str);
   }
 	argv[i] = NULL;
-		
+*/		
 	setenv("PATH", "/bin", 0);
 	execvp(argv[0], argv);
 	/*
