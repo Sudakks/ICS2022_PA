@@ -6,6 +6,7 @@
 #include "syscall.h"
 #include <stdio.h>
 #include <string.h>
+#include <errno.h>
 
 // helper macros
 #define _concat(x, y) x ## y
@@ -111,10 +112,9 @@ int _gettimeofday(struct timeval *tv, struct timezone *tz) {
 	return _syscall_(SYS_gettimeofday, (intptr_t)tv, (intptr_t)tz, 0);
 }
 
-extern int errno;
+/*errno是全局变量*/
 int _execve(const char *fname, char * const argv[], char *const envp[]) {
   int ret = _syscall_(SYS_execve, (uintptr_t)fname, (uintptr_t)argv, (uintptr_t)envp);
-	return 0;
 	if(ret < 0)//表示系统调用失败
 	{
 		errno = -ret;
