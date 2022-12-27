@@ -44,6 +44,7 @@ void init_proc() {
 	context_uload(&pcb[1], "/bin/pal", argv, NULL);
 	*/
 
+  switch_boot_pcb();
 	char *const argv[] = {"www", "bbb", "uiui", NULL};
 	context_uload(&pcb[1], "/bin/exec-test", argv, NULL);
   //switch_boot_pcb();
