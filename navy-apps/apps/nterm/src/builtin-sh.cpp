@@ -50,8 +50,8 @@ static void sh_handle_cmd(const char *cmd) {
 		
 	setenv("PATH", "/bin", 0);
 	//execvpe(my_cmd, (char**const)argv, (char**const)envp);
-	execvp(my_cmd, (char**const) argv);
-	//execvp(cmd, NULL);
+	//execvp(my_cmd, (char**const) argv);
+	execvp(cmd, NULL);
 }
 
 void builtin_sh_run() {
