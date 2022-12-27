@@ -35,14 +35,16 @@ static void sh_handle_cmd(const char *cmd) {
 	//overwrite is set to 0
 	char* my_cmd;
 	char str[64];
-	char** argv;
+	char* argv;
 	//char** envp;
 	strcpy(str, tmp);
 	const char del[2] = " ";
 	my_cmd = strtok(tmp, del);
 	printf("my_cmd = %s\n", my_cmd);
-	if(my_cmd != NULL)
-		argv = (char**)strtok(NULL, del);
+	//if(my_cmd != NULL)
+		//argv = (char**)strtok(NULL, del);
+	argv = tmp;
+	printf("argv = %s\n", argv);
 	//if(argv != NULL)
 		//envp = (char**)strtok(NULL, del);
 		
