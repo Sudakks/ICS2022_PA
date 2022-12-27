@@ -57,11 +57,13 @@ void init_proc() {
 int my_execve(const char*filename, char *const argv[], char *const envp[])
 {
 	/*
-	if(!fs_open(filename, 0, 0))
-		return -1;
-	else
-		fs_close(filename);
+	检查要执行的文件是否存在
 	*/
+	int fd = fs_open(filename, 0, 0);
+	if(fd == -1)
+		return -2;//返回-2,表示这个文件不存在
+	else
+		fs_close(fd);
 	context_uload(current, filename, argv, envp);
 	switch_boot_pcb();
 	yield();

@@ -135,6 +135,7 @@ void sys_execve(Context *c)
 	//暂时忽略后面两个参数
 	//execve无返回值
 	//naive_uload(NULL, filename);
+	
 	c->GPRx = my_execve(filename, argv, envp);
 }
 

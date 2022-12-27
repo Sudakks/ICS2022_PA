@@ -50,7 +50,7 @@ static void sh_handle_cmd(const char *cmd) {
 	argv[argc] = NULL;
 	//我不理解为啥，他就是解析不了p这个字符
 
-	setenv("PATH", "/bin", 0);
+	setenv("PATH", "/bin:/usr/bin", 0);
 	execvp(argv[0], argv);
 	/*
 	注意传给execvp的argv参数列表，也包括cmd命令！
