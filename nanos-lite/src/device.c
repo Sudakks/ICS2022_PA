@@ -59,7 +59,7 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 	//printf("io_read: w = %d, h = %d\n", w, h);
 
 	size_t ret = snprintf(buf, len, "WIDTH: %d\nHEIGHT: %d\n", w, h);
-	printf("%s", buf);
+	//printf("%s", buf);
 	//是<，因为最后一位是'\0'，但是不计入长度
 	assert(ret < len);
 	return ret + 1;
