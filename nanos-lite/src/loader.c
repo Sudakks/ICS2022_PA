@@ -114,7 +114,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	*/
 	//先得出argc的值
 	/*nr_page = 8, nr_page_sz = 4096*/
-	printf("in ulload: filename = %s\n", filename);
 	int argc = 0, envc = 0;
 	if(argv)
 	{

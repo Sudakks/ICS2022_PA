@@ -46,7 +46,7 @@ void init_proc() {
 
 	char *const argv[] = {"www", "bbb", "uiui", NULL};
 	context_uload(&pcb[1], "/bin/exec-test", argv, NULL);
-  switch_boot_pcb();
+  //switch_boot_pcb();
 }
 
 int my_execve(const char*filename, char *const argv[], char *const envp[])
