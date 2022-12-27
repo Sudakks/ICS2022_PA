@@ -39,11 +39,11 @@ static void sh_handle_cmd(const char *cmd) {
 	char* argv[8];
 	//char** envp;
 	const char del[2] = " ";
-	int i = 1;
+	int i = 0;
 	char* token = strtok(str, del);
 	while(token != NULL ) 
 	{
-		argv[++i] = token;
+		argv[i++] = token;
     printf("%s\n", token);
     token = strtok(NULL, str);
   }
