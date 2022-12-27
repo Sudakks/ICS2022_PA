@@ -30,7 +30,7 @@ static void sh_handle_cmd(const char *cmd) {
 	//先要把'\n'去掉
 	//现在要解析参数
 	char str[128];
-	strcpy(str, (char*)cmd);
+	strcpy(str, cmd);
 	str[strlen(cmd) - 1] = '\0';
 	printf("cmd = %s\n", str);
 	//overwrite is set to 0
@@ -38,12 +38,15 @@ static void sh_handle_cmd(const char *cmd) {
 	char* argv[16];
 	//char** envp;
 	const char del[2] = " ";
-
+	char* token;
 	int argc = 0;
-	char* token = strtok(str, del);
+
+	token = strtok(str, del);
+
 	while(token != NULL ) 
 	{
 		argv[argc++] = token;
+		/*
 		int i = 0;
 		while(token[i] != '\0')
 		{
@@ -51,12 +54,11 @@ static void sh_handle_cmd(const char *cmd) {
 				printf("find gang n\n");
 			if(token[i] == 'p')
 				printf("yes\n");
-			else
-				printf("no\n");
 			i++;
 		}
+		*/
     printf("%s\n", token);
-    token = strtok(NULL, str);
+    token = strtok(NULL, del);
   }
 	argv[argc] = NULL;
 	//我不理解为啥，他就是解析不了p这个字符
