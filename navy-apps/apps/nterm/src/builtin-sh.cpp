@@ -44,10 +44,11 @@ static void sh_handle_cmd(const char *cmd) {
 	while(token != NULL ) 
 	{
 		argv[argc++] = token;
-    printf("%s\n", argv[argc-1]);
+    //printf("%s\n", argv[argc-1]);
     token = strtok(NULL, str);
   }
 	argv[argc] = NULL;
+	//我不理解为啥，他就是解析不了p这个字符
 
 	setenv("PATH", "/bin", 0);
 	execvp(argv[0], argv);
