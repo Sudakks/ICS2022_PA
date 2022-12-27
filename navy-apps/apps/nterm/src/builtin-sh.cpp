@@ -32,7 +32,7 @@ static void sh_handle_cmd(const char *cmd) {
 	char str[128];
 	strcpy(str, cmd);
 	str[strlen(cmd) - 1] = '\0';
-	printf("cmd = %s\n", str);
+	//printf("cmd = %s\n", str);
 	//overwrite is set to 0
 
 	char* argv[16];
@@ -46,25 +46,13 @@ static void sh_handle_cmd(const char *cmd) {
 	while(token != NULL ) 
 	{
 		argv[argc++] = token;
-		/*
-		int i = 0;
-		while(token[i] != '\0')
-		{
-			if(token[i] == '\n')
-				printf("find gang n\n");
-			if(token[i] == 'p')
-				printf("yes\n");
-			i++;
-		}
-		*/
-    printf("%s\n", token);
+		//printf("%s\n", token);
     token = strtok(NULL, del);
+		//我要哭出来了，这里写成了str分割，所以一直解析不对,,,,
   }
 	argv[argc] = NULL;
 	//我不理解为啥，他就是解析不了p这个字符
 
-printf("+++++++++\n");
-	setenv("PATH", "/bin:/usr/bin", 0);
 	execvp(argv[0], argv);
 	/*
 	注意传给execvp的argv参数列表，也包括cmd命令！
@@ -75,7 +63,7 @@ void builtin_sh_run() {
   sh_banner();
   sh_prompt();
 
-	//setenv("PATH", "/bin:/usr/bin", 0);
+	setenv("PATH", "/bin:/usr/bin", 0);
 
   while (1) {
     SDL_Event ev;
