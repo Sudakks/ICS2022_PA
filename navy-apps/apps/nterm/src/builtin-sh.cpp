@@ -32,6 +32,7 @@ static void sh_handle_cmd(const char *cmd) {
 	char str[128];
 	strcpy(str, (char*)cmd);
 	printf("strlen = %d\n", strlen(cmd));
+	printf("last = %c\n", str[strlen(cmd) - 1]);
 	str[strlen(cmd) - 1] = '\0';
 	//printf("cmd = %s\n", cmd);
 	//overwrite is set to 0
