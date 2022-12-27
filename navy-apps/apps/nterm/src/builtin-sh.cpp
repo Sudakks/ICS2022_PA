@@ -51,9 +51,11 @@ static void sh_handle_cmd(const char *cmd) {
 				printf("find gang n\n");
 			if(token[i] == 'p')
 				printf("yes\n");
+			else
+				printf("no\n");
 			i++;
 		}
-    printf("%s\n", argv[argc-1]);
+    printf("%s\n", token);
     token = strtok(NULL, str);
   }
 	argv[argc] = NULL;
