@@ -45,7 +45,8 @@ static void sh_handle_cmd(const char *cmd) {
 		argv[++i] = token;
     printf("%s\n", token);
     token = strtok(NULL, str);
-   }
+  }
+	argv[i] = NULL;
 	//if(my_cmd != NULL)
 		//argv = (char**)strtok(NULL, del);
 	//if(argv != NULL)
