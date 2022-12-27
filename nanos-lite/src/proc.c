@@ -44,7 +44,7 @@ void init_proc() {
 	context_uload(&pcb[1], "/bin/pal", argv, NULL);
 	*/
 
-	char *const argv[] = {"www", "bbb", NULL};
+	char *const argv[] = {"www", "bbb", "uiui", NULL};
 	context_uload(&pcb[1], "/bin/exec-test", argv, NULL);
   switch_boot_pcb();
 }
@@ -57,7 +57,6 @@ int my_execve(const char*filename, char *const argv[], char *const envp[])
 	else
 		fs_close(filename);
 	*/
-	printf("in my_execve\n");
 	context_uload(current, filename, argv, envp);
 	switch_boot_pcb();
 	yield();
