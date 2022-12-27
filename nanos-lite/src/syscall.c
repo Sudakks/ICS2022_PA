@@ -129,14 +129,12 @@ void sys_gettimeofday(Context *c)
 extern int my_execve(const char*filename, char *const argv[], char *const envp[]);
 void sys_execve(Context *c)
 {
-	printf("run into this\n");
 	const char* filename = (const char*)c->GPR2;
 	char**const argv = (char**const)c->GPR3;
 	char**const envp = (char**const)c->GPR4;
 	//暂时忽略后面两个参数
 	//execve无返回值
 	//naive_uload(NULL, filename);
-	printf("-----\nfilename = %s\n", filename);
 	c->GPRx = my_execve(filename, argv, envp);
 }
 
