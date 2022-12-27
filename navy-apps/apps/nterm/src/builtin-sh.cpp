@@ -28,12 +28,27 @@ static void sh_handle_cmd(const char *cmd) {
 	//这个是读到的路径，调用这个文件
 	//set PATH=/bin
 	//先要把'\n'去掉
+	//现在要解析参数
 	char* tmp = (char*) cmd;
 	tmp[strlen(cmd) - 1] = '\0';
 	//printf("cmd = %s\n", cmd);
 	//overwrite is set to 0
+	char* my_cmd;
+	char str[64];
+	char** argv;
+	//char** envp;
+	strcpy(str, tmp);
+	const char del[2] = " ";
+	my_cmd = strtok(tmp, del);
+	if(my_cmd != NULL)
+		argv = (char**)strtok(NULL, del);
+	//if(argv != NULL)
+		//envp = (char**)strtok(NULL, del);
+		
 	setenv("PATH", "/bin", 0);
-	execvp(cmd, NULL);
+	//execvpe(my_cmd, (char**const)argv, (char**const)envp);
+	execvp(my_cmd, (char**const) argv);
+	//execvp(cmd, NULL);
 }
 
 void builtin_sh_run() {
