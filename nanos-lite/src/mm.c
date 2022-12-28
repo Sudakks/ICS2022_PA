@@ -10,6 +10,7 @@ void* new_page(size_t nr_page) {
 
 #ifdef HAS_VME
 static void* pg_alloc(int n) {
+	printf("yes  jj\n");
 	size_t num = n / page_sz;
 	void* ret = new_page(num);
 	//对分配的页面进行清零操作
