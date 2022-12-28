@@ -43,7 +43,6 @@ bool vme_init(void* (*pgalloc_f)(int), void (*pgfree_f)(void*)) {
   }
   set_satp(kas.ptr);
   vme_enable = 1;
-printf("finfih\n");
   return true;
 }
 
@@ -90,6 +89,7 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 
 Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
 	//no arg, ignore as temporarily
+	printf("maybe not here\n");
 	Context* con = (Context*)(kstack.end - sizeof(Context));
 	con->mepc = (uintptr_t)entry;
   return con;

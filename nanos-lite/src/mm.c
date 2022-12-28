@@ -4,14 +4,13 @@ static void *pf = NULL;
 const int page_sz = 4096;
 void* new_page(size_t nr_page) {
 	void* ret = pf;
-	pf = (void*)((char*)pf + nr_page * 4096);
+	pf = (void*)((char*)pf + nr_page * PGSIZE);
 	return ret;
 }
 
 #ifdef HAS_VME
 static void* pg_alloc(int n) {
-	printf("yes  jj\n");
-	size_t num = n / page_sz;
+	size_t num = n / PGSIZE;
 	void* ret = new_page(num);
 	//对分配的页面进行清零操作
 	memset(ret, 0, n);
