@@ -24,7 +24,7 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
 	vaddr_t offset = vaddr & 0xfff;
 
 	//first level
-	vaddr_t PPN = cpu.satp & 0x3fffff;
+	vaddr_t PPN = (cpu.satp >> 12) & 0x3fffff;
 	vaddr_t pte_addr = (PPN << 12) + (VPN1 << 2);
 	uint32_t pte = paddr_read(pte_addr, 4);//这里是读出目录特定位置的内容
 	assert(pte != 0 && (pte & 0x1));
@@ -32,7 +32,7 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
 	//valid位有效
 
 	//second level
-	PPN = pte & 0x3fffff;
+	PPN = (pte >> 12) & 0x3fffff;
 	vaddr_t leaf_addr = (PPN << 12) + (VPN0 << 2); 
 	uint32_t leaf = paddr_read(leaf_addr, 4);
 	assert(leaf != 0 && (leaf & 0x1));
