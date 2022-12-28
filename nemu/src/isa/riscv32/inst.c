@@ -60,9 +60,9 @@ void W_CSR(word_t idx, word_t val)
 			cpu.mstatus = val;
 			break;
 		case 0x180:
-			//printf("write satp\n");
+			Log("write satp\n");
 			cpu.satp = val;
-			//printf("val = %u\n", val);
+			Log("val = %u\n", val);
 			break;//差点又忘记加break了
 		default:
 			panic("No more accessible SRs can write!");
