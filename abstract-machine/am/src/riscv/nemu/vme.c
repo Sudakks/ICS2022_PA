@@ -78,8 +78,8 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 	uint32_t VPN0 = (_va >> 12) & 0x3ff;
 	//要经过两层转换
 	//取出的是地址
-	/*
 	uint32_t** base = (uint32_t**)as->ptr;
+	printf("base = %p\n", base);
 	if(base[VPN1] == NULL)
 	{
 		base[VPN1] = (uint32_t*)pgalloc_usr(PGSIZE);
@@ -87,7 +87,7 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 	}
 	uint32_t* page_table = base[VPN1];
 	page_table[VPN0] = _pa & 0xfffff000;
-	*/
+	/*
 	printf("as->ptr = %p\n", as->ptr);
 	printf("va = %x, VPN1= %x, VPN0 = %x\n", va, VPN1, VPN0);
 	uint32_t* pte = (uint32_t*)as->ptr + (VPN1 << 2);
@@ -101,6 +101,7 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 	printf("after pte = %p\n", pte);
 	uint32_t* leaf = ((uint32_t*)(*pte << 12)) + (VPN0 << 2);
 	*leaf = _pa & 0xfffff000;
+	*/
 	//然后把这个位置映射到pa上
 }
 
