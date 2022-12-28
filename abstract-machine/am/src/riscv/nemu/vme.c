@@ -91,7 +91,7 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 	printf("as->ptr = %p\n", as->ptr);
 	printf("va = %x, VPN1= %x, VPN0 = %x\n", va, VPN1, VPN0);
 	uint32_t* pte = (uint32_t*)as->ptr + (VPN1 << 2);
-	printf("pte = %p\n", pte);
+	printf("pte = %p, pte's val = %p\n", pte, *pte);
 	if(!(*pte & 0x1))
 	{
 		//页目录不存在，分配
