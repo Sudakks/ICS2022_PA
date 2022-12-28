@@ -35,6 +35,8 @@ word_t R_CSR(word_t idx)
 			return cpu.mtvec;
 		case 0x300:
 			return cpu.mstatus;
+		case 0x180:
+			return cpu.satp;
 		default:
 			panic("No more accessible SRs can read!");
 	}
@@ -56,6 +58,9 @@ void W_CSR(word_t idx, word_t val)
 		case 0x300:
 			cpu.mstatus = val;
 			break;
+		case 0x180:
+			cpu.satp = val;
+			break;//差点又忘记加break了
 		default:
 			panic("No more accessible SRs can write!");
 	}

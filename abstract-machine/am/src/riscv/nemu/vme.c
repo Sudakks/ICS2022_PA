@@ -68,7 +68,20 @@ void __am_switch(Context *c) {
 }
 
 void map(AddrSpace *as, void *va, void *pa, int prot) {
-	//ignore prot
+	//ignore prot temporarily
+	PTE _va = (PTE)va;
+	PTE _pa = (PTE)pa;
+	uint32_t VPN0 = (uint32_t)((_va >> 22) & 0x3ff);
+	uint32_t VPN1 = (uint32_t)((_va >> 12) & 0x3ff);
+	//要经过两层转换
+	//取出的是地址
+	PTE* page_table = (PTE*)((PTE*)as->ptr)[VPN0];
+	if(page_table == NULL)
+	{
+		page_table = pgalloc_usr(PGSIZE);			
+	}
+	page_table[VPN1] = _pa & 0xfffff000;
+	//然后把这个位置映射到pa上
 }
 
 Context *ucontext(AddrSpace *as, Area kstack, void *entry) {

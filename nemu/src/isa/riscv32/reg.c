@@ -52,6 +52,7 @@ void isa_reg_display() {
 	printf("%s  %#x  %u\n", "mtvec", cpu.mtvec, cpu.mtvec);
 	printf("%s  %#x  %u\n", "mstatus", cpu.mstatus, cpu.mstatus);
 	printf("%s  %#x  %u\n", "mcause", cpu.mcause, cpu.mcause);
+	printf("%s  %#x  %u\n", "satp", cpu.satp, cpu.satp);
 	
 	//分别以16进制和无符号十进制数表示
 }
@@ -75,6 +76,8 @@ word_t isa_reg_str2val(const char *s, bool *success) {
 		return cpu.mcause;
 	if(!strcmp(s, "status"))
 		return cpu.mstatus;
+	if(!strcmp(s, "satp"))
+		return cpu.satp;
 	*success = false;
 	return 0;
 
