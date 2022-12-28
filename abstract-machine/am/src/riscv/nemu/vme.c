@@ -89,7 +89,7 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 	page_table[VPN0] = _pa & 0xfffff000;
 	*/
 	printf("as->ptr = %p\n", as->ptr);
-	printf("va = %x\n", va);
+	printf("va = %x, VPN1= %x, VPN0 = %x\n", va, VPN1, VPN0);
 	uint32_t* pte = (uint32_t*)as->ptr + (VPN1 << 2);
 	printf("pte = %p\n", pte);
 	if(!(*pte & 0x1))
