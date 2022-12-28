@@ -38,6 +38,7 @@ bool vme_init(void* (*pgalloc_f)(int), void (*pgfree_f)(void*)) {
 printf("here\n");
   for (i = 0; i < LENGTH(segments); i ++) {
     void *va = segments[i].start;
+		printf("i = %d\n", i);
     for (; va < segments[i].end; va += PGSIZE) {
       map(&kas, va, va, 0);
     }
@@ -80,14 +81,11 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 	uint32_t VPN1 = (uint32_t)((_va >> 12) & 0x3ff);
 	//要经过两层转换
 	//取出的是地址
-	printf("uuuu\n");
 	PTE* page_table = (PTE*)((PTE*)as->ptr)[VPN0];
-	printf("iiii\n");
 	if(page_table == NULL)
 	{
 		page_table = pgalloc_usr(PGSIZE);			
 	}
-	printf("oooo\n");
 	page_table[VPN1] = _pa & 0xfffff000;
 	//然后把这个位置映射到pa上
 }
