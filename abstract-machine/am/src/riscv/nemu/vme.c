@@ -43,7 +43,7 @@ bool vme_init(void* (*pgalloc_f)(int), void (*pgfree_f)(void*)) {
   }
   set_satp(kas.ptr);
   vme_enable = 1;
-
+printf("finfih\n");
   return true;
 }
 
@@ -72,14 +72,14 @@ void __am_switch(Context *c) {
 
 void map(AddrSpace *as, void *va, void *pa, int prot) {
 	//ignore prot temporarily
-	PTE _va = (PTE)va;
-	PTE _pa = (PTE)pa;
-	uint32_t VPN1 = (uint32_t)((_va >> 22) & 0x3ff);
-	uint32_t VPN0 = (uint32_t)((_va >> 12) & 0x3ff);
+	uint32_t _va = (uint32_t)va;
+	uint32_t _pa = (uint32_t)pa;
+	uint32_t VPN1 = _va >> 22;
+	uint32_t VPN0 = (_va >> 12) & 0x3ff;
 	//要经过两层转换
 	//取出的是地址
-	PTE* tmp = (PTE*)as->ptr;
-	PTE* page_table = (PTE*)tmp[VPN1];
+	uint32_t** tmp = (uint32_t**)as->ptr;
+	uint32_t* page_table = tmp[VPN1];
 	if(page_table == NULL)
 	{
 		page_table = pgalloc_usr(PGSIZE);			
