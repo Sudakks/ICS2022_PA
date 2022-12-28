@@ -17,6 +17,11 @@
 #include <memory/paddr.h>
 
 word_t vaddr_ifetch(vaddr_t addr, int len) {
+
+	if(cpu.satp & 0x80000000)
+		printf("should MMU\n");
+	else
+		printf("cpu.satp = %x\n", cpu.satp);
 	vaddr_t bug = addr;
 	addr = (isa_mmu_check(vaddr, len, 0) == MMU_TRANSLATE) ? isa_mmu_translate(addr, len, 0) : addr;
 	assert(addr == bug);
@@ -26,6 +31,8 @@ word_t vaddr_ifetch(vaddr_t addr, int len) {
 word_t vaddr_read(vaddr_t addr, int len) {
 	if(cpu.satp & 0x80000000)
 		printf("should MMU\n");
+	else
+		printf("cpu.satp = %x\n", cpu.satp);
 		/*
 	else
 		printf("satp = %d\n", cpu.satp);
@@ -43,6 +50,11 @@ word_t vaddr_read(vaddr_t addr, int len) {
 }
 
 void vaddr_write(vaddr_t addr, int len, word_t data) {
+
+	if(cpu.satp & 0x80000000)
+		printf("should MMU\n");
+	else
+		printf("cpu.satp = %x\n", cpu.satp);
 	vaddr_t bug = addr;
 	addr = (isa_mmu_check(vaddr, len, 0) == MMU_TRANSLATE) ? isa_mmu_translate(addr, len, 0) : addr;
 	assert(addr == bug);
