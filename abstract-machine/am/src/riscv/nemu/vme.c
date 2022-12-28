@@ -85,6 +85,7 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 		page_table = (uint32_t*)pgalloc_usr(PGSIZE);			
 	}
 	page_table[VPN0] = _pa & 0xfffff000;
+	printf("pa = %d\n", _pa & 0xfffff000);
 	//然后把这个位置映射到pa上
 }
 
