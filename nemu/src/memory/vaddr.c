@@ -25,7 +25,7 @@ word_t vaddr_ifetch(vaddr_t addr, int len) {
 		printf("cpu.satp = %x\n", cpu.satp);
 		*/
 	vaddr_t bug = addr;
-	printf("ifetch = %x\n", addr);
+	//printf("ifetch = %x\n", addr);
 	addr = (isa_mmu_check(vaddr, len, 0) == MMU_TRANSLATE) ? isa_mmu_translate(addr, len, 0) : addr;
 	assert(addr == bug);
   return paddr_read(addr, len);
