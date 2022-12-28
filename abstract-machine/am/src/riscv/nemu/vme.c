@@ -14,13 +14,13 @@ static Area segments[] = {      // Kernel memory mappings
 #define USER_SPACE RANGE(0x40000000, 0x80000000)
 
 static inline void set_satp(void *pdir) {
-	printf("run into set_satp\n");
+	//printf("run into set_satp\n");
   uintptr_t mode = 1ul << (__riscv_xlen - 1);
   asm volatile("csrw satp, %0" : : "r"(mode | ((uintptr_t)pdir >> 12)));
 }
 
 static inline uintptr_t get_satp() {
-	printf("run into get_satp\n");
+	//printf("run into get_satp\n");
   uintptr_t satp;
   asm volatile("csrr %0, satp" : "=r"(satp));
   return satp << 12;
@@ -72,7 +72,6 @@ void __am_switch(Context *c) {
 
 void map(AddrSpace *as, void *va, void *pa, int prot) {
 	//ignore prot temporarily
-	/*
 	PTE _va = (PTE)va;
 	PTE _pa = (PTE)pa;
 	uint32_t VPN1 = (uint32_t)((_va >> 22) & 0x3ff);
@@ -87,7 +86,6 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 	}
 	page_table[VPN0] = _pa & 0xfffff000;
 	//然后把这个位置映射到pa上
-	*/
 }
 
 Context *ucontext(AddrSpace *as, Area kstack, void *entry) {

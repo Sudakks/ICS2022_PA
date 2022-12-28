@@ -36,7 +36,7 @@ word_t R_CSR(word_t idx)
 		case 0x300:
 			return cpu.mstatus;
 		case 0x180:
-			printf("read satp\n");
+			//printf("read satp\n");
 			return cpu.satp;
 		default:
 			panic("No more accessible SRs can read!");
@@ -60,9 +60,9 @@ void W_CSR(word_t idx, word_t val)
 			cpu.mstatus = val;
 			break;
 		case 0x180:
-			printf("write satp\n");
+			//printf("write satp\n");
 			cpu.satp = val;
-			printf("val = %u\n", val);
+			//printf("val = %u\n", val);
 			break;//差点又忘记加break了
 		default:
 			panic("No more accessible SRs can write!");
