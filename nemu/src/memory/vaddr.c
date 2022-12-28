@@ -26,8 +26,10 @@ word_t vaddr_ifetch(vaddr_t addr, int len) {
 word_t vaddr_read(vaddr_t addr, int len) {
 	if(cpu.satp & 0x80000000)
 		printf("should MMU\n");
+		/*
 	else
 		printf("satp = %d\n", cpu.satp);
+		*/
 		/*
 	if(isa_mmu_check(vaddr, len, 0) == MMU_TRANSLATE)
 		printf("should MMU\n");
