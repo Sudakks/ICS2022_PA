@@ -25,6 +25,7 @@ word_t vaddr_ifetch(vaddr_t addr, int len) {
 		printf("cpu.satp = %x\n", cpu.satp);
 		*/
 	vaddr_t bug = addr;
+	printf("ifetch = %x\n", addr);
 	addr = (isa_mmu_check(vaddr, len, 0) == MMU_TRANSLATE) ? isa_mmu_translate(addr, len, 0) : addr;
 	assert(addr == bug);
   return paddr_read(addr, len);
@@ -47,6 +48,8 @@ word_t vaddr_read(vaddr_t addr, int len) {
 	else if(isa_mmu_check(vaddr, len, 0) == MMU_DIRECT)
 		printf("should not MMU\n");
 		*/
+
+	printf("vaddr_read = %x\n", addr);
 	vaddr_t bug = addr;
 	addr = (isa_mmu_check(vaddr, len, 0) == MMU_TRANSLATE) ? isa_mmu_translate(addr, len, 0) : addr;
 	assert(addr == bug);
@@ -60,6 +63,7 @@ void vaddr_write(vaddr_t addr, int len, word_t data) {
 	else
 		printf("cpu.satp = %x\n", cpu.satp);
 		*/
+	printf("vaddr_write = %x\n", addr);
 	vaddr_t bug = addr;
 	addr = (isa_mmu_check(vaddr, len, 0) == MMU_TRANSLATE) ? isa_mmu_translate(addr, len, 0) : addr;
 	assert(addr == bug);
