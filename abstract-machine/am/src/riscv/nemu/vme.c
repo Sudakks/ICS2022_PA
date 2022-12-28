@@ -40,6 +40,7 @@ printf("here\n");
     void *va = segments[i].start;
 		printf("i = %d\n", i);
     for (; va < segments[i].end; va += PGSIZE) {
+			printf("va = %p\n", va);
       map(&kas, va, va, 0);
     }
   }
