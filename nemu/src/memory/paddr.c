@@ -69,7 +69,9 @@ word_t paddr_read(paddr_t addr, int len) {
 		return ret; 
 	}
   IFDEF(CONFIG_DEVICE, return mmio_read(addr, len));
+	printf("in read\n");
   out_of_bound(addr);
+	printf("done read\n");
   return 0;
 }
 
@@ -83,7 +85,9 @@ void paddr_write(paddr_t addr, int len, word_t data) {
 		return; 
 	}  
   IFDEF(CONFIG_DEVICE, mmio_write(addr, len, data); return);
+	printf("in write\n");
   out_of_bound(addr);
+	printf("done write\n");
 }
 
 int save_pmem(FILE* fp)
