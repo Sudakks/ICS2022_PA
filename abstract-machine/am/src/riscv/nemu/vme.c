@@ -81,7 +81,7 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 	uint32_t* page_table = tmp[VPN1];
 	if(page_table == NULL)
 	{
-		page_table = pgalloc_usr(PGSIZE);			
+		page_table = (uint32_t*)pgalloc_usr(PGSIZE);			
 	}
 	page_table[VPN0] = _pa & 0xfffff000;
 	//然后把这个位置映射到pa上
@@ -89,7 +89,6 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 
 Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
 	//no arg, ignore as temporarily
-	printf("maybe not here\n");
 	Context* con = (Context*)(kstack.end - sizeof(Context));
 	con->mepc = (uintptr_t)entry;
   return con;
