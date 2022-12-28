@@ -49,6 +49,9 @@ static void sh_handle_cmd(const char *cmd) {
 		//printf("%s\n", token);
     token = strtok(NULL, del);
 		//我要哭出来了，这里写成了str分割，所以一直解析不对,,,,
+		//天哪，这个小小的地方，竟然耗费了我一天的时间，真的会哭出来啊啊啊啊！！！！
+		//但是这里解决了，busybox也可以运行了终于！
+		//还是有点开心在里面的哈哈哈哈
   }
 	argv[argc] = NULL;
 	//我不理解为啥，他就是解析不了p这个字符
