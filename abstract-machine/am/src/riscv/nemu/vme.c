@@ -89,7 +89,7 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 	page_table[VPN0] = _pa & 0xfffff000;
 	*/
 	uint32_t* pte = (uint32_t*)as->ptr + (VPN1 << 2);
-	printf("pte = %x\n", *pte);
+	printf("pte = %p\n", pte);
 	if(!(*pte & 0x1))
 	{
 		//页目录不存在，分配
