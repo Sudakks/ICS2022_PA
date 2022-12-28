@@ -90,7 +90,8 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 	{
 		//页目录不存在，分配
 		uint32_t* npage = (uint32_t*)pgalloc_usr(PGSIZE);
-		pte = npage;
+		printf("noage = %p\n", npage);
+		//pte = npage << 2;
 	}
 	uint32_t* leaf = ((uint32_t*)(*pte << 12)) + (VPN0 << 2);
 	*leaf = _pa & 0xfffff000;
