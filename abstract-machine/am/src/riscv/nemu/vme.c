@@ -95,6 +95,7 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 	if(!(*pte & 0x1))
 	{
 		//页目录不存在，分配
+		printf("fenpeu\n");
 		pte = (uint32_t*)pgalloc_usr(PGSIZE);
 	}
 	printf("after pte = %p\n", pte);
