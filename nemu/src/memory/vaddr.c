@@ -24,10 +24,14 @@ word_t vaddr_ifetch(vaddr_t addr, int len) {
 }
 
 word_t vaddr_read(vaddr_t addr, int len) {
+	/*
+	int flag;
+	if(cpu.satp)
 	if(isa_mmu_check(vaddr, len, 0) == MMU_TRANSLATE)
 		printf("should MMU\n");
 	else if(isa_mmu_check(vaddr, len, 0) == MMU_DIRECT)
 		printf("should not MMU\n");
+		*/
 	vaddr_t bug = addr;
 	addr = (isa_mmu_check(vaddr, len, 0) == MMU_TRANSLATE) ? isa_mmu_translate(addr, len, 0) : addr;
 	assert(addr == bug);
