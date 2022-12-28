@@ -62,6 +62,7 @@ void W_CSR(word_t idx, word_t val)
 		case 0x180:
 			printf("write satp\n");
 			cpu.satp = val;
+			printf("val = %d\n", val);
 			break;//差点又忘记加break了
 		default:
 			panic("No more accessible SRs can write!");
