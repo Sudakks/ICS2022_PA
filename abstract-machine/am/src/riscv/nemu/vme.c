@@ -78,23 +78,25 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 	uint32_t VPN0 = (_va >> 12) & 0x3ff;
 	//要经过两层转换
 	//取出的是地址
-	//uint32_t** base = (uint32_t**)as->ptr;
-	/*
+	uint32_t** base = (uint32_t**)as->ptr;
 	if(base[VPN1] == NULL)
+	{
 		base[VPN1] = (uint32_t*)pgalloc_usr(PGSIZE);
+		printf("alloc = %p\n", base[VPN1]);
+	}
 	uint32_t* page_table = base[VPN1];
 	page_table[VPN0] = _pa & 0xfffff000;
-	*/
+	/*
 	uint32_t* pte = (uint32_t*)as->ptr + (VPN1 << 2);
 	if(!(*pte & 0x1))
 	{
 		//页目录不存在，分配
 		uint32_t* npage = (uint32_t*)pgalloc_usr(PGSIZE);
-		printf("noage = %p\n", npage);
 		//pte = npage << 2;
 	}
 	uint32_t* leaf = ((uint32_t*)(*pte << 12)) + (VPN0 << 2);
 	*leaf = _pa & 0xfffff000;
+	*/
 	//然后把这个位置映射到pa上
 }
 
