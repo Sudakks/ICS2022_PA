@@ -49,7 +49,7 @@ word_t vaddr_read(vaddr_t addr, int len) {
 		printf("should not MMU\n");
 		*/
 
-	printf("vaddr_read = %x\n", addr);
+	//printf("vaddr_read = %x\n", addr);
 	vaddr_t bug = addr;
 	addr = (isa_mmu_check(vaddr, len, 0) == MMU_TRANSLATE) ? isa_mmu_translate(addr, len, 0) : addr;
 	assert(addr == bug);

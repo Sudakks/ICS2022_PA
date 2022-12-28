@@ -75,13 +75,13 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 	uint32_t _va = (uint32_t)va;
 	uint32_t _pa = (uint32_t)pa;
 	uint32_t VPN1 = _va >> 22;
-	uint32_t VPN0 = (_va & 0x3fffff) >> 12;
+	uint32_t VPN0 = (_va >> 12) & 0x3ff;
 	//要经过两层转换
 	//取出的是地址
 	uint32_t** tmp = (uint32_t**)as->ptr;
+	if(tmp[VPN1] == NULL)
+		tmp[VPN1] = (uint32_t*)pgalloc_usr(PGSIZE);
 	uint32_t* page_table = tmp[VPN1];
-	if(page_table == NULL)
-		page_table = (uint32_t*)pgalloc_usr(PGSIZE);
 	page_table[VPN0] = _pa & 0xfffff000;
 	//然后把这个位置映射到pa上
 }
