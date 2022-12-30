@@ -38,6 +38,7 @@ typedef struct {
   int pgsize;
   Area area;
   void *ptr;
+	/*地址空间描述符指针*/
 } AddrSpace;
 
 #ifdef __cplusplus

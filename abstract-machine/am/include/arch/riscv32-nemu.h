@@ -7,7 +7,8 @@ struct Context {
   //uintptr_t mepc, mcause, gpr[32], mstatus;
 	//PA3.1
 	uintptr_t gpr[32], mcause, mstatus, mepc;
-  void *pdir;/*这个放在哪里？？*/
+  void *pdir;
+	/*这是进程的地址空间描述符指针*/
 };
 
 #define GPR1 gpr[17] // a7

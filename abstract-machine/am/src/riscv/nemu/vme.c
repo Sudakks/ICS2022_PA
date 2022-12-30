@@ -45,7 +45,6 @@ bool vme_init(void* (*pgalloc_f)(int), void (*pgfree_f)(void*)) {
 }
 
 void protect(AddrSpace *as) {
-	//创建一个默认的地址空间
   PTE *updir = (PTE*)(pgalloc_usr(PGSIZE));
   as->ptr = updir;
   as->area = USER_SPACE;
@@ -106,8 +105,10 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 }
 
 Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
-	//no arg, ignore as temporarily
+	//no arg
 	Context* con = (Context*)(kstack.end - sizeof(Context));
 	con->mepc = (uintptr_t)entry;
+	con->pdir = as->ptr;
+	/*在创建的用户进程上下文中设置地址空间描述符指针*/
   return con;
 }
