@@ -34,34 +34,19 @@ bool vme_init(void* (*pgalloc_f)(int), void (*pgfree_f)(void*)) {
   kas.ptr = pgalloc_f(PGSIZE);
 
   int i;
-
-printf("len = %d\n", LENGTH(segments));
-for(int j = 0; j < LENGTH(segments); j++)
-{
-	printf("segments[j].start = %x\n", segments[j].start);
-}
-
-for (i = 0; i < LENGTH(segments); i ++) {
-    void *va = segments[i].start;
-			printf("start a new for, va = %x\n", va);
-    for (; va < segments[i].end; va += PGSIZE) {
-		//if(i = LENGTH(segments) - 1)
-			printf("va = %x\n", va);
-      //map(&kas, va, va, 0);
-    }
-  }
-/*
   for (i = 0; i < LENGTH(segments); i ++) {
     void *va = segments[i].start;
-		if(i == 0)
+		/*if(i == 0)
 			printf("start a new for, va = %x\n", va);
+			*/
     for (; va < segments[i].end; va += PGSIZE) {
+			printf("end = %x\n", segments[i].end);
 		//if(i = LENGTH(segments) - 1)
-			printf("va = %x\n", va);
+			//printf("va = %x\n", va);
       map(&kas, va, va, 0);
     }
   }
-	*/
+
   set_satp(kas.ptr);
   vme_enable = 1;
 	printf("finish!!!!\n");
