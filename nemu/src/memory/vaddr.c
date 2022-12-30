@@ -33,7 +33,7 @@ word_t vaddr_read(vaddr_t addr, int len) {
 	vaddr_t bug = addr;
 	if(isa_mmu_check(addr, len, 0) == MMU_TRANSLATE)
 	{
-		Log("should translate\n");
+		//Log("should translate\n");
 		addr = isa_mmu_translate(addr, len, 0);
 	}
 	assert(addr == bug);
@@ -51,7 +51,7 @@ void vaddr_write(vaddr_t addr, int len, word_t data) {
 	vaddr_t bug = addr;
 	if(isa_mmu_check(addr, len, 0) == MMU_TRANSLATE)
 	{
-		Log("should translate\n");
+		//Log("should translate\n");
 		addr = isa_mmu_translate(addr, len, 0);
 	}
 	//addr = (isa_mmu_check(addr, len, 0) == MMU_TRANSLATE) ? isa_mmu_translate(addr, len, 0) : addr;
