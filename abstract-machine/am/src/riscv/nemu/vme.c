@@ -87,6 +87,7 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 	}
 	if(_va == 0x80000000)
 		{
+printf("VPN1 = %x, VPN0 = %x\n", VPN1, VPN0); 
 			printf("first = %x\n", base[VPN1]);
 		}
 	uint32_t* page_table = base[VPN1];
