@@ -35,6 +35,7 @@ bool vme_init(void* (*pgalloc_f)(int), void (*pgfree_f)(void*)) {
 
   int i;
 
+printf("len = %d\n", LENGTH(segments));
 for(int j = 0; j < LENGTH(segments); j++)
 {
 	printf("segments[j].start = %x\n", segments[j].start);
