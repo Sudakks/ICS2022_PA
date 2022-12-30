@@ -42,12 +42,12 @@ for(int j = 0; j < LENGTH(segments); j++)
 }
   for (i = 0; i < LENGTH(segments); i ++) {
     void *va = segments[i].start;
-		if(i == LENGTH(segments) - 1)
+		if(i == 0)
 			printf("start a new for, va = %x\n", va);
     for (; va < segments[i].end; va += PGSIZE) {
 		//if(i = LENGTH(segments) - 1)
 		if(i == 0)
-			//printf("va = %x\n", va);
+			printf("va = %x\n", va);
       map(&kas, va, va, 0);
     }
   }
