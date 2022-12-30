@@ -26,7 +26,7 @@ word_t vaddr_ifetch(vaddr_t addr, int len) {
 		*/
 	vaddr_t bug = addr;
 	//printf("ifetch = %x\n", addr);
-	addr = (isa_mmu_check(vaddr, len, 0) == MMU_TRANSLATE) ? isa_mmu_translate(addr, len, 0) : addr;
+	addr = (isa_mmu_check(addr, len, 0) == MMU_TRANSLATE) ? isa_mmu_translate(addr, len, 0) : addr;
 	assert(addr == bug);
   return paddr_read(addr, len);
 }
@@ -51,7 +51,9 @@ word_t vaddr_read(vaddr_t addr, int len) {
 
 	//printf("vaddr_read = %x\n", addr);
 	vaddr_t bug = addr;
-	addr = (isa_mmu_check(vaddr, len, 0) == MMU_TRANSLATE) ? isa_mmu_translate(addr, len, 0) : addr;
+	if(isa_mmu_check(addr, len, 0) == MMU_TRANSLATE)
+		Log("yes\n");
+	addr = (isa_mmu_check(addr, len, 0) == MMU_TRANSLATE) ? isa_mmu_translate(addr, len, 0) : addr;
 	assert(addr == bug);
   return paddr_read(addr, len);
 }
@@ -65,7 +67,7 @@ void vaddr_write(vaddr_t addr, int len, word_t data) {
 		*/
 	//printf("vaddr_write = %x\n", addr);
 	vaddr_t bug = addr;
-	addr = (isa_mmu_check(vaddr, len, 0) == MMU_TRANSLATE) ? isa_mmu_translate(addr, len, 0) : addr;
+	addr = (isa_mmu_check(addr, len, 0) == MMU_TRANSLATE) ? isa_mmu_translate(addr, len, 0) : addr;
 	assert(addr == bug);
   paddr_write(addr, len, data);
 }
