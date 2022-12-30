@@ -47,7 +47,7 @@ for (i = 0; i < LENGTH(segments); i ++) {
     for (; va < segments[i].end; va += PGSIZE) {
 		//if(i = LENGTH(segments) - 1)
 			printf("va = %x\n", va);
-      map(&kas, va, va, 0);
+      //map(&kas, va, va, 0);
     }
   }
 /*
