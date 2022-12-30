@@ -30,7 +30,7 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
 	vaddr_t pte_addr = (PPN << 12) + (VPN1 << 2);
 	uint32_t pte = paddr_read(pte_addr, 4);//这里是读出目录特定位置的内容
 	//printf("first = %x\n", pte);
-	//assert(pte != 0 && (pte & 0x1));
+	assert(pte != 0 && (pte & 0x1));
 	//说明已经有过映射了！
 	//valid位有效
 
@@ -41,9 +41,9 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
 	//printf("2 addr = %x\n", leaf_addr);
 	//printf("leaf_addr = %x\n", leaf_addr);
 	uint32_t leaf = paddr_read(leaf_addr, 4);
-	//assert(leaf != 0 && (leaf & 0x1));
+	assert(leaf != 0 && (leaf & 0x1));
 	vaddr_t ret = (leaf & 0xfffff000) | offset;
-	printf("yinshe to %x\n", ret);
+	//printf("yinshe to %x\n", ret);
 	assert(0);
 	return ret;
 }
