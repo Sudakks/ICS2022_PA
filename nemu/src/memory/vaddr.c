@@ -51,6 +51,7 @@ word_t vaddr_read(vaddr_t addr, int len) {
 
 	//printf("vaddr_read = %x\n", addr);
 	vaddr_t bug = addr;
+	Log("reach hree\n");
 	if(isa_mmu_check(addr, len, 0) == MMU_TRANSLATE)
 		Log("yes\n");
 	addr = (isa_mmu_check(addr, len, 0) == MMU_TRANSLATE) ? isa_mmu_translate(addr, len, 0) : addr;
