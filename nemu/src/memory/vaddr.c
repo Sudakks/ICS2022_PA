@@ -17,42 +17,26 @@
 #include <memory/paddr.h>
 
 word_t vaddr_ifetch(vaddr_t addr, int len) {
-
-/*
-	if(cpu.satp & 0x80000000)
-		printf("should MMU\n");
-	else
-		printf("cpu.satp = %x\n", cpu.satp);
-		*/
-	//vaddr_t bug = addr;
-	//printf("ifetch = %x\n", addr);
-	addr = (isa_mmu_check(addr, len, 0) == MMU_TRANSLATE) ? isa_mmu_translate(addr, len, 0) : addr;
-	//assert(addr == bug);
+	vaddr_t bug = addr;
+	if(isa_mmu_check(addr, len, 0) == MMU_TRANSLATE)
+	{
+		Log("should translate\n");
+		addr = isa_mmu_translate(addr, len, 0);
+	}
+	//addr = (isa_mmu_check(addr, len, 0) == MMU_TRANSLATE) ? isa_mmu_translate(addr, len, 0) : addr;
+	assert(addr == bug);
   return paddr_read(addr, len);
 }
 
 word_t vaddr_read(vaddr_t addr, int len) {
-	/*
-	if(cpu.satp & 0x80000000)
-		printf("should MMU\n");
-	else
-		printf("cpu.satp = %x\n", cpu.satp);
-		*/
-		/*
-	else
-		printf("satp = %d\n", cpu.satp);
-		*/
-		/*
-	if(isa_mmu_check(vaddr, len, 0) == MMU_TRANSLATE)
-		printf("should MMU\n");
-	else if(isa_mmu_check(vaddr, len, 0) == MMU_DIRECT)
-		printf("should not MMU\n");
-		*/
 
-	//printf("vaddr_read = %x\n", addr);
-	//vaddr_t bug = addr;
-	addr = (isa_mmu_check(addr, len, 0) == MMU_TRANSLATE) ? isa_mmu_translate(addr, len, 0) : addr;
-	//assert(addr == bug);
+	vaddr_t bug = addr;
+	if(isa_mmu_check(addr, len, 0) == MMU_TRANSLATE)
+	{
+		Log("should translate\n");
+		addr = isa_mmu_translate(addr, len, 0);
+	}
+	assert(addr == bug);
   return paddr_read(addr, len);
 }
 
