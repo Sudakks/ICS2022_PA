@@ -42,8 +42,11 @@ for(int j = 0; j < LENGTH(segments); j++)
 }
   for (i = 0; i < LENGTH(segments); i ++) {
     void *va = segments[i].start;
-		printf("start a new for, va = %x\n", va);
+		if(i == LENGTH(segments) - 1)
+			printf("start a new for, va = %x\n", va);
     for (; va < segments[i].end; va += PGSIZE) {
+		//if(i = LENGTH(segments) - 1)
+		if(i == 0)
 			printf("va = %x\n", va);
       map(&kas, va, va, 0);
     }
@@ -79,7 +82,6 @@ void __am_switch(Context *c) {
 
 void map(AddrSpace *as, void *va, void *pa, int prot) {
 	//ignore prot temporarily
-	printf("map %x\n", va);
 	uint32_t _va = (uint32_t)va;
 	uint32_t _pa = (uint32_t)pa;
 	uint32_t VPN1 = _va >> 22;
@@ -94,21 +96,7 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 	}
 	uint32_t* page_table = base[VPN1];
 	page_table[VPN0] = _pa & 0xfffff000;
-	/*
-	printf("as->ptr = %p\n", as->ptr);
-	printf("va = %x, VPN1= %x, VPN0 = %x\n", va, VPN1, VPN0);
-	uint32_t* pte = (uint32_t*)as->ptr + (VPN1 << 2);
-	printf("pte = %p, pte's val = %p\n", pte, *pte);
-	if(!(*pte & 0x1))
-	{
-		//页目录不存在，分配
-		printf("fenpeu\n");
-		pte = (uint32_t*)pgalloc_usr(PGSIZE);
-	}
-	printf("after pte = %p\n", pte);
-	uint32_t* leaf = ((uint32_t*)(*pte << 12)) + (VPN0 << 2);
-	*leaf = _pa & 0xfffff000;
-	*/
+	
 	//然后把这个位置映射到pa上
 }
 
