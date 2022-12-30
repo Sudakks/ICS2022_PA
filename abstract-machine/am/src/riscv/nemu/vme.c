@@ -80,6 +80,7 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 	//要经过两层转换
 	//取出的是地址
 	uint32_t** base = (uint32_t**)as->ptr;
+	printf("base = %x\n", base);
 	if(base[VPN1] == NULL)
 	{
 		base[VPN1] = (uint32_t*)pgalloc_usr(PGSIZE);
