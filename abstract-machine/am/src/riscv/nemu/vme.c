@@ -84,9 +84,16 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 	{
 		uint32_t* npage = (uint32_t*)pgalloc_usr(PGSIZE);
 		base[VPN1] = (uint32_t*)((uint32_t)npage | 0x1);//set valid
+		/*
+		在nemu里面要检查valid项，所以在这里就要预先设定好valid，使它为1
+		！！！很重要！！！
+		*/
 		//base[VPN1] = (uint32_t*)pgalloc_usr(PGSIZE);
 		//printf("alloc = %p\n", base[VPN1]);
 	}
+	/*
+	嗯最后是通过一个具体的地址，一个一个比对，才发现translate错误了
+	*/
 	uint32_t* page_table = base[VPN1];
 	//if(_va == 0x80001000)
 		//printf("first = %x\n", page_table);

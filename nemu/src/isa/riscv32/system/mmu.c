@@ -31,6 +31,9 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
 	uint32_t pte = paddr_read(pte_addr, 4);//这里是读出目录特定位置的内容
 	//printf("first = %x\n", pte);
 	assert(pte != 0 && (pte & 0x1));
+	/*
+	assert是有必要的，检验map是否正确，这个是要自己设置valid位的
+	*/
 	//说明已经有过映射了！
 	//valid位有效
 
@@ -44,6 +47,5 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
 	assert(leaf != 0 && (leaf & 0x1));
 	vaddr_t ret = (leaf & 0xfffff000) | offset;
 	//printf("yinshe to %x\n", ret);
-	//assert(0);
 	return ret;
 }
