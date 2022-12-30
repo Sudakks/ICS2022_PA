@@ -37,7 +37,7 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
 	//second level
 	//PPN = pte & 0x3fffff;
 	PPN = pte;
-	vaddr_t leaf_addr = (PPN << 12) + (VPN0 << 2); 
+	vaddr_t leaf_addr = PPN + (VPN0 << 2); 
 	printf("2 addr = %x\n", leaf_addr);
 	//printf("leaf_addr = %x\n", leaf_addr);
 	uint32_t leaf = paddr_read(leaf_addr, 4);
