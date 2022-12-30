@@ -85,7 +85,7 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 		base[VPN1] = (uint32_t*)pgalloc_usr(PGSIZE);
 		//printf("alloc = %p\n", base[VPN1]);
 	}
-	if(_va == 0x80000000)
+	if(_va == 0x80001000)
 		{
 printf("VPN1 = %x, VPN0 = %x\n", VPN1, VPN0); 
 			printf("first = %x\n", base[VPN1]);
