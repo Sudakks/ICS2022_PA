@@ -40,7 +40,6 @@ for(int j = 0; j < LENGTH(segments); j++)
 {
 	printf("segments[j].start = %x\n", segments[j].start);
 }
-assert(0);
   for (i = 0; i < LENGTH(segments); i ++) {
     void *va = segments[i].start;
 		printf("start a new for, va = %x\n", va);
