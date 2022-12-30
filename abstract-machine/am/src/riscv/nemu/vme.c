@@ -86,9 +86,9 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 		//printf("alloc = %p\n", base[VPN1]);
 	}
 	uint32_t* page_table = base[VPN1];
-	if(_va == 0x80001000)
-		printf("page_table = %x\n", page_table);
 	page_table[VPN0] = _pa & 0xfffff000;
+	if(_va == 0x80001000)
+		printf("2 addr = %x\n", page_table + VPN0);
 	if(_va == 0x80001000)
 	{
 		printf("yinshe to %x\n", _pa & 0xfffff000);
