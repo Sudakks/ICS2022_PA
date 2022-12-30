@@ -47,5 +47,17 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
 	assert(leaf != 0 && (leaf & 0x1));
 	vaddr_t ret = (leaf & 0xfffff000) | offset;
 	//printf("yinshe to %x\n", ret);
+
+	if(type == VME_WRITE)
+	{
+		//表示这个位置被写过
+		//set dirty
+		paddr_write(leaf_addr, 4, leaf | 0x80);
+	}
+	else if(type == VME_READ)
+	{
+		//set access
+		paddr_write(leaf_addr, 4, leaf | 0x40);
+	}
 	return ret;
 }
