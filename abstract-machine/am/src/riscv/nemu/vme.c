@@ -50,6 +50,7 @@ bool vme_init(void* (*pgalloc_f)(int), void (*pgfree_f)(void*)) {
 	printf("reach here\n");
 
   set_satp(kas.ptr);
+	printf("but not here\n");
   vme_enable = 1;
 	printf("finish!!!!\n");
   return true;
