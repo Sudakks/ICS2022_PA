@@ -19,7 +19,7 @@
 
 paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
 	// 对内存区间为[vaddr, vaddr + len), 类型为type的内存访问进行地址转换
-	printf("translate: %x\n", vaddr);
+	Log("translate: %x\n", vaddr);
 	vaddr_t VPN1 = ((vaddr >> 22) & 0x3ff);
 	vaddr_t VPN0 = ((vaddr >> 12) & 0x3ff);
 	vaddr_t offset = vaddr & 0xfff;
