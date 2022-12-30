@@ -46,10 +46,11 @@ for(int j = 0; j < LENGTH(segments); j++)
 			printf("start a new for, va = %x\n", va);
     for (; va < segments[i].end; va += PGSIZE) {
 		//if(i = LENGTH(segments) - 1)
-		if(i == 0)
-			printf("va = %x\n", va);
+		/*if(i == 0)
+			printf("va = %x\n", va);*/
       map(&kas, va, va, 0);
     }
+		assert(0);
   }
   set_satp(kas.ptr);
   vme_enable = 1;
