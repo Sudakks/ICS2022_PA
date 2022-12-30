@@ -41,9 +41,9 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
 	//printf("2 addr = %x\n", leaf_addr);
 	//printf("leaf_addr = %x\n", leaf_addr);
 	uint32_t leaf = paddr_read(leaf_addr, 4);
-	assert(leaf != 0 && (leaf & 0x1));
+	//assert(leaf != 0 && (leaf & 0x1));
 	vaddr_t ret = (leaf & 0xfffff000) | offset;
 	//printf("yinshe to %x\n", ret);
-	assert(0);
+	//assert(0);
 	return ret;
 }
