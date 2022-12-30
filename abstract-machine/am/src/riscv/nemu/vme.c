@@ -36,19 +36,11 @@ bool vme_init(void* (*pgalloc_f)(int), void (*pgfree_f)(void*)) {
   int i;
   for (i = 0; i < LENGTH(segments); i ++) {
     void *va = segments[i].start;
-		/*if(i == 0)
-			printf("start a new for, va = %x\n", va);
-			*/
     for (; va < segments[i].end; va += PGSIZE) {
-			//printf("i = %d, start = %x, end = %x\n", i, segments[i].start, segments[i].end);
-		//if(i = LENGTH(segments) - 1)
-			//printf("va = %x\n", va);
       map(&kas, va, va, 0);
     }
-		printf("i = %d\n", i);
   }
 	printf("reach here\n");
-
   set_satp(kas.ptr);
 	printf("but not here\n");
   vme_enable = 1;
@@ -93,9 +85,16 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 		base[VPN1] = (uint32_t*)pgalloc_usr(PGSIZE);
 		//printf("alloc = %p\n", base[VPN1]);
 	}
+	if(_va == 0x80000000)
+		{
+			printf("first = %x\n", base[VPN1]);
+		}
 	uint32_t* page_table = base[VPN1];
 	page_table[VPN0] = _pa & 0xfffff000;
-	
+if(_va == 0x80000000)
+	{
+		printf("yinshe to %x\n", _pa & 0xfffff000);
+	}
 	//然后把这个位置映射到pa上
 }
 
