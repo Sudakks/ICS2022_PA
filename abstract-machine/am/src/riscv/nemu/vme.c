@@ -82,7 +82,7 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 	if(base[VPN1] == NULL)
 	{
 		base[VPN1] = (uint32_t*)pgalloc_usr(PGSIZE);
-		printf("alloc = %p\n", base[VPN1]);
+		//printf("alloc = %p\n", base[VPN1]);
 	}
 	uint32_t* page_table = base[VPN1];
 	page_table[VPN0] = _pa & 0xfffff000;
