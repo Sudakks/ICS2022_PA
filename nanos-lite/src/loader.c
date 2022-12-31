@@ -111,6 +111,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 				printf("read_len = %d, read_vaddr = %x\n", read_len, read_vaddr);
 				left_len -= read_len;
 			}
+			if((read_vaddr & ~0xfff) != read_vaddr)
+				read_vaddr = (read_vaddr & ~0xfff) + PGSIZE; 
 			left_len = phdr[i].p_memsz - phdr[i].p_filesz;
 			for(;read_vaddr < phdr[i].p_vaddr + phdr[i].p_memsz; read_vaddr += PGSIZE)
 			{
