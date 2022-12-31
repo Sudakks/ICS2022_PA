@@ -107,6 +107,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 					read_len = mmin(PGSIZE, left_len);
 					fs_read(fd, npage, read_len);
 				}
+				printf("read_len = %d, read_vaddr = %x\n", read_len, read_vaddr);
 				read_vaddr += read_len;
 				left_len -= read_len;
 			}
