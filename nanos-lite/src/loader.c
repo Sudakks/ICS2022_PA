@@ -94,6 +94,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 				memset(npage, 0, PGSIZE);
 				if(read_vaddr != (read_vaddr & ~0xfff))
 				{
+					printf("not aligned\n");
 					//一开始不对齐，在一页中有偏移量
 					map(as, (void*)(read_vaddr & ~0xfff), npage, 1);
 					read_len = mmin(PGSIZE - (read_vaddr & 0xfff), left_len);
@@ -101,6 +102,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 				}
 				else
 				{
+					printf("aligned\n");
 					map(as, (void*)read_vaddr, npage, 1);
 					read_len = mmin(PGSIZE, left_len);
 					fs_read(fd, npage, read_len);
