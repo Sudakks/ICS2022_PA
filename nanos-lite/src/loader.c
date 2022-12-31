@@ -62,7 +62,6 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 //////////////////////////////
 	//这个时候要用到pcb的addrspace了
 	AddrSpace* as = &pcb->as;
-	printf("filename = %s\n", filename);
 
 	Elf_Ehdr ehdr;//elf headr table
 	int fd = fs_open(filename, 0, 0);
@@ -72,7 +71,6 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
 	//check magic number
 	assert(*(uint32_t *)ehdr.e_ident == 0x464c457f);
-	//assert(ehdr.e_ident[0] == 0x7f && ehdr.e_ident[1] == 0x45 && ehdr.e_ident[2] == 0x4c && ehdr.e_ident[3] == 0x46);
 	assert(ehdr.e_machine == EXPECT_TYPE);
 
 	Elf_Phdr phdr[ehdr.e_phnum];
@@ -105,6 +103,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 				else
 				{
 					printf("aligned\n");
+					printf("map to %x\n", npage);
 					map(as, (void*)read_vaddr, npage, 1);
 					read_len = mmin(PGSIZE, left_len);
 					fs_read(fd, npage, read_len);
