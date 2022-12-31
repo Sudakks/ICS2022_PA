@@ -86,7 +86,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 			//fs_lseek(fd, phdr[i].p_offset, 0);
 			fs_lseek(fd, ehdr.e_phoff + i * sizeof(Elf_Phdr), 0);
 			//printf("p_offset = %x, ehdr.e_phoff = %xm siz = %d\n", phdr[i].p_offset, ehdr.e_phoff, sizeof(Elf_Phdr));
-			assert(phdr[i].p_offset == ehdr.e_phoff + i * sizeof(Elf_Phdr));
+			//assert(phdr[i].p_offset == ehdr.e_phoff + i * sizeof(Elf_Phdr));
 			uint32_t read_vaddr = phdr[i].p_vaddr;
 			uint32_t left_len = phdr[i].p_filesz;
 			uint32_t read_len;
