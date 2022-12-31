@@ -77,6 +77,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 	//fs_lseek(fd, ehdr.e_phoff, 0);
 	//fs_read(fd, phdr, sizeof(Elf_Phdr) * ehdr.e_phnum);
 	//这是将头表的内容先全部读入
+	printf("here\n");
 	for (size_t i = 0; i < ehdr.e_phnum; i++)
 	{ 
 		if (phdr[i].p_type == PT_LOAD)
@@ -86,6 +87,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 			//fs_lseek(fd, phdr[i].p_offset, 0);
 			fs_lseek(fd, ehdr.e_phoff + i * sizeof(Elf_Phdr), 0);
 			fs_read(fd, &phdr[i], sizeof(Elf_Phdr));
+
 			uint32_t read_vaddr = phdr[i].p_vaddr;
 			printf("at start = %d\n", read_vaddr);
 			uint32_t left_len = phdr[i].p_filesz;
