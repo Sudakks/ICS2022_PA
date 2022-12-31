@@ -77,13 +77,13 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 	fs_lseek(fd, ehdr.e_phoff, 0);
 	fs_read(fd, phdr, sizeof(Elf_Phdr) * ehdr.e_phnum);
 	//这是将头表的内容先全部读入
-	printf("here\n");
-	printf("filename = %s\n", filename);
-	printf("ehdr.e_phnum = %d\n", ehdr.e_phnum);
+	//printf("here\n");
+	//printf("filename = %s\n", filename);
+	//printf("ehdr.e_phnum = %d\n", ehdr.e_phnum);
 	for (size_t i = 0; i < ehdr.e_phnum; i++)
 	{ 
-		printf("i = %d\n", i);
-		printf("type = %d\n", phdr[i].p_type);
+		//printf("i = %d\n", i);
+		//printf("type = %d\n", phdr[i].p_type);
 		if (phdr[i].p_type == PT_LOAD)
 		{
 			//加载这一段，并看它有多少页，使用for循环map
@@ -92,7 +92,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 			//fs_read(fd, &phdr[i], sizeof(Elf_Phdr));
 
 			uint32_t read_vaddr = phdr[i].p_vaddr;
-			printf("at start = %d\n", read_vaddr);
+			//printf("at start = %d\n", read_vaddr);
 			uint32_t left_len = phdr[i].p_filesz;
 			uint32_t read_len;
 			for( ;read_vaddr < phdr[i].p_vaddr + phdr[i].p_filesz;)
@@ -102,7 +102,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 				memset(npage, 0, PGSIZE);
 				if(read_vaddr != (read_vaddr & ~0xfff))
 				{
-					printf("not aligned\n");
+					//printf("not aligned\n");
 					//一开始不对齐，在一页中有偏移量
 					map(as, (void*)read_vaddr, npage, 1);
 					read_len = mmin(PGSIZE - (read_vaddr & 0xfff), left_len);
@@ -117,7 +117,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 					fs_read(fd, npage, read_len);
 				}
 				read_vaddr += read_len;
-				printf("read_len = %d, read_vaddr = %x\n", read_len, read_vaddr);
+				//printf("read_len = %d, read_vaddr = %x\n", read_len, read_vaddr);
 				left_len -= read_len;
 			}
 			if((read_vaddr & ~0xfff) != read_vaddr)
@@ -133,10 +133,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 			//以一页为单位，从文件中读入一页
 			//不满一页按少于一页的读
 		}
-		printf("aaa\n");
 	}
 	printf("entry = %x\n", ehdr.e_entry);
-	assert(0);
 	return ehdr.e_entry;//Entry point virtual address
 }
 
