@@ -78,6 +78,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 	//fs_read(fd, phdr, sizeof(Elf_Phdr) * ehdr.e_phnum);
 	//这是将头表的内容先全部读入
 	printf("here\n");
+	printf("filename = %s\n", filename);
 	printf("ehdr.e_phnum = %d\n", ehdr.e_phnum);
 	for (size_t i = 0; i < ehdr.e_phnum; i++)
 	{ 
