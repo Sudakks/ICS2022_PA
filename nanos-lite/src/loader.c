@@ -62,6 +62,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 //////////////////////////////
 	//这个时候要用到pcb的addrspace了
 	AddrSpace* as = &pcb->as;
+	printf("filename = %s\n", filename);
 
 	Elf_Ehdr ehdr;//elf headr table
 	int fd = fs_open(filename, 0, 0);
@@ -147,8 +148,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 */
 	protect(&pcb->as);
 
-printf("filename = %s\n", filename);
-printf("start = %x, end = %x\n", pcb->as.area.start, pcb->as.area.end);
 	/*
 	把heap.end作为用户进程的栈顶, 然后把这个栈顶赋给用户进程的栈指针寄存器
 	*/
