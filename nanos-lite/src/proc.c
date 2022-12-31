@@ -52,7 +52,6 @@ void init_proc() {
 	//char *const argv[] = {"aaa", "bbb", NULL};
 	//context_uload(&pcb[1], "/bin/nterm", NULL, NULL);
 	context_uload(&pcb[1], "/bin/dummy", NULL, NULL);
-	printf("after\n");
   //switch_boot_pcb();
 }
 
