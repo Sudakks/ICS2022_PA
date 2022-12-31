@@ -80,6 +80,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 	printf("here\n");
 	for (size_t i = 0; i < ehdr.e_phnum; i++)
 	{ 
+		printf("no\n");
 		if (phdr[i].p_type == PT_LOAD)
 		{
 			printf("i = %d\n", i);
