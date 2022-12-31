@@ -134,7 +134,6 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 			//不满一页按少于一页的读
 		}
 	}
-	printf("entry = %x\n", ehdr.e_entry);
 	return ehdr.e_entry;//Entry point virtual address
 }
 
