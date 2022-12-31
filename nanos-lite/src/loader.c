@@ -18,7 +18,7 @@
 # error Unsupported ISA 
 #endif
 
-#define mmin(a, b) ((a) < (b)) ? (a) : (b)
+#define mmin(a, b) (((a) < (b)) ? (a) : (b))
 static uintptr_t loader(PCB *pcb, const char *filename) {
 //magic number 7f 45 4c 46
 	//检查魔数和ISA类型
@@ -84,6 +84,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 			printf("i = %d\n", i);
 			//加载这一段，并看它有多少页，使用for循环map
 			fs_lseek(fd, phdr[i].p_offset, 0);
+			assert(phdr[i].p_offset == ehdr.e_phoff + i * sizeof(Elf_Phdr));
 			uint32_t read_vaddr = phdr[i].p_vaddr;
 			uint32_t left_len = phdr[i].p_filesz;
 			uint32_t read_len;
