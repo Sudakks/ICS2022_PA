@@ -82,6 +82,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 	{ 
 		if (phdr[i].p_type == PT_LOAD)
 		{
+			printf("i = %d\n", i);
 			//加载这一段，并看它有多少页，使用for循环map
 			fs_lseek(fd, phdr[i].p_offset, 0);
 
