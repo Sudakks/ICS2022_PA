@@ -74,8 +74,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 	assert(ehdr.e_machine == EXPECT_TYPE);
 
 	Elf_Phdr phdr[ehdr.e_phnum];
-	//fs_lseek(fd, ehdr.e_phoff, 0);
-	//fs_read(fd, phdr, sizeof(Elf_Phdr) * ehdr.e_phnum);
+	fs_lseek(fd, ehdr.e_phoff, 0);
+	fs_read(fd, phdr, sizeof(Elf_Phdr) * ehdr.e_phnum);
 	//这是将头表的内容先全部读入
 	printf("here\n");
 	printf("filename = %s\n", filename);
@@ -88,9 +88,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 		{
 			//加载这一段，并看它有多少页，使用for循环map
 			//fs_lseek(fd, phdr[i].p_offset, 0);
-			printf("before\n");
-			fs_lseek(fd, ehdr.e_phoff + i * sizeof(Elf_Phdr), 0);
-			fs_read(fd, &phdr[i], sizeof(Elf_Phdr));
+			//fs_lseek(fd, ehdr.e_phoff + i * sizeof(Elf_Phdr), 0);
+			//fs_read(fd, &phdr[i], sizeof(Elf_Phdr));
 
 			uint32_t read_vaddr = phdr[i].p_vaddr;
 			printf("at start = %d\n", read_vaddr);
