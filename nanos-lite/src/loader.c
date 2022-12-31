@@ -147,6 +147,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 */
 	protect(&pcb->as);
 
+printf("filename = %x\n", filename);
 printf("start = %x, end = %x\n", pcb->as.area.start, pcb->as.area.end);
 	/*
 	把heap.end作为用户进程的栈顶, 然后把这个栈顶赋给用户进程的栈指针寄存器
