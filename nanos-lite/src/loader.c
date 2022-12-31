@@ -91,6 +91,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 			{
 				void* npage = new_page(1);
 				//预先将其全部设置为0
+				memset(npage, 0, PGSIZE);
 				if(read_vaddr != (read_vaddr & ~0xfff))
 				{
 					//一开始不对齐，在一页中有偏移量
@@ -100,7 +101,6 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 				}
 				else
 				{
-					memset(npage, 0, PGSIZE);
 					map(as, (void*)read_vaddr, npage, 1);
 					read_len = mmin(PGSIZE, left_len);
 					fs_read(fd, npage, read_len);
@@ -165,7 +165,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	//printf("in uload:\nenvc = %d\n", envc);
 
 	char* now = (char*)new_page(nr_page) + nr_page * nr_page_sz;
-	for(int i = 0; i < 8; i++)
+	for(int i = 1; i <= 8; i++)
 	{
 		//把用户栈的物理页映射到[as.area.end - 32KB, as.area.end)这段虚拟地址空间
 		map(&pcb->as, pcb->as.area.end - i * PGSIZE, now - i * PGSIZE, 1);
