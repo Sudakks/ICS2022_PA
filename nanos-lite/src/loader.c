@@ -80,10 +80,9 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 	printf("here\n");
 	for (size_t i = 0; i < ehdr.e_phnum; i++)
 	{ 
-		printf("no\n");
+			printf("i = %d\n", i);
 		if (phdr[i].p_type == PT_LOAD)
 		{
-			printf("i = %d\n", i);
 			//加载这一段，并看它有多少页，使用for循环map
 			//fs_lseek(fd, phdr[i].p_offset, 0);
 			fs_lseek(fd, ehdr.e_phoff + i * sizeof(Elf_Phdr), 0);
