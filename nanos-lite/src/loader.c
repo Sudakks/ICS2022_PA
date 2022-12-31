@@ -84,6 +84,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 			printf("i = %d\n", i);
 			//加载这一段，并看它有多少页，使用for循环map
 			fs_lseek(fd, phdr[i].p_offset, 0);
+			printf("p_offset = %x, ehdr.e_phoff = %xm siz = %d\n", phdr[i].p_offset, ehdr.e_phoff, sizeof(Elf_Phdr));
 			assert(phdr[i].p_offset == ehdr.e_phoff + i * sizeof(Elf_Phdr));
 			uint32_t read_vaddr = phdr[i].p_vaddr;
 			uint32_t left_len = phdr[i].p_filesz;
