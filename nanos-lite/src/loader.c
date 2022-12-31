@@ -104,8 +104,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 				}
 				else
 				{
-					printf("aligned\n");
-					printf("map to %x\n", npage);
+					//printf("aligned\n");
+					//printf("map to %x\n", npage);
 					map(as, (void*)read_vaddr, npage, 1);
 					read_len = mmin(PGSIZE, left_len);
 					fs_read(fd, npage, read_len);
