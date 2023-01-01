@@ -126,6 +126,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 		}
 	}
 	printf("===============\n");
+	printf("return entry = %x\n", ehdr.e_entry);
 	return ehdr.e_entry;//Entry point virtual address
 }
 
