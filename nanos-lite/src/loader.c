@@ -125,7 +125,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 			printf("now left_len = %d\n", left_len);
 			if(left_len == -4096)
 				printf("yes\n");
-			printf("> ? %d\n", -4096 > 0);
+			printf("> ? %d\n", left_len > 0);
 			if(left_len > 0)
 			{
 				printf("in\n");
@@ -142,6 +142,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 			//不满一页按少于一页的读
 		}
 	}
+	printf("===============\n");
 	return ehdr.e_entry;//Entry point virtual address
 }
 
