@@ -88,7 +88,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 			//fs_read(fd, &phdr[i], sizeof(Elf_Phdr));
 
 			uint32_t read_vaddr = phdr[i].p_vaddr;
-			//printf("at start = %d\n", read_vaddr);
+			printf("at start = %d\n", read_vaddr);
 			uint32_t left_len = phdr[i].p_filesz;
 			uint32_t read_len;
 			for( ;read_vaddr < phdr[i].p_vaddr + phdr[i].p_filesz;)
@@ -98,7 +98,6 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 				memset(npage, 0, PGSIZE);
 				if(read_vaddr != (read_vaddr & ~0xfff))
 				{
-					//printf("not aligned\n");
 					//一开始不对齐，在一页中有偏移量
 					map(as, (void*)read_vaddr, npage, 1);
 					read_len = mmin(PGSIZE - (read_vaddr & 0xfff), left_len);
@@ -106,25 +105,28 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 				}
 				else
 				{
-					//printf("aligned\n");
-					//printf("map to %x\n", npage);
 					map(as, (void*)read_vaddr, npage, 1);
 					read_len = mmin(PGSIZE, left_len);
 					fs_read(fd, npage, read_len);
 				}
 				read_vaddr += read_len;
-				//printf("read_len = %d, read_vaddr = %x\n", read_len, read_vaddr);
 				left_len -= read_len;
 				printf("read len = %d\n", read_len);
 			}
-			if((read_vaddr & ~0xfff) != read_vaddr)
-				read_vaddr = (read_vaddr & ~0xfff) + PGSIZE; 
 			left_len = phdr[i].p_memsz - phdr[i].p_filesz;
-			for(;read_vaddr < phdr[i].p_vaddr + phdr[i].p_memsz; read_vaddr += PGSIZE)
+			printf("chaju = %d\n", left_len);
+			if((read_vaddr & ~0xfff) != read_vaddr)
+			{
+				read_vaddr = (read_vaddr & ~0xfff) + PGSIZE; 
+				left_len = left_len - (PGSIZE - (read_vaddr & 0xfff));
+				printf("need\n");
+			}
+			for(; left_len > 0; read_vaddr += PGSIZE)
 			{
 				void* npage = new_page(1);
 				memset(npage, 0, PGSIZE);
 				map(as, (void*)read_vaddr, npage, 1);	
+				left_len -= PGSIZE;	
 			}
 			//还需要把后面一段空间清0
 			//以一页为单位，从文件中读入一页
