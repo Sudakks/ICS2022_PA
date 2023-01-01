@@ -88,7 +88,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 			//fs_read(fd, &phdr[i], sizeof(Elf_Phdr));
 
 			uint32_t read_vaddr = phdr[i].p_vaddr;
-			printf("at start = %d\n", read_vaddr);
+			printf("at start = %x\n", read_vaddr);
 			uint32_t left_len = phdr[i].p_filesz;
 			uint32_t read_len;
 			for( ;read_vaddr < phdr[i].p_vaddr + phdr[i].p_filesz;)
