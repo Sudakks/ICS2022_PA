@@ -77,13 +77,9 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 	fs_lseek(fd, ehdr.e_phoff, 0);
 	fs_read(fd, phdr, sizeof(Elf_Phdr) * ehdr.e_phnum);
 	//这是将头表的内容先全部读入
-	//printf("here\n");
-	//printf("filename = %s\n", filename);
-	//printf("ehdr.e_phnum = %d\n", ehdr.e_phnum);
 	for (size_t i = 0; i < ehdr.e_phnum; i++)
 	{ 
-		//printf("i = %d\n", i);
-		//printf("type = %d\n", phdr[i].p_type);
+		printf("i = %d\n", i);
 		if (phdr[i].p_type == PT_LOAD)
 		{
 			//加载这一段，并看它有多少页，使用for循环map
@@ -119,6 +115,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 				read_vaddr += read_len;
 				//printf("read_len = %d, read_vaddr = %x\n", read_len, read_vaddr);
 				left_len -= read_len;
+				printf("read len = %d\n", read_len);
 			}
 			if((read_vaddr & ~0xfff) != read_vaddr)
 				read_vaddr = (read_vaddr & ~0xfff) + PGSIZE; 
