@@ -186,11 +186,11 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 	//printf("in uload:\nargc = %d\n", argc);
 	//printf("in uload:\nenvc = %d\n", envc);
 
-	char* now = (char*)new_page(nr_page) + nr_page * nr_page_sz;
-	for(int i = 1; i <= 8; i++)
+	char* now = (char*)new_page(nr_page) + nr_page * PGSIZE;
+	for(int i = 8; i >= 1; i--)
 	{
 		//把用户栈的物理页映射到[as.area.end - 32KB, as.area.end)这段虚拟地址空间
-		map(&pcb->as, pcb->as.area.end - i * PGSIZE, now - i * PGSIZE, 1);
+		map(&pcb->as, (void*)(pcb->as.area.end - i * PGSIZE), now - i * PGSIZE, 1);
 	}
 	//char* now = (char*)heap.end;
 	char* ar[argc];
