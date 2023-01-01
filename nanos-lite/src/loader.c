@@ -125,7 +125,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 			printf("now left_len = %d\n", left_len);
 			if(left_len == -4096)
 				printf("yes\n");
-			if(left_len > 0)
+			if(left_len < 0)
 				printf("ww left_len = %d\n", left_len);
 			printf("> ? %d\n", left_len > 0);
 			if(left_len > 0)
