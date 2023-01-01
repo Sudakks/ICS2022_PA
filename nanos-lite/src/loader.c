@@ -125,6 +125,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 			printf("now left_len = %d\n", left_len);
 			if(left_len > 0)
 			{
+				printf("in\n");
 				for(; left_len > 0; read_vaddr += PGSIZE)
 				{
 					void* npage = new_page(1);
@@ -133,7 +134,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 					left_len -= PGSIZE;	
 				}
 			}
-						//还需要把后面一段空间清0
+			//还需要把后面一段空间清0
 			//以一页为单位，从文件中读入一页
 			//不满一页按少于一页的读
 		}
