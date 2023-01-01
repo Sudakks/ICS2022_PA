@@ -59,78 +59,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 	return ehdr.e_entry;//Entry point virtual address
 
 */
-//////////////////////////////
-	//这个时候要用到pcb的addrspace了
-	/*
-	AddrSpace* as = &pcb->as;
-
-	Elf_Ehdr ehdr;//elf headr table
-	int fd = fs_open(filename, 0, 0);
-	//ignore flags and mode
-	size_t off = fs_read(fd, &ehdr, sizeof(Elf_Ehdr)); 
-	assert(off != 0);
-
-	//check magic number
-	assert(*(uint32_t *)ehdr.e_ident == 0x464c457f);
-	assert(ehdr.e_machine == EXPECT_TYPE);
-
-	Elf_Phdr phdr[ehdr.e_phnum];
-	fs_lseek(fd, ehdr.e_phoff, 0);
-	fs_read(fd, phdr, sizeof(Elf_Phdr) * ehdr.e_phnum);
-	//这是将头表的内容先全部读入
-	for (size_t i = 0; i < ehdr.e_phnum; i++)
-	{ 
-		printf("i = %d\n", i);
-		if (phdr[i].p_type == PT_LOAD)
-		{
-			//加载这一段，并看它有多少页，使用for循环map
-			//fs_lseek(fd, phdr[i].p_offset, 0);
-			//fs_lseek(fd, ehdr.e_phoff + i * sizeof(Elf_Phdr), 0);
-			//fs_read(fd, &phdr[i], sizeof(Elf_Phdr));
-
-			uint32_t read_vaddr = phdr[i].p_vaddr;
-			printf("at start = %x\n", read_vaddr);
-			uint32_t left_len = phdr[i].p_filesz;
-			uint32_t read_len;
-			for( ;read_vaddr < phdr[i].p_vaddr + phdr[i].p_filesz;)
-			{
-				void* npage = new_page(1);
-				//预先将其全部设置为0
-				memset(npage, 0, PGSIZE);
-				if(read_vaddr != (read_vaddr & ~0xfff))
-				{
-					//一开始不对齐，在一页中有偏移量
-					map(as, (void*)read_vaddr, npage, 1);
-					read_len = mmin(PGSIZE - (read_vaddr & 0xfff), left_len);
-					fs_read(fd, npage + (read_vaddr & 0xfff), read_len);
-				}
-				else
-				{
-					map(as, (void*)read_vaddr, npage, 1);
-					read_len = mmin(PGSIZE, left_len);
-					fs_read(fd, npage, read_len);
-				}
-				read_vaddr += read_len;
-				left_len -= read_len;
-			}
-			if((read_vaddr & ~0xfff) != read_vaddr)
-				read_vaddr = (read_vaddr & ~0xfff) + PGSIZE; 
-			for(; read_vaddr < phdr[i].p_memsz + phdr[i].p_vaddr; read_vaddr += PGSIZE)
-			{
-				void* npage = new_page(1);
-				memset(npage, 0, PGSIZE);
-				map(as, (void*)read_vaddr, npage, 1);	
-			}
-			//还需要把后面一段空间清0
-			//以一页为单位，从文件中读入一页
-			//不满一页按少于一页的读
-		}
-	}
-	printf("===============\n");
-	printf("return entry = %x\n", ehdr.e_entry);
-	return ehdr.e_entry;//Entry point virtual address
-	*/
-	
+///////////////////////////////////////	
 
 	AddrSpace* as = &pcb->as;
 	Elf_Ehdr ehdr;//elf headr table
