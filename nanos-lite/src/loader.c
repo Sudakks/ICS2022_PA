@@ -122,6 +122,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 				left_len = left_len - (PGSIZE - (read_vaddr & 0xfff));
 				printf("need\n");
 			}
+			printf("now left_len = %d\n", left_len);
 			for(; left_len > 0; read_vaddr += PGSIZE)
 			{
 				void* npage = new_page(1);
