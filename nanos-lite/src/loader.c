@@ -123,14 +123,17 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 				printf("need\n");
 			}
 			printf("now left_len = %d\n", left_len);
-			for(; left_len > 0; read_vaddr += PGSIZE)
+			if(left_len > 0)
 			{
-				void* npage = new_page(1);
-				memset(npage, 0, PGSIZE);
-				map(as, (void*)read_vaddr, npage, 1);	
-				left_len -= PGSIZE;	
+				for(; left_len > 0; read_vaddr += PGSIZE)
+				{
+					void* npage = new_page(1);
+					memset(npage, 0, PGSIZE);
+					map(as, (void*)read_vaddr, npage, 1);	
+					left_len -= PGSIZE;	
+				}
 			}
-			//还需要把后面一段空间清0
+						//还需要把后面一段空间清0
 			//以一页为单位，从文件中读入一页
 			//不满一页按少于一页的读
 		}
