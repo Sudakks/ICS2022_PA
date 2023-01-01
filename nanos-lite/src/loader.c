@@ -111,26 +111,14 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 				}
 				read_vaddr += read_len;
 				left_len -= read_len;
-				printf("read len = %d\n", read_len);
 			}
-			left_len = phdr[i].p_memsz - phdr[i].p_filesz;
-			printf("chaju = %d\n", left_len);
-			printf("now read_vaddr = %x\n", read_vaddr);
 			if((read_vaddr & ~0xfff) != read_vaddr)
-			{
 				read_vaddr = (read_vaddr & ~0xfff) + PGSIZE; 
-				//left_len = left_len - (PGSIZE - (read_vaddr & 0xfff));
-				printf("need\n");
-			}
-			printf("read_vaddr = %x, add = %x\n", read_vaddr, phdr[i].p_memsz + phdr[i].p_vaddr);
-			if(read_vaddr < phdr[i].p_memsz + phdr[i].p_vaddr)
+			for(; read_vaddr < phdr[i].p_memsz + phdr[i].p_vaddr; read_vaddr += PGSIZE)
 			{
-				for(; read_vaddr < phdr[i].p_memsz + phdr[i].p_vaddr; read_vaddr += PGSIZE)
-				{
-					void* npage = new_page(1);
-					memset(npage, 0, PGSIZE);
-					map(as, (void*)read_vaddr, npage, 1);	
-				}
+				void* npage = new_page(1);
+				memset(npage, 0, PGSIZE);
+				map(as, (void*)read_vaddr, npage, 1);	
 			}
 			//还需要把后面一段空间清0
 			//以一页为单位，从文件中读入一页
