@@ -29,10 +29,6 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
 	vaddr_t PPN = cpu.satp & 0x3fffff;
 	vaddr_t pte_addr = (PPN << 12) + (VPN1 << 2);
 	uint32_t pte = paddr_read(pte_addr, 4);//这里是读出目录特定位置的内容
-	if(pte == 0)
-	{
-		printf("pte = %x, vaddr = %x\n", pte, vaddr);
-	}
 	assert(pte != 0 && (pte & 0x1));
 	/*
 	assert是有必要的，检验map是否正确，这个是要自己设置valid位的

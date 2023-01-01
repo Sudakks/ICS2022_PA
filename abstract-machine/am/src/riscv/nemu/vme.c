@@ -108,6 +108,7 @@ Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
 	//no arg
 	Context* con = (Context*)(kstack.end - sizeof(Context));
 	con->mepc = (uintptr_t)entry;
+	assert(as != NULL);
 	con->pdir = as->ptr;
 	/*在创建的用户进程上下文中设置地址空间描述符指针*/
   return con;

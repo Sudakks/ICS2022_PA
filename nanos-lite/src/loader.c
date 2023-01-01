@@ -222,8 +222,10 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 
 	Area area = RANGE(pcb, (uint8_t*)pcb + STACK_SIZE);
 	void* entry = (void*)loader(pcb, filename);
+	/*
+	这里，记得要传入as进去，否则传入NULL会导致地址错误
+	*/
 	pcb->cp = ucontext(&pcb->as, area, entry);
-	//pcb->cp->pdir = pcb->as.ptr;
 	//pcb->cp->GPRx = (uintptr_t)heap.end;
 
 	int* tmp = (int*)(ptr);
