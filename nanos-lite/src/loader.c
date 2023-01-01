@@ -84,6 +84,10 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 			uint32_t read_vaddr = phdr[i].p_vaddr;
 			uint32_t left_len = phdr[i].p_filesz;
 			uint32_t read_len;
+			/*
+			哦我的天哪，我好感动啊啊啊啊
+			是loader的问题，不需要大改动，只需要加上分页机制就行了！！！
+			*/
 			for( ;read_vaddr < phdr[i].p_vaddr + phdr[i].p_filesz;)
 			{
 				void* npage = new_page(1);
@@ -109,10 +113,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 			//clear[VirtAddr + FileSize, VirtAddr + MemSiz), as .bss part
 			memset((uint8_t*)(phdr[i].p_vaddr + phdr[i].p_filesz), 0, phdr[i].p_memsz - phdr[i].p_filesz);
 		}
-		//需要及时调整open_offset的位置，因为有的内容没有读，需要跳过
 	}
 	return ehdr.e_entry;//Entry point virtual address
-
 }
 
 void naive_uload(PCB *pcb, const char *filename) {
