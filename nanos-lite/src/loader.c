@@ -123,7 +123,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 				printf("need\n");
 			}
 			printf("now left_len = %d\n", left_len);
-			printf("> ? %d\n", left_len > 0);
+			printf("> ? %d\n", -4096 > 0);
 			if(left_len > 0)
 			{
 				printf("in\n");
