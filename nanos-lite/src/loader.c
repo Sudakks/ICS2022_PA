@@ -123,6 +123,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 			}
 			for(; left_len > 0; read_vaddr += PGSIZE)
 			{
+				printf("in\n");
 				void* npage = new_page(1);
 				memset(npage, 0, PGSIZE);
 				map(as, (void*)read_vaddr, npage, 1);	
