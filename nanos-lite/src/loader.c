@@ -115,6 +115,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 			}
 			left_len = phdr[i].p_memsz - phdr[i].p_filesz;
 			printf("chaju = %d\n", left_len);
+			printf("now read_vaddr = %x\n", read_vaddr);
 			if((read_vaddr & ~0xfff) != read_vaddr)
 			{
 				read_vaddr = (read_vaddr & ~0xfff) + PGSIZE; 
@@ -123,7 +124,6 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 			}
 			for(; left_len > 0; read_vaddr += PGSIZE)
 			{
-				printf("in\n");
 				void* npage = new_page(1);
 				memset(npage, 0, PGSIZE);
 				map(as, (void*)read_vaddr, npage, 1);	
